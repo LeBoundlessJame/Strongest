@@ -19,27 +19,23 @@ public class FlightRendering {
         ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
         if (clientPlayer == null || !clientPlayer.getUuid().equals(abstractClientPlayerEntity.getUuid())) return;
         float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
-        float rotationAmount = 0f;
         float rotationSpeed = 0.0075f;
-        rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 1.8f;
+        rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 0.2f;
 
         if (clientPlayer.input.getMovementInput().y == 1) {
-
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, 0.0f, 0.2f);
         } else if (clientPlayer.input.getMovementInput().y == -1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -1.0f, 1.0f);
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -0.2f, 0.0f);
         } else {
-            if (((FlightAccess)renderer).boundless$getFlightRotation() > 0) {
-                ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, 0.0f, 1.0f);
-            } else if (((FlightAccess)renderer).boundless$getFlightRotation() < 0) {
-                ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -1.0f, 0);
-            }
+            ((FlightAccess)renderer).boundless$returnToDefaultRotation(rotationSpeed);
         }
 
-        rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
+        float rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
 
         abstractClientPlayerEntity.sendMessage(Text.of("Rotation amount : " + rotationAmount), true);
         float degrees = rotationAmount * (-90.0F - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
+        //matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.sin((abstractClientPlayerEntity.age + tickDelta) * 0.1f) / 5f));
 
         /*
         if (abstractClientPlayerEntity.isSprinting()) {

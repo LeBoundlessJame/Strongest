@@ -48,4 +48,11 @@ public abstract class PlayerFlightAccessRendering extends LivingEntityRenderer<A
         rotation = Math.clamp(rotation + rotationAdjustment, min, max);
         this.currentFlightRotation = rotation;
     }
+
+    @Override
+    public void boundless$returnToDefaultRotation(float returnSpeed) {
+        if (this.currentFlightRotation == 0) return;
+        returnSpeed *= this.currentFlightRotation > 0 ? -1 : 1;
+        this.currentFlightRotation = Math.clamp(this.currentFlightRotation + returnSpeed, -0, 1);
+    }
 }
