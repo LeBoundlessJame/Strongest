@@ -30,7 +30,6 @@ public class SuperHero extends Hero {
                 .displayName("Super Hero")
                 .textureIdentifier(BoundlessAPI.textureID("super_hero"))
                 .tickHandler(FlightAbility::flightTick)
-                .clientTickEvent(FlightRendering::clientInputLogic)
                 .defaultAbilityLoadout(ABILITY_LOADOUTS.get("LOADOUT_1"))
                 .build();
 

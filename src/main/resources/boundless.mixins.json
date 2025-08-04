@@ -7,16 +7,16 @@
     "InvulnerabilityMixin",
     "KeybindAccessor",
     "LivingEntityMixin",
-    "flight_ability.UpdateFlightPoseMixin",
+    "flight_ability.FlightPoseMixin",
     "flight_ability.PlayerFlightAccessRendering",
-    "flight_ability.FlightPoseMixin"
+    "flight_ability.UpdateFlightPoseMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
-    "ClientPlayerEntityMixin",
     "SkinLayerMixin"
   ]
 }
