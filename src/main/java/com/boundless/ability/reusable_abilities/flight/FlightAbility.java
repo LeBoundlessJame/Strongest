@@ -48,7 +48,7 @@ public class FlightAbility {
     }
 
     public static void flightMovement(PlayerEntity player) {
-        Vec3d rotation = player.getRotationVector();
+        Vec3d rotation = player.getRotationVector().multiply(2f);
         player.setVelocity(rotation.x, rotation.y, rotation.z);
         player.velocityModified = true;
         player.velocityDirty = true;

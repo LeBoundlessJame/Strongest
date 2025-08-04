@@ -17,6 +17,7 @@
   "client": [
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
-    "SkinLayerMixin"
+    "SkinLayerMixin",
+    "flight_ability.FlightCameraMixin"
   ]
 }
