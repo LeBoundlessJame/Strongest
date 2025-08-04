@@ -1,16 +1,13 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.util.FlightAccess;
-import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class FlightRendering {
@@ -20,18 +17,17 @@ public class FlightRendering {
         if (clientPlayer == null || !clientPlayer.getUuid().equals(abstractClientPlayerEntity.getUuid())) return;
         float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
         float rotationSpeed = 0.0075f;
-        rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 0.2f;
+        rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 0.35f;
 
         if (clientPlayer.input.getMovementInput().y == 1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, 0.0f, 0.2f);
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, -1.0f, 0.2f);
         } else if (clientPlayer.input.getMovementInput().y == -1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -0.2f, 0.0f);
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -0.2f, 1.0f);
         } else {
-            ((FlightAccess)renderer).boundless$returnToDefaultRotation(rotationSpeed);
+            ((FlightAccess)renderer).boundless$returnToDefaultRotation(rotationSpeed * 2f);
         }
 
         float rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
-
         abstractClientPlayerEntity.sendMessage(Text.of("Rotation amount : " + rotationAmount), true);
         float degrees = rotationAmount * (-90.0F - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
