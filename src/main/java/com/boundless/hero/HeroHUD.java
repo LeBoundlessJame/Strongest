@@ -33,7 +33,7 @@ public class HeroHUD {
 
         for (int i = 0; i < abilityLoadout.size(); i++) {
             Ability ability = AbilityRegistry.getAbilityFromID(entryList.get(i).getValue());
-            if (ability == null) continue;
+            if (ability == null || ability.isHide()) continue;
 
             Text boundKeyText = KeybindingUtils.getKeyBindingFromTranslation(entryList.get(i).getKey()).getBoundKeyLocalizedText();
             drawContext.drawTexture(ABILITY_FRAME, 15, 20 + (i * 21), 0, 0, 22, 22, 22, 22);

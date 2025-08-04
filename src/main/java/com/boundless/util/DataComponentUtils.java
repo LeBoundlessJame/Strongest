@@ -34,7 +34,7 @@ public class DataComponentUtils {
 
     public static void addOrSubtractInt(ComponentType<Integer> component, PlayerEntity player, int amount, int max) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, Math.clamp(DataComponentUtils.getInt(component, player, max) + amount, 0, max));
+        stack.set(component, Math.clamp(DataComponentUtils.getInt(component, player, 0) + amount, 0, max));
     }
 
     public static boolean consumeInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
