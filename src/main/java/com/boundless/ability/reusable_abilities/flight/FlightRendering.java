@@ -20,19 +20,31 @@ public class FlightRendering {
         rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 0.35f;
         float clamp = abstractClientPlayerEntity.isSprinting() ? 1.0f : 0.2f;
 
+        float rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
+
         if (clientPlayer.input.getMovementInput().y == 1) {
             ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, -1.0f, clamp);
         } else if (clientPlayer.input.getMovementInput().y == -1) {
             ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -clamp, 1.0f);
         } else {
+            if (rotationAmount > 0.3f) {
+                rotationSpeed *= 3f;
+            }
             ((FlightAccess)renderer).boundless$returnToDefaultRotation(rotationSpeed * 2f);
         }
 
-        float rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
-        abstractClientPlayerEntity.sendMessage(Text.of("Rotation amount : " + rotationAmount), true);
+        rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
+        //abstractClientPlayerEntity.sendMessage(Text.of("Rotation amount : " + rotationAmount), true);
         float degrees = rotationAmount * (-90.0F - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
-        //matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.sin((abstractClientPlayerEntity.age + tickDelta) * 0.1f) / 5f));
+
+        if (abstractClientPlayerEntity.isSprinting()) {
+            matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.sin((abstractClientPlayerEntity.age + tickDelta) * 0.1f) / 5f));
+        } else {
+            matrixStack.translate(0, (float) Math.sin((abstractClientPlayerEntity.age + tickDelta) * 0.1f) / 5f, 0);
+        }
+
+
 
         /*
         if (abstractClientPlayerEntity.isSprinting()) {
