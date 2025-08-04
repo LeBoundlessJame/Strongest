@@ -18,11 +18,12 @@ public class FlightRendering {
         float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
         float rotationSpeed = 0.0075f;
         rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 0.35f;
+        float clamp = abstractClientPlayerEntity.isSprinting() ? 1.0f : 0.2f;
 
         if (clientPlayer.input.getMovementInput().y == 1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, -1.0f, 0.2f);
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, -1.0f, clamp);
         } else if (clientPlayer.input.getMovementInput().y == -1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -0.2f, 1.0f);
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -clamp, 1.0f);
         } else {
             ((FlightAccess)renderer).boundless$returnToDefaultRotation(rotationSpeed * 2f);
         }
