@@ -4,7 +4,6 @@ import com.boundless.hero.SuperHero;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,7 +18,6 @@ public class CameraShakeRendering {
         if (flightTicksServer <= 0) return;
 
         if (flightTicksServer < shakeDuration) {
-            // Boost shake
             float intensity = 1.2f;
             float rotationDegrees = MathHelper.lerp((float) flightTicks / (float) shakeDuration, (float) Math.sin((flightTicks * intensity + tickDelta)), 0);
             matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotationDegrees));
