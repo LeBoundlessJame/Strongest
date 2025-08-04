@@ -1,14 +1,13 @@
 package com.boundless.ability.reusable_abilities.flight;
 
-import com.boundless.hero.SuperHero;
+import com.boundless.util.FlightAccess;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.datafixer.fix.ChunkPalettedStorageFix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,18 +18,31 @@ public class FlightRendering {
          /* Todo: fix flightDirection
         String flightDirection = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(SuperHero.FLIGHT_DIRECTION, "forward");
          */
+
     }
 
-    public static void hoverRendering(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, CallbackInfo ci) {
+    public static void hoverRendering(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer, CallbackInfo ci) {
         float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
-
         Vec3d lerpedVelocity = abstractClientPlayerEntity.lerpVelocity(tickDelta);
         double velocityLength = lerpedVelocity.length();
-        /*
-        float rotationAmount = (float) MathHelper.clamp(velocityLength, -0.2f, 0.2f);
-         */
-        float rotationAmount = 0;
+        float rotationAmount = 0f;
 
+        if (velocityLength > 0) {
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(0.05f, -0.2f, 0.2f);
+        } else {
+            ((FlightAccess)renderer).boundless$adjustFlightRotation(-0.05f, -0.2f, 0.2f);
+        }
+
+        rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
+        abstractClientPlayerEntity.sendMessage(Text.of("Rotation amount : " + rotationAmount), true);
+
+
+        //rotationAmount = (float) MathHelper.clamp(velocityLength, -0.2f, 0.2f);
+        //abstractClientPlayerEntity.sendMessage(Text.of("Velocity length: " + velocityLength), true);
+        float degrees = rotationAmount * (-90.0F - pitch);
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
+
+        /* Flight rendering
         ItemStack heroStack = HeroUtils.getHeroStack(abstractClientPlayerEntity);
         int flightTicksServer = heroStack.getOrDefault(SuperHero.FLIGHT_TICKS, 0);
         long flightBeginTimeStamp = heroStack.getOrDefault(SuperHero.FLIGHT_BEGIN_TIMESTAMP, 0L);
@@ -44,6 +56,8 @@ public class FlightRendering {
             matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
         }
 
+
+         */
 
         if (abstractClientPlayerEntity.isSprinting()) {
             Vec3d rotation = abstractClientPlayerEntity.getRotationVec(tickDelta);

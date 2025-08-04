@@ -8,7 +8,7 @@
     "KeybindAccessor",
     "LivingEntityMixin",
     "flight_ability.UpdateFlightPoseMixin",
-    "flight_ability.PlayerFlightRendering",
+    "flight_ability.PlayerFlightAccessRendering",
     "flight_ability.FlightPoseMixin"
   ],
   "injectors": {

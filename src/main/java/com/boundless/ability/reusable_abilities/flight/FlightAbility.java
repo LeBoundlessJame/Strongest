@@ -38,11 +38,7 @@ public class FlightAbility {
 
     public static void flightAnimationLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-
-        if (!player.getAbilities().flying) {
-            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("null"));
-            return;
-        }
+        if (!player.getAbilities().flying) return;
 
         if (player.isSprinting()) {
             AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"));
