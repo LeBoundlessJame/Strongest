@@ -41,9 +41,10 @@ public class FlightAbility {
         if (player.getWorld().isClient) return;
         if (!player.getAbilities().flying) return;
 
-        if (player.isSprinting()) {
+        if (player.isSprinting() && DataComponentUtils.getInt(SuperHero.FLIGHT_TICKS, player, 0) == 1) {
             AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"));
-        } else {
+        } else if (!player.isSprinting()) {
+            AnimationUtils.getCurrentAnimation(player);
             AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"));
         }
     }
