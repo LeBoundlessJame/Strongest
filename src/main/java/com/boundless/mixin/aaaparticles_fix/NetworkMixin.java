@@ -36,6 +36,7 @@ public class NetworkMixin {
     @Shadow @Final private static ConcurrentHashMap<Class<?>, CustomPayload.Id<?>> TYPE_TO_ID_MAP;
 
     // Todo: I'd like to give a huge credit to the https://github.com/Buuz135/FindMe project as I found the fix from them!
+    // Todo: make this work for any given side / packet type instead of a short-term fix
     @Inject(method = "register", at = @At("HEAD"), cancellable = true)
     private static <T extends CustomPayload> void boundless$register(NetworkManager.Side side, Class<T> type, ValueFirstEncoder<PacketByteBuf, T> encoder, PacketDecoder<PacketByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkManager.PacketContext>> handler, CallbackInfo ci) {
         CustomPayload.Id<T> payloadType = new CustomPayload.Id(AAAParticles.loc(String.valueOf(id.getAndIncrement())));
