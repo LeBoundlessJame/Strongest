@@ -47,7 +47,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.34'
 	annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-	modImplementation "maven.modrinth:aaa-particles:1.21-1.4.9-fabric"
+	modImplementation "maven.modrinth:aaa-particles:1.21-1.4.7-fabric"
 	modImplementation "maven.modrinth:architectury-api:13.0.8+fabric"
 
 	modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
