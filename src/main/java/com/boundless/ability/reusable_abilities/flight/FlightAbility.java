@@ -2,6 +2,7 @@ package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.client.KeyInputHandler;
 import com.boundless.hero.SuperHero;
 import com.boundless.networking.payloads.UpdateHoldStatePayload;
 import com.boundless.networking.payloads.evasion.EvasionServerPayload;
@@ -20,10 +21,6 @@ import net.minecraft.util.math.Vec3d;
 import java.util.HashMap;
 
 public class FlightAbility {
-    public static void clientTick(MinecraftClient client) {
-        if (client.player == null) return;
-        KeybindingUtils.keybindHoldLogic(client, client.options.forwardKey, client.options.forwardKey.getTranslationKey());
-    }
 
     // Todo: don't forget to fix melee animations etc playing on top, currently null takes priority over them
     // Todo: look into priority system, but also make sure that the animations stop getting triggered every tick
@@ -47,6 +44,7 @@ public class FlightAbility {
             FlightAbility.flightMovement(player);
         } else {
             DataComponentUtils.setInt(SuperHero.FLIGHT_TICKS, player, 0);
+            DataComponentUtils.addOrSubtractInt(SuperHero.BOOST_TICKS, player, 1, 100000);
         }
     }
 

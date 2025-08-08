@@ -1,13 +1,21 @@
 package com.boundless.ability.reusable_abilities.flight;
 
+import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.hero.SuperHero;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.FlightAccess;
+import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FlightRendering {
 
@@ -42,5 +50,21 @@ public class FlightRendering {
         } else {
             matrixStack.translate(0, (float) Math.sin((abstractClientPlayerEntity.age + tickDelta) * 0.1f) / 5f, 0);
         }
+    }
+
+
+    public static void renderFlight(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer) {
+        /*Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
+        KeybindHoldData keybindHoldData = keyHeldMap.get("key.forward");
+        if (keybindHoldData == null) return;
+
+         */
+        int ticc = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(SuperHero.BOOST_TICKS, 0);
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) Math.sin(ticc / 3f) * 10));
+        //abstractClientPlayerEntity.sendMessage(Text.of(String.valueOf(abstractClientPlayerEntity.getName() + " " + keybindHoldData.startTimestamp())), true);
+        /*
+        float degrees = rotationAmount * (-90.0F - pitch);
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
+         */
     }
 }

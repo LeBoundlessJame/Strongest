@@ -9,7 +9,8 @@
     "LivingEntityMixin",
     "aaaparticles_fix.NetworkMixin",
     "flight_ability.FlightPoseMixin",
-    "flight_ability.UpdateFlightPoseMixin"
+    "flight_ability.UpdateFlightPoseMixin",
+    "flight_ability.PlayerFlightAccessRendering"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -18,7 +19,6 @@
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
     "SkinLayerMixin",
-    "flight_ability.FlightCameraMixin",
-    "flight_ability.PlayerFlightAccessRendering"
+    "flight_ability.FlightCameraMixin"
   ]
 }
