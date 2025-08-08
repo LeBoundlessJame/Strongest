@@ -8,7 +8,8 @@ public class CodecRegistry {
     public static final Codec<KeybindHoldData> KEYBIND_HOLD_CODEC = RecordCodecBuilder.create(builder -> {
         return builder.group(
                 Codec.BOOL.fieldOf("held").forGetter(KeybindHoldData::held),
-                Codec.LONG.fieldOf("startTimestamp").forGetter(KeybindHoldData::startTimestamp)
+                Codec.LONG.fieldOf("startTimestamp").forGetter(KeybindHoldData::startTimestamp),
+                Codec.LONG.fieldOf("endTimestamp").forGetter(KeybindHoldData::endTimestamp)
         ).apply(builder, KeybindHoldData::new);
     });
 
