@@ -3,6 +3,7 @@ package com.boundless.networking;
 import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.AbilityUsePayload;
 import com.boundless.networking.payloads.AnimationPlayPayload;
+import com.boundless.networking.payloads.UpdateHoldStatePayload;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.networking.payloads.evasion.EvasionServerPayload;
 import com.boundless.networking.payloads.flight.UpdateFlightDirectionPayload;
@@ -17,11 +18,13 @@ public class PayloadRegistry {
     public static final Identifier EVASION_CLIENT = BoundlessAPI.identifier("evasion_client");
     public static final Identifier EVASION_SERVER = BoundlessAPI.identifier("evasion_server");
     public static final Identifier UPDATE_FLIGHT_DIRECTION = BoundlessAPI.identifier("update_flight_direction");
+    public static final Identifier UPDATE_HOLD_STATE = BoundlessAPI.identifier("update_hold_state");
 
     public static void registerPayloads() {
         PayloadTypeRegistry.playC2S().register(UpdateFlightDirectionPayload.ID, UpdateFlightDirectionPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(AbilityUsePayload.ID, AbilityUsePayload.CODEC);
         PayloadTypeRegistry.playC2S().register(EvasionServerPayload.ID, EvasionServerPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(UpdateHoldStatePayload.ID, UpdateHoldStatePayload.CODEC);
         PayloadTypeRegistry.playS2C().register(AnimationPlayPayload.ID, AnimationPlayPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(EvasionClientPayload.ID, EvasionClientPayload.CODEC);
     }
@@ -30,6 +33,7 @@ public class PayloadRegistry {
         ServerPlayNetworking.registerGlobalReceiver(UpdateFlightDirectionPayload.ID, UpdateFlightDirectionPayload::receive);
         ServerPlayNetworking.registerGlobalReceiver(AbilityUsePayload.ID, AbilityUsePayload::receive);
         ServerPlayNetworking.registerGlobalReceiver(EvasionServerPayload.ID, EvasionServerPayload::receive);
+        ServerPlayNetworking.registerGlobalReceiver(UpdateHoldStatePayload.ID, UpdateHoldStatePayload::receive);
     }
 
     public static void registerS2CPackets() {

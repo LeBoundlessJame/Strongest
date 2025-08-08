@@ -17,6 +17,12 @@ public class DataComponentUtils {
         return updatedCooldownData;
     }
 
+    public static <A, B> void updateMap(ItemStack heroStack, ComponentType<Map<A, B>> mapComponent, A key, B value) {
+        HashMap<A, B> map = new HashMap<>(heroStack.getOrDefault(mapComponent, new HashMap<>()));
+        map.put(key, value);
+        heroStack.set(mapComponent, map);
+    }
+
     public static void toggleBoolean(PlayerEntity player, ComponentType<Boolean> component) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, !stack.getOrDefault(component, false));

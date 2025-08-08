@@ -1,16 +1,29 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.hero.SuperHero;
+import com.boundless.networking.payloads.UpdateHoldStatePayload;
+import com.boundless.networking.payloads.evasion.EvasionServerPayload;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.HashMap;
+
 public class FlightAbility {
+    public static void clientTick(MinecraftClient client) {
+        if (client.player == null) return;
+        KeybindingUtils.keybindHoldLogic(client, client.options.forwardKey, client.options.forwardKey.getTranslationKey());
+    }
 
     // Todo: don't forget to fix melee animations etc playing on top, currently null takes priority over them
     // Todo: look into priority system, but also make sure that the animations stop getting triggered every tick

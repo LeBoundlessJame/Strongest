@@ -1,9 +1,7 @@
-package com.boundless.event;
+package com.boundless.client;
 
-import com.boundless.ability.Ability;
 import com.boundless.hero.api.HeroData;
 import com.boundless.networking.payloads.AbilityUsePayload;
-import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.HeroUtils;
@@ -26,7 +24,7 @@ public class KeyInputHandler {
             if (abilities == null) return;
 
             for (String translatableKey: abilities.keySet()) {
-                inputLogic(client, translatableKey);
+                KeybindingUtils.inputLogic(client, translatableKey);
             }
 
             HeroData heroData = HeroUtils.getHeroData(client.player);
@@ -35,14 +33,5 @@ public class KeyInputHandler {
                 clientConsumer.accept(client);
             }
         });
-    }
-
-    public static void inputLogic(MinecraftClient client, String translatableKey) {
-        if (KeybindingUtils.getKeyBindingFromTranslation(translatableKey).isPressed()) {
-            Identifier abilityID = AbilityUtils.abilityIDFromKeybind(client.player, translatableKey);
-            if (AbilityUtils.checkAndUseAbility(client.player, abilityID)) {
-                ClientPlayNetworking.send(new AbilityUsePayload(abilityID));
-            };
-        }
     }
 }

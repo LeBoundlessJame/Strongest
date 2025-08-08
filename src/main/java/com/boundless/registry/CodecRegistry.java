@@ -1,0 +1,16 @@
+package com.boundless.registry;
+
+import com.boundless.ability.components.KeybindHoldData;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+public class CodecRegistry {
+    public static final Codec<KeybindHoldData> KEYBIND_HOLD_CODEC = RecordCodecBuilder.create(builder -> {
+        return builder.group(
+                Codec.BOOL.fieldOf("held").forGetter(KeybindHoldData::held),
+                Codec.LONG.fieldOf("startTimestamp").forGetter(KeybindHoldData::startTimestamp)
+        ).apply(builder, KeybindHoldData::new);
+    });
+
+    public static void initialize() {}
+}

@@ -8,7 +8,6 @@ import com.boundless.ability.reusable_abilities.flight.FlightAbility;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.registry.DataComponentRegistry;
-import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 
 public class SuperHero extends Hero {
@@ -33,6 +32,7 @@ public class SuperHero extends Hero {
                 .displayName("Super Hero")
                 .textureIdentifier(BoundlessAPI.textureID("super_hero"))
                 .tickHandler(FlightAbility::flightTick)
+                .clientTickEvent(FlightAbility::clientTick)
                 .defaultAbilityLoadout(ABILITY_LOADOUTS.get("LOADOUT_1"))
                 .build();
 
