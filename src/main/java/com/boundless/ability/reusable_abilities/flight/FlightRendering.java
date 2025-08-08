@@ -1,7 +1,6 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.ability.components.KeybindHoldData;
-import com.boundless.hero.SuperHero;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.FlightAccess;
 import com.boundless.util.HeroUtils;
@@ -11,6 +10,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -54,17 +54,23 @@ public class FlightRendering {
 
 
     public static void renderFlight(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer) {
-        /*Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
+        float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
+        Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
         KeybindHoldData keybindHoldData = keyHeldMap.get("key.forward");
         if (keybindHoldData == null) return;
-
-         */
-        int ticc = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(SuperHero.BOOST_TICKS, 0);
-        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) Math.sin(ticc / 3f) * 10));
-        //abstractClientPlayerEntity.sendMessage(Text.of(String.valueOf(abstractClientPlayerEntity.getName() + " " + keybindHoldData.startTimestamp())), true);
-        /*
-        float degrees = rotationAmount * (-90.0F - pitch);
-        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
-         */
+        int elapsedTicks = Math.toIntExact(abstractClientPlayerEntity.getWorld().getTime() - keybindHoldData.startTimestamp());
+        int duration = 40;
+        float progress = Math.clamp((float) elapsedTicks / duration, 0f, 1f);
+        abstractClientPlayerEntity.sendMessage(Text.of("Progress + " + String.valueOf(progress)), true);
+        float rotationDegrees = MathHelper.lerp(progress, 0, 45);
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationDegrees));
     }
+
+    /*
+            Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
+        KeybindHoldData keybindHoldData = keyHeldMap.get("key.forward");
+        if (keybindHoldData == null) return;
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(abstractClientPlayerEntity.getWorld().getTime() - keybindHoldData.startTimestamp()));
+
+     */
 }
