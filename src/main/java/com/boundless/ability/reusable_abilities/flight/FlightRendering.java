@@ -58,8 +58,8 @@ public class FlightRendering {
         Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
         KeybindHoldData keybindHoldData = keyHeldMap.get("key.forward");
         if (keybindHoldData == null) return;
-        int elapsedTicks = Math.toIntExact(abstractClientPlayerEntity.getWorld().getTime() - keybindHoldData.startTimestamp());
-        int duration = 40;
+        float elapsedTicks = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - keybindHoldData.startTimestamp();
+        int duration = 20;
         float progress = Math.clamp((float) elapsedTicks / duration, 0f, 1f);
         abstractClientPlayerEntity.sendMessage(Text.of("Progress + " + String.valueOf(progress)), true);
         float rotationDegrees = MathHelper.lerp(progress, 0, 0.4f);
