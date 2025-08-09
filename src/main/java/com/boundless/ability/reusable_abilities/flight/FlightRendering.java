@@ -62,15 +62,8 @@ public class FlightRendering {
         int duration = 40;
         float progress = Math.clamp((float) elapsedTicks / duration, 0f, 1f);
         abstractClientPlayerEntity.sendMessage(Text.of("Progress + " + String.valueOf(progress)), true);
-        float rotationDegrees = MathHelper.lerp(progress, 0, 45);
+        float rotationDegrees = MathHelper.lerp(progress, 0, 0.4f);
+        rotationDegrees = rotationDegrees * (-90 - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationDegrees));
     }
-
-    /*
-            Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
-        KeybindHoldData keybindHoldData = keyHeldMap.get("key.forward");
-        if (keybindHoldData == null) return;
-        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(abstractClientPlayerEntity.getWorld().getTime() - keybindHoldData.startTimestamp()));
-
-     */
 }
