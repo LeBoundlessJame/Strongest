@@ -56,14 +56,28 @@ public class FlightRendering {
     public static void renderFlight(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer) {
         float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
         Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
-        KeybindHoldData keybindHoldData = keyHeldMap.get("key.forward");
-        if (keybindHoldData == null) return;
-        float elapsedTicks = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - keybindHoldData.startTimestamp();
-        int duration = 20;
-        float progress = Math.clamp((float) elapsedTicks / duration, 0f, 1f);
-        abstractClientPlayerEntity.sendMessage(Text.of("Progress + " + String.valueOf(progress)), true);
-        float rotationDegrees = MathHelper.lerp(progress, 0, 0.4f);
+        KeybindHoldData forwardData = keyHeldMap.get("key.forward");
+        if (forwardData == null) return;
+        float startElapsed = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - forwardData.startTimestamp();
+        float endElapsed = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - forwardData.endTimestamp();
+
+        int duration = 10;
+        float rotationDegrees;
+
+        if (forwardData.held()) {
+            float progress = getRotationProgress(startElapsed, duration);
+            rotationDegrees = MathHelper.lerp(progress, 0, 0.4f);
+        } else {
+            float progress = getRotationProgress(endElapsed, duration);
+            rotationDegrees = MathHelper.lerp(progress,  MathHelper.lerp(getRotationProgress(startElapsed, duration), 0, 0.4f), 0f);
+            abstractClientPlayerEntity.sendMessage(Text.of(String.valueOf(rotationDegrees)), true);
+        }
+
         rotationDegrees = rotationDegrees * (-90 - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationDegrees));
+    }
+
+    public static float getRotationProgress(float elapsedTicks, int duration) {
+        return Math.clamp(elapsedTicks / duration, 0f, 1f);
     }
 }
