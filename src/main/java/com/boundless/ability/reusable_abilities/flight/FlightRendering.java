@@ -6,7 +6,6 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.RotationAxis;
 
 public class FlightRendering {
@@ -18,7 +17,6 @@ public class FlightRendering {
         float rotation = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
         float degrees = rotation * (-90.0F - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
-        player.sendMessage(Text.of(String.valueOf(rotation)), true);
 
         if (player.isSprinting()) {
             matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.sin((player.age + tickDelta) * 0.1f) / 5f));

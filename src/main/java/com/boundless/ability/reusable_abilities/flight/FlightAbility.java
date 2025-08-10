@@ -57,20 +57,25 @@ public class FlightAbility {
         ItemStack heroStack = HeroUtils.getHeroStack(player);
         KeybindHoldData forwardData = KeybindingUtils.getHoldData(player, "key.forward");
         KeybindHoldData backData = KeybindingUtils.getHoldData(player, "key.back");
+
         float rotation = heroStack.getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
-        float duration = 10;
-        float rotationSpeed = 0.2f / duration;
+        int duration = player.isSprinting() && rotation > 0 ? 15 : 10;
+        float clamp = player.isSprinting() ? 1.0f : 0.2f;
+        float rotationSpeed = clamp / duration;
 
         if (forwardData.held()) {
-            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation + rotationSpeed, 0f, 0.2f));
+            rotation = MathHelper.clamp(rotation + rotationSpeed, 0f, clamp);
         } else if (rotation > 0) {
-            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation - rotationSpeed, 0f, 0.2f));
+            rotation = MathHelper.clamp(rotation - rotationSpeed, 0f, clamp);
         } else if (backData.held()) {
-            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation - rotationSpeed, -0.2f, 0));
+            rotation = MathHelper.clamp(rotation - rotationSpeed, -clamp, 0f);
         } else if (rotation < 0) {
-            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation + rotationSpeed, -0.2f, 0f));
+            rotation = MathHelper.clamp(rotation + rotationSpeed, -clamp, 0f);
         }
+
+        heroStack.set(FlightAbility.FLIGHT_ROTATION, rotation);
     }
+
 
     public static void flightAnimationLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
