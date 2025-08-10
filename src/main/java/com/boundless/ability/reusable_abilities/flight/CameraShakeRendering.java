@@ -1,6 +1,5 @@
 package com.boundless.ability.reusable_abilities.flight;
 
-import com.boundless.hero.SuperHero;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class CameraShakeRendering {
     public static void cameraShake(MatrixStack matrices, float tickDelta, ClientPlayerEntity player, CallbackInfo ci) {
-        int flightTicksServer = HeroUtils.getHeroStack(player).getOrDefault(SuperHero.FLIGHT_TICKS, 0);
-        long flightBegin = HeroUtils.getHeroStack(player).getOrDefault(SuperHero.FLIGHT_BEGIN_TIMESTAMP, 0).longValue();
+        int flightTicksServer = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_TICKS, 0);
+        long flightBegin = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_BEGIN_TIMESTAMP, 0).longValue();
         int flightTicks = Math.toIntExact(player.clientWorld.getTime() - flightBegin);
 
         int shakeDuration = 40;

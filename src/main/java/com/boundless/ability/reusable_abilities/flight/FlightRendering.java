@@ -58,23 +58,29 @@ public class FlightRendering {
         Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
         KeybindHoldData forwardData = keyHeldMap.get("key.forward");
         if (forwardData == null) return;
+        /*
         float startElapsed = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - forwardData.startTimestamp();
         float endElapsed = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - forwardData.endTimestamp();
 
         int duration = 10;
-        float rotationDegrees;
+        float rotationDegrees = 0;
 
         if (forwardData.held()) {
             float progress = getRotationProgress(startElapsed, duration);
             rotationDegrees = MathHelper.lerp(progress, 0, 0.4f);
         } else {
-            float progress = getRotationProgress(endElapsed, duration);
-            rotationDegrees = MathHelper.lerp(progress,  MathHelper.lerp(getRotationProgress(startElapsed, duration), 0, 0.4f), 0f);
-            abstractClientPlayerEntity.sendMessage(Text.of(String.valueOf(rotationDegrees)), true);
+            float startProgress = getRotationProgress(startElapsed, duration);
+            float endProgress = getRotationProgress(endElapsed, duration);
+            //rotationDegrees = MathHelper.lerp(startProgress, MathHelper.lerp(getRotationProgress(startElapsed, duration), 0, 0.4f), 0f);
+            rotationDegrees = MathHelper.lerp(startProgress - endProgress)
         }
+
+        // abstractClientPlayerEntity.sendMessage(Text.of(String.valueOf(rotationDegrees)), true);
 
         rotationDegrees = rotationDegrees * (-90 - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationDegrees));
+
+         */
     }
 
     public static float getRotationProgress(float elapsedTicks, int duration) {

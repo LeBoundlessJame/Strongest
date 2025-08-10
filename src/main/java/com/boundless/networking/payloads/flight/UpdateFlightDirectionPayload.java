@@ -1,6 +1,6 @@
 package com.boundless.networking.payloads.flight;
 
-import com.boundless.hero.SuperHero;
+import com.boundless.ability.reusable_abilities.flight.FlightAbility;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.util.HeroUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -22,7 +22,7 @@ public record UpdateFlightDirectionPayload(String direction) implements CustomPa
         PlayerEntity player = context.player();
         if (!HeroUtils.isHero(player)) return;
         ItemStack heroStack = HeroUtils.getHeroStack(player);
-        heroStack.set(SuperHero.FLIGHT_DIRECTION, payload.direction);
+        heroStack.set(FlightAbility.FLIGHT_DIRECTION, payload.direction);
     }
 
     @Override

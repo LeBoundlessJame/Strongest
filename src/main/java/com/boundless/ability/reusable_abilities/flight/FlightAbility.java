@@ -1,26 +1,22 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.components.KeybindHoldData;
-import com.boundless.client.KeyInputHandler;
-import com.boundless.hero.SuperHero;
-import com.boundless.networking.payloads.UpdateHoldStatePayload;
-import com.boundless.networking.payloads.evasion.EvasionServerPayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.HashMap;
-
 public class FlightAbility {
+    public static ComponentType<Integer> FLIGHT_TICKS = DataComponentRegistry.registerInt("flight_ticks");
+    public static ComponentType<Long> FLIGHT_BEGIN_TIMESTAMP = DataComponentRegistry.registerLong("flight_begin_timestamp");
+    public static ComponentType<String> FLIGHT_DIRECTION = DataComponentRegistry.registerString("flight_direction");
+    public static ComponentType<Boolean> BOOSTING = DataComponentRegistry.registerBoolean("boosting");
+    public static ComponentType<Integer> BOOST_TICKS = DataComponentRegistry.registerInt("boost_ticks");
+    public static ComponentType<Long> BOOST_NEXT_USABLE = DataComponentRegistry.registerLong("boost_next_usable");
 
     // Todo: don't forget to fix melee animations etc playing on top, currently null takes priority over them
     // Todo: look into priority system, but also make sure that the animations stop getting triggered every tick
@@ -30,21 +26,21 @@ public class FlightAbility {
         FlightAbility.flightAnimationLogic(player);
 
         if (!player.getAbilities().flying) {
-            DataComponentUtils.setInt(SuperHero.FLIGHT_TICKS, player, 0);
+            DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
             return;
         }
 
         if (player.isSprinting()) {
-            DataComponentUtils.addOrSubtractInt(SuperHero.FLIGHT_TICKS, player, 1, Integer.MAX_VALUE);
-            if (DataComponentUtils.getInt(SuperHero.FLIGHT_TICKS, player, 0) == 1) {
-                HeroUtils.getHeroStack(player).set(SuperHero.FLIGHT_BEGIN_TIMESTAMP, player.getWorld().getTime());
+            DataComponentUtils.addOrSubtractInt(FLIGHT_TICKS, player, 1, Integer.MAX_VALUE);
+            if (DataComponentUtils.getInt(FLIGHT_TICKS, player, 0) == 1) {
+                HeroUtils.getHeroStack(player).set(FLIGHT_BEGIN_TIMESTAMP, player.getWorld().getTime());
                 boostLogic(player);
             }
 
             FlightAbility.flightMovement(player);
         } else {
-            DataComponentUtils.setInt(SuperHero.FLIGHT_TICKS, player, 0);
-            DataComponentUtils.addOrSubtractInt(SuperHero.BOOST_TICKS, player, 1, 100000);
+            DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
+            DataComponentUtils.addOrSubtractInt(BOOST_TICKS, player, 1, 100000);
         }
     }
 
@@ -52,7 +48,7 @@ public class FlightAbility {
         if (player.getWorld().isClient) return;
         if (!player.getAbilities().flying) return;
 
-        if (player.isSprinting() && DataComponentUtils.getInt(SuperHero.FLIGHT_TICKS, player, 0) == 1) {
+        if (player.isSprinting() && DataComponentUtils.getInt(FLIGHT_TICKS, player, 0) == 1) {
             AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"));
         } else if (!player.isSprinting()) {
             AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"));
@@ -77,4 +73,6 @@ public class FlightAbility {
         Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
         EffekUtils.playRotatedEffect(BoundlessAPI.identifier("flight_boost"), player, effectPos, effectScale, effectRotation);
     }
+
+    public static void initialize() {}
 }
