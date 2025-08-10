@@ -40,5 +40,9 @@ public class DataComponentRegistry {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<String>builder().codec(Codec.STRING).build());
     }
 
+    public static <T> ComponentType<Float> registerFloat(String name) {
+        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<Float>builder().codec(Codec.FLOAT).build());
+    }
+
     public static void initialize() {}
 }

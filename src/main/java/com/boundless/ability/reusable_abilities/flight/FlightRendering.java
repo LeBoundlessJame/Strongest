@@ -1,47 +1,20 @@
 package com.boundless.ability.reusable_abilities.flight;
 
-import com.boundless.ability.components.KeybindHoldData;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.FlightAccess;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class FlightRendering {
-
-    public static void hoverRendering(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer, CallbackInfo ci) {
+    public static void renderFlight(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer) {
         ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
         if (clientPlayer == null || !clientPlayer.getUuid().equals(abstractClientPlayerEntity.getUuid())) return;
         float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
-        float rotationSpeed = 0.0075f;
-        rotationSpeed *= abstractClientPlayerEntity.isSprinting() ? 3 : 0.35f;
-        float clamp = abstractClientPlayerEntity.isSprinting() ? 1.0f : 0.2f;
 
-        float rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
-
-        if (clientPlayer.input.getMovementInput().y == 1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(rotationSpeed, -1.0f, clamp);
-        } else if (clientPlayer.input.getMovementInput().y == -1) {
-            ((FlightAccess)renderer).boundless$adjustFlightRotation(-rotationSpeed, -clamp, 1.0f);
-        } else {
-            if (rotationAmount > 0.3f) {
-                rotationSpeed *= 3f;
-            }
-            ((FlightAccess)renderer).boundless$returnToDefaultRotation(rotationSpeed * 2f);
-        }
-
-        rotationAmount = ((FlightAccess)renderer).boundless$getFlightRotation();
-
+        float rotationAmount = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
         float degrees = rotationAmount * (-90.0F - pitch);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
 
@@ -50,40 +23,5 @@ public class FlightRendering {
         } else {
             matrixStack.translate(0, (float) Math.sin((abstractClientPlayerEntity.age + tickDelta) * 0.1f) / 5f, 0);
         }
-    }
-
-
-    public static void renderFlight(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer) {
-        float pitch = abstractClientPlayerEntity.getPitch(tickDelta);
-        Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(abstractClientPlayerEntity).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
-        KeybindHoldData forwardData = keyHeldMap.get("key.forward");
-        if (forwardData == null) return;
-        /*
-        float startElapsed = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - forwardData.startTimestamp();
-        float endElapsed = (abstractClientPlayerEntity.getWorld().getTime() + tickDelta) - forwardData.endTimestamp();
-
-        int duration = 10;
-        float rotationDegrees = 0;
-
-        if (forwardData.held()) {
-            float progress = getRotationProgress(startElapsed, duration);
-            rotationDegrees = MathHelper.lerp(progress, 0, 0.4f);
-        } else {
-            float startProgress = getRotationProgress(startElapsed, duration);
-            float endProgress = getRotationProgress(endElapsed, duration);
-            //rotationDegrees = MathHelper.lerp(startProgress, MathHelper.lerp(getRotationProgress(startElapsed, duration), 0, 0.4f), 0f);
-            rotationDegrees = MathHelper.lerp(startProgress - endProgress)
-        }
-
-        // abstractClientPlayerEntity.sendMessage(Text.of(String.valueOf(rotationDegrees)), true);
-
-        rotationDegrees = rotationDegrees * (-90 - pitch);
-        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationDegrees));
-
-         */
-    }
-
-    public static float getRotationProgress(float elapsedTicks, int duration) {
-        return Math.clamp(elapsedTicks / duration, 0f, 1f);
     }
 }

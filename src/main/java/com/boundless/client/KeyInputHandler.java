@@ -37,6 +37,7 @@ public class KeyInputHandler {
                 clientConsumer.accept(client);
             } */
             KeyInputHandler.keybindHoldLogic(client, client.options.forwardKey, client.options.forwardKey.getTranslationKey());
+            KeyInputHandler.keybindHoldLogic(client, client.options.backKey, client.options.backKey.getTranslationKey());
         });
     }
 

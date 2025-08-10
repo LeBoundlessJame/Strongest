@@ -1,6 +1,7 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
 import net.minecraft.component.ComponentType;
@@ -10,6 +11,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FlightAbility {
     public static ComponentType<Integer> FLIGHT_TICKS = DataComponentRegistry.registerInt("flight_ticks");
     public static ComponentType<Long> FLIGHT_BEGIN_TIMESTAMP = DataComponentRegistry.registerLong("flight_begin_timestamp");
@@ -17,6 +21,7 @@ public class FlightAbility {
     public static ComponentType<Boolean> BOOSTING = DataComponentRegistry.registerBoolean("boosting");
     public static ComponentType<Integer> BOOST_TICKS = DataComponentRegistry.registerInt("boost_ticks");
     public static ComponentType<Long> BOOST_NEXT_USABLE = DataComponentRegistry.registerLong("boost_next_usable");
+    public static ComponentType<Float> FLIGHT_ROTATION = DataComponentRegistry.registerFloat("flight_rotation");
 
     // Todo: don't forget to fix melee animations etc playing on top, currently null takes priority over them
     // Todo: look into priority system, but also make sure that the animations stop getting triggered every tick
@@ -24,6 +29,7 @@ public class FlightAbility {
     public static void flightTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         FlightAbility.flightAnimationLogic(player);
+        FlightAbility.rotationLogic(player);
 
         if (!player.getAbilities().flying) {
             DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
@@ -41,6 +47,29 @@ public class FlightAbility {
         } else {
             DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
             DataComponentUtils.addOrSubtractInt(BOOST_TICKS, player, 1, 100000);
+        }
+    }
+
+    public static void rotationLogic(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+        Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
+        KeybindHoldData forwardData = keyHeldMap.getOrDefault("key.forward", new KeybindHoldData(false, 0, 0));
+        KeybindHoldData backData = keyHeldMap.getOrDefault("key.back", new KeybindHoldData(false, 0, 0));
+
+        float rotationSpeed = 0.075f;
+        rotationSpeed *= player.isSprinting() ? 3 : 0.35f;
+        float clamp = player.isSprinting() ? 1.0f : 0.2f;
+
+        if (forwardData.held()) {
+            adjustFlightRotation(player, rotationSpeed, -1.0f, clamp);
+        } else if (backData.held()) {
+            adjustFlightRotation(player, -rotationSpeed, -clamp, 1.0f);
+        } else {
+            float rotationAmount = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
+            if (rotationAmount > 0.3f) {
+                rotationSpeed *= 3f;
+            }
+            rotateTo(player, 0, rotationSpeed * 2f);
         }
     }
 
@@ -75,4 +104,22 @@ public class FlightAbility {
     }
 
     public static void initialize() {}
+
+    public static void adjustFlightRotation(PlayerEntity player, float rotationAdjustment, float min, float max) {
+        float rotation = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
+        rotation = Math.clamp(rotation + rotationAdjustment, min, max);
+        HeroUtils.getHeroStack(player).set(FlightAbility.FLIGHT_ROTATION, rotation);
+    }
+
+    public static void rotateTo(PlayerEntity player, float desiredRotation, float returnSpeed) {
+        float currentRotation = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
+        if (currentRotation == desiredRotation) return;
+        if (Math.abs(currentRotation - returnSpeed) <= 0.015) {
+            HeroUtils.getHeroStack(player).set(FlightAbility.FLIGHT_ROTATION, desiredRotation);
+            return;
+        }
+        returnSpeed *= currentRotation > desiredRotation ? -1 : 1;
+        HeroUtils.getHeroStack(player).set(FlightAbility.FLIGHT_ROTATION, Math.clamp(HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f) + returnSpeed, -1, 1f));
+    }
+
 }
