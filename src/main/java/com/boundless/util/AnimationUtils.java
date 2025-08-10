@@ -29,17 +29,21 @@ public class AnimationUtils {
     /**
      * Plays an animation and sends a packet for multiplayer display
      **/
-    public static void playAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror) {
+    public static void playAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean important) {
         //playClientAnimation(user, animation);
         if (user.getWorld().isClient) return;
 
         for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
-            ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror));
+            ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, important));
         }
     }
 
     public static void playAnimation(PlayerEntity user, Identifier animation) {
-        playAnimation(user, animation, 1.0f, false);
+        playAnimation(user, animation, 1.0f, false, true);
+    }
+
+    public static void playAnimation(PlayerEntity user, Identifier animation, boolean important) {
+        playAnimation(user, animation, 1.0f, false, important);
     }
 
     public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed) {
@@ -47,8 +51,17 @@ public class AnimationUtils {
     }
 
     public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror) {
+        playClientAnimation(user, animation, speed, mirror, true);
+    }
+
+    /** If marked as unimportant, it will not interrupt the current animation. **/
+    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean important) {
         if (user.getWorld().isClient) {
             var playerAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
+
+            if (!important) {
+                if (playerAnimationContainer.isActive()) return;
+            }
 
             if (animation.equals(BoundlessAPI.identifier("null"))) {
                 playerAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), null);

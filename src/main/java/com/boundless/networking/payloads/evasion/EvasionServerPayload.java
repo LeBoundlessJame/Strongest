@@ -32,7 +32,7 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
             animationSpeed = player.isOnGround() ? 1.75f : 1.0f;
         }
 
-        AnimationUtils.playAnimation(player, BoundlessAPI.identifier(animation), animationSpeed, false);
+        AnimationUtils.playAnimation(player, BoundlessAPI.identifier(animation), animationSpeed, false, true);
         float groundRollDist = 1.5f;
         float rollDistMultiplier = player.isOnGround() ? groundRollDist : groundRollDist / 2;
 

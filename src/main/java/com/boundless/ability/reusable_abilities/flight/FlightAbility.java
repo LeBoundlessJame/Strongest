@@ -78,9 +78,9 @@ public class FlightAbility {
         if (!player.getAbilities().flying) return;
 
         if (player.isSprinting() && DataComponentUtils.getInt(FLIGHT_TICKS, player, 0) == 1) {
-            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"));
+            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"), false);
         } else if (!player.isSprinting()) {
-            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"));
+            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"), false);
         }
     }
 

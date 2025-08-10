@@ -3,7 +3,7 @@
 	"animations": {
 		"flight_idle": {
 			"loop": true,
-			"animation_length": 2,
+			"animation_length": 0.5,
 			"bones": {
 				"body": {
 					"position": {
@@ -37,7 +37,7 @@
 		},
 		"flight_pose": {
 			"loop": true,
-			"animation_length": 2,
+			"animation_length": 0.5,
 			"bones": {
 				"body": {
 					"position": {
@@ -87,7 +87,7 @@
 		},
 		"hover": {
 			"loop": true,
-			"animation_length": 2,
+			"animation_length": 0.5,
 			"bones": {
 				"body": {
 					"position": {
@@ -121,59 +121,6 @@
 					}
 				},
 				"rightLeg": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				}
-			}
-		},
-		"empty": {
-			"loop": true,
-			"bones": {
-				"body": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"rightArm": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"leftArm": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"rightLeg": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"leftLeg": {
 					"rotation": {
 						"vector": [0, 0, 0]
 					},

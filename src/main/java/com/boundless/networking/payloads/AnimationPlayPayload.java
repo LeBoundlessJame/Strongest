@@ -13,13 +13,14 @@ import net.minecraft.util.Uuids;
 
 import java.util.UUID;
 
-public record AnimationPlayPayload(UUID user, Identifier animation, float speed, boolean mirror) implements CustomPayload {
+public record AnimationPlayPayload(UUID user, Identifier animation, float speed, boolean mirror, boolean important) implements CustomPayload {
     public static final CustomPayload.Id<AnimationPlayPayload> ID = new CustomPayload.Id<>(PayloadRegistry.ANIMATION_PLAY);
     public static final PacketCodec<RegistryByteBuf, AnimationPlayPayload> CODEC = PacketCodec.tuple(
             Uuids.PACKET_CODEC, AnimationPlayPayload::user,
             Identifier.PACKET_CODEC, AnimationPlayPayload::animation,
             PacketCodecs.FLOAT, AnimationPlayPayload::speed,
             PacketCodecs.BOOL, AnimationPlayPayload::mirror,
+            PacketCodecs.BOOL, AnimationPlayPayload::important,
             AnimationPlayPayload::new
     );
 
@@ -27,7 +28,7 @@ public record AnimationPlayPayload(UUID user, Identifier animation, float speed,
         PlayerEntity user = context.player().getWorld().getPlayerByUuid(payload.user);
 
         context.client().execute(() -> {
-            AnimationUtils.playClientAnimation(user, payload.animation, payload.speed, payload.mirror);
+            AnimationUtils.playClientAnimation(user, payload.animation, payload.speed, payload.mirror, payload.important);
         });
     }
 
