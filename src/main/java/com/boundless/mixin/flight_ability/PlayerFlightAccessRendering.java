@@ -1,33 +1,19 @@
 package com.boundless.mixin.flight_ability;
 
-import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.ability.reusable_abilities.flight.FlightRendering;
-import com.boundless.hero.SuperHero;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.FlightAccess;
-import com.boundless.util.HeroUtils;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Mixin(PlayerEntityRenderer.class)
-public abstract class PlayerFlightAccessRendering extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> implements FlightAccess {
-    @Unique
-    private float currentFlightRotation = 0f;
-
+public abstract class PlayerFlightAccessRendering extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
     public PlayerFlightAccessRendering(EntityRendererFactory.Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
@@ -38,33 +24,5 @@ public abstract class PlayerFlightAccessRendering extends LivingEntityRenderer<A
         super.setupTransforms(abstractClientPlayerEntity, matrixStack, f, g, tickDelta, i);
         FlightRendering.renderFlight(abstractClientPlayerEntity, matrixStack, f, g, tickDelta, i, (PlayerEntityRenderer) (Object) this);
         ci.cancel();
-    }
-
-    @Override
-    public float boundless$getFlightRotation() {
-        return currentFlightRotation;
-    }
-
-    @Override
-    public void boundless$setFlightRotation(float rotation) {
-        this.currentFlightRotation = rotation;
-    }
-
-    @Override
-    public void boundless$adjustFlightRotation(float rotationAdjustment, float min, float max) {
-        float rotation = this.currentFlightRotation;
-        rotation = Math.clamp(rotation + rotationAdjustment, min, max);
-        this.currentFlightRotation = rotation;
-    }
-
-    @Override
-    public void boundless$returnToDefaultRotation(float returnSpeed) {
-        if (this.currentFlightRotation == 0) return;
-        if (Math.abs(this.currentFlightRotation - returnSpeed) <= 0.015) {
-            this.currentFlightRotation = 0;
-            return;
-        }
-        returnSpeed *= this.currentFlightRotation > 0 ? -1 : 1;
-        this.currentFlightRotation = Math.clamp(this.currentFlightRotation + returnSpeed, -1, 1);
     }
 }
