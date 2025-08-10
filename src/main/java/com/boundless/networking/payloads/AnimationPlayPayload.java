@@ -26,6 +26,7 @@ public record AnimationPlayPayload(UUID user, Identifier animation, float speed,
 
     public static void receive(AnimationPlayPayload payload, ClientPlayNetworking.Context context) {
         PlayerEntity user = context.player().getWorld().getPlayerByUuid(payload.user);
+        if (user == null || context.client() == null) return;
 
         context.client().execute(() -> {
             AnimationUtils.playClientAnimation(user, payload.animation, payload.speed, payload.mirror, payload.important);
