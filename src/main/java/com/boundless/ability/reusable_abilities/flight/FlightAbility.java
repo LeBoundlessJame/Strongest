@@ -8,7 +8,9 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
@@ -52,24 +54,21 @@ public class FlightAbility {
 
     public static void rotationLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<String, KeybindHoldData>());
-        KeybindHoldData forwardData = keyHeldMap.getOrDefault("key.forward", new KeybindHoldData(false, 0, 0));
-        KeybindHoldData backData = keyHeldMap.getOrDefault("key.back", new KeybindHoldData(false, 0, 0));
-
-        float rotationSpeed = 0.075f;
-        rotationSpeed *= player.isSprinting() ? 3 : 0.35f;
-        float clamp = player.isSprinting() ? 1.0f : 0.2f;
+        ItemStack heroStack = HeroUtils.getHeroStack(player);
+        KeybindHoldData forwardData = KeybindingUtils.getHoldData(player, "key.forward");
+        KeybindHoldData backData = KeybindingUtils.getHoldData(player, "key.back");
+        float rotation = heroStack.getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
+        float duration = 10;
+        float rotationSpeed = 0.2f / duration;
 
         if (forwardData.held()) {
-            adjustFlightRotation(player, rotationSpeed, -1.0f, clamp);
+            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation + rotationSpeed, 0f, 0.2f));
+        } else if (rotation > 0) {
+            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation - rotationSpeed, 0f, 0.2f));
         } else if (backData.held()) {
-            adjustFlightRotation(player, -rotationSpeed, -clamp, 1.0f);
-        } else {
-            float rotationAmount = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
-            if (rotationAmount > 0.3f) {
-                rotationSpeed *= 3f;
-            }
-            rotateTo(player, 0, rotationSpeed * 2f);
+            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation - rotationSpeed, -0.2f, 0));
+        } else if (rotation < 0) {
+            heroStack.set(FlightAbility.FLIGHT_ROTATION, MathHelper.clamp(rotation + rotationSpeed, -0.2f, 0f));
         }
     }
 
@@ -104,22 +103,4 @@ public class FlightAbility {
     }
 
     public static void initialize() {}
-
-    public static void adjustFlightRotation(PlayerEntity player, float rotationAdjustment, float min, float max) {
-        float rotation = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
-        rotation = Math.clamp(rotation + rotationAdjustment, min, max);
-        HeroUtils.getHeroStack(player).set(FlightAbility.FLIGHT_ROTATION, rotation);
-    }
-
-    public static void rotateTo(PlayerEntity player, float desiredRotation, float returnSpeed) {
-        float currentRotation = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
-        if (currentRotation == desiredRotation) return;
-        if (Math.abs(currentRotation - returnSpeed) <= 0.015) {
-            HeroUtils.getHeroStack(player).set(FlightAbility.FLIGHT_ROTATION, desiredRotation);
-            return;
-        }
-        returnSpeed *= currentRotation > desiredRotation ? -1 : 1;
-        HeroUtils.getHeroStack(player).set(FlightAbility.FLIGHT_ROTATION, Math.clamp(HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f) + returnSpeed, -1, 1f));
-    }
-
 }
