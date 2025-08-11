@@ -30,8 +30,7 @@ public class FlightSoundInstance extends MovingSoundInstance {
             this.z = this.player.getZ();
 
             this.volume = 1.0f;
-
-            this.pitch = 1.0F + (this.volume - 0.8F);
+            this.pitch = 1.2f;
         } else {
             this.setDone();
         }
