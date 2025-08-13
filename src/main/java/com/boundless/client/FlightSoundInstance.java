@@ -24,7 +24,7 @@ public class FlightSoundInstance extends MovingSoundInstance {
     public void tick() {
         ++this.tickCount;
 
-        if (!this.player.isRemoved() && (this.tickCount <= 20 || HeroUtils.getHeroStack(this.player).getOrDefault(FlightAbility.FLIGHT_TICKS, 0) > 0)) {
+        if (!this.player.isRemoved() && (HeroUtils.getHeroStack(this.player).getOrDefault(FlightAbility.FLIGHT_TICKS, 0) > 0)) {
             this.x = this.player.getX();
             this.y = this.player.getY();
             this.z = this.player.getZ();
