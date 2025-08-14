@@ -22,7 +22,6 @@ public class BoundlessAPI implements ModInitializer {
 		DataComponentRegistry.initialize();
 		HeroRegistry.initialize();
 		PayloadRegistry.registerPayloads();
-		PayloadRegistry.registerC2SPackets();
 		EntityRegistry.intialize();
 		SoundRegistry.initialize();
 		StatusEffectRegistry.initialize();
