@@ -1,9 +1,8 @@
-package com.boundless.mixin.flight_ability;
+package com.boundless.mixin;
 
 import com.boundless.client.CameraShake;
 import com.boundless.util.CameraShakeAccessor;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Final;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(GameRenderer.class)
-public abstract class FlightCameraMixin implements CameraShakeAccessor {
+public abstract class CameraShakeMixin implements CameraShakeAccessor {
     @Shadow @Final MinecraftClient client;
     @Unique List<CameraShake> cameraShakes = new ArrayList<>();
 
