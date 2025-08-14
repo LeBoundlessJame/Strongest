@@ -25,19 +25,25 @@ public class CameraShake {
     }
 
     public void shake(MinecraftClient client, MatrixStack matrices) {
-        if (this.startTimestamp == 0 || this.endTimestamp == 0 || client.player == null) return;
+        if (!shouldShake(client) || client.player == null) return;
 
         long worldTime = client.player.getWorld().getTime();
-        if (worldTime > this.endTimestamp) {
-            this.markFinished = true;
-            return;
-        }
-
         float tickDelta = client.getRenderTickCounter().getTickDelta(true);
         int elapsedTicks = calculateElapsedTicks(worldTime);
 
         float rotationDegrees = MathHelper.lerp((float) elapsedTicks / duration, (float) Math.sin((elapsedTicks * intensity + tickDelta)), 0);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotationDegrees));
+    }
+
+    public boolean shouldShake(MinecraftClient client) {
+        if (this.startTimestamp == 0 || this.endTimestamp == 0 || client.player == null) return false;
+
+        long worldTime = client.player.getWorld().getTime();
+        if (worldTime > this.endTimestamp) {
+            this.markFinished = true;
+            return false;
+        }
+        return true;
     }
 
     /*
