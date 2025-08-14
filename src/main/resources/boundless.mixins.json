@@ -19,7 +19,7 @@
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
     "SkinLayerMixin",
-    "CameraShakeMixin",
+    "flight_ability.FlightCameraMixin",
     "flight_ability.FlightSoundsMixin"
   ]
 }
