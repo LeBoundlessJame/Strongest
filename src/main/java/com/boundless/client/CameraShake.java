@@ -13,8 +13,8 @@ import java.util.function.BiConsumer;
 public class CameraShake {
     @Getter
     private BiConsumer<MinecraftClient, MatrixStack> cameraShakeLogic = this::shake;
-    private int duration = 20;
-    private float intensity = 1.0f;
+    private int duration = 40;
+    private float intensity = 1.2f;
     private long startTimestamp = 0;
     private long endTimestamp = 0;
     @Getter
@@ -45,4 +45,22 @@ public class CameraShake {
         }
         return true;
     }
+
+    /*
+    public static void shakeLogic() {
+        int flightTicksServer = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_TICKS, 0);
+        long flightBegin = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLIGHT_BEGIN_TIMESTAMP, 0).longValue();
+        int flightTicks = Math.toIntExact(player.clientWorld.getTime() - flightBegin);
+
+        int shakeDuration = 40;
+        if (flightTicksServer <= 0) return;
+
+        if (flightTicksServer < shakeDuration) {
+            float intensity = 1.2f;
+            float rotationDegrees = MathHelper.lerp((float) flightTicks / (float) shakeDuration, (float) Math.sin((flightTicks * intensity + tickDelta)), 0);
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotationDegrees));
+        }
+    }
+
+     */
 }
