@@ -7,9 +7,11 @@ import com.boundless.networking.payloads.CameraShakePayload;
 import com.boundless.networking.payloads.UpdateHoldStatePayload;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.networking.payloads.evasion.EvasionServerPayload;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
@@ -30,19 +32,22 @@ public class PayloadRegistry {
         registerC2SPayload(EvasionServerPayload.ID, EvasionServerPayload.CODEC, EvasionServerPayload::receive);
         registerC2SPayload(UpdateHoldStatePayload.ID, UpdateHoldStatePayload.CODEC, UpdateHoldStatePayload::receive);
 
-        PayloadTypeRegistry.playS2C().register(AnimationPlayPayload.ID, AnimationPlayPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(EvasionClientPayload.ID, EvasionClientPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(CameraShakePayload.ID, PacketCodec.unit(new CameraShakePayload()));
+        registerS2CPayload(AnimationPlayPayload.ID, AnimationPlayPayload.CODEC, AnimationPlayPayload::receive);
+        registerS2CPayload(EvasionClientPayload.ID, EvasionClientPayload.CODEC, EvasionClientPayload::receive);
+        registerS2CPayload(CameraShakePayload.ID, PacketCodec.unit(new CameraShakePayload()), CameraShakePayload::receive);
     }
 
     public static <P extends CustomPayload> void registerC2SPayload(CustomPayload.Id<P> ID, PacketCodec<RegistryByteBuf, P> packetCodec, BiConsumer<P, ServerPlayNetworking.Context> receiveMethod) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) return;
         PayloadTypeRegistry.playC2S().register(ID, packetCodec);
         ServerPlayNetworking.registerGlobalReceiver(ID, receiveMethod::accept);
     }
 
-    public static void registerS2CPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(CameraShakePayload.ID, CameraShakePayload::receive);
-        ClientPlayNetworking.registerGlobalReceiver(AnimationPlayPayload.ID, AnimationPlayPayload::receive);
-        ClientPlayNetworking.registerGlobalReceiver(EvasionClientPayload.ID, EvasionClientPayload::receive);
+
+    public static <P extends CustomPayload> void registerS2CPayload(CustomPayload.Id<P> ID, PacketCodec<RegistryByteBuf, P> codec, BiConsumer<P, ClientPlayNetworking.Context> receiveMethod) {
+        PayloadTypeRegistry.playS2C().register(ID, codec);
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            ClientPlayNetworking.registerGlobalReceiver(ID, receiveMethod::accept);
+        }
     }
 }
