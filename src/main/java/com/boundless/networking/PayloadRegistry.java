@@ -10,6 +10,7 @@ import com.boundless.networking.payloads.evasion.EvasionServerPayload;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
 
 public class PayloadRegistry {
@@ -24,6 +25,8 @@ public class PayloadRegistry {
         PayloadTypeRegistry.playC2S().register(AbilityUsePayload.ID, AbilityUsePayload.CODEC);
         PayloadTypeRegistry.playC2S().register(EvasionServerPayload.ID, EvasionServerPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(UpdateHoldStatePayload.ID, UpdateHoldStatePayload.CODEC);
+
+        PayloadTypeRegistry.playS2C().register(CameraShakePayload.ID, PacketCodec.unit(new CameraShakePayload()));
         PayloadTypeRegistry.playS2C().register(AnimationPlayPayload.ID, AnimationPlayPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(EvasionClientPayload.ID, EvasionClientPayload.CODEC);
     }
