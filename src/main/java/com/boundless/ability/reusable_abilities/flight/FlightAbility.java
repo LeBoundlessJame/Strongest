@@ -2,13 +2,16 @@ package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.networking.payloads.CameraShakePayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -48,31 +51,6 @@ public class FlightAbility {
         }
     }
 
-    public static void rotationLogic(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
-        ItemStack heroStack = HeroUtils.getHeroStack(player);
-        KeybindHoldData forwardData = KeybindingUtils.getHoldData(player, "key.forward");
-        KeybindHoldData backData = KeybindingUtils.getHoldData(player, "key.back");
-
-        float rotation = heroStack.getOrDefault(FlightAbility.FLIGHT_ROTATION, 0f);
-        int duration = player.isSprinting() && rotation > 0 ? 15 : 10;
-        float clamp = player.isSprinting() ? 1.0f : 0.2f;
-        float rotationSpeed = clamp / duration;
-
-        if (forwardData.held()) {
-            rotation = MathHelper.clamp(rotation + rotationSpeed, 0f, clamp);
-        } else if (rotation > 0) {
-            rotation = MathHelper.clamp(rotation - rotationSpeed, 0f, clamp);
-        } else if (backData.held()) {
-            rotation = MathHelper.clamp(rotation - rotationSpeed, -clamp, 0f);
-        } else if (rotation < 0) {
-            rotation = MathHelper.clamp(rotation + rotationSpeed, -clamp, 0f);
-        }
-
-        heroStack.set(FlightAbility.FLIGHT_ROTATION, rotation);
-    }
-
-
     public static void flightAnimationLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         if (!player.getAbilities().flying) return;
@@ -93,9 +71,12 @@ public class FlightAbility {
     }
 
     public static void boostLogic(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+
         SoundUtils.playSound(player, SoundEvents.ITEM_FIRECHARGE_USE, 1.0f);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 5, 0, true, false, false));
 
+        ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
         Vec3d playerRotation = player.getRotationVector();
         Vec3d effectPos = player.getPos().add(playerRotation.normalize().multiply(-player.getWidth()).x, 0.5f, playerRotation.normalize().multiply(-player.getWidth() ).z);
         Vec3d effectScale = new Vec3d(player.getScale() * 0.5f, player.getScale() * 0.5f, player.getScale() * 0.5f);

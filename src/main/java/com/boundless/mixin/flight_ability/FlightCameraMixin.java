@@ -2,6 +2,7 @@ package com.boundless.mixin.flight_ability;
 
 import com.boundless.ability.reusable_abilities.flight.CameraShakeRendering;
 import com.boundless.client.CameraShake;
+import com.boundless.util.CameraShakeAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
@@ -23,12 +24,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mixin(GameRenderer.class)
-public abstract class FlightCameraMixin {
-    @Shadow
-    @Final
-    MinecraftClient client;
-    @Shadow @Final private Camera camera;
-    @Unique List<CameraShake> cameraShakes = new ArrayList<>();
+public abstract class FlightCameraMixin implements CameraShakeAccessor {
+    @Shadow @Final MinecraftClient client;
+    @Unique
+    List<CameraShake> cameraShakes = new ArrayList<>();
 
     @Inject(method = "tiltViewWhenHurt", at = @At(value = "HEAD"))
     private void boundless$cameraShake(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
@@ -47,5 +46,9 @@ public abstract class FlightCameraMixin {
         cameraShakes.forEach((cameraShake -> {
             cameraShake.getCameraShakeLogic().accept(client, matrices);
         }));
+    }
+
+    public void boundless$addCameraShake(CameraShake cameraShake) {
+        cameraShakes.add(cameraShake);
     }
 }
