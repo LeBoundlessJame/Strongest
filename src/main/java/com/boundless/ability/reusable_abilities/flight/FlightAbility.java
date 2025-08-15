@@ -27,7 +27,7 @@ public class FlightAbility {
     public static void flightTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         FlightAbility.flightAnimationLogic(player);
-        FlightAbility.rotationLogic(player);
+        //FlightAbility.rotationLogic(player);
 
         if (!player.getAbilities().flying) {
             DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
