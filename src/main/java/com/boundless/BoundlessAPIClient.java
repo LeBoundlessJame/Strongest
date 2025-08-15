@@ -14,7 +14,6 @@ public class BoundlessAPIClient implements ClientModInitializer {
         KeyInputHandler.keyInputs();
         PayloadRegistry.registerS2CPackets();
         HeroHudRenderer.register();
-        ParticleClientRegistry.initialize();
         ArmorRenderRegistry.initialize();
     }
 }
