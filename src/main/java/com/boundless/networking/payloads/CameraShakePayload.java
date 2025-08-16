@@ -9,7 +9,7 @@ public record  CameraShakePayload() implements CustomPayload {
     public static final CustomPayload.Id<CameraShakePayload> ID = new CustomPayload.Id<>(PayloadRegistry.CAMERA_SHAKE);
 
     public static void receive(CameraShakePayload payload, ClientPlayNetworking.Context context) {
-        CameraUtils.addCameraShake(context.client(), 200, 1.2f);
+        CameraUtils.addCameraShake(context.client(), 40, 1.2f);
     }
 
     @Override

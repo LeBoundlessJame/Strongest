@@ -1,7 +1,6 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.networking.payloads.CameraShakePayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
@@ -10,10 +9,8 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class FlightAbility {
@@ -27,10 +24,9 @@ public class FlightAbility {
     // Todo: don't forget to fix melee animations etc playing on top, currently null takes priority over them
     // Todo: look into priority system, but also make sure that the animations stop getting triggered every tick
     // Todo: and instead use some sort of marking system
-    public static void flightTick(PlayerEntity player) {
+    public static void tick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        FlightAbility.flightAnimationLogic(player);
-        //FlightAbility.rotationLogic(player);
+        FlightAbility.animationLogic(player);
 
         if (!player.getAbilities().flying) {
             DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
@@ -51,14 +47,16 @@ public class FlightAbility {
         }
     }
 
-    public static void flightAnimationLogic(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
-        if (!player.getAbilities().flying) return;
+    public static void animationLogic(PlayerEntity player) {
+        if (player.getAbilities().flying) {
+            if (player.isSprinting()) {
+                AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"), false);
+            } else {
+                AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"), false);
+            }
 
-        if (player.isSprinting() && DataComponentUtils.getInt(FLIGHT_TICKS, player, 0) == 1) {
-            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"), false);
-        } else if (!player.isSprinting()) {
-            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"), false);
+        } else {
+            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("null"), true);
         }
     }
 

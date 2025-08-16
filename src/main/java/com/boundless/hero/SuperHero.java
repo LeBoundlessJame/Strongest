@@ -22,7 +22,7 @@ public class SuperHero extends Hero {
                 .name("super_hero")
                 .displayName("Super Hero")
                 .textureIdentifier(BoundlessAPI.textureID("super_hero"))
-                .tickHandler(FlightAbility::flightTick)
+                .tickHandler(FlightAbility::tick)
                 .defaultAbilityLoadout(ABILITY_LOADOUTS.get("LOADOUT_1"))
                 .build();
 
