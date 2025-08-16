@@ -54,11 +54,12 @@ public class AnimationUtils {
     }
 
     /**
-     * If marked as unimportant, it will not interrupt the current animation.
+     * @param overrideProgress: if true, restart current animation.
      **/
-    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean important) {
+    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean overrideProgress) {
         if (user.getWorld().isClient) {
             var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
+            if (!overrideProgress && animationAlreadyPlaying(user, animation)) return;
 
             if (animation.equals(BoundlessAPI.identifier("null"))) {
                 currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), null);
@@ -73,6 +74,15 @@ public class AnimationUtils {
             newAnimationContainer.setAnimation(new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(animation)).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration().setShowRightArm(true).setShowLeftArm(true)));
 
             currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), newAnimationContainer);
+
+            // Todo: add component-based 'current animation' system fr
+            // Todo: use a hashmap for priority system
         }
+    }
+
+    public static boolean animationAlreadyPlaying(PlayerEntity user, Identifier identifier) {
+        var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
+        Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
+        return currentAnimationContainer.isActive() && lastTriggeredAnimation.equals(identifier);
     }
 }

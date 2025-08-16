@@ -54,9 +54,6 @@ public class FlightAbility {
             } else {
                 AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"), false);
             }
-
-        } else {
-            AnimationUtils.playAnimation(player, BoundlessAPI.identifier("null"), true);
         }
     }
 
