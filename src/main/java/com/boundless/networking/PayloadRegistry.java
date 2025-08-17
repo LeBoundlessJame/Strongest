@@ -1,10 +1,7 @@
 package com.boundless.networking;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.networking.payloads.AbilityUsePayload;
-import com.boundless.networking.payloads.AnimationPlayPayload;
-import com.boundless.networking.payloads.CameraShakePayload;
-import com.boundless.networking.payloads.UpdateHoldStatePayload;
+import com.boundless.networking.payloads.*;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.networking.payloads.evasion.EvasionServerPayload;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -16,6 +13,7 @@ import net.minecraft.util.Identifier;
 public class PayloadRegistry {
     public static final Identifier ABILITY_USE = BoundlessAPI.identifier("ability_use");
     public static final Identifier ANIMATION_PLAY = BoundlessAPI.identifier("animation_play");
+    public static final Identifier ANIMATION_STOP = BoundlessAPI.identifier("animation_stop");
     public static final Identifier EVASION_CLIENT = BoundlessAPI.identifier("evasion_client");
     public static final Identifier EVASION_SERVER = BoundlessAPI.identifier("evasion_server");
     public static final Identifier UPDATE_HOLD_STATE = BoundlessAPI.identifier("update_hold_state");
@@ -28,6 +26,7 @@ public class PayloadRegistry {
 
         PayloadTypeRegistry.playS2C().register(CameraShakePayload.ID, PacketCodec.unit(new CameraShakePayload()));
         PayloadTypeRegistry.playS2C().register(AnimationPlayPayload.ID, AnimationPlayPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(AnimationStopPayload.ID, AnimationStopPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(EvasionClientPayload.ID, EvasionClientPayload.CODEC);
     }
 
@@ -40,6 +39,7 @@ public class PayloadRegistry {
     public static void registerS2CPackets() {
         ClientPlayNetworking.registerGlobalReceiver(CameraShakePayload.ID, CameraShakePayload::receive);
         ClientPlayNetworking.registerGlobalReceiver(AnimationPlayPayload.ID, AnimationPlayPayload::receive);
+        ClientPlayNetworking.registerGlobalReceiver(AnimationStopPayload.ID, AnimationStopPayload::receive);
         ClientPlayNetworking.registerGlobalReceiver(EvasionClientPayload.ID, EvasionClientPayload::receive);
     }
 }

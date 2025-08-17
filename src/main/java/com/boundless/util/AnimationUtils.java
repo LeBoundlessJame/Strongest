@@ -1,6 +1,8 @@
 package com.boundless.util;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.AnimationPlayPayload;
+import com.boundless.networking.payloads.AnimationStopPayload;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
@@ -20,6 +22,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 
+import java.util.HashMap;
+import java.util.Objects;
+
 public class AnimationUtils {
 
     /**
@@ -33,6 +38,14 @@ public class AnimationUtils {
         }
     }
 
+    public static void stopSyncedAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
+        if (user.getWorld().isClient) return;
+
+        for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
+            ServerPlayNetworking.send(target, new AnimationStopPayload(user.getUuid(), animations));
+        }
+    }
+
     public static void playSyncedAnimation(PlayerEntity user, Identifier animation) {
         playSyncedAnimation(user, animation, 1.0f, false, true, 1000);
     }
@@ -43,16 +56,14 @@ public class AnimationUtils {
 
     public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
         if (!user.getWorld().isClient) return;
-        if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) System.out.println("Already playing!");
         if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) return;
 
         var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
         Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
         int lastPriority = ((IAnimatedHero) user).boundless$getAnimationPriority(lastTriggeredAnimation, 1000);
-        if (priority < lastPriority) System.out.println("Priority not great enough!");
         if (priority < lastPriority && currentAnimationContainer.isActive()) return;
 
-        if (animation == null) {
+        if (Objects.equals(animation, BoundlessAPI.identifier("null"))) {
             ((IAnimatedHero) user).boundless$setLastTriggeredAnimation(null);
             currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), null);
             return;
@@ -76,5 +87,23 @@ public class AnimationUtils {
         var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
         Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
         return currentAnimationContainer.isActive() && lastTriggeredAnimation.equals(identifier);
+    }
+
+    public static void stopAnimation(PlayerEntity user, Identifier identifier) {
+        Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
+        if (lastTriggeredAnimation == identifier) {
+            playClientAnimation(user, BoundlessAPI.identifier("null"), 1.0f, false, false, 9999);
+        }
+    }
+
+    public static void stopAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
+        Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
+        if (animations.containsKey(lastTriggeredAnimation)) {
+            playClientAnimation(user, BoundlessAPI.identifier("null"), 1.0f, false, false, 9999);
+        }
+    }
+
+    public static Identifier getLastTriggeredAnimation(PlayerEntity user) {
+        return ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
     }
 }

@@ -11,7 +11,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.HashMap;
 
 public class FlightAbility {
     public static ComponentType<Integer> FLIGHT_TICKS = DataComponentRegistry.registerInt("flight_ticks");
@@ -21,9 +24,15 @@ public class FlightAbility {
     public static ComponentType<Long> BOOST_NEXT_USABLE = DataComponentRegistry.registerLong("boost_next_usable");
     public static ComponentType<Float> FLIGHT_ROTATION = DataComponentRegistry.registerFloat("flight_rotation");
 
-    // Todo: don't forget to fix melee animations etc playing on top, currently null takes priority over them
-    // Todo: look into priority system, but also make sure that the animations stop getting triggered every tick
-    // Todo: and instead use some sort of marking system
+    public static HashMap<Identifier, Integer> FLIGHT_ANIMATIONS = getFlightAnimations();
+
+    public static HashMap<Identifier, Integer> getFlightAnimations() {
+        HashMap<Identifier, Integer> animations = new HashMap<>();
+        animations.put(BoundlessAPI.identifier("flight_pose"), 1100);
+        animations.put(BoundlessAPI.identifier("hover"), 1200);
+        return animations;
+    }
+
     public static void tick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         FlightAbility.animationLogic(player);
@@ -52,8 +61,10 @@ public class FlightAbility {
             if (player.isSprinting()) {
                 AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("flight_pose"), false, 1100);
             } else {
-                AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hover"), false, 1000);
+                AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hover"), false, 1100);
             }
+        } else if (player.age % 2 == 0) {
+            AnimationUtils.stopSyncedAnimationIfPresent(player, FLIGHT_ANIMATIONS);
         }
     }
 
