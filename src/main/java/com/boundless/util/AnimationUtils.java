@@ -89,13 +89,6 @@ public class AnimationUtils {
         return currentAnimationContainer.isActive() && lastTriggeredAnimation.equals(identifier);
     }
 
-    public static void stopAnimation(PlayerEntity user, Identifier identifier) {
-        Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
-        if (lastTriggeredAnimation == identifier) {
-            playClientAnimation(user, BoundlessAPI.identifier("null"), 1.0f, false, false, 9999);
-        }
-    }
-
     public static void stopAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
         Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
         if (animations.containsKey(lastTriggeredAnimation)) {

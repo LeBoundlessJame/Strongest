@@ -36,7 +36,9 @@ public class FlightRendering {
         }
 
         float degrees = rotation * (-90.0F - player.getPitch(tickDelta));
-        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
+        if (player.getAbilities().flying) {
+            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
+        }
         flightRotations.put(player, rotation);
 
         if (player.isSprinting() && player.getAbilities().flying) {
