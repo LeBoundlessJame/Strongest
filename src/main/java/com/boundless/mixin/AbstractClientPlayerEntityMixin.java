@@ -1,5 +1,6 @@
 package com.boundless.mixin;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.hero.SuperHero;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.IAnimatedHero;
@@ -27,7 +28,7 @@ public class AbstractClientPlayerEntityMixin implements IAnimatedHero {
     @Unique
     private Identifier lastTriggeredAnimation = null;
     @Unique
-    private HashMap<Identifier, Integer> animationPriorityMap = new HashMap<>();
+    private final HashMap<Identifier, Integer> animationPriorityMap = new HashMap<>();
 
     @Inject(method = "<init>", at = @At(value = "RETURN"))
     private void init(ClientWorld world, GameProfile profile, CallbackInfo ci) {

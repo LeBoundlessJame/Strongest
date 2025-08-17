@@ -1,10 +1,8 @@
 package com.boundless.util;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.AnimationPlayPayload;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
-import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
@@ -22,62 +20,52 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 
-import java.util.Objects;
-
 public class AnimationUtils {
 
     /**
      * Plays an animation and sends a packet for multiplayer display
      **/
-    public static void playAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean important) {
+    public static void playSyncedAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
         if (user.getWorld().isClient) return;
 
         for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
-            ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, important));
+            ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, repeatIfPlaying, priority));
         }
     }
 
-    public static void playAnimation(PlayerEntity user, Identifier animation) {
-        playAnimation(user, animation, 1.0f, false, true);
+    public static void playSyncedAnimation(PlayerEntity user, Identifier animation) {
+        playSyncedAnimation(user, animation, 1.0f, false, true, 1000);
     }
 
-    public static void playAnimation(PlayerEntity user, Identifier animation, boolean important) {
-        playAnimation(user, animation, 1.0f, false, important);
+    public static void playSyncedAnimation(PlayerEntity user, Identifier animation, boolean repeatIfPlaying) {
+        playSyncedAnimation(user, animation, 1.0f, false, repeatIfPlaying, 1000);
     }
 
-    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed) {
-        playClientAnimation(user, animation, speed, false);
-    }
+    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
+        if (!user.getWorld().isClient) return;
+        if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) return;
 
-    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror) {
-        playClientAnimation(user, animation, speed, mirror, true);
-    }
+        int lastPriority = ((IAnimatedHero) user).boundless$getAnimationPriority(animation, 1000);
+        if (priority <= lastPriority) return;
 
-    /**
-     * @param overrideProgress: if true, restart current animation.
-     **/
-    public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean overrideProgress) {
-        if (user.getWorld().isClient) {
-            var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
-            if (!overrideProgress && animationAlreadyPlaying(user, animation)) return;
+        var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
 
-            if (animation.equals(BoundlessAPI.identifier("null"))) {
-                currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), null);
-                return;
-            }
-
-            var newAnimationContainer = new ModifierLayer<>();
-
-            newAnimationContainer.addModifierBefore(new SpeedModifier(speed));
-            newAnimationContainer.addModifierBefore(new MirrorModifier(mirror));
-            newAnimationContainer.addModifierBefore(new LeftHandedHelperModifier(user));
-            newAnimationContainer.setAnimation(new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(animation)).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration().setShowRightArm(true).setShowLeftArm(true)));
-
-            currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), newAnimationContainer);
-
-            // Todo: add component-based 'current animation' system fr
-            // Todo: use a hashmap for priority system
+        if (animation == null) {
+            ((IAnimatedHero) user).boundless$setLastTriggeredAnimation(null);
+            currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), null);
+            return;
         }
+
+        var newAnimationContainer = new ModifierLayer<>();
+
+        newAnimationContainer.addModifierBefore(new SpeedModifier(speed));
+        newAnimationContainer.addModifierBefore(new MirrorModifier(mirror));
+        newAnimationContainer.addModifierBefore(new LeftHandedHelperModifier(user));
+        newAnimationContainer.setAnimation(new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(animation)).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration().setShowRightArm(true).setShowLeftArm(true)));
+        currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), newAnimationContainer);
+
+        ((IAnimatedHero) user).boundless$setLastTriggeredAnimation(animation);
+        ((IAnimatedHero) user).boundless$setAnimationPriority(animation, priority);
     }
 
     public static boolean animationAlreadyPlaying(PlayerEntity user, Identifier identifier) {

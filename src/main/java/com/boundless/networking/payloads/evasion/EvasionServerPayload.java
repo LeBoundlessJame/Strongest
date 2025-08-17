@@ -2,7 +2,6 @@ package com.boundless.networking.payloads.evasion;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.networking.PayloadRegistry;
-import com.boundless.networking.payloads.AbilityUsePayload;
 import com.boundless.util.AnimationUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +31,7 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
             animationSpeed = player.isOnGround() ? 1.75f : 1.0f;
         }
 
-        AnimationUtils.playAnimation(player, BoundlessAPI.identifier(animation), animationSpeed, false, true);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier(animation), animationSpeed, false, true, 1200);
         float groundRollDist = 1.5f;
         float rollDistMultiplier = player.isOnGround() ? groundRollDist : groundRollDist / 2;
 

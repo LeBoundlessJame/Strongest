@@ -50,9 +50,9 @@ public class FlightAbility {
     public static void animationLogic(PlayerEntity player) {
         if (player.getAbilities().flying) {
             if (player.isSprinting()) {
-                AnimationUtils.playAnimation(player, BoundlessAPI.identifier("flight_pose"), false);
+                AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("flight_pose"), false);
             } else {
-                AnimationUtils.playAnimation(player, BoundlessAPI.identifier("hover"), false);
+                AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hover"), false);
             }
         }
     }
