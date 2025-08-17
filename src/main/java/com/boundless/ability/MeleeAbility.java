@@ -28,7 +28,7 @@ public class MeleeAbility {
             CombatUtils.attack(heroAction, attackData);
         });
 
-        AnimationUtils.playSyncedAnimation(player, attackData.getAnimation(), attackData.getAnimationSpeed(), jabCount % 2 == 0, true, 1100);
+        AnimationUtils.playSyncedAnimation(player, attackData.getAnimation(), attackData.getAnimationSpeed(), jabCount % 2 == 0, true, 2000);
         AttackUtils.triggerAttackAction(player, attackAction);
     }
 }

@@ -37,16 +37,19 @@ public class AnimationUtils {
         playSyncedAnimation(user, animation, 1.0f, false, true, 1000);
     }
 
-    public static void playSyncedAnimation(PlayerEntity user, Identifier animation, boolean repeatIfPlaying) {
-        playSyncedAnimation(user, animation, 1.0f, false, repeatIfPlaying, 1000);
+    public static void playSyncedAnimation(PlayerEntity user, Identifier animation, boolean repeatIfPlaying, int priority) {
+        playSyncedAnimation(user, animation, 1.0f, false, repeatIfPlaying, priority);
     }
 
     public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
         if (!user.getWorld().isClient) return;
+        if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) System.out.println("Already playing!");
         if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) return;
 
-        int lastPriority = ((IAnimatedHero) user).boundless$getAnimationPriority(animation, 1000);
-        if (priority <= lastPriority) return;
+        Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
+        int lastPriority = ((IAnimatedHero) user).boundless$getAnimationPriority(lastTriggeredAnimation, 1000);
+        if (priority < lastPriority) System.out.println("Priority not great enough!");
+        if (priority < lastPriority) return;
 
         var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
 
