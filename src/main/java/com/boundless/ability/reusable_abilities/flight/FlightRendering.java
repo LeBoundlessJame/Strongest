@@ -1,6 +1,7 @@
 package com.boundless.ability.reusable_abilities.flight;
 
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.util.DataComponentUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -18,6 +19,8 @@ public class FlightRendering {
     public static void renderFlight(AbstractClientPlayerEntity player, MatrixStack matrixStack, float f, float g, float tickDelta, float i, PlayerEntityRenderer renderer) {
         KeybindHoldData forwardData = KeybindingUtils.getHoldData(player, "key.forward");
         KeybindHoldData backData = KeybindingUtils.getHoldData(player, "key.back");
+        boolean isFlying = HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLYING, false);
+        if (!isFlying) return;
 
         // Todo: make this follow a tick-based system for speed, etc.
         float rotation = flightRotations.getOrDefault(player, 0f);
@@ -36,15 +39,15 @@ public class FlightRendering {
         }
 
         float degrees = rotation * (-90.0F - player.getPitch(tickDelta));
-        if (player.getAbilities().flying) {
-            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
-        }
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(degrees));
         flightRotations.put(player, rotation);
 
-        if (player.isSprinting() && player.getAbilities().flying) {
-            matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.sin((player.age + tickDelta) * 0.1f) / 5f));
-        } else if (player.getAbilities().flying) {
-            matrixStack.translate(0, (float) Math.sin((player.age + tickDelta) * 0.1f) / 5f, 0);
+
+        float worldTime = (float) player.getWorld().getTime();
+        if (player.isSprinting()) {
+            matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.sin((worldTime + tickDelta) * 0.1f) / 5f));
+        } else {
+            matrixStack.translate(0, (float) Math.sin((worldTime + tickDelta) * 0.1f) / 5f, 0);
         }
     }
 }

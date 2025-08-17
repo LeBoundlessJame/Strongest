@@ -19,10 +19,8 @@ import java.util.HashMap;
 public class FlightAbility {
     public static ComponentType<Integer> FLIGHT_TICKS = DataComponentRegistry.registerInt("flight_ticks");
     public static ComponentType<Long> FLIGHT_BEGIN_TIMESTAMP = DataComponentRegistry.registerLong("flight_begin_timestamp");
-    public static ComponentType<Boolean> BOOSTING = DataComponentRegistry.registerBoolean("boosting");
     public static ComponentType<Integer> BOOST_TICKS = DataComponentRegistry.registerInt("boost_ticks");
-    public static ComponentType<Long> BOOST_NEXT_USABLE = DataComponentRegistry.registerLong("boost_next_usable");
-    public static ComponentType<Float> FLIGHT_ROTATION = DataComponentRegistry.registerFloat("flight_rotation");
+    public static ComponentType<Boolean> FLYING = DataComponentRegistry.registerBoolean("flying");
 
     public static HashMap<Identifier, Integer> FLIGHT_ANIMATIONS = getFlightAnimations();
 
@@ -58,12 +56,15 @@ public class FlightAbility {
 
     public static void animationLogic(PlayerEntity player) {
         if (player.getAbilities().flying) {
+            HeroUtils.getHeroStack(player).set(FlightAbility.FLYING, true);
+
             if (player.isSprinting()) {
                 AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("flight_pose"), false, 1100);
             } else {
                 AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hover"), false, 1100);
             }
         } else if (player.age % 2 == 0) {
+            HeroUtils.getHeroStack(player).set(FlightAbility.FLYING, false);
             AnimationUtils.stopSyncedAnimationIfPresent(player, FLIGHT_ANIMATIONS);
         }
     }
