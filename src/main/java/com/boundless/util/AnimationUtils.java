@@ -46,12 +46,11 @@ public class AnimationUtils {
         if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) System.out.println("Already playing!");
         if (!repeatIfPlaying && animationAlreadyPlaying(user, animation)) return;
 
+        var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
         Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
         int lastPriority = ((IAnimatedHero) user).boundless$getAnimationPriority(lastTriggeredAnimation, 1000);
         if (priority < lastPriority) System.out.println("Priority not great enough!");
-        if (priority < lastPriority) return;
-
-        var currentAnimationContainer = ((IAnimatedHero) user).boundless_getModAnimation();
+        if (priority < lastPriority && currentAnimationContainer.isActive()) return;
 
         if (animation == null) {
             ((IAnimatedHero) user).boundless$setLastTriggeredAnimation(null);
@@ -64,8 +63,10 @@ public class AnimationUtils {
         newAnimationContainer.addModifierBefore(new SpeedModifier(speed));
         newAnimationContainer.addModifierBefore(new MirrorModifier(mirror));
         newAnimationContainer.addModifierBefore(new LeftHandedHelperModifier(user));
+        newAnimationContainer.addModifierBefore(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTSINE));
+
         newAnimationContainer.setAnimation(new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(animation)).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration().setShowRightArm(true).setShowLeftArm(true)));
-        currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), newAnimationContainer);
+        currentAnimationContainer.setAnimation(newAnimationContainer);
 
         ((IAnimatedHero) user).boundless$setLastTriggeredAnimation(animation);
         ((IAnimatedHero) user).boundless$setAnimationPriority(animation, priority);

@@ -3,7 +3,6 @@
 	"animations": {
 		"flight_pose": {
 			"animation_length": 1,
-			"loop": true,
 			"bones": {
 				"body": {
 					"position": {
