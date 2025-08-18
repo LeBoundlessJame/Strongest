@@ -37,13 +37,14 @@ public class FlightAbility {
     public static void tick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
 
+        FlightAbility.landingLogic(player);
+        FlightAbility.animationLogic(player);
+
         if (!player.getAbilities().flying) {
             DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
             return;
         }
 
-        FlightAbility.landingLogic(player);
-        FlightAbility.animationLogic(player);
 
         if (player.isSprinting()) {
             DataComponentUtils.addOrSubtractInt(FLIGHT_TICKS, player, 1, Integer.MAX_VALUE);
