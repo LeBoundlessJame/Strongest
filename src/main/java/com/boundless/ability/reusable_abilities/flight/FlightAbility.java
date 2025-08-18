@@ -3,6 +3,7 @@ package com.boundless.ability.reusable_abilities.flight;
 import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.CameraShakePayload;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.ComponentType;
@@ -21,6 +22,8 @@ public class FlightAbility {
     public static ComponentType<Long> FLIGHT_BEGIN_TIMESTAMP = DataComponentRegistry.registerLong("flight_begin_timestamp");
     public static ComponentType<Integer> BOOST_TICKS = DataComponentRegistry.registerInt("boost_ticks");
     public static ComponentType<Boolean> FLYING = DataComponentRegistry.registerBoolean("flying");
+    public static ComponentType<Long> LANDING_COOLDOWN_TIMESTAMP = DataComponentRegistry.registerLong("landing_cooldown_timestamp");
+    public static long LANDING_COOLDOWN_TICKS = 60;
 
     public static HashMap<Identifier, Integer> FLIGHT_ANIMATIONS = getFlightAnimations();
 
@@ -33,12 +36,14 @@ public class FlightAbility {
 
     public static void tick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        FlightAbility.animationLogic(player);
 
         if (!player.getAbilities().flying) {
             DataComponentUtils.setInt(FLIGHT_TICKS, player, 0);
             return;
         }
+
+        FlightAbility.landingLogic(player);
+        FlightAbility.animationLogic(player);
 
         if (player.isSprinting()) {
             DataComponentUtils.addOrSubtractInt(FLIGHT_TICKS, player, 1, Integer.MAX_VALUE);
@@ -75,6 +80,20 @@ public class FlightAbility {
         player.velocityModified = true;
         player.velocityDirty = true;
         player.onLanding();
+    }
+
+    public static void landingLogic(PlayerEntity player) {
+        if (player.isOnGround() && HeroUtils.getHeroStack(player).getOrDefault(FlightAbility.FLYING, false) && player.getVelocity().length() > 0.5f) {
+            if (player.getWorld().getTime() > HeroUtils.getHeroStack(player).getOrDefault(LANDING_COOLDOWN_TIMESTAMP, 0L)) {
+                SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 3, false, false, false));
+                AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("landing"), false, 2000);
+                ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
+                EffekUtils.playBoundEffect(BoundlessAPI.identifier("landing_impact"), player, new Vec3d(1.0f, 1.0f, 1.0f), new Vec3d(0, 0, 0));
+
+                HeroUtils.getHeroStack(player).set(LANDING_COOLDOWN_TIMESTAMP, player.getWorld().getTime() + LANDING_COOLDOWN_TICKS);
+            }
+        }
     }
 
     public static void boostLogic(PlayerEntity player) {

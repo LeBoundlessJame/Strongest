@@ -9,6 +9,11 @@
       "boundless:miss_hit"
     ]
   },
+  "earth_impact": {
+    "sounds": [
+      "boundless:earth_impact"
+    ]
+  },
   "rock_crumbling": {
     "sounds": [
       "boundless:rock_crumbling"

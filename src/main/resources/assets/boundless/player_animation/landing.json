@@ -1,0 +1,58 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"landing": {
+			"animation_length": 0.75,
+			"bones": {
+				"rightArm": {
+					"rotation": {
+						"vector": [-19.67505, 21.11581, 6.32633]
+					},
+					"position": {
+						"vector": [0, -8, 0]
+					}
+				},
+				"leftArm": {
+					"rotation": {
+						"vector": [-0.72083, 0.34715, -7.36934]
+					},
+					"position": {
+						"vector": [0, -7, 0]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [0, -1, -2]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"body": {
+					"rotation": {
+						"vector": [15, 0, 0]
+					}
+				},
+				"head": {
+					"position": {
+						"vector": [0, -8, 0]
+					}
+				},
+				"torso": {
+					"position": {
+						"vector": [0, -7, 1]
+					}
+				}
+			}
+		}
+	},
+	"azurelib_format_version": 2
+}
