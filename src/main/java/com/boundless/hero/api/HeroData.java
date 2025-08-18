@@ -6,6 +6,7 @@ import com.boundless.ability.AbilityLoadout;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -26,6 +27,9 @@ public class HeroData {
 
     @Singular
     private final List<Consumer<PlayerEntity>> tickHandlers;
+
+    @Singular
+    private final List<Consumer<MinecraftClient>> clientTickEvents;
 
     private AbilityLoadout defaultAbilityLoadout;
 

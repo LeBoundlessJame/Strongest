@@ -1,6 +1,5 @@
 package com.boundless.ability;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.action.Action;
 import com.boundless.hero.MeleeHero;
@@ -29,7 +28,7 @@ public class MeleeAbility {
             CombatUtils.attack(heroAction, attackData);
         });
 
-        AnimationUtils.playAnimation(player, attackData.getAnimation(), attackData.getAnimationSpeed(), jabCount % 2 == 0);
+        AnimationUtils.playSyncedAnimation(player, attackData.getAnimation(), attackData.getAnimationSpeed(), jabCount % 2 == 0, true, 2000);
         AttackUtils.triggerAttackAction(player, attackAction);
     }
 }

@@ -17,6 +17,12 @@ public class DataComponentUtils {
         return updatedCooldownData;
     }
 
+    public static <A, B> void updateMap(ItemStack heroStack, ComponentType<Map<A, B>> mapComponent, A key, B value) {
+        HashMap<A, B> map = new HashMap<>(heroStack.getOrDefault(mapComponent, new HashMap<>()));
+        map.put(key, value);
+        heroStack.set(mapComponent, map);
+    }
+
     public static void toggleBoolean(PlayerEntity player, ComponentType<Boolean> component) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, !stack.getOrDefault(component, false));
@@ -34,7 +40,7 @@ public class DataComponentUtils {
 
     public static void addOrSubtractInt(ComponentType<Integer> component, PlayerEntity player, int amount, int max) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, Math.clamp(DataComponentUtils.getInt(component, player, max) + amount, 0, max));
+        stack.set(component, Math.clamp(DataComponentUtils.getInt(component, player, 0) + amount, 0, max));
     }
 
     public static boolean consumeInt(ComponentType<Integer> component, PlayerEntity player, int amount) {

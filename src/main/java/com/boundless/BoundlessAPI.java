@@ -1,5 +1,6 @@
 package com.boundless;
 
+import com.boundless.ability.reusable_abilities.BoundlessAbilities;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -14,6 +15,8 @@ public class BoundlessAPI implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		BoundlessAbilities.initialize();
+		CodecRegistry.initialize();
 		RenderLogicRegistry.initialize();
 		ConfigRegistry.initialize();
 		DataComponentRegistry.initialize();

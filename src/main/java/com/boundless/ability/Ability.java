@@ -25,4 +25,5 @@ public class Ability {
     private final int iconWidth = 22;
     private final Identifier abilityIcon;
     private final Identifier abilityID;
+    private final boolean hide;
 }

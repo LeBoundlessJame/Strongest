@@ -1,9 +1,8 @@
-package com.boundless.event;
+package com.boundless.client;
 
-import com.boundless.ability.Ability;
 import com.boundless.hero.api.HeroData;
 import com.boundless.networking.payloads.AbilityUsePayload;
-import com.boundless.registry.AbilityRegistry;
+import com.boundless.networking.payloads.UpdateHoldStatePayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.HeroUtils;
@@ -11,10 +10,13 @@ import com.boundless.util.KeybindingUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class KeyInputHandler {
     public static void keyInputs() {
@@ -27,7 +29,30 @@ public class KeyInputHandler {
             for (String translatableKey: abilities.keySet()) {
                 inputLogic(client, translatableKey);
             }
+
+            HeroData heroData = HeroUtils.getHeroData(client.player);
+            if (heroData == null) return;
+            /* Todo: reintegrate some other stage
+            for (Consumer<MinecraftClient> clientConsumer: heroData.getClientTickEvents()) {
+                clientConsumer.accept(client);
+            } */
+            KeyInputHandler.keybindHoldLogic(client, client.options.forwardKey, client.options.forwardKey.getTranslationKey());
+            KeyInputHandler.keybindHoldLogic(client, client.options.backKey, client.options.backKey.getTranslationKey());
         });
+    }
+
+    private static final Map<String, Boolean> heldKeysMap = new HashMap<>();
+
+    public static void keybindHoldLogic(MinecraftClient client, KeyBinding key, String translationKey) {
+        if (client.player == null) return;
+
+        if (key.isPressed() && !heldKeysMap.getOrDefault(translationKey, false)) {
+            heldKeysMap.put(translationKey, true);
+            ClientPlayNetworking.send(new UpdateHoldStatePayload(translationKey, true));
+        } else if (!key.isPressed() && heldKeysMap.getOrDefault(translationKey, false)) {
+            heldKeysMap.put(translationKey, false);
+            ClientPlayNetworking.send(new UpdateHoldStatePayload(translationKey, false));
+        }
     }
 
     public static void inputLogic(MinecraftClient client, String translatableKey) {
