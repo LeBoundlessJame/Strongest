@@ -9,6 +9,11 @@
       "boundless:miss_hit"
     ]
   },
+  "black_flash": {
+    "sounds": [
+      "boundless:black_flash"
+    ]
+  },
   "earth_impact": {
     "sounds": [
       "boundless:earth_impact"
