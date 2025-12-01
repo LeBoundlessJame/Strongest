@@ -38,6 +38,12 @@ public class BlackSparksHero extends Hero {
         this.registerHero();
     }
 
+
+    /*
+    Vec3d effectScale =  new Vec3d(livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f);
+    Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
+    EffekUtils.playRotatedEffect(BoundlessAPI.identifier("divergent_fist_impact"), player, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), effectScale, effectRotation);
+     */
     public static Ability BLACK_FLASH =  Ability.builder()
             .abilityConsumer((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
@@ -51,11 +57,9 @@ public class BlackSparksHero extends Hero {
                                 ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
                             }
                             CombatUtils.uppercutLogic(attackDataBuilder, livingEntity);
-
                             Vec3d effectScale =  new Vec3d(livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f);
                             Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-
-                            EffekUtils.playRotatedEffect(BoundlessAPI.identifier("divergent_fist_impact"), player, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), effectScale, effectRotation);
+                            EffekUtils.playRotatedEffect(BoundlessAPI.identifier("black_flash_impact"), player, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), effectScale, effectRotation);
 
                             //EffekUtils.playRotatedEffect(BoundlessAPI.identifier("black_flash_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), new Vec3d(1, 1, 1), new Vec3d(0, 0, 0));
                         })
