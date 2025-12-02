@@ -13,6 +13,7 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.CombatUtils;
 import com.boundless.util.EffekUtils;
+import com.boundless.util.HeroUtils;
 import com.boundless.util.SoundUtils;
 import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -22,9 +23,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 
 public class BlackSparksHero extends Hero {
+    public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time",builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.BLACK_FLASH)
+                .ability("key.use", BlackSparksHero.FOCUS)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
                 .ability("key.boundless.ability_two", MeleeCombatAbilities.SPIN_KICK)
                 .build();
@@ -34,9 +38,19 @@ public class BlackSparksHero extends Hero {
                 .name("black_sparks_hero")
                 .textureIdentifier(BoundlessAPI.textureID("black_sparks_hero"))
                 .defaultAbilityLoadout(loadout)
+                .hudRenderer(BlackSparksHUD::render)
                 .build();
         this.registerHero();
     }
+
+    public static Ability FOCUS = Ability.builder()
+            .abilityConsumer((player) -> {
+                HeroUtils.getHeroStack(player).set(BlackSparksHero.BLACK_FLASH_TIMESTAMP, player.getWorld().getTime() + player.getRandom().nextBetween(5, 30));
+            })
+            .cooldown(5)
+            .abilityID(BoundlessAPI.identifier("focus"))
+            .abilityIcon(BoundlessAPI.hudPNG("sword"))
+            .build();
 
 
     /*
