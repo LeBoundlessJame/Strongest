@@ -46,7 +46,7 @@ public class AbilityUtils {
 
         Ability ability = AbilityRegistry.getAbilityFromID(abilityID);
         if (ability == null) return false;
-        Consumer<PlayerEntity> abilityConsumer = ability.getAbilityConsumer();
+        Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
 
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {
             abilityConsumer.accept(player);
@@ -74,7 +74,7 @@ public class AbilityUtils {
     }
 
     public static Ability abilityWithIcon(String name, String iconName, Consumer<PlayerEntity> abilityLogic, int cooldown) {
-        return Ability.builder().abilityConsumer(abilityLogic)
+        return Ability.builder().abilityLogic(abilityLogic)
                 .cooldown(cooldown)
                 .abilityID(BoundlessAPI.identifier(name))
                 .abilityIcon(BoundlessAPI.hudPNG(iconName))

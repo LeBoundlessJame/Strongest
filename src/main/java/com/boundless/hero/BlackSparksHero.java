@@ -19,7 +19,6 @@ import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.ComponentType;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 
 public class BlackSparksHero extends Hero {
@@ -44,7 +43,7 @@ public class BlackSparksHero extends Hero {
     }
 
     public static Ability FOCUS = Ability.builder()
-            .abilityConsumer((player) -> {
+            .abilityLogic((player) -> {
                 HeroUtils.getHeroStack(player).set(BlackSparksHero.BLACK_FLASH_TIMESTAMP, player.getWorld().getTime() + player.getRandom().nextBetween(5, 30));
             })
             .cooldown(5)
@@ -52,14 +51,8 @@ public class BlackSparksHero extends Hero {
             .abilityIcon(BoundlessAPI.hudPNG("sword"))
             .build();
 
-
-    /*
-    Vec3d effectScale =  new Vec3d(livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f);
-    Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-    EffekUtils.playRotatedEffect(BoundlessAPI.identifier("divergent_fist_impact"), player, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), effectScale, effectRotation);
-     */
-    public static Ability BLACK_FLASH =  Ability.builder()
-            .abilityConsumer((player) -> {
+    public static Ability BLACK_FLASH = Ability.builder()
+            .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(40f)
                         .knockbackStrength(2f)

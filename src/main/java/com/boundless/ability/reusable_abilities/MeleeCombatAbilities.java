@@ -14,7 +14,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class MeleeCombatAbilities {
     public static Ability JAB = Ability.builder()
-            .abilityConsumer((player) -> {
+            .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(10f)
                         .knockbackStrength(1.0f)
@@ -29,7 +29,7 @@ public class MeleeCombatAbilities {
             .build();
 
     public static Ability SPIN_KICK = Ability.builder()
-            .abilityConsumer((player) -> {
+            .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(15f)
                         .knockbackStrength(2.0f)
@@ -48,7 +48,7 @@ public class MeleeCombatAbilities {
             .build();
 
     public static Ability DROPKICK = Ability.builder()
-            .abilityConsumer((player) -> {
+            .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(30f)
                         .knockbackStrength(3.0f)
@@ -70,7 +70,7 @@ public class MeleeCombatAbilities {
             .abilityID(BoundlessAPI.identifier("dash"))
             .abilityIcon(BoundlessAPI.hudPNG("dash"))
             .cooldown(60)
-            .abilityConsumer((player) -> {
+            .abilityLogic((player) -> {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
                 if (!player.getWorld().isClient) {
                     ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
@@ -79,7 +79,7 @@ public class MeleeCombatAbilities {
             .build();
 
     public static Ability UPPERCUT = Ability.builder()
-            .abilityConsumer((player) -> {
+            .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(50f)
                         .customHitLogic(CombatUtils::uppercutLogic)
