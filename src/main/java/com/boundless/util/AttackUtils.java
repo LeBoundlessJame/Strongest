@@ -1,14 +1,14 @@
 package com.boundless.util;
 
-import com.boundless.ability.combat.CombatSystem;
 import com.boundless.action.Action;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.function.BiConsumer;
+
+import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
+import static com.boundless.registry.DataComponentRegistry.ATTACK_START;
 
 public class AttackUtils {
 
@@ -21,10 +21,16 @@ public class AttackUtils {
         int lifetime = keys.getLast();
 
         if (startAttackTimer){
-            CombatSystem.startAttackTimer(player, lifetime);
+            AttackUtils.startAttackTimer(player, lifetime);
         }
 
         ActionUtils.performAction(player, action);
         //CombatUtils.performAttack(player, action, duration);
+    }
+
+    public static void startAttackTimer(PlayerEntity player, long duration) {
+        ItemStack heroStack = HeroUtils.getHeroStack(player);
+        heroStack.set(ATTACK_START, player.getWorld().getTime());
+        heroStack.set(ATTACK_END, heroStack.getOrDefault(ATTACK_START, 0L) + duration);
     }
 }
