@@ -16,6 +16,15 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class AbilityUtils {
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon) {
+        return Ability
+                .builder()
+                .abilityLogic(abilityLogic)
+                .cooldown(cooldown)
+                .abilityID(abilityID)
+                .abilityIcon(abilityIcon)
+                .build();
+    }
 
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
@@ -57,31 +66,5 @@ public class AbilityUtils {
             return true;
         }
         return false;
-    }
-
-    public static void assignAbilityLoadout(PlayerEntity player, Map<String, Identifier> abilities) {
-        if (!HeroUtils.isHero(player)) return;
-        HeroUtils.getHeroStack(player).set(DataComponentRegistry.ABILITY_LOADOUT, abilities);
-    }
-
-    public static void assignAbilityLoadout(PlayerEntity player, AbilityLoadout loadout) {
-        if (!HeroUtils.isHero(player)) return;
-        LinkedHashMap<String, Identifier> abilities = new LinkedHashMap();
-        for (Map.Entry<String, Ability> entry: loadout.getAbilities().entrySet()) {
-            abilities.put(entry.getKey(), entry.getValue().getAbilityID());
-        }
-        HeroUtils.getHeroStack(player).set(DataComponentRegistry.ABILITY_LOADOUT, abilities);
-    }
-
-    public static Ability abilityWithIcon(String name, String iconName, Consumer<PlayerEntity> abilityLogic, int cooldown) {
-        return Ability.builder().abilityLogic(abilityLogic)
-                .cooldown(cooldown)
-                .abilityID(BoundlessAPI.identifier(name))
-                .abilityIcon(BoundlessAPI.hudPNG(iconName))
-                .build();
-    }
-
-    public static Ability abilityWithIcon(String name, Consumer<PlayerEntity> abilityLogic, int cooldown) {
-        return AbilityUtils.abilityWithIcon(name, name, abilityLogic, cooldown);
     }
 }

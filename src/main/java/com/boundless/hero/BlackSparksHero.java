@@ -8,26 +8,22 @@ import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.ability.reusable_abilities.MeleeCombatAbilities;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.networking.payloads.CameraShakePayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
-import com.boundless.util.CombatUtils;
-import com.boundless.util.EffekUtils;
-import com.boundless.util.HeroUtils;
-import com.boundless.util.SoundUtils;
+import com.boundless.util.AbilityUtils;
+import com.boundless.util.CameraUtils;
 import com.mojang.serialization.Codec;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.ComponentType;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class BlackSparksHero extends Hero {
     public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time",builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.identifier("arm"));
+
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.BLACK_FLASH)
-                .ability("key.use", BlackSparksHero.FOCUS)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
                 .ability("key.boundless.ability_two", MeleeCombatAbilities.SPIN_KICK)
                 .build();
@@ -37,20 +33,28 @@ public class BlackSparksHero extends Hero {
                 .name("black_sparks_hero")
                 .textureIdentifier(BoundlessAPI.textureID("black_sparks_hero"))
                 .defaultAbilityLoadout(loadout)
-                .hudRenderer(BlackSparksHUD::render)
                 .build();
         this.registerHero();
     }
 
-    public static Ability FOCUS = Ability.builder()
-            .abilityLogic((player) -> {
-                HeroUtils.getHeroStack(player).set(BlackSparksHero.BLACK_FLASH_TIMESTAMP, player.getWorld().getTime() + player.getRandom().nextBetween(5, 30));
-            })
-            .cooldown(5)
-            .abilityID(BoundlessAPI.identifier("focus"))
-            .abilityIcon(BoundlessAPI.hudPNG("sword"))
-            .build();
+    public static void blackFlash(PlayerEntity player) {
+        AttackDataBuilder data = AttackDataBuilder
+                .builder()
+                .damage(800)
+                .knockbackStrength(2)
+                .impactSound(SoundRegistry.BLACK_FLASH)
+                .impactTick(4)
+                .animation(BoundlessAPI.identifier("hook"))
+                .impactVisual(BoundlessAPI.identifier("black_flash_impact"))
+                .postHitLogic(CameraUtils::playCameraShake)
+                .attacker(player)
+                .build();
+        MeleeAbility blackSparks = new MeleeAbility(data);
+        blackSparks.attack(player);
+    }
 
+
+    /*
     public static Ability BLACK_FLASH = Ability.builder()
             .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
@@ -64,17 +68,16 @@ public class BlackSparksHero extends Hero {
                                 ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
                             }
                             CombatUtils.uppercutLogic(attackDataBuilder, livingEntity);
-                            Vec3d effectScale =  new Vec3d(livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f, livingEntity.getScale() * 0.5f);
-                            Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-                            EffekUtils.playRotatedEffect(BoundlessAPI.identifier("black_flash_impact"), player, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), effectScale, effectRotation);
 
                             //EffekUtils.playRotatedEffect(BoundlessAPI.identifier("black_flash_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), new Vec3d(1, 1, 1), new Vec3d(0, 0, 0));
                         })
                         .player(player)
-                        .build()).singleAttack(player);
+                        .build()).attack(player);
             })
             .cooldown(5)
             .abilityID(BoundlessAPI.identifier("black_flash"))
             .abilityIcon(BoundlessAPI.hudPNG("arm"))
             .build();
+
+     */
 }

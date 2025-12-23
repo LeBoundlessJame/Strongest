@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 public class AttackDataBuilder {
 
     @Builder.Default
-    PlayerEntity player = null;
+    PlayerEntity attacker = null;
 
     @Builder.Default
     float damage = 0;
@@ -34,7 +34,13 @@ public class AttackDataBuilder {
     BiConsumer<AttackDataBuilder, LivingEntity> customHitLogic = null;
 
     @Builder.Default
-    BiConsumer<AttackDataBuilder, PlayerEntity> customAttackLogic = null;
+    BiConsumer<AttackDataBuilder, PlayerEntity> replacedAttackLogic = null;
+
+    @Builder.Default
+    BiConsumer<AttackDataBuilder, PlayerEntity> postHitLogic = null;
+
+    @Builder.Default
+    Identifier impactVisual = null;
 
     @Builder.Default
     int slownessDuration = 20;

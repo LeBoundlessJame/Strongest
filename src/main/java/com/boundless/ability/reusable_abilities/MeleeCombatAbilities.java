@@ -20,8 +20,8 @@ public class MeleeCombatAbilities {
                         .knockbackStrength(1.0f)
                         .animation(BoundlessAPI.identifier("hook"))
                         .impactTick(4)
-                        .player(player)
-                        .build()).singleAttack(player);
+                        .attacker(player)
+                        .build()).attack(player);
             })
             .cooldown(5)
             .abilityID(BoundlessAPI.identifier("jab"))
@@ -39,8 +39,8 @@ public class MeleeCombatAbilities {
                         .slownessAmplifier(1)
                         .impactTick(10)
                         .animationSpeed(1.0f)
-                        .player(player)
-                        .build()).singleAttack(player);
+                        .attacker(player)
+                        .build()).attack(player);
             })
             .cooldown(10)
             .abilityID(BoundlessAPI.identifier("spin_kick"))
@@ -58,8 +58,8 @@ public class MeleeCombatAbilities {
                         .slownessAmplifier(2)
                         .impactTick(4)
                         .animationSpeed(1.0f)
-                        .player(player)
-                        .build()).singleAttack(player);
+                        .attacker(player)
+                        .build()).attack(player);
             })
             .cooldown(10)
             .abilityID(BoundlessAPI.identifier("dropkick"))
@@ -83,7 +83,7 @@ public class MeleeCombatAbilities {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(50f)
                         .customHitLogic(CombatUtils::uppercutLogic)
-                        .customAttackLogic(MeleeCombatAbilities::uppercutMovement)
+                        .replacedAttackLogic(MeleeCombatAbilities::uppercutMovement)
                         .knockbackStrength(1.0f)
                         .animation(BoundlessAPI.identifier("uppercut"))
                         .animationSpeed(2.0f)
@@ -91,8 +91,8 @@ public class MeleeCombatAbilities {
                         .slownessDuration(10)
                         .slownessAmplifier(0)
                         .impactTick(2)
-                        .player(player)
-                        .build()).singleAttack(player);
+                        .attacker(player)
+                        .build()).attack(player);
             })
             .cooldown(60)
             .abilityID(BoundlessAPI.identifier("uppercut"))

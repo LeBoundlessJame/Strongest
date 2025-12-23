@@ -1,9 +1,21 @@
 package com.boundless.util;
 
+import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.client.CameraShake;
+import com.boundless.networking.payloads.CameraShakePayload;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CameraUtils {
+
+    public static void playCameraShake(AttackDataBuilder data, PlayerEntity player) {
+        if (!player.getWorld().isClient) {
+            ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
+        }
+    }
+
     public static void addCameraShake(MinecraftClient client, long duration, float intensity) {
         if (client.player == null || client.world == null || !client.player.getWorld().isClient) return;
         long worldTime = client.world.getTime();
