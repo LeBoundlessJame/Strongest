@@ -104,18 +104,11 @@ public class BlackSparksHero extends Hero {
         if (raycastResult == null) return;
         Entity entity = raycastResult.getEntity();
 
-        player.setVelocity(player.getPos().subtract(entity.getPos()).normalize().multiply(-1.5));
-        player.velocityModified = true;
+        player.teleport(entity.getPos().x, entity.getPos().y, entity.getPos().z, false);
+        EffekUtils.playBoundEffect(BoundlessAPI.identifier("landing_impact"), player, new Vec3d(1, 1, 1), new Vec3d(1, 1, 1));
+        SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+        entity.kill();
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 10, 2, true, false, false));
-
-        tasks.put(10, (user, heroAction) -> {
-            if (player.distanceTo(entity) < 2.0) {
-                entity.kill();
-            }
-            //SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
-            //EffekUtils.playBoundEffect(BoundlessAPI.identifier("landing_impact"), player, new Vec3d(1, 1, 1), new Vec3d(1, 1, 1));
-        });
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
     }
 }
