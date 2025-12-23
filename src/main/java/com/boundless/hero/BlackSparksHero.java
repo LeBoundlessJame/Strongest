@@ -15,23 +15,29 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.TeleportTarget;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
-    public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time",builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("leg"));
+    public static Ability GROUND_POUND = AbilityUtils.ability(BlackSparksHero::groundPound, 5, BoundlessAPI.identifier("ground_pound"), BoundlessAPI.hudPNG("black_flash"));
+
 
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
-                .ability("key.attack", BlackSparksHero.BLACK_FLASH)
+                .ability("key.attack", BlackSparksHero.GROUND_POUND)
                 .ability("key.use", BlackSparksHero.DIVERGENT_FIST)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
@@ -91,4 +97,25 @@ public class BlackSparksHero extends Hero {
         player.velocityModified = true;
     }
 
+    public static void groundPound(PlayerEntity player) {
+        if (player.isOnGround()) return;
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        EntityHitResult raycastResult = RaycastUtils.raycast(player, 32);
+        if (raycastResult == null) return;
+        Entity entity = raycastResult.getEntity();
+
+        player.setVelocity(player.getPos().subtract(entity.getPos()).normalize().multiply(-1.5));
+        player.velocityModified = true;
+
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 10, 2, true, false, false));
+
+        tasks.put(10, (user, heroAction) -> {
+            if (player.distanceTo(entity) < 2.0) {
+                entity.kill();
+            }
+            //SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+            //EffekUtils.playBoundEffect(BoundlessAPI.identifier("landing_impact"), player, new Vec3d(1, 1, 1), new Vec3d(1, 1, 1));
+        });
+        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+    }
 }
