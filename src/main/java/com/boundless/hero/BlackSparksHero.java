@@ -88,7 +88,7 @@ public class BlackSparksHero extends Hero {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, false, true, 2000);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("flip_kick"), 1.0f, false, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addVelocity(player.getRotationVector().normalize().multiply(0.4f).x, player.isOnGround() ? 0.5f : 0.0f, player.getRotationVector().normalize().multiply(0.4f).z);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
