@@ -32,12 +32,10 @@ public class BlackSparksHero extends Hero {
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("leg"));
-    public static Ability GROUND_POUND = AbilityUtils.ability(BlackSparksHero::groundPound, 5, BoundlessAPI.identifier("ground_pound"), BoundlessAPI.hudPNG("black_flash"));
-
 
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
-                .ability("key.attack", BlackSparksHero.GROUND_POUND)
+                .ability("key.attack", BlackSparksHero.BLACK_FLASH)
                 .ability("key.use", BlackSparksHero.DIVERGENT_FIST)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
@@ -90,25 +88,11 @@ public class BlackSparksHero extends Hero {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.25f, false, true, 2000);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, false, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addVelocity(player.getRotationVector().normalize().multiply(0.4f).x, player.isOnGround() ? 0.5f : 0.0f, player.getRotationVector().normalize().multiply(0.4f).z);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         player.velocityModified = true;
     }
 
-    public static void groundPound(PlayerEntity player) {
-        if (player.isOnGround()) return;
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        EntityHitResult raycastResult = RaycastUtils.raycast(player, 32);
-        if (raycastResult == null) return;
-        Entity entity = raycastResult.getEntity();
-
-        player.teleport(entity.getPos().x, entity.getPos().y, entity.getPos().z, false);
-        EffekUtils.playBoundEffect(BoundlessAPI.identifier("landing_impact"), player, new Vec3d(1, 1, 1), new Vec3d(1, 1, 1));
-        SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
-        entity.kill();
-
-        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
-    }
 }
