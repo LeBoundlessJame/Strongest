@@ -18,12 +18,13 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class BlackSparksHero extends Hero {
     public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time",builder -> ComponentType.<Long>builder().codec(Codec.LONG));
-
-    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.identifier("arm"));
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
+    public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
 
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.BLACK_FLASH)
+                .ability("key.use", BlackSparksHero.DIVERGENT_FIST)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
                 .ability("key.boundless.ability_two", MeleeCombatAbilities.SPIN_KICK)
                 .build();
@@ -40,7 +41,7 @@ public class BlackSparksHero extends Hero {
     public static void blackFlash(PlayerEntity player) {
         AttackDataBuilder data = AttackDataBuilder
                 .builder()
-                .damage(800)
+                .damage(200)
                 .knockbackStrength(2)
                 .impactSound(SoundRegistry.BLACK_FLASH)
                 .impactTick(4)
@@ -53,31 +54,19 @@ public class BlackSparksHero extends Hero {
         blackSparks.attack(player);
     }
 
-
-    /*
-    public static Ability BLACK_FLASH = Ability.builder()
-            .abilityLogic((player) -> {
-                new MeleeAbility(AttackDataBuilder.builder()
-                        .damage(40f)
-                        .knockbackStrength(2f)
-                        .animation(BoundlessAPI.identifier("hook"))
-                        .impactTick(4)
-                        .customHitLogic((attackDataBuilder, livingEntity) -> {
-                            SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH, 1.0f);
-                            if (!player.getWorld().isClient) {
-                                ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
-                            }
-                            CombatUtils.uppercutLogic(attackDataBuilder, livingEntity);
-
-                            //EffekUtils.playRotatedEffect(BoundlessAPI.identifier("black_flash_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), new Vec3d(1, 1, 1), new Vec3d(0, 0, 0));
-                        })
-                        .player(player)
-                        .build()).attack(player);
-            })
-            .cooldown(5)
-            .abilityID(BoundlessAPI.identifier("black_flash"))
-            .abilityIcon(BoundlessAPI.hudPNG("arm"))
-            .build();
-
-     */
+    public static void divergentFist(PlayerEntity player) {
+        AttackDataBuilder data = AttackDataBuilder
+                .builder()
+                .damage(15)
+                .knockbackStrength(4)
+                .impactSound(SoundRegistry.EARTH_IMPACT)
+                .impactTick(4)
+                .animation(BoundlessAPI.identifier("hook"))
+                .impactVisual(BoundlessAPI.identifier("divergent_fist_impact"))
+                .postHitLogic(CameraUtils::playCameraShake)
+                .attacker(player)
+                .build();
+        MeleeAbility divergentFist = new MeleeAbility(data);
+        divergentFist.attack(player);
+    }
 }

@@ -82,7 +82,7 @@ public class MeleeCombatAbilities {
             .abilityLogic((player) -> {
                 new MeleeAbility(AttackDataBuilder.builder()
                         .damage(50f)
-                        .customHitLogic(CombatUtils::uppercutLogic)
+                        .postHitLogic(CombatUtils::uppercutKnockback)
                         .replacedAttackLogic(MeleeCombatAbilities::uppercutMovement)
                         .knockbackStrength(1.0f)
                         .animation(BoundlessAPI.identifier("uppercut"))

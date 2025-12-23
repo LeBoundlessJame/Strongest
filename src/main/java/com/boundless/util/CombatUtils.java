@@ -1,6 +1,5 @@
 package com.boundless.util;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
@@ -56,18 +55,18 @@ public class CombatUtils {
     public static void basicAttackLogic(AttackDataBuilder attack, LivingEntity target) {
         DamageSource source = attack.getDamageSource();
         if (source == null) source = target.getDamageSources().generic();
-        PlayerEntity attacker = attack.getAttacker();
-
-        Vec3d attackerRotation = attacker.getRotationVector();
         target.damage(source, attack.getDamage());
+        knockback(attack, target);
+    }
+
+    public static void knockback(AttackDataBuilder attack, LivingEntity target) {
+        PlayerEntity attacker = attack.getAttacker();
+        Vec3d attackerRotation = attacker.getRotationVector();
         target.takeKnockback(attack.getKnockbackStrength(), attackerRotation.x * -1, attackerRotation.z * -1);
         target.velocityModified = true;
     }
 
-    public static void uppercutLogic(AttackDataBuilder attack, LivingEntity target) {
-        DamageSource source = attack.getDamageSource();
-        if (source == null) source = target.getDamageSources().generic();
-        target.damage(source, attack.getDamage());
+    public static void uppercutKnockback(AttackDataBuilder attack, LivingEntity target) {
         target.setVelocity(attack.getAttacker().getRotationVector().x * 1.2, 1, attack.getAttacker().getRotationVector().z * 1.2);
         target.velocityModified = true;
     }
