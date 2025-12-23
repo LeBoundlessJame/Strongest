@@ -15,6 +15,8 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.LinkedHashMap;
@@ -25,13 +27,14 @@ public class BlackSparksHero extends Hero {
     public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time",builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
+    public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("leg"));
 
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.BLACK_FLASH)
                 .ability("key.use", BlackSparksHero.DIVERGENT_FIST)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
-                .ability("key.boundless.ability_two", MeleeCombatAbilities.SPIN_KICK)
+                .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
@@ -58,39 +61,34 @@ public class BlackSparksHero extends Hero {
         blackSparks.attack(player);
     }
 
-    /*
-    public static void divergentFist(PlayerEntity player) {
-        AttackDataBuilder data = AttackDataBuilder
-                .builder()
-                .damage(15)
-                .knockbackStrength(4)
-                .impactSound(SoundRegistry.EARTH_IMPACT)
-                .impactTick(4)
-                .animation(BoundlessAPI.identifier("hook"))
-                .impactVisual(BoundlessAPI.identifier("divergent_fist_impact"))
-                .postHitLogic(CameraUtils::playCameraShake)
-                .attacker(player)
-                .build();
-        MeleeAbility divergentFist = new MeleeAbility(data);
-        divergentFist.attack(player);
-    }
-
-     */
-
     public static void divergentFist(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
-            CombatUtils.attack(heroAction, 15f, java.util.Optional.empty());
+            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
         tasks.put(8, (user, heroAction) -> {
+            SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
             CameraUtils.playCameraShake(player);
             CombatUtils.attack(heroAction, 1000f, Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
-            SoundUtils.playSound(player, SoundRegistry.IMPACT_HEAVY_1);
         });
         Action divergence = Action.builder().scheduledTasks(tasks).build();
 
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
         ActionUtils.performAction(player, divergence);
+    }
+
+    public static void spinKick(PlayerEntity player) {
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        tasks.put(7, (user, heroAction) -> {
+            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
+        });
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.25f, false, true, 2000);
+        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+        player.addVelocity(player.getRotationVector().normalize().multiply(0.4f).x, player.isOnGround() ? 0.5f : 0.0f, player.getRotationVector().normalize().multiply(0.4f).z);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
+        player.velocityModified = true;
     }
 
 }
