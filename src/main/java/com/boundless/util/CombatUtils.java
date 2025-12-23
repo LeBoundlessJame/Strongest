@@ -10,9 +10,24 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.Optional;
+
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
 public class CombatUtils {
+    public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
+        heroAction.repositionBox();
+        if (heroAction.getOwner() == null) return;
+        PlayerEntity player = (PlayerEntity) heroAction.getOwner();
+
+        for (LivingEntity target : heroAction.getWorld().getEntitiesByClass(LivingEntity.class, heroAction.getBoundingBox(), entity -> true)) {
+            if (target != player) {
+                impactVisual.ifPresent((identifier) -> playImpactVisual(player, target, impactVisual.get()));
+                target.damage(target.getDamageSources().generic(), damage);
+            }
+        }
+    }
+
     public static void attack(HeroActionEntity heroAction, AttackDataBuilder attackDataBuilder) {
         heroAction.repositionBox();
         boolean hasPlayedSound = false;

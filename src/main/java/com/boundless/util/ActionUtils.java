@@ -57,7 +57,7 @@ public class ActionUtils {
         return heroAction;
     }
 
-    public static void summonHeroAction(PlayerEntity user, HeroActionEntity heroAction) {
+    private static void summonHeroAction(PlayerEntity user, HeroActionEntity heroAction) {
         user.getWorld().spawnEntity(heroAction);
     }
 }

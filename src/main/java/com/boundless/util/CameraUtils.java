@@ -10,7 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CameraUtils {
 
-    public static void playCameraShake(AttackDataBuilder data, PlayerEntity player) {
+    public static void playCameraShake(PlayerEntity player) {
         if (!player.getWorld().isClient) {
             ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
         }
