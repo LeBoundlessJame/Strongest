@@ -28,6 +28,20 @@ public class CombatUtils {
         }
     }
 
+    public static void knockbackAttack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
+        heroAction.repositionBox();
+        if (heroAction.getOwner() == null) return;
+        PlayerEntity player = (PlayerEntity) heroAction.getOwner();
+
+        for (LivingEntity target : heroAction.getWorld().getEntitiesByClass(LivingEntity.class, heroAction.getBoundingBox(), entity -> true)) {
+            if (target != player) {
+                impactVisual.ifPresent((identifier) -> playImpactVisual(player, target, impactVisual.get()));
+                target.damage(target.getDamageSources().generic(), damage);
+                CombatUtils.uppercutKnockback(player, target);
+            }
+        }
+    }
+
     public static void attack(HeroActionEntity heroAction, AttackDataBuilder attackDataBuilder) {
         heroAction.repositionBox();
         boolean hasPlayedSound = false;
@@ -81,8 +95,8 @@ public class CombatUtils {
         target.velocityModified = true;
     }
 
-    public static void uppercutKnockback(AttackDataBuilder attack, LivingEntity target) {
-        target.setVelocity(attack.getAttacker().getRotationVector().x * 1.2, 1, attack.getAttacker().getRotationVector().z * 1.2);
+    public static void uppercutKnockback(PlayerEntity player, LivingEntity target) {
+        target.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
         target.velocityModified = true;
     }
 

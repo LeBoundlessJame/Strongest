@@ -19,7 +19,7 @@ import org.joml.Math;
 import java.util.*;
 
 public class HeroHUD {
-    public static Identifier ABILITY_FRAME =  BoundlessAPI.hudPNG("ability_frame");
+    public static Identifier ABILITY_FRAME =  BoundlessAPI.hudPNG("ability_frame_dark");
     public static void render(DrawContext drawContext, RenderTickCounter renderTickCounter) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         if (minecraftClient == null || minecraftClient.player == null || !HeroUtils.isHero(minecraftClient.player)) return;

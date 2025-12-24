@@ -57,6 +57,7 @@ public class BlackSparksHero extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("black_sparks_hero"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
+                .hudRenderer(BlackSparksHUD::render)
                 .build();
         this.registerHero();
     }
@@ -100,7 +101,7 @@ public class BlackSparksHero extends Hero {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(7, (user, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.attack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.knockbackAttack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
