@@ -75,7 +75,7 @@ public class BlackSparksHero extends Hero {
         MeleeAbility blackSparks = new MeleeAbility(data);
         blackSparks.attack(player);
         if (player.getWorld().isClient) return;
-        player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"));
+        player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
     }
 
     public static void divergentFist(PlayerEntity player) {
