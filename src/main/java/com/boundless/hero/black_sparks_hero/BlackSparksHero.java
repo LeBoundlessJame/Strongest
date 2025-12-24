@@ -7,14 +7,14 @@ import com.boundless.ability.MeleeAbility;
 import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.ability.reusable_abilities.MeleeCombatAbilities;
 import com.boundless.action.Action;
+import com.boundless.config.HeroConfig;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.registry.AttributeRegistry;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.*;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
+import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -31,13 +31,14 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
+    public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
+
     public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("leg"));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
-            .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_attack_damage"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
             .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.80f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
             .build();
@@ -63,7 +64,7 @@ public class BlackSparksHero extends Hero {
     public static void blackFlash(PlayerEntity player) {
         AttackDataBuilder data = AttackDataBuilder
                 .builder()
-                .damage(200)
+                .damage(DAMAGE.blackFlash.get())
                 .knockbackStrength(2)
                 .impactSound(SoundRegistry.BLACK_FLASH)
                 .impactTick(4)
@@ -73,19 +74,20 @@ public class BlackSparksHero extends Hero {
                 .build();
         MeleeAbility blackSparks = new MeleeAbility(data);
         blackSparks.attack(player);
-        player.sendMessage(Text.of("§c§l§ka§c §c§lKokusen! §c§l§ka§c"));
+        if (player.getWorld().isClient) return;
+        player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"));
     }
 
     public static void divergentFist(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.attack(heroAction, DAMAGE.divergentFistPunch.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
         tasks.put(8, (user, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
             CameraUtils.playCameraShake(player);
-            CombatUtils.attack(heroAction, 1000f, Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
+            CombatUtils.attack(heroAction, DAMAGE.divergentFistImpact.get(), Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
         });
         Action divergence = Action.builder().scheduledTasks(tasks).build();
 
@@ -97,7 +99,7 @@ public class BlackSparksHero extends Hero {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(7, (user, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.attack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
