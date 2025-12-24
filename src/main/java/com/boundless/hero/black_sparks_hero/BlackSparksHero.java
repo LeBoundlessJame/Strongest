@@ -37,6 +37,7 @@ public class BlackSparksHero extends Hero {
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("leg"));
+    public static Ability DOUBLE_KICK = AbilityUtils.ability(BlackSparksHero::doubleKick, 10, BoundlessAPI.identifier("double_kick"), BoundlessAPI.hudPNG("leg"));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
@@ -46,7 +47,7 @@ public class BlackSparksHero extends Hero {
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.BLACK_FLASH)
-                .ability("key.use", BlackSparksHero.DIVERGENT_FIST)
+                .ability("key.use", BlackSparksHero.DOUBLE_KICK)
                 .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .build();
@@ -109,5 +110,28 @@ public class BlackSparksHero extends Hero {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         player.velocityModified = true;
     }
+
+    public static void doubleKick(PlayerEntity player) {
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        tasks.put(4, (user, heroAction) -> {
+            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            CombatUtils.attack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
+                target.addVelocity(0, 0.5f, 0);
+                target.velocityModified = true;
+            });
+        });
+        tasks.put(8, (user, heroAction) -> {
+            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            CombatUtils.attack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
+                target.addVelocity(0, 0.5f, 0);
+                target.velocityModified = true;
+            });
+        });
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, false, true, 2000);
+        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+    }
+
 
 }
