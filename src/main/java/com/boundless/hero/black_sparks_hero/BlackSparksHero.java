@@ -1,4 +1,4 @@
-package com.boundless.hero;
+package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
@@ -10,18 +10,21 @@ import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
+import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
-import net.minecraft.entity.Entity;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.TeleportTarget;
+import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
@@ -32,6 +35,12 @@ public class BlackSparksHero extends Hero {
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("leg"));
+
+    public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
+            .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_attack_damage"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
+            .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
+            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.80f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
+            .build();
 
     public BlackSparksHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
@@ -46,6 +55,7 @@ public class BlackSparksHero extends Hero {
                 .name("black_sparks_hero")
                 .textureIdentifier(BoundlessAPI.textureID("black_sparks_hero"))
                 .defaultAbilityLoadout(loadout)
+                .attributes(ATTRIBUTES)
                 .build();
         this.registerHero();
     }
@@ -63,6 +73,7 @@ public class BlackSparksHero extends Hero {
                 .build();
         MeleeAbility blackSparks = new MeleeAbility(data);
         blackSparks.attack(player);
+        player.sendMessage(Text.of("§c§l§ka§c §c§lKokusen! §c§l§ka§c"));
     }
 
     public static void divergentFist(PlayerEntity player) {
@@ -88,7 +99,7 @@ public class BlackSparksHero extends Hero {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.attack(heroAction, 15f, Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("flip_kick"), 1.0f, false, true, 2000);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addVelocity(player.getRotationVector().normalize().multiply(0.4f).x, player.isOnGround() ? 0.5f : 0.0f, player.getRotationVector().normalize().multiply(0.4f).z);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));

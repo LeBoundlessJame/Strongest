@@ -1,6 +1,6 @@
 package com.boundless.registry;
 
-import com.boundless.hero.BlackSparksHero;
+import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.hero.MeleeHero;
 import com.boundless.hero.SuperHero;
 import com.boundless.hero.api.Hero;

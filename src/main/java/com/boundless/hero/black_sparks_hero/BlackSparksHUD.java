@@ -1,7 +1,7 @@
-package com.boundless.hero;
+package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.api.HeroData;
+import com.boundless.hero.HeroHUD;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
