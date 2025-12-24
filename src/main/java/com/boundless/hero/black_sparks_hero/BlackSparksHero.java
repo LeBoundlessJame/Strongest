@@ -74,6 +74,7 @@ public class BlackSparksHero extends Hero {
                 .build();
         MeleeAbility blackSparks = new MeleeAbility(data);
         blackSparks.attack(player);
+        CameraUtils.playCameraShake(player);
         if (player.getWorld().isClient) return;
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
     }
