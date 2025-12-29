@@ -68,6 +68,8 @@ public class BlackSparksHero extends Hero {
     }
 
     public static void lightAttack(PlayerEntity player) {
+        if (!AttackUtils.canAttack(player)) return;
+
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
@@ -83,10 +85,13 @@ public class BlackSparksHero extends Hero {
             tasks.put(4, hook);
             AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 2000);
             ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+            AttackUtils.startAttackTimer(player, 4);
         }
     }
 
     public static void mediumAttack(PlayerEntity player) {
+        if (!AttackUtils.canAttack(player)) return;
+
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
@@ -107,6 +112,7 @@ public class BlackSparksHero extends Hero {
             tasks.put(8, kick);
             AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, attackCount % 2 == 0, true, 2000);
             ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+            AttackUtils.startAttackTimer(player, 8);
         }
     }
 
@@ -131,6 +137,7 @@ public class BlackSparksHero extends Hero {
         MeleeAbility blackSparks = new MeleeAbility(data);
         blackSparks.attack(player);
         CameraUtils.playCameraShake(player);
+        AttackUtils.startAttackTimer(player, 6);
         if (player.getWorld().isClient) return;
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
     }
@@ -150,6 +157,7 @@ public class BlackSparksHero extends Hero {
 
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
         ActionUtils.performAction(player, divergence);
+        AttackUtils.startAttackTimer(player, 8);
     }
 
     public static void spinKick(PlayerEntity player) {
@@ -163,6 +171,7 @@ public class BlackSparksHero extends Hero {
         player.addVelocity(player.getRotationVector().normalize().multiply(0.4f).x, player.isOnGround() ? 0.5f : 0.0f, player.getRotationVector().normalize().multiply(0.4f).z);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         player.velocityModified = true;
+        AttackUtils.startAttackTimer(player, 10);
     }
 
     public static boolean channelCursedEnergyActive(PlayerEntity player) {

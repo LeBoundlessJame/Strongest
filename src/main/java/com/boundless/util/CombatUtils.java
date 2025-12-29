@@ -113,10 +113,6 @@ public class CombatUtils {
         target.velocityModified = true;
     }
 
-    public static boolean canAttack(PlayerEntity player) {
-        return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L) && !HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.VANILLA_MECHANICS, false);
-    }
-
     public static void playImpactVisual(PlayerEntity player, LivingEntity target, Identifier impactVisual) {
         Vec3d effectScale =  new Vec3d(target.getScale() * 0.5f, target.getScale() * 0.5f, target.getScale() * 0.5f);
         Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);

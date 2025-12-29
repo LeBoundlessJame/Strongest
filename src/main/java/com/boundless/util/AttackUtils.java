@@ -1,6 +1,7 @@
 package com.boundless.util;
 
 import com.boundless.action.Action;
+import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
@@ -32,5 +33,9 @@ public class AttackUtils {
         ItemStack heroStack = HeroUtils.getHeroStack(player);
         heroStack.set(ATTACK_START, player.getWorld().getTime());
         heroStack.set(ATTACK_END, heroStack.getOrDefault(ATTACK_START, 0L) + duration);
+    }
+
+    public static boolean canAttack(PlayerEntity player) {
+        return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L) && !HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.VANILLA_MECHANICS, false);
     }
 }
