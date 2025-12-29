@@ -43,6 +43,12 @@ public class DataComponentUtils {
         stack.set(component, Math.clamp(DataComponentUtils.getInt(component, player, 0) + amount, 0, max));
     }
 
+    public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        stack.set(component, DataComponentUtils.getInt(component, player, 0) + 1);
+    }
+
+
     public static boolean consumeInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         int currentValue = stack.getOrDefault(component, 0);

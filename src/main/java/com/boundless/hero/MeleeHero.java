@@ -10,7 +10,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 
 public class MeleeHero extends Hero {
-    public static ComponentType<Integer> JAB_ATTACK_COUNT = DataComponentRegistry.registerComponent("jab_attack_count",builder -> ComponentType.<Integer>builder().codec(Codec.INT));
+    public static ComponentType<Integer> ATTACK_COUNT = DataComponentRegistry.registerComponent("attack_count", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
 
     public MeleeHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()

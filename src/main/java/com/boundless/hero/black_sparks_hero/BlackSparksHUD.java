@@ -43,8 +43,6 @@ public class BlackSparksHUD {
             colors = GUIUtils.hexToUnitColor("1bc7b6");
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Divergent Fist", drawContext.getScaledWindowWidth() / 2 + (drawContext.getScaledWindowWidth() / 7), drawContext.getScaledWindowHeight() / 2 - 10, colors);
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Right Click", drawContext.getScaledWindowWidth() / 2 + (drawContext.getScaledWindowWidth() / 7), (drawContext.getScaledWindowHeight() / 2), colors);
-
-            drawContext.drawTexture(BLACK_FLASH, drawContext.getScaledWindowWidth() / 2, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
         }
 
         // Todo: My use of magic numbers here is brutal. Come back later to add some clarity

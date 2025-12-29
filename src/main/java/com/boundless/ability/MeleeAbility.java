@@ -6,12 +6,9 @@ import com.boundless.hero.MeleeHero;
 import com.boundless.util.*;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 
 @Setter
 @Getter
@@ -23,8 +20,8 @@ public class MeleeAbility {
     }
 
     public void attack(PlayerEntity player) {
-        int jabCount = HeroUtils.getHeroStack(player).getOrDefault(MeleeHero.JAB_ATTACK_COUNT, 0);
-        HeroUtils.getHeroStack(player).set(MeleeHero.JAB_ATTACK_COUNT, jabCount + 1);
+        int jabCount = HeroUtils.getHeroStack(player).getOrDefault(MeleeHero.ATTACK_COUNT, 0);
+        HeroUtils.getHeroStack(player).set(MeleeHero.ATTACK_COUNT, jabCount + 1);
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, attackData.getSlownessDuration(), attackData.getSlownessAmplifier(), true, false, false));
         Action attackAction = ActionUtils.singleAction(attackData.getImpactTick(), (attacker, heroAction) -> {
