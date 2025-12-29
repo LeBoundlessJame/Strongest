@@ -24,6 +24,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
@@ -31,14 +32,15 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
+    public static long CE_TIME_WINDOW = 60;
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
 
-    public static ComponentType<Long> BLACK_FLASH_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::blackFlash, 5, BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BlackSparksHero::divergentFist, 5, BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("divergent_fist"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
     public static Ability DOUBLE_KICK = AbilityUtils.ability(BlackSparksHero::doubleKick, 10, BoundlessAPI.identifier("double_kick"), BoundlessAPI.hudPNG("leg"));
-    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(BlackSparksHero::doubleKick, 5, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
+    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(BlackSparksHero::channelCursedEnergy, 2, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
+    public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
@@ -63,6 +65,15 @@ public class BlackSparksHero extends Hero {
                 .hudRenderer(BlackSparksHUD::render)
                 .build();
         this.registerHero();
+    }
+
+    public static void channelCursedEnergy(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        if (player.getWorld().getTime() < stack.getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime())) {
+            stack.set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
+        } else {
+            stack.set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime() + CE_TIME_WINDOW);
+        }
     }
 
     public static void blackFlash(PlayerEntity player) {
