@@ -37,12 +37,18 @@ public class BlackSparksHUD {
 
         if (player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime())) {
             ArrayList<Float> colors = GUIUtils.hexToUnitColor("920a0a");
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Black Flash", drawContext.getScaledWindowWidth() / 4, drawContext.getScaledWindowHeight() / 2 - 10, colors);
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Left Click", drawContext.getScaledWindowWidth() / 4, (drawContext.getScaledWindowHeight() / 2), colors);
+
+            int horizontalOffset = drawContext.getScaledWindowWidth() / 4;
+            int middle = drawContext.getScaledWindowWidth() / 2;
+
+            drawContext.drawTexture(HeroHUD.ABILITY_FRAME, middle - horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
+            drawContext.drawTexture(BLACK_FLASH, middle - horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
+            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "L", middle - horizontalOffset - 11 + 10, (drawContext.getScaledWindowHeight() / 2) + 24, colors);
 
             colors = GUIUtils.hexToUnitColor("1bc7b6");
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Divergent Fist", drawContext.getScaledWindowWidth() / 2 + (drawContext.getScaledWindowWidth() / 7), drawContext.getScaledWindowHeight() / 2 - 10, colors);
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Right Click", drawContext.getScaledWindowWidth() / 2 + (drawContext.getScaledWindowWidth() / 7), (drawContext.getScaledWindowHeight() / 2), colors);
+            drawContext.drawTexture(HeroHUD.ABILITY_FRAME, middle + horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
+            drawContext.drawTexture(DIVERGENT_FIST, middle + horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
+            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "R", middle + horizontalOffset - 11 + 10, (drawContext.getScaledWindowHeight() / 2) + 24, colors);
         }
 
         // Todo: My use of magic numbers here is brutal. Come back later to add some clarity

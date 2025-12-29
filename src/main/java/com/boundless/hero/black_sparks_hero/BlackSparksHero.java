@@ -39,7 +39,7 @@ public class BlackSparksHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BlackSparksHero::lightAttack, 5, BoundlessAPI.identifier("yuji_light"), BoundlessAPI.hudPNG("arm"));
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, 5, BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
-    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(BlackSparksHero::channelCursedEnergy, 2, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
+    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(BlackSparksHero::channelCursedEnergy, 4, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
