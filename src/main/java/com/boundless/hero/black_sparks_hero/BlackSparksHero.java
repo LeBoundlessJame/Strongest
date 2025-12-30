@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
-    public static List<String> BLACK_FLASH_COMBOS = List.of("lmml", "lmlm", "mmlm");
+    public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
 
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
 
@@ -89,10 +89,7 @@ public class BlackSparksHero extends Hero {
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
         if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
-            stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
-            stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CursedEnergyAbility.MINIGAME_DURATION);
-            stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "llll");
-            stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "l");
+            startMinigame(player, "l");
             HeroUtils.getHeroStack(player).set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
         }
 
@@ -147,4 +144,14 @@ public class BlackSparksHero extends Hero {
         player.velocityModified = true;
         AttackUtils.startAttackTimer(player, 10);
     }
+
+    public static void startMinigame(PlayerEntity player, String beginningAttack) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
+        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CursedEnergyAbility.MINIGAME_DURATION);
+        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, BLACK_FLASH_COMBOS.get(player.getRandom().nextInt(BLACK_FLASH_COMBOS.size())));
+        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, beginningAttack);
+    }
+
 }
