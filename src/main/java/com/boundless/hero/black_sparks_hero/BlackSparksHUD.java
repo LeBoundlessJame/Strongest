@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.hero.HeroHUD;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -35,7 +36,7 @@ public class BlackSparksHUD {
         float scale = 1.0f;
         matrixStack.scale(scale, scale, scale);
 
-        if (player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime())) {
+        if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
             ArrayList<Float> colors = GUIUtils.hexToUnitColor("920a0a");
 
             int horizontalOffset = drawContext.getScaledWindowWidth() / 4;
@@ -49,6 +50,12 @@ public class BlackSparksHUD {
             drawContext.drawTexture(HeroHUD.ABILITY_FRAME, middle + horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
             drawContext.drawTexture(DIVERGENT_FIST, middle + horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, "R", middle + horizontalOffset - 11 + 10, (drawContext.getScaledWindowHeight() / 2) + 24, colors);
+        }
+
+        // Todo: Fix this rendering behind chat
+        if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
+            ArrayList<Float> colors = GUIUtils.hexToUnitColor("920a0a");
+            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Black Flash: l -> l -> l -> l", drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() - 62, colors);
         }
 
         // Todo: My use of magic numbers here is brutal. Come back later to add some clarity
