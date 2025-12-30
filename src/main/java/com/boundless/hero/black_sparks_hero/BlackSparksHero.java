@@ -25,6 +25,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -75,15 +76,7 @@ public class BlackSparksHero extends Hero {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        ItemStack stack = HeroUtils.getHeroStack(player);
-
-        if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
-            stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "") + "l");
-            if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
-                CursedEnergyAbility.blackFlash(player);
-                return;
-            }
-        }
+        if (updateMinigameCombo(player, "l")) return;
 
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
@@ -106,6 +99,8 @@ public class BlackSparksHero extends Hero {
 
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
+
+        if (updateMinigameCombo(player, "m")) return;
 
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
@@ -145,6 +140,34 @@ public class BlackSparksHero extends Hero {
         AttackUtils.startAttackTimer(player, 10);
     }
 
+    // Returns true if it is the final hit of the minigame combo
+    // Todo: rework, I don't like the vagueness of this
+    public static boolean updateMinigameCombo(PlayerEntity player, String attack) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        String currentCombo = stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+        String targetCombo = stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+
+        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
+        currentCombo = currentCombo + attack;
+
+        boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+
+        if (withinTimePeriod) {
+            endMinigame(player);
+            return false;
+        }
+
+        if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
+            CursedEnergyAbility.blackFlash(player);
+            endMinigame(player);
+            return true;
+        } else if (currentCombo.length() > targetCombo.length() || !targetCombo.startsWith(currentCombo)) {
+            endMinigame(player);
+        }
+        return false;
+    }
+
     public static void startMinigame(PlayerEntity player, String beginningAttack) {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
@@ -154,4 +177,12 @@ public class BlackSparksHero extends Hero {
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, beginningAttack);
     }
 
+    public static void endMinigame(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
+        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime());
+        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+    }
 }
