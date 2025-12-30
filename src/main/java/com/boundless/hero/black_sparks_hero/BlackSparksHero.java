@@ -3,19 +3,18 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.MeleeAbility;
-import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.ability.reusable_abilities.MeleeCombatAbilities;
 import com.boundless.action.Action;
-import com.boundless.config.HeroConfig;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.MeleeHero;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.registry.*;
+import com.boundless.registry.AttributeRegistry;
+import com.boundless.registry.ConfigRegistry;
+import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
-import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -25,21 +24,18 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
-    public static long CE_TIME_WINDOW = 60;
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
 
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BlackSparksHero::lightAttack, 5, BoundlessAPI.identifier("yuji_light"), BoundlessAPI.hudPNG("arm"));
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, 5, BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
-    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(BlackSparksHero::channelCursedEnergy, 4, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
+    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, 4, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
@@ -73,8 +69,8 @@ public class BlackSparksHero extends Hero {
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
-        if (channelCursedEnergyActive(player)) {
-            blackFlash(player);
+        if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
+            CursedEnergyAbility.blackFlash(player);
             HeroUtils.getHeroStack(player).set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
         } else {
             LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
@@ -95,8 +91,8 @@ public class BlackSparksHero extends Hero {
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
-        if (channelCursedEnergyActive(player)) {
-            divergentFist(player);
+        if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
+            CursedEnergyAbility.divergentFist(player);
             HeroUtils.getHeroStack(player).set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
         } else {
             LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
@@ -116,50 +112,6 @@ public class BlackSparksHero extends Hero {
         }
     }
 
-    public static void channelCursedEnergy(PlayerEntity player) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, channelCursedEnergyActive(player)
-                ? player.getWorld().getTime()
-                : player.getWorld().getTime() + CE_TIME_WINDOW);
-    }
-
-    public static void blackFlash(PlayerEntity player) {
-        AttackDataBuilder data = AttackDataBuilder
-                .builder()
-                .damage(DAMAGE.blackFlash.get())
-                .knockbackStrength(2)
-                .impactSound(SoundRegistry.BLACK_FLASH)
-                .impactTick(4)
-                .animation(BoundlessAPI.identifier("hook"))
-                .impactVisual(BoundlessAPI.identifier("black_flash_impact"))
-                .attacker(player)
-                .build();
-        MeleeAbility blackSparks = new MeleeAbility(data);
-        blackSparks.attack(player);
-        CameraUtils.playCameraShake(player);
-        AttackUtils.startAttackTimer(player, 6);
-        if (player.getWorld().isClient) return;
-        player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
-    }
-
-    public static void divergentFist(PlayerEntity player) {
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        tasks.put(4, (user, heroAction) -> {
-            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.attack(heroAction, DAMAGE.divergentFistPunch.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
-        });
-        tasks.put(8, (user, heroAction) -> {
-            SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
-            CameraUtils.playCameraShake(player);
-            CombatUtils.attack(heroAction, DAMAGE.divergentFistImpact.get(), Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
-        });
-        Action divergence = Action.builder().scheduledTasks(tasks).build();
-
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
-        ActionUtils.performAction(player, divergence);
-        AttackUtils.startAttackTimer(player, 8);
-    }
-
     public static void spinKick(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(7, (user, heroAction) -> {
@@ -172,9 +124,5 @@ public class BlackSparksHero extends Hero {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         player.velocityModified = true;
         AttackUtils.startAttackTimer(player, 10);
-    }
-
-    public static boolean channelCursedEnergyActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
     }
 }
