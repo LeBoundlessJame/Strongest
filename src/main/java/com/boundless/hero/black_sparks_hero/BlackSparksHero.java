@@ -24,19 +24,27 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
+    public static List<String> BLACK_FLASH_COMBOS = List.of("lmml", "lmlm", "mmlm");
+
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
 
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BlackSparksHero::lightAttack, 5, BoundlessAPI.identifier("yuji_light"), BoundlessAPI.hudPNG("arm"));
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, 5, BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
     public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, 4, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
-    public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("black_flash_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+
+    public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> MINIGAME_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<String> TARGET_MINIGAME_COMBO = DataComponentRegistry.registerComponent("target_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
+    public static ComponentType<String> CURRENT_MINIGAME_COMBO = DataComponentRegistry.registerComponent("current_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
@@ -66,23 +74,35 @@ public class BlackSparksHero extends Hero {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
+            stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "") + "l");
+            if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
+                CursedEnergyAbility.blackFlash(player);
+                return;
+            }
+        }
+
         DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
         if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
-            CursedEnergyAbility.blackFlash(player);
+            stack.set(BlackSparksHero.MINIGAME_TIMESTAMP, player.getWorld().getTime() + CursedEnergyAbility.MINIGAME_DURATION);
+            stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "lll");
+            stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
             HeroUtils.getHeroStack(player).set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
-        } else {
-            LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-            BiConsumer<PlayerEntity, HeroActionEntity> hook = (user, heroAction) -> {
-                SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-                CombatUtils.attack(heroAction, DAMAGE.lightAttack.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
-            };
-            tasks.put(4, hook);
-            AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 2000);
-            ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
-            AttackUtils.startAttackTimer(player, 4);
         }
+
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        BiConsumer<PlayerEntity, HeroActionEntity> hook = (user, heroAction) -> {
+            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            CombatUtils.attack(heroAction, DAMAGE.lightAttack.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
+        };
+        tasks.put(4, hook);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 2000);
+        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+        AttackUtils.startAttackTimer(player, 4);
     }
 
     public static void mediumAttack(PlayerEntity player) {

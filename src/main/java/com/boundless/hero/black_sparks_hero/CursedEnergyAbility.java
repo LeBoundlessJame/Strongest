@@ -17,8 +17,8 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class CursedEnergyAbility {
-
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
+    public static long MINIGAME_DURATION = 60;
     public static long CE_TIME_WINDOW = 60;
 
     public static void channelCursedEnergy(PlayerEntity player) {
@@ -46,10 +46,6 @@ public class CursedEnergyAbility {
         AttackUtils.startAttackTimer(player, 8);
     }
 
-    public static boolean channelCursedEnergyActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
-    }
-
     public static void blackFlash(PlayerEntity player) {
         AttackDataBuilder data = AttackDataBuilder
                 .builder()
@@ -65,8 +61,16 @@ public class CursedEnergyAbility {
         blackSparks.attack(player);
         CameraUtils.playCameraShake(player);
         AttackUtils.startAttackTimer(player, 6);
+
         if (player.getWorld().isClient) return;
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
     }
 
+    public static boolean channelCursedEnergyActive(PlayerEntity player) {
+        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
+    }
+
+    public static boolean blackFlashMinigameActive(PlayerEntity player) {
+        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_TIMESTAMP, player.getWorld().getTime());
+    }
 }
