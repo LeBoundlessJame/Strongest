@@ -4,7 +4,6 @@ import com.boundless.BoundlessAPI;
 import com.boundless.hero.HeroHUD;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -23,6 +22,9 @@ public class BlackSparksHUD {
 
     public static Identifier METER_FRAME = BoundlessAPI.hudPNG("meter_frame");
     public static Identifier METER = BoundlessAPI.hudPNG("meter");
+
+    public static Identifier METER_FRAME_HORIZONTAL = BoundlessAPI.hudPNG("meter_frame_horizontal");
+    public static Identifier METER_HORIZONTAL = BoundlessAPI.hudPNG("meter_horizontal");
 
     public static void render(DrawContext drawContext, RenderTickCounter renderTickCounter) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
@@ -54,8 +56,22 @@ public class BlackSparksHUD {
 
         // Todo: Fix this rendering behind chat
         if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
-            ArrayList<Float> colors = GUIUtils.hexToUnitColor("920a0a");
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Black Flash: l -> l -> l -> l", drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() - 62, colors);
+            ItemStack stack = HeroUtils.getHeroStack(player);
+            ArrayList<Float> colors = GUIUtils.hexToUnitColor("fc5454");
+
+            float target = stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+            float start = stack.getOrDefault(BlackSparksHero.MINIGAME_START_TIMESTAMP, 0L);
+            float current = player.getWorld().getTime() - start;
+            float progress = current / (target - start);
+
+            int meterWidth = MathHelper.clamp(MathHelper.lerp((progress), 119, 0), 0, 119);
+
+            drawContext.drawTexture(METER_FRAME_HORIZONTAL, drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() - 62, 0, 0, 127, 11, 127, 11);
+            drawContext.drawTexture(METER_HORIZONTAL, drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() - 62, 0, 0, meterWidth, 11, 127, 11);
+
+            GUIUtils.drawOutlinedText(drawContext, minecraftClient, getTargetComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);
+            colors = GUIUtils.hexToUnitColor("1bc7b6");
+            GUIUtils.drawOutlinedText(drawContext, minecraftClient, getComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);
         }
 
         // Todo: My use of magic numbers here is brutal. Come back later to add some clarity
@@ -63,5 +79,23 @@ public class BlackSparksHUD {
         drawContext.drawTexture(METER_FRAME, (int) (5 / scale), (int) ((20) / scale), 0f, 127, 11, 127, 11, 127);
         drawContext.drawTexture(METER, (int) (5 / scale), (int) ((24 + meterHeight) / scale), 0f, 131, 11, 119 - meterHeight, 11, 127);
         matrixStack.pop();
+    }
+
+    public static String getComboString(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        String comboProgress = stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+
+        if (comboProgress.isEmpty()) return "";
+        return "Black Flash: " + formattedCombo(comboProgress);
+    }
+
+    public static String getTargetComboString(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        String combo = stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+        return "Black Flash: " + formattedCombo(combo);
+    }
+
+    public static String formattedCombo(String combo) {
+        return combo.replaceAll("(.)", "$1 -> ").replaceAll(" -> $", "");
     }
 }

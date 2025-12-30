@@ -71,6 +71,6 @@ public class CursedEnergyAbility {
     }
 
     public static boolean blackFlashMinigameActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_TIMESTAMP, player.getWorld().getTime());
+        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime());
     }
 }

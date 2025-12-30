@@ -42,7 +42,8 @@ public class BlackSparksHero extends Hero {
     public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, 4, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
 
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
-    public static ComponentType<Long> MINIGAME_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> MINIGAME_END_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_end_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<String> TARGET_MINIGAME_COMBO = DataComponentRegistry.registerComponent("target_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
     public static ComponentType<String> CURRENT_MINIGAME_COMBO = DataComponentRegistry.registerComponent("current_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
 
@@ -88,9 +89,10 @@ public class BlackSparksHero extends Hero {
         int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
 
         if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
-            stack.set(BlackSparksHero.MINIGAME_TIMESTAMP, player.getWorld().getTime() + CursedEnergyAbility.MINIGAME_DURATION);
-            stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "lll");
-            stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+            stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
+            stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CursedEnergyAbility.MINIGAME_DURATION);
+            stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "llll");
+            stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "l");
             HeroUtils.getHeroStack(player).set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
         }
 
