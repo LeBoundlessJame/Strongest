@@ -49,8 +49,10 @@ public class BlackSparksHero extends Hero {
     public static ComponentType<String> CURRENT_MINIGAME_COMBO = DataComponentRegistry.registerComponent("current_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
-            .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
-            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.80f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.forEquipmentSlot(EquipmentSlot.CHEST))
+            .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.80f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_jump_strength"), 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_safe_fall_damage_distance"), 10, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .build();
 
     public BlackSparksHero() {
@@ -151,12 +153,15 @@ public class BlackSparksHero extends Hero {
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
         currentCombo = currentCombo + attack;
 
+        /*
         boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
 
-        if (withinTimePeriod) {
+        if (!withinTimePeriod) {
             endMinigame(player);
             return false;
         }
+
+         */
 
         if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
             CursedEnergyAbility.blackFlash(player);
