@@ -37,6 +37,9 @@ public class CursedEnergyAbility {
         tasks.put(8, (user, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
             CameraUtils.playCameraShake(player);
+            CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
+                livingEntity.timeUntilRegen = 0;
+            });
             CombatUtils.attack(heroAction, DAMAGE.divergentFistImpact.get(), Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
         });
         Action divergence = Action.builder().scheduledTasks(tasks).build();
