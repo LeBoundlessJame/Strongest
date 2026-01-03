@@ -59,10 +59,10 @@ public class CursedEnergyAbility {
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
                 livingEntity.timeUntilRegen = 0;
                 CombatUtils.knockback(attacker, livingEntity, 2.0f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 2, 1, false, false, false));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 12, 1, false, false, false));
             });
             CombatUtils.attack(heroAction, DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 8, 1, false, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 12, 1, false, false, false));
         });
         Action impact = Action.builder().scheduledTasks(tasks).build();
 
