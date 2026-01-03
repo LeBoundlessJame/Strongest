@@ -6,6 +6,7 @@
     "AttackMixin",
     "InvulnerabilityMixin",
     "KeybindAccessor",
+    "LeapingMixin",
     "LivingEntityMixin",
     "aaaparticles_fix.NetworkMixin",
     "flight_ability.FlightPoseMixin",
