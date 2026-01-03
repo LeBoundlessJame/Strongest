@@ -52,21 +52,23 @@ public class CursedEnergyAbility {
     }
 
     public static void blackFlash(PlayerEntity player) {
-        AttackDataBuilder data = AttackDataBuilder
-                .builder()
-                .damage(DAMAGE.blackFlash.get())
-                .knockbackStrength(2)
-                .impactSound(SoundRegistry.BLACK_FLASH)
-                .impactTick(4)
-                .animation(BoundlessAPI.identifier("hook"))
-                .impactVisual(BoundlessAPI.identifier("black_flash_impact"))
-                .attacker(player)
-                .build();
-        MeleeAbility blackSparks = new MeleeAbility(data);
-        blackSparks.attack(player);
-        CameraUtils.playCameraShake(player);
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        tasks.put(4, (user, heroAction) -> {
+            SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
+            CameraUtils.playCameraShake(player);
+            CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
+                livingEntity.timeUntilRegen = 0;
+                CombatUtils.knockback(attacker, livingEntity, 2.0f);
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 2, 1, false, false, false));
+            });
+            CombatUtils.attack(heroAction, DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 8, 1, false, false, false));
+        });
+        Action impact = Action.builder().scheduledTasks(tasks).build();
+
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), true, 5000);
+        ActionUtils.performAction(player, impact);
         AttackUtils.startAttackTimer(player, 6);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
 
         if (player.getWorld().isClient) return;
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);

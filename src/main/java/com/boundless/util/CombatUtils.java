@@ -108,6 +108,12 @@ public class CombatUtils {
         target.velocityModified = true;
     }
 
+    public static void knockback(PlayerEntity attacker, LivingEntity target, float strength) {
+        Vec3d attackerRotation = attacker.getRotationVector();
+        target.takeKnockback(strength, attackerRotation.x * -1, attackerRotation.z * -1);
+        target.velocityModified = true;
+    }
+
     public static void uppercutKnockback(PlayerEntity player, LivingEntity target) {
         target.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
         target.velocityModified = true;
