@@ -2,9 +2,10 @@ package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.HeroHUD;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -32,6 +33,15 @@ public class BlackSparksHUD {
         if (minecraftClient == null || minecraftClient.player == null || !HeroUtils.isHero(minecraftClient.player)) return;
         PlayerEntity player = minecraftClient.player;
         HeroHUD.render(drawContext, renderTickCounter);
+
+
+        if (minecraftClient.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
+            ((ShaderAccessor)minecraftClient.gameRenderer).boundless$loadShader();
+        } else {
+            if (minecraftClient.gameRenderer.getPostProcessor() != null) {
+                ((ShaderAccessor)minecraftClient.gameRenderer).boundless$disablePostProcessor();
+            }
+        }
 
         MatrixStack matrixStack = drawContext.getMatrices();
         matrixStack.push();

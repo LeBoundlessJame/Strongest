@@ -7,7 +7,9 @@ import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -64,6 +66,7 @@ public class CursedEnergyAbility {
         blackSparks.attack(player);
         CameraUtils.playCameraShake(player);
         AttackUtils.startAttackTimer(player, 6);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
 
         if (player.getWorld().isClient) return;
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);

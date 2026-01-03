@@ -20,7 +20,7 @@
   "client": [
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
-    "ShaderMixin",
+    "ShaderLoaderMixin",
     "SkinLayerMixin",
     "flight_ability.FlightCameraMixin",
     "flight_ability.FlightSoundsMixin"
