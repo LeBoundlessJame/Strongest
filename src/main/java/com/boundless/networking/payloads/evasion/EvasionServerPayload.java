@@ -40,7 +40,7 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
             normalizedRotationVector = normalizedRotationVector.multiply(-1);
         }
 
-        player.setVelocity(new Vec3d(normalizedRotationVector.x, 0.25, normalizedRotationVector.z));
+        player.addVelocity(new Vec3d(normalizedRotationVector.x, 0.25, normalizedRotationVector.z));
         player.velocityDirty = true;
         player.velocityModified = true;
     }
