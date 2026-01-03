@@ -9,6 +9,7 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.MeleeHero;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
+import com.boundless.hero.armor.BlackSparksHeroRenderer;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -72,6 +73,7 @@ public class BlackSparksHero extends Hero {
                 .attributes(ATTRIBUTES)
                 .hudRenderer(BlackSparksHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
+                .armorRenderer(BlackSparksHeroRenderer::new)
                 .build();
         this.registerHero();
     }

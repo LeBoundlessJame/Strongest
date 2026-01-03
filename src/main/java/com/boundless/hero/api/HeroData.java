@@ -3,9 +3,11 @@ package com.boundless.hero.api;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.hero.armor.HeroArmorRenderer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
+import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -16,6 +18,7 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 @Builder
@@ -42,4 +45,7 @@ public class HeroData {
     private final Identifier modelIdentifier = BoundlessAPI.modelID("hero");
 
     private final BiConsumer<DrawContext, RenderTickCounter> hudRenderer;
+
+    @Builder.Default
+    private final BiFunction<Identifier, Identifier, ? extends AzArmorRenderer> armorRenderer = HeroArmorRenderer::new;
 }
