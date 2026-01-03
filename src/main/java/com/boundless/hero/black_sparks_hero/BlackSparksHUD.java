@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.hero.HeroHUD;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -30,7 +31,6 @@ public class BlackSparksHUD {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         if (minecraftClient == null || minecraftClient.player == null || !HeroUtils.isHero(minecraftClient.player)) return;
         PlayerEntity player = minecraftClient.player;
-
         HeroHUD.render(drawContext, renderTickCounter);
 
         MatrixStack matrixStack = drawContext.getMatrices();
@@ -56,6 +56,8 @@ public class BlackSparksHUD {
 
         // Todo: Fix this rendering behind chat
         if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
+            matrixStack.push();
+            matrixStack.translate(0, 0, 10000);
             ItemStack stack = HeroUtils.getHeroStack(player);
             ArrayList<Float> colors = GUIUtils.hexToUnitColor("fc5454");
 
@@ -72,6 +74,7 @@ public class BlackSparksHUD {
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, getTargetComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);
             colors = GUIUtils.hexToUnitColor("1bc7b6");
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, getComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);
+            matrixStack.pop();
         }
 
         // Todo: My use of magic numbers here is brutal. Come back later to add some clarity
