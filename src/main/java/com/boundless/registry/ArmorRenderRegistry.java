@@ -1,9 +1,8 @@
 package com.boundless.registry;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.armor.HeroArmorRenderer;
-import mod.azure.azurelib.rewrite.render.armor.AzArmorRendererRegistry;
+import mod.azure.azurelib.common.render.armor.AzArmorRendererRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
