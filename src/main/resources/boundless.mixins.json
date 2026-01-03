@@ -8,6 +8,7 @@
     "KeybindAccessor",
     "LeapingMixin",
     "LivingEntityMixin",
+    "SpeedMixin",
     "aaaparticles_fix.NetworkMixin",
     "flight_ability.FlightPoseMixin",
     "flight_ability.PlayerFlightAccessRendering",

@@ -18,6 +18,8 @@ public class DataComponentRegistry {
     public static ComponentType<Long> ATTACK_START = registerComponent("attack_start", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> ATTACK_END = registerComponent("attack_end", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
+    public static ComponentType<Integer> SPRINT_TICKS = registerComponent("sprint_ticks", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
+
     public static final ComponentType<Map<String, KeybindHoldData>> HELD_KEYBIND = registerComponent("held_keybind", builder -> ComponentType.<Map<String, KeybindHoldData>>builder().codec(Codec.unboundedMap(Codec.STRING, CodecRegistry.KEYBIND_HOLD_CODEC)));
 
     public static <T> ComponentType<T> registerComponent(String name, UnaryOperator<ComponentType.Builder<T>> builder) {

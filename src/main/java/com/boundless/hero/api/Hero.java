@@ -4,10 +4,14 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.registry.AbilityRegistry;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.util.HeroUtils;
 import com.boundless.util.RegistryUtils;
 import lombok.Getter;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -38,5 +42,14 @@ public abstract class Hero {
 
         HeroRegistry.HEROES.add(this);
         BoundlessAPI.LOGGER.info("Registered " + this.heroData.getName());
+    }
+
+    public static void heroSprintHandler(PlayerEntity player) {
+        ItemStack heroStack = HeroUtils.getHeroStack(player);
+        if (player.isSprinting()) {
+            heroStack.set(DataComponentRegistry.SPRINT_TICKS, heroStack.getOrDefault(DataComponentRegistry.SPRINT_TICKS, 0) + 1);
+        } else {
+            heroStack.set(DataComponentRegistry.SPRINT_TICKS, 0);
+        }
     }
 }

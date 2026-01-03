@@ -18,14 +18,12 @@ import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -71,6 +69,7 @@ public class BlackSparksHero extends Hero {
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
                 .hudRenderer(BlackSparksHUD::render)
+                .tickHandler(Hero::heroSprintHandler)
                 .build();
         this.registerHero();
     }
@@ -160,7 +159,6 @@ public class BlackSparksHero extends Hero {
             endMinigame(player);
             return false;
         }
-
          */
 
         if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
