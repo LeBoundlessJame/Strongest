@@ -14,10 +14,12 @@ public class SpeedMixin {
     @ModifyReturnValue(method = "getMovementSpeed", at = @At("RETURN"))
     private float boundless$increaseSpeed(float original) {
         PlayerEntity player = (PlayerEntity) (Object) this;
-        if (!HeroUtils.isHero(player)) return original;
+        if (!HeroUtils.isHero(player) || !player.isSprinting()) return original;
+
         int elapsedSprintTicks = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.SPRINT_TICKS, 0);
         float topSpeedMultiplier = (float) player.getAttributeValue(AttributeRegistry.TOP_SPEED_MULTIPLIER);
         int ticksUntilMaxSpeed = (int) (player.getAttributeValue(AttributeRegistry.TIME_UNTIL_MAX_SPEED) * 20);
+
         float delta = (float) elapsedSprintTicks / ticksUntilMaxSpeed;
         return MathHelper.lerp(Math.clamp(delta, 0.0f, 1.0f), original, original * topSpeedMultiplier);
     }
