@@ -24,5 +24,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void boundless$createLivingAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         cir.getReturnValue().add(AttributeRegistry.DAMAGE_RESISTANCE);
+        cir.getReturnValue().add(AttributeRegistry.TOP_SPEED_MULTIPLIER);
+        cir.getReturnValue().add(AttributeRegistry.TIME_UNTIL_MAX_SPEED);
     }
 }

@@ -1,5 +1,6 @@
 package com.boundless.mixin;
 
+import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -15,8 +16,9 @@ public class SpeedMixin {
         PlayerEntity player = (PlayerEntity) (Object) this;
         if (!HeroUtils.isHero(player)) return original;
         int elapsedSprintTicks = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.SPRINT_TICKS, 0);
-        int timeUntilMaxSpeed = 40;
-        float delta = (float) elapsedSprintTicks / timeUntilMaxSpeed;
-        return MathHelper.lerp(Math.clamp(delta, 0.0f, 1.0f), original, original * 2.5f);
+        float topSpeedMultiplier = (float) player.getAttributeValue(AttributeRegistry.TOP_SPEED_MULTIPLIER);
+        int ticksUntilMaxSpeed = (int) (player.getAttributeValue(AttributeRegistry.TIME_UNTIL_MAX_SPEED) * 20);
+        float delta = (float) elapsedSprintTicks / ticksUntilMaxSpeed;
+        return MathHelper.lerp(Math.clamp(delta, 0.0f, 1.0f), original, original * topSpeedMultiplier);
     }
 }

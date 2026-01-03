@@ -1,5 +1,7 @@
 {
   "boundless.damage_resistance": "Damage Resistance",
+  "boundless.top_speed_multiplier": "Top Speed Multiplier",
+  "boundless.ticks_until_max_speed": "Seconds Until Max Speed",
   "category.boundless.controls": "Boundless Controls",
   "effect.boundless.invulnerability": "Invulnerability",
   "item.boundless.melee_hero_boots": "Melee hero's Boots",
