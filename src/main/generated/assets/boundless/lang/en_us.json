@@ -4,14 +4,14 @@
   "boundless.ticks_until_max_speed": "Seconds Until Max Speed",
   "category.boundless.controls": "Boundless Controls",
   "effect.boundless.invulnerability": "Invulnerability",
-  "item.boundless.black_spark_hero_helmet": "Brawler's Head",
-  "item.boundless.black_spark_hero_chestplate": "Brawler's Hoodie",
-  "item.boundless.black_spark_hero_leggings": "Brawler's Leggings",
-  "item.boundless.black_spark_hero_boots": "Brawler's Boots",
+  "item.boundless.black_sparks_hero_helmet": "Brawler's Head",
+  "item.boundless.black_sparks_hero_chestplate": "Brawler's Hoodie",
+  "item.boundless.black_sparks_hero_leggings": "Brawler's Leggings",
+  "item.boundless.black_sparks_hero_boots": "Brawler's Boots",
   "itemGroup.boundless.boundless_group": "Strongest",
-  "key.boundless.ability_five": "Ability 5",
-  "key.boundless.ability_four": "Ability 4",
   "key.boundless.ability_one": "Ability 1",
+  "key.boundless.ability_two": "Ability 2",
   "key.boundless.ability_three": "Ability 3",
-  "key.boundless.ability_two": "Ability 2"
+  "key.boundless.ability_four": "Ability 4",
+  "key.boundless.ability_five": "Ability 5"
 }
