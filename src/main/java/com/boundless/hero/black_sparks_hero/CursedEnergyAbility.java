@@ -40,7 +40,8 @@ public class CursedEnergyAbility {
         tasks.put(8, (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
 
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_1);
+            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
+
             CameraUtils.playCameraShake(player);
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
                 livingEntity.timeUntilRegen = 0;
@@ -59,7 +60,10 @@ public class CursedEnergyAbility {
         tasks.put(4, (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
 
+            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
+            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_3);
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
+
             CameraUtils.playCameraShake(player);
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
                 livingEntity.timeUntilRegen = 0;
