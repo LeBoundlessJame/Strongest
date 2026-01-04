@@ -124,6 +124,7 @@ public class BlackSparksHero extends Hero {
                 CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
                     target.addVelocity(0, 0.5f, 0);
                     target.velocityModified = true;
+                    target.timeUntilRegen = 0;
                 });
             };
             tasks.put(4, kick);
