@@ -33,6 +33,8 @@ public class BlackSparksHero extends Hero {
     public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
 
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
+    public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
+
 
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BlackSparksHero::lightAttack, 5, BoundlessAPI.identifier("yuji_light"), BoundlessAPI.hudPNG("arm"));
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, 5, BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
@@ -47,7 +49,7 @@ public class BlackSparksHero extends Hero {
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
-            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.80f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), CONFIG.damageReduction.get(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
             .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_jump_strength"), 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
             .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_safe_fall_damage_distance"), 10, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.identifier("top_speed_multiplier"), 2.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
@@ -118,7 +120,7 @@ public class BlackSparksHero extends Hero {
                 if (CombatUtils.isRolling(player)) return;
 
                 SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-                CombatUtils.attack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
+                CombatUtils.attack(heroAction, DAMAGE.mediumAttackPerHit.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
                 CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
                     target.addVelocity(0, 0.5f, 0);
                     target.velocityModified = true;
@@ -180,7 +182,7 @@ public class BlackSparksHero extends Hero {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
         stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
-        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CursedEnergyAbility.MINIGAME_DURATION);
+        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CONFIG.blackFlashTimeWindow.get());
         stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, BLACK_FLASH_COMBOS.get(player.getRandom().nextInt(BLACK_FLASH_COMBOS.size())));
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, beginningAttack);
     }

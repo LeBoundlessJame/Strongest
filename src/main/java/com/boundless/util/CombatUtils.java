@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+// Todo: Some of this class could definitely do with being removed and replaced
 public class CombatUtils {
     public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
         heroAction.repositionBox();
@@ -53,6 +54,7 @@ public class CombatUtils {
         }
     }
 
+    // Todo: A rework for this could be nice, so that it's not just if statements
     public static void attack(HeroActionEntity heroAction, AttackDataBuilder attackDataBuilder) {
         heroAction.repositionBox();
         boolean hasPlayedSound = false;

@@ -19,15 +19,14 @@ import java.util.function.BiConsumer;
 
 public class CursedEnergyAbility {
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
-    public static long MINIGAME_DURATION = 60;
-    public static long CE_TIME_WINDOW = 60;
+    public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
 
     public static void channelCursedEnergy(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         SoundUtils.playSound(player, SoundEvents.ITEM_FIRECHARGE_USE);
         stack.set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, channelCursedEnergyActive(player)
                 ? player.getWorld().getTime()
-                : player.getWorld().getTime() + CE_TIME_WINDOW);
+                : player.getWorld().getTime() + CONFIG.energyChannelTimeWindow.get());
     }
 
     public static void divergentFist(PlayerEntity player) {
@@ -65,10 +64,10 @@ public class CursedEnergyAbility {
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
                 livingEntity.timeUntilRegen = 0;
                 CombatUtils.knockback(attacker, livingEntity, 2.0f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 12, 1, false, false, false));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, CONFIG.impactFrameDuration.get(), 1, false, false, false));
             });
             CombatUtils.attack(heroAction, DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 12, 1, false, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, CONFIG.impactFrameDuration.get(), 1, false, false, false));
         });
         Action impact = Action.builder().scheduledTasks(tasks).build();
 
