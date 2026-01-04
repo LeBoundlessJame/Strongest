@@ -12,6 +12,8 @@ import com.boundless.util.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
@@ -25,6 +27,7 @@ public class CursedEnergyAbility {
 
     public static void channelCursedEnergy(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
+        SoundUtils.playSound(player, SoundEvents.ITEM_FIRECHARGE_USE);
         stack.set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, channelCursedEnergyActive(player)
                 ? player.getWorld().getTime()
                 : player.getWorld().getTime() + CE_TIME_WINDOW);
@@ -75,10 +78,10 @@ public class CursedEnergyAbility {
     }
 
     public static boolean channelCursedEnergyActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
+        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, 0L);
     }
 
     public static boolean blackFlashMinigameActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime());
+        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
     }
 }

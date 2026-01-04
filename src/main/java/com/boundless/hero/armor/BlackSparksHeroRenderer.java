@@ -22,8 +22,8 @@ public class BlackSparksHeroRenderer extends AzArmorRenderer {
     }
 
     public static boolean channelingCursedEnergy(PlayerEntity player, ItemStack stack) {
-        long minigameEnd = stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime());
-        long ceTimestamp = stack.getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
+        long minigameEnd = stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+        long ceTimestamp = stack.getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, 0L);
 
         return player.getWorld().getTime() <= minigameEnd || player.getWorld().getTime() <= ceTimestamp;
     }

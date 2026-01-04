@@ -187,8 +187,8 @@ public class BlackSparksHero extends Hero {
     public static void endMinigame(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
-        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
-        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime());
+        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, 0L);
+        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
         stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
     }
