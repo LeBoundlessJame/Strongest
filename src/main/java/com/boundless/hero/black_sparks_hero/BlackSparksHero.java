@@ -32,14 +32,14 @@ import java.util.function.BiConsumer;
 public class BlackSparksHero extends Hero {
     public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
 
-    public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
     public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
+    public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
+    public static BlackSparksHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
-
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(BlackSparksHero::lightAttack, 5, BoundlessAPI.identifier("yuji_light"), BoundlessAPI.hudPNG("arm"));
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, 5, BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
-    public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, 20, BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
-    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, 4, BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(BlackSparksHero::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("yuji_light"), BoundlessAPI.hudPNG("arm"));
+    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
+    public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
+    public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, COOLDOWNS.channelCursedEnergy.get(), BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
 
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -199,7 +199,7 @@ public class BlackSparksHero extends Hero {
     public static Ability DODGE = Ability.builder()
             .abilityID(BoundlessAPI.identifier("dash"))
             .abilityIcon(BoundlessAPI.hudPNG("dash"))
-            .cooldown(60)
+            .cooldown(COOLDOWNS.dodge.get())
             .abilityLogic((player) -> {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
                 HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);

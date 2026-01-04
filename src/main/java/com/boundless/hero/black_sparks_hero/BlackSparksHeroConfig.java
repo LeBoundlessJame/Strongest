@@ -21,9 +21,10 @@ public class BlackSparksHeroConfig extends ConfigSection {
 
     public static class AbilityCooldownConfig extends ConfigSection {
         public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt mediumAttack = new ValidatedInt(10, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt spinKick = new ValidatedInt(40, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt dodgeCooldown = new ValidatedInt(1400, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt mediumAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt spinKick = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt channelCursedEnergy = new ValidatedInt(4, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt dodge = new ValidatedInt(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }
 
     public static class AbilityDamageConfig extends ConfigSection {
