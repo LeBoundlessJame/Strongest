@@ -34,6 +34,7 @@ public abstract class LivingEntityMixin {
         float resistanceReduction = 0.0f;
         if (this.hasStatusEffect(StatusEffectRegistry.BONE_BREAK_EFFECT)) {
             resistanceReduction = (Objects.requireNonNull(this.getStatusEffect(StatusEffectRegistry.BONE_BREAK_EFFECT)).getAmplifier() + 1) * 0.1f;
+            resistanceReduction = Math.clamp(resistanceReduction, 0.0f, damageResistance);
         }
         return (original - (original * (damageResistance - resistanceReduction)));
     }
