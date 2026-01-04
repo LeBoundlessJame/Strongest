@@ -10,12 +10,13 @@ import net.minecraft.util.Identifier;
 
 public class BlackSparksHeroRenderer extends AzArmorRenderer {
     public static Identifier TEXTURE = BoundlessAPI.textureID("black_sparks_hero");
-    public static Identifier CHARGING_ENERGY = BoundlessAPI.textureID("black_sparks_hero_charging");
+    public static Identifier CHARGING_1 = BoundlessAPI.textureID("black_sparks_hero_charging_1");
+    public static Identifier CHARGING_2 = BoundlessAPI.textureID("black_sparks_hero_charging_2");
 
     public BlackSparksHeroRenderer(Identifier model, Identifier texture) {
         super(AzArmorRendererConfig.builder(((entity, itemStack) -> model), (entity, stack) -> {
             if (!(entity instanceof PlayerEntity player)) return TEXTURE;
-            if (channelingCursedEnergy(player, stack)) return CHARGING_ENERGY;
+            if (channelingCursedEnergy(player, stack)) return player.age % 15 < 10 ? CHARGING_1 : CHARGING_2;
             return TEXTURE;
         }).build());
     }
