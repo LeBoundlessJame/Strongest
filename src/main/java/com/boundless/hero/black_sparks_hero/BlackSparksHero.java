@@ -3,18 +3,16 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.reusable_abilities.MeleeCombatAbilities;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.BlackSparksHeroRenderer;
-import com.boundless.registry.AttributeRegistry;
-import com.boundless.registry.ConfigRegistry;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.SoundRegistry;
+import com.boundless.networking.payloads.evasion.EvasionClientPayload;
+import com.boundless.registry.*;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -24,6 +22,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,7 +58,7 @@ public class BlackSparksHero extends Hero {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.LIGHT_ATTACK)
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", MeleeCombatAbilities.DODGE)
+                .ability("key.boundless.ability_one", BlackSparksHero.DODGE)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BlackSparksHero.CHANNEL_CURSED_ENERGY)
                 .build();
@@ -191,4 +190,16 @@ public class BlackSparksHero extends Hero {
         stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
     }
+
+    public static Ability DODGE = Ability.builder()
+            .abilityID(BoundlessAPI.identifier("dash"))
+            .abilityIcon(BoundlessAPI.hudPNG("dash"))
+            .cooldown(60)
+            .abilityLogic((player) -> {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
+                if (!player.getWorld().isClient) {
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
+                }
+            })
+            .build();
 }
