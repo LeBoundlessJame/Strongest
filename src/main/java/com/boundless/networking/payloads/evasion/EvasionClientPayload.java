@@ -1,9 +1,7 @@
 package com.boundless.networking.payloads.evasion;
 
 import com.boundless.networking.PayloadRegistry;
-import com.boundless.networking.payloads.AbilityUsePayload;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

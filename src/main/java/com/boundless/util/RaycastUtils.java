@@ -1,16 +1,12 @@
 package com.boundless.util;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.resource.metadata.BlockEntry;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.BlockStateRaycastContext;
-import net.minecraft.world.World;
 
 public class RaycastUtils {
     public static EntityHitResult raycast(PlayerEntity playerEntity, float range) {

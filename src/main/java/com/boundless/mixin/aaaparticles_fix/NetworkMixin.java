@@ -1,15 +1,11 @@
 package com.boundless.mixin.aaaparticles_fix;
 
-import com.boundless.networking.payloads.AnimationPlayPayload;
-import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import dev.architectury.impl.NetworkAggregator;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
 import dev.architectury.utils.Env;
 import mod.chloeprime.aaaparticles.AAAParticles;
 import mod.chloeprime.aaaparticles.common.network.ModNetwork;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketDecoder;

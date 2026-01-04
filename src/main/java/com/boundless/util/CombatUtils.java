@@ -2,7 +2,6 @@ package com.boundless.util;
 
 import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,8 +11,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
-
-import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
 public class CombatUtils {
     public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {

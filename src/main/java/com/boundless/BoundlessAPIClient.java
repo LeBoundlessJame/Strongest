@@ -3,7 +3,9 @@ package com.boundless;
 import com.boundless.client.HeroHudRenderer;
 import com.boundless.client.KeyInputHandler;
 import com.boundless.networking.PayloadRegistry;
-import com.boundless.registry.*;
+import com.boundless.registry.ArmorRenderRegistry;
+import com.boundless.registry.EntityRenderRegistry;
+import com.boundless.registry.KeybindRegistry;
 import net.fabricmc.api.ClientModInitializer;
 
 public class BoundlessAPIClient implements ClientModInitializer {

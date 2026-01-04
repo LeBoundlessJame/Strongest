@@ -1,7 +1,7 @@
 package com.boundless.registry;
 
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.hero.api.Hero;
+import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
 package com.boundless.util;
 
-import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.client.CameraShake;
 import com.boundless.networking.payloads.CameraShakePayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

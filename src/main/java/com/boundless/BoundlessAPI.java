@@ -3,7 +3,6 @@ package com.boundless;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.*;
 import net.fabricmc.api.ModInitializer;
-
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ public class BoundlessAPI implements ModInitializer {
 		HeroRegistry.initialize();
 		PayloadRegistry.registerPayloads();
 		PayloadRegistry.registerC2SPackets();
-		EntityRegistry.intialize();
+		EntityRegistry.initialize();
 		SoundRegistry.initialize();
 		StatusEffectRegistry.initialize();
 		ParticleRegistry.initialize();

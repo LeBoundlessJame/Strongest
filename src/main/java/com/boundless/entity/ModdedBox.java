@@ -1,8 +1,6 @@
 package com.boundless.entity;
 
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 
 public class ModdedBox extends Box {
     public final double minX;

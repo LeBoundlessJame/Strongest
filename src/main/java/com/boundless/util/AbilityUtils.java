@@ -1,8 +1,6 @@
 package com.boundless.util;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
-import com.boundless.ability.AbilityLoadout;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.EquipmentSlot;
@@ -10,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;

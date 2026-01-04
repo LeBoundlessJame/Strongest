@@ -14,5 +14,5 @@ public class EntityRegistry {
         return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.identifier(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));
     }
 
-    public static void intialize() {}
+    public static void initialize() {}
 }

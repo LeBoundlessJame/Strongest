@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class KeyInputHandler {
     public static void keyInputs() {

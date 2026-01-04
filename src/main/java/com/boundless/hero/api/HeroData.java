@@ -1,7 +1,6 @@
 package com.boundless.hero.api;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import lombok.Builder;
@@ -16,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;

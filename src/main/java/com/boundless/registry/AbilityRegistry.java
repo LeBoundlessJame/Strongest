@@ -1,8 +1,6 @@
 package com.boundless.registry;
 
 import com.boundless.ability.Ability;
-import com.boundless.util.HeroUtils;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

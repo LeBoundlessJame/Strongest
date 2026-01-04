@@ -2,8 +2,8 @@ package com.boundless.util;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
-import com.boundless.hero.api.HeroData;
 import com.boundless.hero.api.HeroArmor;
+import com.boundless.hero.api.HeroData;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterials;
 import net.minecraft.item.Item;

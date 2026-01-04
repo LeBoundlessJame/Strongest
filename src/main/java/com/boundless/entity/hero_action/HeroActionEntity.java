@@ -1,12 +1,12 @@
 package com.boundless.entity.hero_action;
 
 import com.boundless.action.Action;
-import com.boundless.client.RenderParameters;
 import com.boundless.entity.ModEntityDimensions;
 import com.boundless.registry.EntityRegistry;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -14,7 +14,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
