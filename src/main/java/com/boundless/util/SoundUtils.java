@@ -8,11 +8,13 @@ public class SoundUtils {
 
     public static void playSound(PlayerEntity player, SoundEvent sound, float pitch) {
         if (!player.getWorld().isClient) {
-            player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1.0f, pitch);
         }
     }
 
     public static void playSound(PlayerEntity player, SoundEvent sound) {
-        playSound(player, sound, 1.0f);
+        float pitch = player.getRandom().nextBetween(6, 15) * 0.1f;
+        System.out.println(pitch);
+        playSound(player, sound, pitch);
     }
 }
