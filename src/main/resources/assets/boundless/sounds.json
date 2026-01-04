@@ -9,9 +9,24 @@
       "boundless:miss_hit"
     ]
   },
-  "black_flash": {
+  "energy_impact_1": {
     "sounds": [
-      "boundless:black_flash"
+      "boundless:energy_impact_1"
+    ]
+  },
+  "energy_impact_2": {
+    "sounds": [
+      "boundless:energy_impact_2"
+    ]
+  },
+  "energy_impact_3": {
+    "sounds": [
+      "boundless:energy_impact_3"
+    ]
+  },
+  "energy_impact_heavy": {
+    "sounds": [
+      "boundless:energy_impact_heavy"
     ]
   },
   "earth_impact": {

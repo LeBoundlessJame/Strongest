@@ -11,7 +11,10 @@ public class SoundRegistry {
     public static SoundEvent MISS_HIT = registerSoundEvent(BoundlessAPI.identifier("miss_hit"));
     public static SoundEvent ROCK_CRUMBLING = registerSoundEvent(BoundlessAPI.identifier("rock_crumbling"));
     public static SoundEvent EARTH_IMPACT = registerSoundEvent(BoundlessAPI.identifier("earth_impact"));
-    public static SoundEvent BLACK_FLASH = registerSoundEvent(BoundlessAPI.identifier("black_flash"));
+    public static SoundEvent ENERGY_IMPACT_1 = registerSoundEvent(BoundlessAPI.identifier("energy_impact_1"));
+    public static SoundEvent ENERGY_IMPACT_2 = registerSoundEvent(BoundlessAPI.identifier("energy_impact_2"));
+    public static SoundEvent ENERGY_IMPACT_3 = registerSoundEvent(BoundlessAPI.identifier("energy_impact_3"));
+    public static SoundEvent ENERGY_IMPACT_HEAVY = registerSoundEvent(BoundlessAPI.identifier("energy_impact_heavy"));
 
     public static SoundEvent registerSoundEvent(Identifier identifier) {
         Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
