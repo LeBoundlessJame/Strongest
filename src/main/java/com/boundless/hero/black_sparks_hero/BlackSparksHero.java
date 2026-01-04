@@ -6,7 +6,6 @@ import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.reusable_abilities.MeleeCombatAbilities;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.MeleeHero;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.BlackSparksHeroRenderer;
@@ -83,8 +82,8 @@ public class BlackSparksHero extends Hero {
 
         if (updateMinigameCombo(player, "l")) return;
 
-        DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
-        int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
+        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
 
         if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
             startMinigame(player, "l");
@@ -107,8 +106,8 @@ public class BlackSparksHero extends Hero {
 
         if (updateMinigameCombo(player, "m")) return;
 
-        DataComponentUtils.incrementInt(MeleeHero.ATTACK_COUNT, player, 1);
-        int attackCount = DataComponentUtils.getInt(MeleeHero.ATTACK_COUNT, player, 0);
+        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
 
         if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
             CursedEnergyAbility.divergentFist(player);

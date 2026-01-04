@@ -2,7 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.action.Action;
-import com.boundless.hero.MeleeHero;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +20,8 @@ public class MeleeAbility {
     }
 
     public void attack(PlayerEntity player) {
-        int jabCount = HeroUtils.getHeroStack(player).getOrDefault(MeleeHero.ATTACK_COUNT, 0);
-        HeroUtils.getHeroStack(player).set(MeleeHero.ATTACK_COUNT, jabCount + 1);
+        int jabCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+        HeroUtils.getHeroStack(player).set(DataComponentRegistry.ATTACK_COUNT, jabCount + 1);
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, attackData.getSlownessDuration(), attackData.getSlownessAmplifier(), true, false, false));
         Action attackAction = ActionUtils.singleAction(attackData.getImpactTick(), (attacker, heroAction) -> {
