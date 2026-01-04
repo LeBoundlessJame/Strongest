@@ -17,6 +17,7 @@ public class DataComponentRegistry {
     public static final ComponentType<Map<Identifier, Long>> COOLDOWN_DATA = registerComponent("cooldown_data", builder -> ComponentType.<Map<Identifier, Long>>builder().codec(Codec.unboundedMap(Identifier.CODEC, Codec.LONG)));
     public static ComponentType<Long> ATTACK_START = registerComponent("attack_start", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> ATTACK_END = registerComponent("attack_end", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> ROLLING_END = registerComponent("rolling_end", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
     public static ComponentType<Integer> SPRINT_TICKS = registerComponent("sprint_ticks", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Integer> ATTACK_COUNT = registerComponent("attack_count", builder -> ComponentType.<Integer>builder().codec(Codec.INT));

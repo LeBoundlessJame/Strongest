@@ -33,10 +33,14 @@ public class CursedEnergyAbility {
     public static void divergentFist(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
+            if (CombatUtils.isRolling(player)) return;
+
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.attack(heroAction, DAMAGE.divergentFistPunch.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
         tasks.put(8, (user, heroAction) -> {
+            if (CombatUtils.isRolling(player)) return;
+
             SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
             CameraUtils.playCameraShake(player);
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
@@ -54,6 +58,8 @@ public class CursedEnergyAbility {
     public static void blackFlash(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
+            if (CombatUtils.isRolling(player)) return;
+
             SoundUtils.playSound(player, SoundRegistry.BLACK_FLASH);
             CameraUtils.playCameraShake(player);
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {

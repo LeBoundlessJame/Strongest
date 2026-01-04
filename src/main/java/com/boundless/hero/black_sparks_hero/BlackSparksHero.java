@@ -91,6 +91,7 @@ public class BlackSparksHero extends Hero {
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         BiConsumer<PlayerEntity, HeroActionEntity> hook = (user, heroAction) -> {
+            if (CombatUtils.isRolling(player)) return;
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.attack(heroAction, DAMAGE.lightAttack.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         };
@@ -114,6 +115,8 @@ public class BlackSparksHero extends Hero {
         } else {
             LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
             BiConsumer<PlayerEntity, HeroActionEntity> kick = (user, heroAction) -> {
+                if (CombatUtils.isRolling(player)) return;
+
                 SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
                 CombatUtils.attack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
                 CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
@@ -132,14 +135,14 @@ public class BlackSparksHero extends Hero {
     public static void spinKick(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(7, (user, heroAction) -> {
+            if (CombatUtils.isRolling(player)) return;
+
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.knockbackAttack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
-        player.addVelocity(player.getRotationVector().normalize().multiply(0.4f).x, player.isOnGround() ? 0.5f : 0.0f, player.getRotationVector().normalize().multiply(0.4f).z);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
-        player.velocityModified = true;
         AttackUtils.startAttackTimer(player, 10);
     }
 
@@ -197,6 +200,7 @@ public class BlackSparksHero extends Hero {
             .cooldown(60)
             .abilityLogic((player) -> {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
+                HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);
                 if (!player.getWorld().isClient) {
                     ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
                 }
