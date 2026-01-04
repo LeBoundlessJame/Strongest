@@ -14,7 +14,6 @@ public class SoundUtils {
 
     public static void playSound(PlayerEntity player, SoundEvent sound) {
         float pitch = player.getRandom().nextBetween(6, 15) * 0.1f;
-        System.out.println(pitch);
         playSound(player, sound, pitch);
     }
 }
