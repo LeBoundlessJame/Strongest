@@ -9,10 +9,7 @@
     "LeapingMixin",
     "LivingEntityMixin",
     "SpeedMixin",
-    "aaaparticles_fix.NetworkMixin",
-    "flight_ability.FlightPoseMixin",
-    "flight_ability.PlayerFlightAccessRendering",
-    "flight_ability.UpdateFlightPoseMixin"
+    "aaaparticles_fix.NetworkMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -21,8 +18,6 @@
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
     "ShaderLoaderMixin",
-    "SkinLayerMixin",
-    "flight_ability.FlightCameraMixin",
-    "flight_ability.FlightSoundsMixin"
+    "SkinLayerMixin"
   ]
 }
