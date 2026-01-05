@@ -19,4 +19,8 @@ public class KeybindingUtils {
         Map<String, KeybindHoldData> keyHeldMap = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.HELD_KEYBIND, new HashMap<>());
         return keyHeldMap.getOrDefault(key, new KeybindHoldData(false, 0, 0));
     }
+
+    public static void endKeybindHold(PlayerEntity player, String key) {
+        DataComponentUtils.updateMap(HeroUtils.getHeroStack(player), DataComponentRegistry.HELD_KEYBIND, key, new KeybindHoldData(false, 0L, 0L));
+    }
 }

@@ -3,6 +3,7 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.ability.HeldAbility;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
@@ -75,6 +76,7 @@ public class BlackSparksHero extends Hero {
                 .hudRenderer(BlackSparksHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(BlackSparksHeroRenderer::new)
+                .tickHandler(HeldAbility::holdTickLogic)
                 .build();
         this.registerHero();
     }
