@@ -30,7 +30,7 @@ public class BlackSparksHeroConfig extends ConfigSection {
         public ValidatedFloat lightAttack = new ValidatedFloat(20.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedFloat mediumAttackPerHit = new ValidatedFloat(12.5f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedFloat spinKick = new ValidatedFloat(30.0f, 99999, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedFloat blackFlash = new ValidatedFloat(50.0f, 99999, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat blackFlash = new ValidatedFloat(100.0f, 99999, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedFloat divergentFistPunch = new ValidatedFloat(15.0f, 99999, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedFloat divergentFistImpact = new ValidatedFloat(25.0f, 99999, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
     }
