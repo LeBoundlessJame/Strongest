@@ -3,7 +3,6 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.HeldAbility;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
@@ -42,7 +41,7 @@ public class BlackSparksHero extends Hero {
     public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, COOLDOWNS.channelCursedEnergy.get(), BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
     //public static Ability DASH = AbilityUtils.ability(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("dash"));
 
-    public static Ability LIGHT_ATTACK = new LightAttackAbility(CursedEnergyAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack");
+    public static Ability LIGHT_ATTACK = new DivergentLightAttackAbility(CursedEnergyAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack");
     public static Ability CHARGED_ABILITY = AbilityUtils.heldAbility(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("black_flash"), 20, "key.boundless.ability_one");
 
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));

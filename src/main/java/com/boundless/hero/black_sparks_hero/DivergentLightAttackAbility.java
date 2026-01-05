@@ -20,8 +20,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class LightAttackAbility extends HeldAbility {
-    public LightAttackAbility(Consumer<PlayerEntity> abilityLogic, Predicate<PlayerEntity> abilityConditional, int cooldown, int iconHeight, int iconWidth, Identifier abilityIcon, Identifier abilityID, boolean hide, int requiredHoldTime, String keybind) {
+public class DivergentLightAttackAbility extends HeldAbility {
+    public DivergentLightAttackAbility(Consumer<PlayerEntity> abilityLogic, Predicate<PlayerEntity> abilityConditional, int cooldown, int iconHeight, int iconWidth, Identifier abilityIcon, Identifier abilityID, boolean hide, int requiredHoldTime, String keybind) {
         super(abilityLogic, abilityConditional, cooldown, iconHeight, iconWidth, abilityIcon, abilityID, hide, requiredHoldTime, keybind);
     }
 
@@ -54,7 +54,7 @@ public class LightAttackAbility extends HeldAbility {
                     AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown() * 8L);
                 }
             } else {
-                LightAttackAbility.lightAttack(player);
+                DivergentLightAttackAbility.lightAttack(player);
                 AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
             }
         }
