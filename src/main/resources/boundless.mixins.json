@@ -17,6 +17,7 @@
   "client": [
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
+    "CameraMixin",
     "ShaderLoaderMixin",
     "SkinLayerMixin"
   ]
