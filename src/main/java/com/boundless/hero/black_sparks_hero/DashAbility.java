@@ -44,7 +44,7 @@ public class DashAbility extends HeldAbility {
 
             if (heldFor >= this.getRequiredHoldTime()) {
                 Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-                long cooldownEnd = cooldownData.get(this.getAbilityID());
+                long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), player.getWorld().getTime() + this.getCooldown());
 
                 if (data.startTimestamp() >= cooldownEnd) {
                     this.getAbilityLogic().accept(player);

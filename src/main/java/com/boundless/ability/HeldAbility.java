@@ -38,8 +38,8 @@ public class HeldAbility extends Ability {
 
         if (heldFor >= requiredHoldTime) {
             Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-            long cooldownEnd = cooldownData.get(this.getAbilityID());
-
+            long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), player.getWorld().getTime() + this.getCooldown());
+            
             if (data.startTimestamp() >= cooldownEnd) {
                 this.getAbilityLogic().accept(player);
                 AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
