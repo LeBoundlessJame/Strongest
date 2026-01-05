@@ -47,7 +47,7 @@ public class DivergentLightAttackAbility extends HeldAbility {
 
             if (heldFor >= this.getRequiredHoldTime()) {
                 Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-                long cooldownEnd = cooldownData.get(this.getAbilityID());
+                long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), player.getWorld().getTime() + 100);
 
                 if (data.startTimestamp() >= cooldownEnd) {
                     this.getAbilityLogic().accept(player);
