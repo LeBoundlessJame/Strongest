@@ -1,6 +1,7 @@
 package com.boundless.util;
 
 import com.boundless.ability.Ability;
+import com.boundless.ability.HeldAbility;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,6 +22,10 @@ public class AbilityUtils {
                 .abilityID(abilityID)
                 .abilityIcon(abilityIcon)
                 .build();
+    }
+
+    public static HeldAbility heldAbility(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon, int requiredHoldTime, String keybind) {
+        return new HeldAbility(abilityLogic, null, cooldown, 22, 22, abilityIcon, abilityID, false, requiredHoldTime, keybind);
     }
 
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
@@ -51,7 +56,7 @@ public class AbilityUtils {
         if (!HeroUtils.isHero(player)) return false;
 
         Ability ability = AbilityRegistry.getAbilityFromID(abilityID);
-        if (ability == null) return false;
+        if (ability == null || ability instanceof HeldAbility) return false;
         Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
 
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {

@@ -41,7 +41,8 @@ public class BlackSparksHero extends Hero {
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
     public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, COOLDOWNS.channelCursedEnergy.get(), BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
-    public static Ability DASH = AbilityUtils.ability(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("dash"));
+    //public static Ability DASH = AbilityUtils.ability(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("dash"));
+    public static Ability CHARGED_ABILITY = AbilityUtils.heldAbility(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("black_flash"), 20, "key.boundless.ability_one");
 
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -62,7 +63,7 @@ public class BlackSparksHero extends Hero {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.LIGHT_ATTACK)
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", BlackSparksHero.DASH)
+                .ability("key.boundless.ability_one", BlackSparksHero.CHARGED_ABILITY)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BlackSparksHero.CHANNEL_CURSED_ENERGY)
                 .build();
@@ -76,7 +77,7 @@ public class BlackSparksHero extends Hero {
                 .hudRenderer(BlackSparksHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(BlackSparksHeroRenderer::new)
-                .tickHandler(HeldAbility::holdTickLogic)
+                .tickHandler(Hero::onHeroTick)
                 .build();
         this.registerHero();
     }

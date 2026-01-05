@@ -3,6 +3,7 @@ package com.boundless.hero.api;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.ability.HeldAbility;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Hero {
@@ -24,6 +26,8 @@ public abstract class Hero {
     public HeroData heroData;
     @Getter
     public static LinkedHashMap<String, AbilityLoadout> ABILITY_LOADOUTS = new LinkedHashMap<>();
+    @Getter
+    public static ArrayList<HeldAbility> HELD_ABILITIES = new ArrayList<>();
 
     public void registerHero() {
         this.armorSet = RegistryUtils.registerHero(this);
@@ -36,6 +40,12 @@ public abstract class Hero {
                         BoundlessAPI.LOGGER.info("Registered " + ability.getAbilityID() + " ability");
                     }
                     AbilityRegistry.ABILITIES.putIfAbsent(ability.getAbilityID(), abilityEntry.getValue());
+                }
+
+                for (Ability ability: loadout.getAbilities().values()) {
+                    if (ability instanceof HeldAbility heldAbility) {
+                        HELD_ABILITIES.add(heldAbility);
+                    }
                 }
             }
         }
@@ -50,6 +60,12 @@ public abstract class Hero {
             heroStack.set(DataComponentRegistry.SPRINT_TICKS, heroStack.getOrDefault(DataComponentRegistry.SPRINT_TICKS, 0) + 1);
         } else {
             heroStack.set(DataComponentRegistry.SPRINT_TICKS, 0);
+        }
+    }
+
+    public static void onHeroTick(PlayerEntity player) {
+        for (HeldAbility heldAbility: HELD_ABILITIES) {
+            heldAbility.holdTickLogic(player);
         }
     }
 }
