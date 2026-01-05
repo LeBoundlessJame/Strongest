@@ -149,6 +149,7 @@ public class BlackSparksHero extends Hero {
                     Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
                     EffekUtils.playRotatedEffect(BoundlessAPI.identifier("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
 
+                    CameraUtils.playCameraShake(player);
                     CombatUtils.knockbackAttack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("landing_impact")));
                 }
                 Vec3d velocity = target.getPos().subtract(user.getPos()).multiply(1.0 / remainingTicks);
