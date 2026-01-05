@@ -14,10 +14,13 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class CursedEnergyAbility {
+    public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
+
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
     public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
 
@@ -89,5 +92,53 @@ public class CursedEnergyAbility {
 
     public static boolean blackFlashMinigameActive(PlayerEntity player) {
         return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+    }
+
+    // Returns true if it is the final hit of the minigame combo
+    // Todo: rework, I don't like the vagueness of this
+    public static boolean updateMinigameCombo(PlayerEntity player, String attack) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        String currentCombo = stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+        String targetCombo = stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+
+        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
+        currentCombo = currentCombo + attack;
+
+        /*
+        boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+
+        if (!withinTimePeriod) {
+            endMinigame(player);
+            return false;
+        }
+         */
+
+        if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
+            CursedEnergyAbility.blackFlash(player);
+            endMinigame(player);
+            return true;
+        } else if (currentCombo.length() > targetCombo.length() || !targetCombo.startsWith(currentCombo)) {
+            endMinigame(player);
+        }
+        return false;
+    }
+
+    public static void startMinigame(PlayerEntity player, String beginningAttack) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
+        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CONFIG.blackFlashTimeWindow.get());
+        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, BLACK_FLASH_COMBOS.get(player.getRandom().nextInt(BLACK_FLASH_COMBOS.size())));
+        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, beginningAttack);
+    }
+
+    public static void endMinigame(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, 0L);
+        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
     }
 }

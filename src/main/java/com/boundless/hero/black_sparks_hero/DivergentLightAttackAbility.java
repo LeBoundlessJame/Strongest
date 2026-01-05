@@ -63,13 +63,13 @@ public class DivergentLightAttackAbility extends HeldAbility {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        if (BlackSparksHero.updateMinigameCombo(player, "l")) return;
+        if (CursedEnergyAbility.updateMinigameCombo(player, "l")) return;
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
 
         if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
-            BlackSparksHero.startMinigame(player, "l");
+            CursedEnergyAbility.startMinigame(player, "l");
             HeroUtils.getHeroStack(player).set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, player.getWorld().getTime());
         }
 

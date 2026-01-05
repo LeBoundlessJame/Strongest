@@ -9,11 +9,12 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.BlackSparksHeroRenderer;
-import com.boundless.networking.payloads.evasion.EvasionClientPayload;
-import com.boundless.registry.*;
+import com.boundless.registry.AttributeRegistry;
+import com.boundless.registry.ConfigRegistry;
+import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import com.mojang.serialization.Codec;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -22,17 +23,12 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackSparksHero extends Hero {
-    public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
-
     public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
     public static BlackSparksHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
@@ -40,11 +36,9 @@ public class BlackSparksHero extends Hero {
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
     public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, COOLDOWNS.channelCursedEnergy.get(), BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
-    //public static Ability DASH = AbilityUtils.ability(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("dash"));
 
     public static HeldAbility LIGHT_ATTACK = new DivergentLightAttackAbility(CursedEnergyAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack");
-    public static HeldAbility CHARGED_ABILITY = AbilityUtils.heldAbility(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("black_flash"), 20, "key.boundless.ability_one");
-
+    public static HeldAbility DASH = new DashAbility(DashAbility::superDash, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one");
 
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -65,7 +59,7 @@ public class BlackSparksHero extends Hero {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.LIGHT_ATTACK)
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", BlackSparksHero.CHARGED_ABILITY)
+                .ability("key.boundless.ability_one", BlackSparksHero.DASH)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BlackSparksHero.CHANNEL_CURSED_ENERGY)
                 .build();
@@ -89,7 +83,7 @@ public class BlackSparksHero extends Hero {
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        if (updateMinigameCombo(player, "m")) return;
+        if (CursedEnergyAbility.updateMinigameCombo(player, "m")) return;
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
@@ -130,61 +124,5 @@ public class BlackSparksHero extends Hero {
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         AttackUtils.startAttackTimer(player, 10);
-    }
-
-    // Returns true if it is the final hit of the minigame combo
-    // Todo: rework, I don't like the vagueness of this
-    public static boolean updateMinigameCombo(PlayerEntity player, String attack) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-
-        String currentCombo = stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
-        String targetCombo = stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
-
-        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
-        currentCombo = currentCombo + attack;
-
-        /*
-        boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
-
-        if (!withinTimePeriod) {
-            endMinigame(player);
-            return false;
-        }
-         */
-
-        if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
-            CursedEnergyAbility.blackFlash(player);
-            endMinigame(player);
-            return true;
-        } else if (currentCombo.length() > targetCombo.length() || !targetCombo.startsWith(currentCombo)) {
-            endMinigame(player);
-        }
-        return false;
-    }
-
-    public static void startMinigame(PlayerEntity player, String beginningAttack) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-
-        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
-        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CONFIG.blackFlashTimeWindow.get());
-        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, BLACK_FLASH_COMBOS.get(player.getRandom().nextInt(BLACK_FLASH_COMBOS.size())));
-        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, beginningAttack);
-    }
-
-    public static void endMinigame(PlayerEntity player) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-
-        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, 0L);
-        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
-        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
-        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
-    }
-
-    public static void dash(PlayerEntity player) {
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
-        HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);
-        if (!player.getWorld().isClient) {
-            ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
-        }
     }
 }
