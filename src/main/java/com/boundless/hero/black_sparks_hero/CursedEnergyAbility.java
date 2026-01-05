@@ -93,14 +93,12 @@ public class CursedEnergyAbility {
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
         currentCombo = currentCombo + attack;
 
-        /*
         boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
 
         if (!withinTimePeriod) {
             endMinigame(player);
             return false;
         }
-         */
 
         if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
             CursedEnergyAbility.blackFlash(player);
