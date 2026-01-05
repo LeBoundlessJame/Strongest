@@ -25,19 +25,24 @@ public class LightAttackAbility extends HeldAbility {
         super(abilityLogic, abilityConditional, cooldown, iconHeight, iconWidth, abilityIcon, abilityID, hide, requiredHoldTime, keybind);
     }
 
+    // Todo: A little messy and repetitive, could do with a small refactor soon
     @Override
     public void holdTickLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
+        if (!AbilityUtils.canUseAbility(player, this.getAbilityID())) return;
 
         KeybindHoldData data = KeybindingUtils.getHoldData(player, this.getKeybind());
 
+        long heldFor = player.getWorld().getTime() - data.startTimestamp();
+
         if (data.held()) {
-            long heldFor = player.getWorld().getTime() - data.startTimestamp();
-            if (heldFor > 3) {
+            Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
+            long cooldownEnd = cooldownData.get(this.getAbilityID());
+
+            if (heldFor > 3 && data.startTimestamp() >= cooldownEnd) {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2, 1, false, false, false));
             }
         } else {
-            long heldFor = player.getWorld().getTime() - data.startTimestamp();
             KeybindingUtils.endKeybindHold(player, this.getKeybind());
 
             if (heldFor >= this.getRequiredHoldTime()) {
@@ -46,10 +51,11 @@ public class LightAttackAbility extends HeldAbility {
 
                 if (data.startTimestamp() >= cooldownEnd) {
                     this.getAbilityLogic().accept(player);
-                    AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
+                    AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown() * 8L);
                 }
             } else {
                 LightAttackAbility.lightAttack(player);
+                AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
             }
         }
     }

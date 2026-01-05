@@ -29,6 +29,7 @@ public class HeldAbility extends Ability {
 
     public void holdTickLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
+        if (!AbilityUtils.canUseAbility(player, this.getAbilityID())) return;
 
         KeybindHoldData data = KeybindingUtils.getHoldData(player, keybind);
         if (data.startTimestamp() == 0 || data.held()) return;
