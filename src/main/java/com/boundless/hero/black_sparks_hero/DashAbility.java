@@ -65,7 +65,6 @@ public class DashAbility extends HeldAbility {
         }
     }
 
-    // Todo: Camera shake suddenly stopped working. Try to fix later.
     public static void superDash(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("front_handspring"), true, 5000);
