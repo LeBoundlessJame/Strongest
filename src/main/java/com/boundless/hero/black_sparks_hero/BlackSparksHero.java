@@ -142,6 +142,16 @@ public class BlackSparksHero extends Hero {
             int remainingTicks = duration - i;
 
             tasks.put(i, (user, heroAction) -> {
+                if (remainingTicks == 1) {
+                    SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+                    SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+
+                    Vec3d effectScale = new Vec3d(player.getScale() * 0.5f, player.getScale() * 0.5f, player.getScale() * 0.5f);
+                    Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
+                    EffekUtils.playRotatedEffect(BoundlessAPI.identifier("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
+
+                    CombatUtils.knockbackAttack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("landing_impact")));
+                }
                 Vec3d velocity = target.getPos().subtract(user.getPos()).multiply(1.0 / remainingTicks);
 
                 user.setVelocity(velocity);
@@ -150,6 +160,7 @@ public class BlackSparksHero extends Hero {
             });
         }
 
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dropkick"), 2f, false, true, 5000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
     }
 

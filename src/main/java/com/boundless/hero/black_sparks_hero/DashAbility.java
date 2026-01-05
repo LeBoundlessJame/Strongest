@@ -68,7 +68,7 @@ public class DashAbility extends HeldAbility {
     public static void superDash(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("front_handspring"), true, 5000);
-        player.addVelocity(player.getRotationVector().multiply(2.5, 5, 2.5));
+        player.addVelocity(player.getRotationVector().multiply(2.5, 2.5, 2.5));
         player.velocityDirty = true;
         player.velocityModified = true;
         CameraUtils.playCameraShake(player);
