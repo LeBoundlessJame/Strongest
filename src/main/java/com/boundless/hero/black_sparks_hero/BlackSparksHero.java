@@ -78,6 +78,7 @@ public class BlackSparksHero extends Hero {
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(BlackSparksHeroRenderer::new)
                 .tickHandler(Hero::onHeroTick)
+                .heldKeybind("key.boundless.ability_one")
                 .build();
         this.registerHero();
     }

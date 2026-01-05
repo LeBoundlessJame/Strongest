@@ -46,4 +46,7 @@ public class HeroData {
 
     @Builder.Default
     private final BiFunction<Identifier, Identifier, ? extends AzArmorRenderer> armorRenderer = HeroArmorRenderer::new;
+
+    @Singular
+    private final List<String> heldKeybinds;
 }

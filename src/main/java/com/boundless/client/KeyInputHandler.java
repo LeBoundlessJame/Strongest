@@ -36,17 +36,23 @@ public class KeyInputHandler {
             for (Consumer<MinecraftClient> clientConsumer: heroData.getClientTickEvents()) {
                 clientConsumer.accept(client);
             } */
-            KeyInputHandler.keybindHoldLogic(client, client.options.forwardKey, client.options.forwardKey.getTranslationKey());
-            KeyInputHandler.keybindHoldLogic(client, client.options.backKey, client.options.backKey.getTranslationKey());
-            KeyInputHandler.keybindHoldLogic(client, KeybindRegistry.ABILITY_ONE, "key.boundless.ability_one");
+            KeyInputHandler.keybindHoldLogic(client, client.options.forwardKey.getTranslationKey());
+            KeyInputHandler.keybindHoldLogic(client, client.options.backKey.getTranslationKey());
 
+            if (heroData.getHeldKeybinds() == null) return;
+
+            for (String keybind: heroData.getHeldKeybinds()) {
+                KeyInputHandler.keybindHoldLogic(client, keybind);
+            }
         });
     }
 
     private static final Map<String, Boolean> heldKeysMap = new HashMap<>();
 
-    public static void keybindHoldLogic(MinecraftClient client, KeyBinding key, String translationKey) {
+    public static void keybindHoldLogic(MinecraftClient client, String translationKey) {
         if (client.player == null) return;
+
+        KeyBinding key = KeybindingUtils.getKeyBindingFromTranslation(translationKey);
 
         if (key.isPressed() && !heldKeysMap.getOrDefault(translationKey, false)) {
             heldKeysMap.put(translationKey, true);
