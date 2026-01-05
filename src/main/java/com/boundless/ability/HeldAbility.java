@@ -1,11 +1,14 @@
 package com.boundless.ability;
 
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
+import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -24,16 +27,20 @@ public class HeldAbility extends Ability {
         if (player.getWorld().isClient) return;
 
         KeybindHoldData data = KeybindingUtils.getHoldData(player, keybind);
-        if (data.startTimestamp() == 0) return;
+        if (data.startTimestamp() == 0 || data.held()) return;
 
-        if (!data.held()) {
-            long heldFor = player.getWorld().getTime() - data.startTimestamp();
-            KeybindingUtils.endKeybindHold(player, keybind);
+        long heldFor = player.getWorld().getTime() - data.startTimestamp();
+        KeybindingUtils.endKeybindHold(player, keybind);
 
-            if (heldFor >= requiredHoldTime) {
+        if (heldFor >= requiredHoldTime) {
+            Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
+            long cooldownEnd = cooldownData.get(this.getAbilityID());
+
+            if (data.startTimestamp() >= cooldownEnd) {
                 this.getAbilityLogic().accept(player);
                 AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
             }
         }
     }
+
 }
