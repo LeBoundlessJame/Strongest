@@ -40,6 +40,7 @@ public class BlackSparksHero extends Hero {
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
     public static Ability CHANNEL_CURSED_ENERGY = AbilityUtils.ability(CursedEnergyAbility::channelCursedEnergy, COOLDOWNS.channelCursedEnergy.get(), BoundlessAPI.identifier("channel_cursed_energy"), BoundlessAPI.hudPNG("channel_cursed_energy"));
+    public static Ability DASH = AbilityUtils.ability(BlackSparksHero::dash, COOLDOWNS.dodge.get(), BoundlessAPI.identifier("dash"), BoundlessAPI.hudPNG("dash"));
 
     public static ComponentType<Long> CHANNEL_CURSED_ENERGY_TIMESTAMP = DataComponentRegistry.registerComponent("channel_cursed_energy_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -60,7 +61,7 @@ public class BlackSparksHero extends Hero {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BlackSparksHero.LIGHT_ATTACK)
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", BlackSparksHero.DODGE)
+                .ability("key.boundless.ability_one", BlackSparksHero.DASH)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BlackSparksHero.CHANNEL_CURSED_ENERGY)
                 .build();
@@ -197,16 +198,11 @@ public class BlackSparksHero extends Hero {
         stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
     }
 
-    public static Ability DODGE = Ability.builder()
-            .abilityID(BoundlessAPI.identifier("dash"))
-            .abilityIcon(BoundlessAPI.hudPNG("dash"))
-            .cooldown(COOLDOWNS.dodge.get())
-            .abilityLogic((player) -> {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
-                HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);
-                if (!player.getWorld().isClient) {
-                    ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
-                }
-            })
-            .build();
+    public static void dash(PlayerEntity player) {
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
+        HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);
+        if (!player.getWorld().isClient) {
+            ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
+        }
+    }
 }
