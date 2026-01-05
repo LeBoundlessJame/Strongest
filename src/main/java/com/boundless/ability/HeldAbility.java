@@ -5,6 +5,8 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -14,7 +16,9 @@ import java.util.function.Predicate;
 
 public class HeldAbility extends Ability {
 
+    @Getter
     private final int requiredHoldTime;
+    @Getter
     private final String keybind;
 
     public HeldAbility(Consumer<PlayerEntity> abilityLogic, Predicate<PlayerEntity> abilityConditional, int cooldown, int iconHeight, int iconWidth, Identifier abilityIcon, Identifier abilityID, boolean hide, int requiredHoldTime, String keybind) {

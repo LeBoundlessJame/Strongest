@@ -37,7 +37,7 @@ public class CursedEnergyAbility {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             CombatUtils.attack(heroAction, DAMAGE.divergentFistPunch.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         });
-        tasks.put(8, (user, heroAction) -> {
+        tasks.put(15, (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
 
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
@@ -52,7 +52,7 @@ public class CursedEnergyAbility {
 
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
         ActionUtils.performAction(player, divergence);
-        AttackUtils.startAttackTimer(player, 8);
+        AttackUtils.startAttackTimer(player, 15);
     }
 
     public static void blackFlash(PlayerEntity player) {
