@@ -24,14 +24,6 @@ public class CursedEnergyAbility {
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
     public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
 
-    public static void channelCursedEnergy(PlayerEntity player) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        SoundUtils.playSound(player, SoundEvents.ITEM_FIRECHARGE_USE);
-        stack.set(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, channelCursedEnergyActive(player)
-                ? player.getWorld().getTime()
-                : player.getWorld().getTime() + CONFIG.energyChannelTimeWindow.get());
-    }
-
     public static void divergentFist(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
@@ -84,10 +76,6 @@ public class CursedEnergyAbility {
 
         if (player.getWorld().isClient) return;
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
-    }
-
-    public static boolean channelCursedEnergyActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, 0L);
     }
 
     public static boolean blackFlashMinigameActive(PlayerEntity player) {

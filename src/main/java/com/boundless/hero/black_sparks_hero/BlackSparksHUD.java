@@ -48,22 +48,6 @@ public class BlackSparksHUD {
         float scale = 1.0f;
         matrixStack.scale(scale, scale, scale);
 
-        if (CursedEnergyAbility.channelCursedEnergyActive(player)) {
-            ArrayList<Float> colors = GUIUtils.hexToUnitColor("920a0a");
-
-            int horizontalOffset = drawContext.getScaledWindowWidth() / 4;
-            int middle = drawContext.getScaledWindowWidth() / 2;
-
-            drawContext.drawTexture(HeroHUD.ABILITY_FRAME, middle - horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
-            drawContext.drawTexture(BLACK_FLASH, middle - horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "L", middle - horizontalOffset - 11 + 10, (drawContext.getScaledWindowHeight() / 2) + 24, colors);
-
-            colors = GUIUtils.hexToUnitColor("1bc7b6");
-            drawContext.drawTexture(HeroHUD.ABILITY_FRAME, middle + horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
-            drawContext.drawTexture(DIVERGENT_FIST, middle + horizontalOffset - 11, drawContext.getScaledWindowHeight() / 2, 0, 0, 22, 22, 22, 22);
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, "R", middle + horizontalOffset - 11 + 10, (drawContext.getScaledWindowHeight() / 2) + 24, colors);
-        }
-
         // Todo: Fix this rendering behind chat
         if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
             matrixStack.push();
