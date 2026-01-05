@@ -22,7 +22,6 @@ public class BlackSparksHeroConfig extends ConfigSection {
         public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt mediumAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt spinKick = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt channelCursedEnergy = new ValidatedInt(4, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt dodge = new ValidatedInt(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt blackFlash = new ValidatedInt(200, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }

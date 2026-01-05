@@ -35,7 +35,7 @@ public class BlackSparksHero extends Hero {
 
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
-    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::startBlackFlashMinigame, COOLDOWNS.channelCursedEnergy.get(), BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::startBlackFlashMinigame, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
 
     public static HeldAbility LIGHT_ATTACK = new DivergentLightAttackAbility(CursedEnergyAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack");
     public static HeldAbility DASH = new DashAbility(DashAbility::superDash, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one");
