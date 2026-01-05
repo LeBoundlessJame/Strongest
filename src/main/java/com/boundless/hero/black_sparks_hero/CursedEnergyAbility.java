@@ -52,7 +52,7 @@ public class CursedEnergyAbility {
 
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
         ActionUtils.performAction(player, divergence);
-        AttackUtils.startAttackTimer(player, 15);
+        AttackUtils.startAttackTimer(player, 10);
     }
 
     public static void blackFlash(PlayerEntity player) {
