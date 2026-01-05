@@ -1,14 +1,12 @@
 package com.boundless.hero.black_sparks_hero;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.ability.HeldAbility;
 import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.AbilityUtils;
-import com.boundless.util.CameraUtils;
-import com.boundless.util.HeroUtils;
-import com.boundless.util.KeybindingUtils;
+import com.boundless.util.*;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -70,7 +68,8 @@ public class DashAbility extends HeldAbility {
     // Todo: Camera shake suddenly stopped working. Try to fix later.
     public static void superDash(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        player.addVelocity(player.getRotationVector().multiply(5));
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("front_handspring"), true, 5000);
+        player.addVelocity(player.getRotationVector().multiply(2.5, 5, 2.5));
         player.velocityDirty = true;
         player.velocityModified = true;
         CameraUtils.playCameraShake(player);
