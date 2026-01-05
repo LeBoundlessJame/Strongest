@@ -130,9 +130,8 @@ public class BlackSparksHero extends Hero {
     }
 
     public static void dropkick(PlayerEntity player) {
-        EntityHitResult hitResult = RaycastUtils.raycast(player, 64);
-        if (hitResult == null || hitResult.getEntity() == null) return;
-        Entity target = hitResult.getEntity();
+        Entity target = RaycastUtils.thickRaycast(player, 32, 2);
+        if (target == null) return;
 
         int duration = 8;
 
