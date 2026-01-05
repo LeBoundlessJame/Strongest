@@ -6,7 +6,6 @@ import com.boundless.util.AbilityUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 

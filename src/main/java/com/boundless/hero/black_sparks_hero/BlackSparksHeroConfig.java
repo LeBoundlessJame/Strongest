@@ -12,8 +12,7 @@ public class BlackSparksHeroConfig extends ConfigSection {
     }
 
     public ValidatedFloat damageReduction = new ValidatedFloat(0.80f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
-    public ValidatedLong blackFlashTimeWindow = new ValidatedLong(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-    public ValidatedLong energyChannelTimeWindow = new ValidatedLong(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+    public ValidatedLong blackFlashTimeWindow = new ValidatedLong(100, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     public ValidatedInt impactFrameDuration = new ValidatedInt(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
 
     public AbilityDamageConfig abilityDamageConfig = new AbilityDamageConfig();
@@ -25,6 +24,7 @@ public class BlackSparksHeroConfig extends ConfigSection {
         public ValidatedInt spinKick = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt channelCursedEnergy = new ValidatedInt(4, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt dodge = new ValidatedInt(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt blackFlash = new ValidatedInt(200, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }
 
     public static class AbilityDamageConfig extends ConfigSection {

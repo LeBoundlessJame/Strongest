@@ -4,7 +4,6 @@ import com.boundless.hero.api.HeroData;
 import com.boundless.networking.payloads.AbilityUsePayload;
 import com.boundless.networking.payloads.UpdateHoldStatePayload;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.KeybindRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
