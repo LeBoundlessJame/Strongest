@@ -40,6 +40,14 @@ public class CombatUtils {
         }
     }
 
+    public static void aoeAttack(PlayerEntity player, float radius, BiConsumer<PlayerEntity, LivingEntity> logic) {
+        for (LivingEntity target : player.getWorld().getEntitiesByClass(LivingEntity.class, player.getBoundingBox().expand(radius), entity -> true)) {
+            if (target != player) {
+                logic.accept(player, target);
+            }
+        }
+    }
+
     public static void knockbackAttack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
         heroAction.repositionBox();
         if (heroAction.getOwner() == null) return;

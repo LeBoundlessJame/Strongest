@@ -19,12 +19,14 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.LinkedHashMap;
@@ -49,12 +51,13 @@ public class BlackSparksHero extends Hero {
     public static ComponentType<Long> MINIGAME_END_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_end_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<String> TARGET_MINIGAME_COMBO = DataComponentRegistry.registerComponent("target_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
     public static ComponentType<String> CURRENT_MINIGAME_COMBO = DataComponentRegistry.registerComponent("current_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
+    public static ComponentType<Boolean> DROPKICK_DAMAGE_TRIGGERED = DataComponentRegistry.registerComponent("dropkick_damage_triggered", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), CONFIG.damageReduction.get(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
             .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_jump_strength"), 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
-            .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_safe_fall_damage_distance"), 10, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_safe_fall_damage_distance"), 35, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.identifier("top_speed_multiplier"), 2.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.identifier("ticks_until_max_speed"), 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .build();
@@ -130,33 +133,35 @@ public class BlackSparksHero extends Hero {
     }
 
     public static void dropkick(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        stack.set(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, false);
+
         Entity target = RaycastUtils.thickRaycast(player, 32, 2);
         if (target == null) return;
 
-        int duration = 8;
+        int overallDuration = 15;
+        int moveToTargetDuration = 8;
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
-        for (int i = 0; i < duration; i++) {
-            int remainingTicks = duration - i;
+        for (int i = 0; i < overallDuration; i++) {
+            int remainingMoveTicks = moveToTargetDuration - i;
 
             tasks.put(i, (user, heroAction) -> {
-                if (remainingTicks == 1) {
-                    SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-                    SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+                if (stack.getOrDefault(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, false)) return;
 
-                    Vec3d effectScale = new Vec3d(player.getScale() * 0.5f, player.getScale() * 0.5f, player.getScale() * 0.5f);
-                    Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-                    EffekUtils.playRotatedEffect(BoundlessAPI.identifier("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
-
-                    CameraUtils.playCameraShake(player);
-                    CombatUtils.knockbackAttack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("landing_impact")));
+                if (user.distanceTo(target) < 5 && !stack.getOrDefault(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, false)) {
+                    stack.set(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, true);
+                    CombatUtils.aoeAttack(player, 4, BlackSparksHero::dropkickAoe);
+                    return;
                 }
-                Vec3d velocity = target.getPos().subtract(user.getPos()).multiply(1.0 / remainingTicks);
 
-                user.setVelocity(velocity);
-                user.velocityModified = true;
-                user.velocityDirty = true;
+                if (remainingMoveTicks > 0) {
+                    Vec3d velocity = target.getPos().subtract(user.getPos()).multiply(1.0 / remainingMoveTicks);
+                    user.setVelocity(velocity);
+                    user.velocityModified = true;
+                    user.velocityDirty = true;
+                }
             });
         }
 
@@ -164,4 +169,17 @@ public class BlackSparksHero extends Hero {
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
     }
 
+    public static void dropkickAoe(PlayerEntity player, LivingEntity target) {
+        SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+        SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+
+        Vec3d effectScale = new Vec3d(player.getScale() * 0.5f, player.getScale() * 0.5f, player.getScale() * 0.5f);
+        Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
+        EffekUtils.playRotatedEffect(BoundlessAPI.identifier("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
+
+        CameraUtils.playCameraShake(player);
+        target.damage(target.getDamageSources().generic(), DAMAGE.spinKick.get());
+        CombatUtils.uppercutKnockback(player, target);
+        CombatUtils.playImpactVisual(player, target, BoundlessAPI.identifier("landing_impact"));
+    }
 }
