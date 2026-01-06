@@ -5,6 +5,7 @@ import com.boundless.ability.HeldAbility;
 import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -12,6 +13,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -58,6 +60,7 @@ public class DashAbility extends HeldAbility {
     }
 
     public static void dash(PlayerEntity player) {
+        SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
         HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);
         if (!player.getWorld().isClient) {
@@ -67,8 +70,15 @@ public class DashAbility extends HeldAbility {
 
     public static void superDash(PlayerEntity player) {
         if (player.getWorld().isClient) return;
+        if (player.isOnGround()) {
+            SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+        } else {
+            SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
+        }
+
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("front_handspring"), true, 5000);
-        player.addVelocity(player.getRotationVector().multiply(2.5, 2.5, 2.5));
+        player.addVelocity(player.getRotationVector().multiply(2.5, 0, 2.5).add(0, 2, 0));
         player.velocityDirty = true;
         player.velocityModified = true;
         CameraUtils.playCameraShake(player);
