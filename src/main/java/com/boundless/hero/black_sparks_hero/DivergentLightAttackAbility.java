@@ -63,7 +63,7 @@ public class DivergentLightAttackAbility extends HeldAbility {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        if (CursedEnergyAbility.updateMinigameCombo(player, "l")) return;
+        if (BlackFlashAbility.updateMinigameCombo(player, "l")) return;
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);

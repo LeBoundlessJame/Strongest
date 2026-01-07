@@ -8,12 +8,13 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
+import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -68,8 +69,11 @@ public class DashAbility extends HeldAbility {
         }
     }
 
-    public static void superDash(PlayerEntity player) {
+    public static void chargedLeap(PlayerEntity player) {
         if (player.getWorld().isClient) return;
+
+        HeroUtils.getHeroStack(player).set(BlackSparksHero.CHARGED_LEAP_TIME_WINDOW, player.getWorld().getTime() + 15);
+
         if (player.isOnGround()) {
             SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);

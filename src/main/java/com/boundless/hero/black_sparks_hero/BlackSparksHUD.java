@@ -49,7 +49,7 @@ public class BlackSparksHUD {
         matrixStack.scale(scale, scale, scale);
 
         // Todo: Fix this rendering behind chat
-        if (CursedEnergyAbility.blackFlashMinigameActive(player)) {
+        if (BlackFlashAbility.blackFlashMinigameActive(player)) {
             matrixStack.push();
             matrixStack.translate(0, 0, 10000);
             ItemStack stack = HeroUtils.getHeroStack(player);

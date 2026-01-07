@@ -1,6 +1,7 @@
 package com.boundless.hero.armor;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;
@@ -16,15 +17,14 @@ public class BlackSparksHeroRenderer extends AzArmorRenderer {
     public BlackSparksHeroRenderer(Identifier model, Identifier texture) {
         super(AzArmorRendererConfig.builder(((entity, itemStack) -> model), (entity, stack) -> {
             if (!(entity instanceof PlayerEntity player)) return TEXTURE;
-            if (channelingCursedEnergy(player, stack)) return player.age % 15 < 10 ? CHARGING_1 : CHARGING_2;
+            if (inBlackFlashMinigame(player, stack)) return player.age % 15 < 10 ? CHARGING_1 : CHARGING_2;
             return TEXTURE;
         }).build());
     }
 
-    public static boolean channelingCursedEnergy(PlayerEntity player, ItemStack stack) {
+    public static boolean inBlackFlashMinigame(PlayerEntity player, ItemStack stack) {
         long minigameEnd = stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
-        long ceTimestamp = stack.getOrDefault(BlackSparksHero.CHANNEL_CURSED_ENERGY_TIMESTAMP, 0L);
 
-        return player.getWorld().getTime() <= minigameEnd || player.getWorld().getTime() <= ceTimestamp;
+        return player.getWorld().getTime() <= minigameEnd;
     }
 }

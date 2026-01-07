@@ -4,9 +4,12 @@ import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.ConfigRegistry;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
+import com.mojang.serialization.Codec;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-public class CursedEnergyAbility {
+public class BlackFlashAbility {
     public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
 
     public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
@@ -100,7 +103,7 @@ public class CursedEnergyAbility {
         }
 
         if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
-            CursedEnergyAbility.blackFlash(player);
+            BlackFlashAbility.blackFlash(player);
             endMinigame(player);
             return true;
         } else if (currentCombo.length() > targetCombo.length() || !targetCombo.startsWith(currentCombo)) {
