@@ -44,13 +44,10 @@ public class SwitcherHero extends Hero {
         Vec3d playerPos = player.getPos();
         Vec3d targetPos = target.getPos();
 
-        /*
         target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
         player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
 
         player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
-
-         */
     }
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
