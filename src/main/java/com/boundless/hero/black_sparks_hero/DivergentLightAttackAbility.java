@@ -28,7 +28,7 @@ public class DivergentLightAttackAbility extends HeldAbility {
     // Todo: A little messy and repetitive, could do with a small refactor soon
     @Override
     public void holdTickLogic(PlayerEntity player) {
-        if (player.getWorld().isClient || !AttackUtils.canAttack(player)) return;
+        if (player.getWorld().isClient) return;
         if (!AbilityUtils.canUseAbility(player, this.getAbilityID())) return;
 
         KeybindHoldData data = KeybindingUtils.getHoldData(player, this.getKeybind());

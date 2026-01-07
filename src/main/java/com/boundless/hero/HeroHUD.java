@@ -50,12 +50,6 @@ public class HeroHUD {
 
             ArrayList<Float> colors = GUIUtils.hexToUnitColor("bcced4");
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, boundKeyText.getString(), (int) (45 / scale), (int) ((20 + (i * 21) + 8) / scale), colors);
-
-            if (HeroUtils.getHeroStack(minecraftClient.player).getOrDefault(DataComponentRegistry.COMBAT_MODE, true)) {
-                GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Mode: Combat", 8, 10, colors);
-            } else {
-                GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Mode: Normal", 8, 10, colors);
-            }
             matrixStack.pop();
 
             long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);

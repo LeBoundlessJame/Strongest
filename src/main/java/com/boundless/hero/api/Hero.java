@@ -29,7 +29,6 @@ public abstract class Hero {
     public static LinkedHashMap<String, AbilityLoadout> ABILITY_LOADOUTS = new LinkedHashMap<>();
     @Getter
     public static ArrayList<HeldAbility> HELD_ABILITIES = new ArrayList<>();
-    public static Ability COMBAT_MODE_TOGGLE = AbilityUtils.ability(Hero::combatModeToggle, 5, BoundlessAPI.identifier("combat_mode_toggle"), BoundlessAPI.hudPNG("sword"));
 
     public void registerHero() {
         this.armorSet = RegistryUtils.registerHero(this);
@@ -69,9 +68,5 @@ public abstract class Hero {
         for (HeldAbility heldAbility: HELD_ABILITIES) {
             heldAbility.holdTickLogic(player);
         }
-    }
-
-    public static void combatModeToggle(PlayerEntity player) {
-        HeroUtils.getHeroStack(player).set(DataComponentRegistry.COMBAT_MODE, !HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE, true));
     }
 }
