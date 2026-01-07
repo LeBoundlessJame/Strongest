@@ -15,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -26,6 +27,7 @@ public class DashAbility extends HeldAbility {
         super(abilityLogic, abilityConditional, cooldown, iconHeight, iconWidth, abilityIcon, abilityID, hide, requiredHoldTime, keybind);
     }
 
+    // Todo: make it so that super leap doesn't trigger automatically when equipping new stack
     @Override
     public void holdTickLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
@@ -37,7 +39,7 @@ public class DashAbility extends HeldAbility {
 
         if (data.held()) {
             Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-            long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), player.getWorld().getTime());
+            long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), 0L);
 
             if (heldFor > 3 && data.startTimestamp() >= cooldownEnd) {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2, 1, false, false, false));
@@ -47,7 +49,7 @@ public class DashAbility extends HeldAbility {
 
             if (heldFor >= this.getRequiredHoldTime()) {
                 Map<Identifier, Long> cooldownData = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-                long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), player.getWorld().getTime());
+                long cooldownEnd = cooldownData.getOrDefault(this.getAbilityID(), 0L);
 
                 if (data.startTimestamp() >= cooldownEnd) {
                     this.getAbilityLogic().accept(player);
