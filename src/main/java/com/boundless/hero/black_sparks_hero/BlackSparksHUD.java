@@ -36,7 +36,9 @@ public class BlackSparksHUD {
 
 
         if (minecraftClient.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
-            ((ShaderAccessor)minecraftClient.gameRenderer).boundless$loadShader();
+            ((ShaderAccessor)minecraftClient.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));
+        } else if (minecraftClient.player.hasStatusEffect(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT)) {
+            ((ShaderAccessor)minecraftClient.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/boogie_woogie.json"));
         } else {
             if (minecraftClient.gameRenderer.getPostProcessor() != null) {
                 ((ShaderAccessor)minecraftClient.gameRenderer).boundless$disablePostProcessor();

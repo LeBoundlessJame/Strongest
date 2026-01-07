@@ -19,7 +19,7 @@ public abstract class ShaderLoaderMixin implements ShaderAccessor {
         this.disablePostProcessor();
     }
 
-    public void boundless$loadShader() {
-        this.loadPostProcessor(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));
+    public void boundless$loadShader(Identifier identifier) {
+        this.loadPostProcessor(identifier);
     }
 }

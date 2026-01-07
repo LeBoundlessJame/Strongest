@@ -3,6 +3,8 @@ package com.boundless.util;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -57,5 +59,11 @@ public class EffekUtils {
 
         AAALevel.addParticle(user.getWorld(), true, instance);
         return instance;
+    }
+
+    public static void playVisual(LivingEntity entity, Identifier impactVisual) {
+        Vec3d effectScale =  new Vec3d(entity.getScale() * 0.5f, entity.getScale() * 0.5f, entity.getScale() * 0.5f);
+        Vec3d effectRotation = new Vec3d(entity.getPitch(), entity.getYaw() * -1, 0);
+        EffekUtils.playRotatedEffect(impactVisual, entity, entity.getPos().add(0, entity.getHeight() / 2, 0), effectScale, effectRotation);
     }
 }

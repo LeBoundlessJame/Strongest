@@ -3,8 +3,6 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.action.Action;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
@@ -12,6 +10,7 @@ import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -21,12 +20,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.LinkedHashMap;
-import java.util.function.BiConsumer;
 
 public class SwitcherHero extends Hero {
 
@@ -38,6 +33,8 @@ public class SwitcherHero extends Hero {
         Entity target = RaycastUtils.thickRaycast(player, 64, 1.5f);
         if (target == null || target == player) return;
 
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 1, false, false, false));
+
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("clap"));
         SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
 
@@ -46,6 +43,11 @@ public class SwitcherHero extends Hero {
 
         target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
         player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
+
+        EffekUtils.playVisual(player, BoundlessAPI.identifier("energy_spark"));
+        if (target instanceof LivingEntity livingEntity) {
+            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
+        }
 
         player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
     }
