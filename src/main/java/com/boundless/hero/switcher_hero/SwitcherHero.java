@@ -12,10 +12,7 @@ import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.SoundRegistry;
-import com.boundless.util.AbilityUtils;
-import com.boundless.util.ActionUtils;
-import com.boundless.util.RaycastUtils;
-import com.boundless.util.SoundUtils;
+import com.boundless.util.*;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -41,15 +38,19 @@ public class SwitcherHero extends Hero {
         Entity target = RaycastUtils.thickRaycast(player, 64, 1.5f);
         if (target == null || target == player) return;
 
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("clap"));
         SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
 
         Vec3d playerPos = player.getPos();
         Vec3d targetPos = target.getPos();
 
+        /*
         target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
         player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
 
         player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
+
+         */
     }
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
