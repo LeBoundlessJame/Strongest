@@ -63,6 +63,7 @@ public class BlackSparksHero extends Hero {
                 .ability("key.boundless.ability_one", BlackSparksHero.DASH)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BlackSparksHero.BLACK_FLASH)
+                .ability("key.boundless.ability_four", BlackSparksHero.COMBAT_MODE_TOGGLE)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
