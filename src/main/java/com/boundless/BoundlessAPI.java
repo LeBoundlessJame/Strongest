@@ -13,6 +13,7 @@ public class BoundlessAPI implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+        ItemRegistry.initialize();
 		CodecRegistry.initialize();
 		RenderLogicRegistry.initialize();
 		ConfigRegistry.initialize();

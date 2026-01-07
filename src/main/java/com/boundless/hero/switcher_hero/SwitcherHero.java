@@ -10,7 +10,6 @@ import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.SoundRegistry;
-import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -19,12 +18,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class SwitcherHero extends Hero {
-
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability BOOGIE = AbilityUtils.ability(SwitcherHero::boogie, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
 
     public static void boogie(PlayerEntity player) {
@@ -62,9 +60,10 @@ public class SwitcherHero extends Hero {
 
     public SwitcherHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
-                .ability("key.attack", SwitcherHero.BOOGIE)
+                .ability("key.attack", SwitcherHero.LIGHT_ATTACK)
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", BlackSparksHero.SPIN_KICK)
+                .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
+                .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
