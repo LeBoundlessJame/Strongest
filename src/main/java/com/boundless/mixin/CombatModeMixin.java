@@ -11,18 +11,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
-public class AttackMixin {
+public class CombatModeMixin {
     @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
     private void boundless$doAttack(CallbackInfoReturnable<Boolean> cir) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if (player == null) return;
-        if (HeroUtils.isHero(player) && !HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.VANILLA_MECHANICS, true)) cir.cancel();
+        if (HeroUtils.isHero(player) && HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE, true)) cir.cancel();
     }
 
     @Inject(method = "doItemUse", at = @At("HEAD"), cancellable = true)
     private void boundless$doItemUse(CallbackInfo ci) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if (player == null) return;
-        if (HeroUtils.isHero(player) && !HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.VANILLA_MECHANICS, true)) ci.cancel();
+        if (HeroUtils.isHero(player) && HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE, true)) ci.cancel();
     }
 }

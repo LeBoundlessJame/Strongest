@@ -23,6 +23,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
@@ -84,6 +85,7 @@ public class BlackSparksHero extends Hero {
 
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
+
         if (DropkickLogic.canDropkick(player)) {
             DropkickLogic.dropkick(player);
             return;

@@ -36,6 +36,7 @@ public class AttackUtils {
     }
 
     public static boolean canAttack(PlayerEntity player) {
-        return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L) && !HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.VANILLA_MECHANICS, false);
+        return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L) &&
+                HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE, false);
     }
 }
