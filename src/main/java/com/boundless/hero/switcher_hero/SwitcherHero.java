@@ -33,8 +33,6 @@ public class SwitcherHero extends Hero {
         Entity target = RaycastUtils.thickRaycast(player, 64, 1.5f);
         if (target == null || target == player) return;
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 1, false, false, false));
-
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("clap"));
         SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
 
