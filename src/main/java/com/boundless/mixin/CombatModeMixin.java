@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
 public class CombatModeMixin {
+    /*
     @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
     private void boundless$doAttack(CallbackInfoReturnable<Boolean> cir) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -25,4 +26,5 @@ public class CombatModeMixin {
         if (player == null) return;
         if (HeroUtils.isHero(player) && HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE, true)) ci.cancel();
     }
+     */
 }
