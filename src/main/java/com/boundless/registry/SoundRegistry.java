@@ -15,6 +15,7 @@ public class SoundRegistry {
     public static SoundEvent ENERGY_IMPACT_2 = registerSoundEvent(BoundlessAPI.identifier("energy_impact_2"));
     public static SoundEvent ENERGY_IMPACT_3 = registerSoundEvent(BoundlessAPI.identifier("energy_impact_3"));
     public static SoundEvent ENERGY_IMPACT_HEAVY = registerSoundEvent(BoundlessAPI.identifier("energy_impact_heavy"));
+    public static SoundEvent CLAP_1 = registerSoundEvent(BoundlessAPI.identifier("clap_1"));
 
     public static SoundEvent registerSoundEvent(Identifier identifier) {
         Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));

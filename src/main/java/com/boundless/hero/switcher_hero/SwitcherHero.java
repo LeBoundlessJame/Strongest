@@ -3,22 +3,33 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.action.Action;
+import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AbilityUtils;
+import com.boundless.util.ActionUtils;
 import com.boundless.util.RaycastUtils;
+import com.boundless.util.SoundUtils;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.LinkedHashMap;
+import java.util.function.BiConsumer;
 
 public class SwitcherHero extends Hero {
 
@@ -27,8 +38,10 @@ public class SwitcherHero extends Hero {
     public static void boogie(PlayerEntity player) {
         if (player.getWorld().isClient()) return;
 
-        Entity target = RaycastUtils.thickRaycast(player, 64, 2);
-        if (target == null || target == player || !target.isAlive()) return;
+        Entity target = RaycastUtils.thickRaycast(player, 64, 1.5f);
+        if (target == null || target == player) return;
+
+        SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
 
         Vec3d playerPos = player.getPos();
         Vec3d targetPos = target.getPos();
@@ -46,7 +59,7 @@ public class SwitcherHero extends Hero {
             .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_safe_fall_damage_distance"), 35, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.identifier("top_speed_multiplier"), 2.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.identifier("ticks_until_max_speed"), 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
-            .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_scale"), 0.1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_scale"), 0.2, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
             .build();
 
     public SwitcherHero() {

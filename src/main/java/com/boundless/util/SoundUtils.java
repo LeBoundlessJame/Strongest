@@ -16,4 +16,9 @@ public class SoundUtils {
         float pitch = player.getRandom().nextBetween(6, 15) * 0.1f;
         playSound(player, sound, pitch);
     }
+
+    public static void playSound(PlayerEntity player, SoundEvent sound, int lowerRange, int upperRange) {
+        float pitch = player.getRandom().nextBetween(lowerRange, upperRange) * 0.1f;
+        playSound(player, sound, pitch);
+    }
 }
