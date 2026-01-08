@@ -38,4 +38,9 @@ public class AttackUtils {
     public static boolean canAttack(PlayerEntity player) {
         return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L);
     }
+
+    public static int incrementedAttackCount(PlayerEntity player) {
+        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        return DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
+    }
 }

@@ -2,24 +2,39 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"clap": {
-			"animation_length": 0.5,
+			"animation_length": 1,
 			"bones": {
 				"right_arm": {
 					"rotation": {
-						"0.0": [0, 0, 0],
-						"0.125": [90, -25, 0],
-						"0.25": [90, 25, 0]
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-90, 45, 0],
+							"easing": "easeInOutExpo"
+						},
+						"0.375": {
+							"vector": [-90, -45, 0],
+							"easing": "easeInOutExpo"
+						}
 					}
 				},
 				"left_arm": {
 					"rotation": {
-						"0.0": [0, 0, 0],
-						"0.125": [90, 25, 0],
-						"0.25": [90, -25, 0]
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-90, -45, 0],
+							"easing": "easeInOutExpo"
+						},
+						"0.375": {
+							"vector": [-90, 45, 0],
+							"easing": "easeInOutExpo"
+						}
 					}
 				}
 			}
 		}
-	},
-	"azurelib_format_version": 2
+	}
 }

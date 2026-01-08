@@ -64,8 +64,7 @@ public class DivergentLightAttackAbility extends HeldAbility {
 
         if (BlackFlashAbility.updateMinigameCombo(player, "l")) return;
 
-        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
+        int attackCount = AttackUtils.incrementedAttackCount(player);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         BiConsumer<PlayerEntity, HeroActionEntity> hook = (user, heroAction) -> {
