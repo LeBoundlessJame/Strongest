@@ -24,7 +24,7 @@ import net.minecraft.util.math.Vec3d;
 public class SwitcherHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability BOOGIE = AbilityUtils.ability(SwitcherHero::boogie, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
-    public static Ability HEADBUTT = AbilityUtils.ability(HeadbuttLogic::headbutt, 20, BoundlessAPI.identifier("headbutt"), BoundlessAPI.hudPNG("focus"));
+    public static Ability BOOGIE_VARIANTS = AbilityUtils.ability(HeadbuttLogic::headbutt, 20, BoundlessAPI.identifier("boogie_variants"), BoundlessAPI.hudPNG("clap_variants"));
 
     public static void boogie(PlayerEntity player) {
         if (player.getWorld().isClient()) return;
@@ -65,7 +65,7 @@ public class SwitcherHero extends Hero {
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
                 .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
                 .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
-                .ability("key.boundless.ability_three", SwitcherHero.HEADBUTT)
+                .ability("key.boundless.ability_three", SwitcherHero.BOOGIE_VARIANTS)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);

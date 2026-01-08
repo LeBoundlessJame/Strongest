@@ -26,7 +26,7 @@ public class HeadbuttLogic {
             CombatUtils.attack(heroAction, BlackSparksHero.DAMAGE.lightAttack.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
         };
         tasks.put(4, hook);
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("headbutt"), 1.5f, attackCount % 2 == 0, true, 2000);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("grab_and_punch"), 1.0f, attackCount % 2 == 0, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, 4);
     }
