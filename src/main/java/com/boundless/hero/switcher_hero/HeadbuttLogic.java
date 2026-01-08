@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 
 public class HeadbuttLogic {
 
-    // Todo: clean this up a LOT
+    // Todo: clean this up a LOT: also make it so that you can specify a grab offset
     public static void headbutt(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
