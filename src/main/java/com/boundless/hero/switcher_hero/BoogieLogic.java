@@ -3,12 +3,14 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.entity.rock.RockEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.LinkedHashMap;
@@ -16,6 +18,7 @@ import java.util.function.BiConsumer;
 
 public class BoogieLogic {
 
+    /*
     public static void boogie(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
 
@@ -46,5 +49,20 @@ public class BoogieLogic {
 
         tasks.put(5, teleport);
         ActionUtils.performAction(user, Action.builder().scheduledTasks(tasks).build());
+    }
+
+     */
+
+    public static void boogie(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+        RockEntity rock = new RockEntity(player, player.getWorld());
+        rock.setVelocity(player.getRotationVector().multiply(2));
+        rock.setPosition(player.getPos().add(player.getRotationVector().multiply(2).x, 1.2, player.getRotationVector().multiply(2).z));
+        rock.setNoGravity(true);
+        rock.setPitch(player.getPitch());
+        rock.setYaw(player.getYaw());
+        rock.setGlowing(true);
+        player.getWorld().spawnEntity(rock);
+        //rock.setVelocity(player, player.getPitch(), player.getYaw(), 0.0F, 1.5F, 1.0F);
     }
 }
