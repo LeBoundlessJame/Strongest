@@ -10,6 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ProjectileDeflection;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
@@ -49,6 +51,10 @@ public class RockEntity extends PersistentProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
+        if (entity instanceof LivingEntity target) {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 3, false, false, true));
+        }
+
         if (this.getOwner() instanceof LivingEntity livingEntity) {
             livingEntity.onAttacking(entity);
         }
@@ -64,6 +70,7 @@ public class RockEntity extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
         this.getWorld().addBlockBreakParticles(this.getBlockPos(), this.getWorld().getBlockState(this.getBlockPos().down()));
+        this.age = 39;
     }
 
     @Override

@@ -122,6 +122,12 @@ public class CombatUtils {
         target.velocityModified = true;
     }
 
+    // Bypasses knockback reduction
+    public static void strongKnockback(PlayerEntity player, LivingEntity target, float strength) {
+        target.setVelocity(player.getRotationVector().x * strength, 1, player.getRotationVector().z * strength);
+        target.velocityModified = true;
+    }
+
     public static void uppercutKnockback(PlayerEntity player, LivingEntity target) {
         target.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
         target.velocityModified = true;
