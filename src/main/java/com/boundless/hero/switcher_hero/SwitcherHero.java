@@ -9,45 +9,16 @@ import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
-import com.boundless.registry.SoundRegistry;
-import com.boundless.util.*;
-import net.minecraft.command.argument.EntityAnchorArgumentType;
+import com.boundless.util.AbilityUtils;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
 
 public class SwitcherHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability BOOGIE = AbilityUtils.ability(SwitcherHero::boogie, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
+    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::boogie, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
     public static Ability BOOGIE_VARIANTS = AbilityUtils.ability(HeadbuttLogic::headbutt, 20, BoundlessAPI.identifier("boogie_variants"), BoundlessAPI.hudPNG("clap_variants"));
-
-    public static void boogie(PlayerEntity player) {
-        if (player.getWorld().isClient()) return;
-
-        Entity target = RaycastUtils.thickRaycast(player, 64, 1.5f);
-        if (target == null || target == player) return;
-
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
-        SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
-
-        Vec3d playerPos = player.getPos();
-        Vec3d targetPos = target.getPos();
-
-        target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
-        player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
-
-        EffekUtils.playVisual(player, BoundlessAPI.identifier("energy_spark"));
-        if (target instanceof LivingEntity livingEntity) {
-            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
-        }
-
-        player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
-    }
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
