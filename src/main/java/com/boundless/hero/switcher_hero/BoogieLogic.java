@@ -53,6 +53,7 @@ public class BoogieLogic {
             }
 
             if (target instanceof RockEntity) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, false, false, false));
                 BoogieLogic.blackFlash(player);
             }
         };
@@ -81,9 +82,11 @@ public class BoogieLogic {
                 if (player.age % 4 == 0) {
                     EffekUtils.playEffect(BoundlessAPI.identifier("stars"), player, player.getPos(), new Vec3d(3, 3, 3));
                 }
-                user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
-                user.velocityModified = true;
-                user.velocityDirty = true;
+                if (!player.hasStatusEffect(StatusEffects.SLOWNESS)) {
+                    user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
+                    user.velocityModified = true;
+                    user.velocityDirty = true;
+                }
             });
         }
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
@@ -93,6 +96,7 @@ public class BoogieLogic {
 
     public static void blackFlash(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+
         tasks.put(7, (user, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
