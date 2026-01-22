@@ -1,7 +1,9 @@
 package com.boundless.entity.rock;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.util.EffekUtils;
 import mod.azure.azurelib.common.animation.dispatch.command.AzCommand;
 import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 import net.minecraft.block.BlockState;
@@ -16,6 +18,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class RockEntity extends PersistentProjectileEntity {
@@ -45,6 +48,10 @@ public class RockEntity extends PersistentProjectileEntity {
 
         if (this.age > maxLifetime) {
             this.discard();
+        }
+
+        if (this.age % 2 == 0) {
+            EffekUtils.playEffect(BoundlessAPI.identifier("energy_flicker"), this, this.getPos(), new Vec3d(1, 1, 1));
         }
     }
 

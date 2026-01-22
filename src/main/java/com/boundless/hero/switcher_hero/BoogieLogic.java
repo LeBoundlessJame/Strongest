@@ -29,8 +29,6 @@ public class BoogieLogic {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
 
-        Vec3d velocityPreTeleport = user.getVelocity();
-
         BiConsumer<PlayerEntity, HeroActionEntity> teleport = (player, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
 
@@ -39,9 +37,11 @@ public class BoogieLogic {
 
             Vec3d playerPos = player.getPos();
             Vec3d targetPos = target.getPos();
+            Vec3d velocityPreTeleport = player.getVelocity();
 
             target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
             player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
+
             player.setVelocity(velocityPreTeleport);
             player.velocityModified = true;
             player.velocityDirty = true;
@@ -74,8 +74,13 @@ public class BoogieLogic {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("aura"), 2.0f, false, false, 3000);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+
+        // Todo: find a way to cancel this if the teleport happens
         for (int i = 0; i < 40; i++) {
             tasks.put(i, (user, action) -> {
+                if (player.age % 4 == 0) {
+                    EffekUtils.playEffect(BoundlessAPI.identifier("stars"), player, player.getPos(), new Vec3d(3, 3, 3));
+                }
                 user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
                 user.velocityModified = true;
                 user.velocityDirty = true;
