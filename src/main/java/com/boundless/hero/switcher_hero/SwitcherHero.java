@@ -18,7 +18,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 public class SwitcherHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::boogie, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
-    public static Ability ROCK_THROW = AbilityUtils.ability(BoogieLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("clap"));
+    public static Ability ROCK_THROW = AbilityUtils.ability(BoogieLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
 
     public static Ability BOOGIE_VARIANTS = AbilityUtils.ability(HeadbuttLogic::headbutt, 20, BoundlessAPI.identifier("boogie_variants"), BoundlessAPI.hudPNG("clap_variants"));
 
@@ -47,7 +47,7 @@ public class SwitcherHero extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("switcher"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
-                .hudRenderer(BlackSparksHUD::render)
+                .hudRenderer(BoogieHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
