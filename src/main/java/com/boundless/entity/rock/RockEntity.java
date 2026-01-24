@@ -77,7 +77,6 @@ public class RockEntity extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
         this.getWorld().addBlockBreakParticles(this.getBlockPos(), this.getWorld().getBlockState(this.getBlockPos().down()));
-        this.age = 39;
     }
 
     @Override

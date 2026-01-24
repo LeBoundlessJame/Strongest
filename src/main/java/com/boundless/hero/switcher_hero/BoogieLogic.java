@@ -107,7 +107,6 @@ public class BoogieLogic {
     public static void boogie(PlayerEntity player, HeroActionEntity heroAction) {
         String swapType = HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.BOOGIE_SELECTION, "standard");
         SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
-        player.sendMessage(Text.of(swapType));
         ActionUtils.performDelayedAction(player, BOOGIE_MAP.get(swapType), 0);
         HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "standard");
         HeroUtils.getHeroStack(player).set(SwitcherHero.CLAP_SELECT_TIME, 0L);

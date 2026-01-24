@@ -47,6 +47,8 @@ public class BoogieHUD {
         float scale = 1.0f;
         matrixStack.scale(scale, scale, scale);
 
+
+
         /*
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("fc5454");
 
