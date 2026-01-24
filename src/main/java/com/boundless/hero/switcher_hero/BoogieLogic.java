@@ -4,7 +4,6 @@ import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.rock.RockEntity;
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
@@ -14,51 +13,66 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BoogieLogic {
 
-    public static void boogie(PlayerEntity user) {
+    public static HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> BOOGIE_MAP = getBoogieMap();
+
+    public static HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> getBoogieMap() {
+        HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> boogieMap = new HashMap<>();
+        boogieMap.put("standard", BoogieLogic::standardSwap);
+        return boogieMap;
+    }
+
+    public static void standardSwap(PlayerEntity player, HeroActionEntity heroAction) {
+        SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
+
+        EntityHitResult result = RaycastUtils.raycast(player, 64);
+        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
+
+        if (target != null) {
+            System.out.println(target.getName());
+        }
+
+        if (target == null || target == player) return;
+
+        Vec3d playerPos = player.getPos();
+        Vec3d targetPos = target.getPos();
+        Vec3d velocityPreTeleport = player.getVelocity();
+
+        target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
+        player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
+
+        player.setVelocity(velocityPreTeleport);
+        player.velocityModified = true;
+        player.velocityDirty = true;
+
+        EffekUtils.playVisual(player, BoundlessAPI.identifier("energy_spark"));
+        if (target instanceof LivingEntity livingEntity) {
+            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
+            player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
+        }
+
+        if (target instanceof RockEntity) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, false, false, false));
+            BoogieLogic.blackFlash(player);
+        }
+    }
+
+    public static void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
 
-        BiConsumer<PlayerEntity, HeroActionEntity> teleport = (player, heroAction) -> {
-            SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
-
-            Entity target = RaycastUtils.thickRaycast(player, 64, 1.5f);
-            if (target == null || target == player) return;
-
-            Vec3d playerPos = player.getPos();
-            Vec3d targetPos = target.getPos();
-            Vec3d velocityPreTeleport = player.getVelocity();
-
-            target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
-            player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
-
-            player.setVelocity(velocityPreTeleport);
-            player.velocityModified = true;
-            player.velocityDirty = true;
-
-            EffekUtils.playVisual(player, BoundlessAPI.identifier("energy_spark"));
-            if (target instanceof LivingEntity livingEntity) {
-                EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
-                player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
-            }
-
-            if (target instanceof RockEntity) {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, false, false, false));
-                BoogieLogic.blackFlash(player);
-            }
-        };
-
-        tasks.put(3, teleport);
+        tasks.put(3, BOOGIE_MAP.getOrDefault("standard", BoogieLogic::standardSwap));
         ActionUtils.performAction(user, Action.builder().scheduledTasks(tasks).build());
     }
 
@@ -118,4 +132,6 @@ public class BoogieLogic {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         AttackUtils.startAttackTimer(player, 10);
     }
+
+
 }

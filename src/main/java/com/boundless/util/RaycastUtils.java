@@ -1,5 +1,6 @@
 package com.boundless.util;
 
+import com.boundless.entity.hero_action.HeroActionEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -20,8 +21,9 @@ public class RaycastUtils {
             Box box = playerEntity.getBoundingBox().stretch(direction.multiply(range)).expand(1, 1, 1);
 
             // todo: A message from Daomephsta I saw in the fabricmc discord helped with this!
-            return ProjectileUtil.raycast(playerEntity, start,
-                    end, box, entity -> true, range * range);
+            return ProjectileUtil.raycast(playerEntity, start, end, box, entity -> {
+                return !(entity instanceof HeroActionEntity);
+            }, range * range);
         }
         return null;
     }

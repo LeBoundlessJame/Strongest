@@ -6,10 +6,12 @@ import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
-import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
+import com.mojang.serialization.Codec;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -17,10 +19,11 @@ import net.minecraft.entity.attribute.EntityAttributes;
 
 public class SwitcherHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::boogie, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
+    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
     public static Ability ROCK_THROW = AbilityUtils.ability(BoogieLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
 
-    public static Ability BOOGIE_VARIANTS = AbilityUtils.ability(HeadbuttLogic::headbutt, 20, BoundlessAPI.identifier("boogie_variants"), BoundlessAPI.hudPNG("clap_variants"));
+    public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
@@ -38,7 +41,6 @@ public class SwitcherHero extends Hero {
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
                 .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
                 .ability("key.boundless.ability_two", SwitcherHero.ROCK_THROW)
-                .ability("key.boundless.ability_three", SwitcherHero.BOOGIE_VARIANTS)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
