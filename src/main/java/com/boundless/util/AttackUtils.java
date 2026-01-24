@@ -50,22 +50,6 @@ public class AttackUtils {
         AttackUtils.startAttackTimer(player, attackDuration);
     }
 
-    public static void triggerAttackAction(PlayerEntity player, Action action) {
-        triggerAttackAction(player, action, true);
-    }
-
-    public static void triggerAttackAction(PlayerEntity player, Action action, boolean startAttackTimer) {
-        List<Integer> keys = new ArrayList<>(action.scheduledTasks.keySet());
-        int lifetime = keys.getLast();
-
-        if (startAttackTimer){
-            AttackUtils.startAttackTimer(player, lifetime);
-        }
-
-        ActionUtils.performAction(player, action);
-        //CombatUtils.performAttack(player, action, duration);
-    }
-
     public static void startAttackTimer(PlayerEntity player, long duration) {
         ItemStack heroStack = HeroUtils.getHeroStack(player);
         heroStack.set(ATTACK_START, player.getWorld().getTime());
