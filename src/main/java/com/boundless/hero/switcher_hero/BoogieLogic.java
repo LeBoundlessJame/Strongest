@@ -31,39 +31,36 @@ public class BoogieLogic {
         return boogieMap;
     }
 
+    public static void swapEntities(Entity first, Entity second) {
+        Vec3d firstPos = first.getPos();
+        Vec3d secondPos = second.getPos();
+
+        if (first instanceof LivingEntity livingEntity) {
+            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
+        }
+
+        second.requestTeleport(firstPos.x, firstPos.y, firstPos.z);
+        first.requestTeleport(secondPos.x, secondPos.y, secondPos.z);
+
+        if (second instanceof LivingEntity livingEntity) {
+            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
+            first.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, secondPos);
+        }
+
+        if (second instanceof RockEntity rock && rock.getOwner() == first && rock.getOwner() instanceof PlayerEntity player) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, false, false, false));
+            BoogieLogic.blackFlash(player);
+        }
+    }
+
     public static void standardSwap(PlayerEntity player, HeroActionEntity heroAction) {
         SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
 
         EntityHitResult result = RaycastUtils.raycast(player, 64);
         Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
 
-        if (target != null) {
-            System.out.println(target.getName());
-        }
-
         if (target == null || target == player) return;
-
-        Vec3d playerPos = player.getPos();
-        Vec3d targetPos = target.getPos();
-        Vec3d velocityPreTeleport = player.getVelocity();
-
-        target.requestTeleport(playerPos.x, playerPos.y, playerPos.z);
-        player.requestTeleport(targetPos.x, targetPos.y, targetPos.z);
-
-        player.setVelocity(velocityPreTeleport);
-        player.velocityModified = true;
-        player.velocityDirty = true;
-
-        EffekUtils.playVisual(player, BoundlessAPI.identifier("energy_spark"));
-        if (target instanceof LivingEntity livingEntity) {
-            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
-            player.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, playerPos);
-        }
-
-        if (target instanceof RockEntity) {
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, false, false, false));
-            BoogieLogic.blackFlash(player);
-        }
+        BoogieLogic.swapEntities(player, target);
     }
 
     public static void clap(PlayerEntity user) {
@@ -132,6 +129,4 @@ public class BoogieLogic {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         AttackUtils.startAttackTimer(player, 10);
     }
-
-
 }
