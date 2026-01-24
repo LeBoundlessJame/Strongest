@@ -5,6 +5,7 @@
   "mixins": [
     "AttackMixin",
     "CombatModeMixin",
+    "EvasionMixin",
     "GrabPositionMixin",
     "HandSwingMixin",
     "InvulnerabilityMixin",
