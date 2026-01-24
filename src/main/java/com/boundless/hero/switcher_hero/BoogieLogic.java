@@ -12,7 +12,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
@@ -28,9 +27,24 @@ public class BoogieLogic {
         boogieMap.put("standard", BoogieLogic::standardSwap);
         boogieMap.put("swapWithPrimary", BoogieLogic::swapWithPrimary);
         boogieMap.put("swapWithSecondary", BoogieLogic::swapWithSecondary);
-        //boogieMap.put("feint", BoogieLogic::feint);
+        boogieMap.put("feint", BoogieLogic::feint);
+        boogieMap.put("swapTwo", BoogieLogic::swapTwo);
         return boogieMap;
     }
+
+    public static void swapTwo(PlayerEntity player, HeroActionEntity heroAction) {
+        Integer primary = HeroUtils.getHeroStack(player).get(SwitcherHero.PRIMARY_TARGET_ID);
+        Integer secondary = HeroUtils.getHeroStack(player).get(SwitcherHero.SECONDARY_TARGET_ID);
+
+        if (primary == null || secondary == null) return;
+        Entity primaryTarget = player.getWorld().getEntityById(primary);
+        Entity secondaryTarget = player.getWorld().getEntityById(secondary);
+        if (primaryTarget == null || secondaryTarget == null) return;
+
+        swapEntities(primaryTarget, secondaryTarget);
+    }
+
+    public static void feint(PlayerEntity player, HeroActionEntity heroAction) {}
 
     public static void swapEntities(Entity first, Entity second) {
         Vec3d firstPos = first.getPos();
@@ -54,15 +68,6 @@ public class BoogieLogic {
         }
     }
 
-    public static void selectTarget(PlayerEntity player) {
-        EntityHitResult result = RaycastUtils.raycast(player, 64);
-        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
-
-        if (target == null || target == player) return;
-        HeroUtils.getHeroStack(player).set(SwitcherHero.PRIMARY_TARGET_ID, target.getId());
-        player.sendMessage(Text.of(Formatting.AQUA + "" + Formatting.BOLD + "Primary selected: " + target.getDisplayName().getString()), true);
-    }
-
     public static void swapWithTarget(PlayerEntity player, String targetType) {
         Integer id = HeroUtils.getHeroStack(player).get(targetType.equals("primary") ? SwitcherHero.PRIMARY_TARGET_ID : SwitcherHero.SECONDARY_TARGET_ID);
         if (id == null) return;
@@ -81,8 +86,6 @@ public class BoogieLogic {
     }
 
     public static void standardSwap(PlayerEntity player, HeroActionEntity heroAction) {
-        SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
-
         EntityHitResult result = RaycastUtils.raycast(player, 64);
         Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
 
@@ -93,22 +96,25 @@ public class BoogieLogic {
     public static void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
 
-        AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
-        HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECTION, "standard");
-        HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECT_TIME, user.getWorld().getTime() + 5);
-        //BiConsumer<PlayerEntity, HeroActionEntity> swapType = BOOGIE_MAP.getOrDefault("standard", BoogieLogic::standardSwap);
+        TargetSelectMenu.closeMenu(user);
 
+        AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
+        HeroUtils.getHeroStack(user).set(SwitcherHero.CLAP_SELECT_TIME, user.getWorld().getTime() + 5L);
+        HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECTION, "standard");
         ActionUtils.performDelayedAction(user, BoogieLogic::boogie, 5);
     }
 
     public static void boogie(PlayerEntity player, HeroActionEntity heroAction) {
         String swapType = HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.BOOGIE_SELECTION, "standard");
+        SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
+        player.sendMessage(Text.of(swapType));
         ActionUtils.performDelayedAction(player, BOOGIE_MAP.get(swapType), 0);
         HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "standard");
-        HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECT_TIME, 0L);
+        HeroUtils.getHeroStack(player).set(SwitcherHero.CLAP_SELECT_TIME, 0L);
+
     }
 
-    public static boolean isSelectingBoogie(PlayerEntity player) {
-        return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.BOOGIE_SELECT_TIME, 0L);
+    public static boolean isSelectingClap(PlayerEntity player) {
+        return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.CLAP_SELECT_TIME, 0L);
     }
 }

@@ -10,7 +10,12 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class SwitcherMediumLogic {
     public static void mediumAttack(PlayerEntity player) {
-        if (BoogieLogic.isSelectingBoogie(player)) {
+        if (TargetSelectMenu.isMenuOpen(player)) {
+            TargetSelectMenu.selectTarget(player, "secondary");
+            return;
+        }
+
+        if (BoogieLogic.isSelectingClap(player)) {
             HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapWithSecondary");
             return;
         }

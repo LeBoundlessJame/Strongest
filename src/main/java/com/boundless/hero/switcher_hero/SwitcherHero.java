@@ -6,7 +6,6 @@ import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
@@ -23,9 +22,10 @@ public class SwitcherHero extends Hero {
 
     public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
     public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
-    public static Ability SELECT_TARGET = AbilityUtils.ability(BoogieLogic::selectTarget, 5, BoundlessAPI.identifier("select_target"), BoundlessAPI.hudPNG("rock_throw"));
+    public static Ability BOOGIE_MENU = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, 5, BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("rock_throw"));
 
-    public static ComponentType<Long> BOOGIE_SELECT_TIME = DataComponentRegistry.registerComponent("boogie_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> CLAP_SELECT_TIME = DataComponentRegistry.registerComponent("clap_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> TARGET_SELECT_TIME = DataComponentRegistry.registerComponent("target_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<String> BOOGIE_SELECTION = DataComponentRegistry.registerComponent("boogie_selection", builder -> ComponentType.<String>builder().codec(Codec.STRING));
     public static ComponentType<Integer> PRIMARY_TARGET_ID = DataComponentRegistry.registerComponent("primary_target_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Integer> SECONDARY_TARGET_ID = DataComponentRegistry.registerComponent("secondary_target_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
@@ -46,7 +46,7 @@ public class SwitcherHero extends Hero {
                 .ability("key.use", SwitcherHero.MEDIUM_ATTACK)
                 .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
                 .ability("key.boundless.ability_two", SwitcherHero.ROCK_THROW)
-                .ability("key.boundless.ability_three", SwitcherHero.SELECT_TARGET)
+                .ability("key.boundless.ability_three", SwitcherHero.BOOGIE_MENU)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);

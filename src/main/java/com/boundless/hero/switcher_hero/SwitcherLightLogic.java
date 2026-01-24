@@ -10,7 +10,12 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class SwitcherLightLogic {
     public static void lightAttack(PlayerEntity player) {
-        if (BoogieLogic.isSelectingBoogie(player)) {
+        if (TargetSelectMenu.isMenuOpen(player)) {
+            TargetSelectMenu.selectTarget(player, "primary");
+            return;
+        }
+
+        if (BoogieLogic.isSelectingClap(player)) {
             HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapWithPrimary");
             return;
         }

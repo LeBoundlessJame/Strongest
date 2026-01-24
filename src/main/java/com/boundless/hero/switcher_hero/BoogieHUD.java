@@ -47,6 +47,7 @@ public class BoogieHUD {
         float scale = 1.0f;
         matrixStack.scale(scale, scale, scale);
 
+        /*
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("fc5454");
 
         matrixStack.push();
@@ -54,6 +55,8 @@ public class BoogieHUD {
         colors = GUIUtils.hexToUnitColor("1bc7b6");
         GUIUtils.drawOutlinedText(drawContext, minecraftClient, "Bruzzah: " + player.getNameForScoreboard(), 5, 5, colors);
         matrixStack.pop();
+
+         */
 
         int meterHeight = MathHelper.clamp(MathHelper.lerp((player.getHealth() / player.getMaxHealth()), 119, 0), 0, 119);
         drawContext.drawTexture(METER_FRAME, (int) (5 / scale), (int) ((20) / scale), 0f, 127, 11, 127, 11, 127);
