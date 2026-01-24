@@ -24,14 +24,16 @@ import static com.boundless.registry.DataComponentRegistry.ATTACK_START;
 public class AttackUtils {
     public static void performAttack(Attack attack) {
         PlayerEntity player = attack.getPlayer();
+        if (!AttackUtils.canAttack(player)) return;
+
         float damage = attack.getDamage();
         SoundEvent sound = attack.getImpactSound();
         Identifier animation = attack.getAnimation();
+        Identifier attackVFX = attack.getImpactVFX();
         float animationSpeed = attack.getAnimationSpeed();
         int priority = attack.getAnimationPriority();
         int attackDuration = attack.getAttackDuration();
-
-        if (!AttackUtils.canAttack(player)) return;
+        int impactTick = attack.getImpactTick();
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
@@ -40,9 +42,9 @@ public class AttackUtils {
         BiConsumer<PlayerEntity, HeroActionEntity> hit = (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
             SoundUtils.playSound(player, sound);
-            CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.attack(heroAction, damage, Optional.of(attackVFX));
         };
-        tasks.put(4, hit);
+        tasks.put(impactTick, hit);
         AnimationUtils.playSyncedAnimation(player, animation, animationSpeed, attackCount % 2 == 0, true, priority);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, attackDuration);
