@@ -15,6 +15,10 @@ import java.util.function.BiConsumer;
 
 public class LightAttackLogic {
     public static void lightAttack(PlayerEntity player) {
+        if (BoogieLogic.isSelectingBoogie(player)) {
+            HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapWithPrimary");
+            return;
+        }
         if (!AttackUtils.canAttack(player)) return;
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);

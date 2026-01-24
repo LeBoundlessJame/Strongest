@@ -20,10 +20,13 @@ import net.minecraft.entity.attribute.EntityAttributes;
 public class SwitcherHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
-    public static Ability ROCK_THROW = AbilityUtils.ability(BoogieLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
+    public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
+    public static Ability SELECT_TARGET = AbilityUtils.ability(BoogieLogic::selectTarget, 5, BoundlessAPI.identifier("select_target"), BoundlessAPI.hudPNG("rock_throw"));
 
-    public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
-
+    public static ComponentType<Long> BOOGIE_SELECT_TIME = DataComponentRegistry.registerComponent("boogie_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<String> BOOGIE_SELECTION = DataComponentRegistry.registerComponent("boogie_selection", builder -> ComponentType.<String>builder().codec(Codec.STRING));
+    public static ComponentType<Integer> PRIMARY_TARGET_ID = DataComponentRegistry.registerComponent("primary_target_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
+    public static ComponentType<Integer> SECONDARY_TARGET_ID = DataComponentRegistry.registerComponent("secondary_target_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
@@ -41,6 +44,7 @@ public class SwitcherHero extends Hero {
                 .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
                 .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
                 .ability("key.boundless.ability_two", SwitcherHero.ROCK_THROW)
+                .ability("key.boundless.ability_three", SwitcherHero.SELECT_TARGET)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);

@@ -13,6 +13,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
@@ -28,6 +30,9 @@ public class BoogieLogic {
     public static HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> getBoogieMap() {
         HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> boogieMap = new HashMap<>();
         boogieMap.put("standard", BoogieLogic::standardSwap);
+        boogieMap.put("swapWithPrimary", BoogieLogic::swapWithPrimary);
+        //boogieMap.put("swapWithSecondary", BoogieLogic::swapWithSecondary);
+        //boogieMap.put("feint", BoogieLogic::feint);
         return boogieMap;
     }
 
@@ -49,8 +54,26 @@ public class BoogieLogic {
 
         if (second instanceof RockEntity rock && rock.getOwner() == first && rock.getOwner() instanceof PlayerEntity player) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, false, false, false));
-            BoogieLogic.blackFlash(player);
+            RockThrowLogic.blackFlash(player);
         }
+    }
+
+    public static void selectTarget(PlayerEntity player) {
+        EntityHitResult result = RaycastUtils.raycast(player, 64);
+        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
+
+        if (target == null || target == player) return;
+        HeroUtils.getHeroStack(player).set(SwitcherHero.PRIMARY_TARGET_ID, target.getId());
+        player.sendMessage(Text.of(Formatting.AQUA + "" + Formatting.BOLD + "Primary selected: " + target.getDisplayName().getString()), true);
+    }
+
+    public static void swapWithPrimary(PlayerEntity player, HeroActionEntity heroAction) {
+        Integer id = HeroUtils.getHeroStack(player).get(SwitcherHero.PRIMARY_TARGET_ID);
+        if (id == null) return;
+
+        Entity target = player.getWorld().getEntityById(id);
+        if (target == null) return;
+        swapEntities(player, target);
     }
 
     public static void standardSwap(PlayerEntity player, HeroActionEntity heroAction) {
@@ -66,67 +89,22 @@ public class BoogieLogic {
     public static void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
 
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
-        BiConsumer<PlayerEntity, HeroActionEntity> swapType = BOOGIE_MAP.getOrDefault("standard", BoogieLogic::standardSwap);
+        HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECTION, "standard");
+        HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECT_TIME, user.getWorld().getTime() + 5);
+        //BiConsumer<PlayerEntity, HeroActionEntity> swapType = BOOGIE_MAP.getOrDefault("standard", BoogieLogic::standardSwap);
 
-        ActionUtils.performDelayedAction(user, swapType, 3);
+        ActionUtils.performDelayedAction(user, BoogieLogic::boogie, 5);
     }
 
-    public static void rockThrow(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
-        RockEntity rock = new RockEntity(player, player.getWorld());
-        rock.setVelocity(player.getRotationVector().multiply(5));
-        rock.setPosition(player.getPos().add(player.getRotationVector().multiply(2).x, 1.2, player.getRotationVector().multiply(2).z));
-        rock.setNoGravity(true);
-        rock.setPitch(player.getPitch());
-        rock.setYaw(player.getYaw());
-        rock.setGlowing(true);
-        player.getWorld().spawnEntity(rock);
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("aura"), 2.0f, false, false, 3000);
-
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-
-        // Todo: find a way to cancel this if the teleport happens
-        for (int i = 0; i < 40; i++) {
-            tasks.put(i, (user, action) -> {
-                if (player.age % 4 == 0) {
-                    EffekUtils.playEffect(BoundlessAPI.identifier("stars"), player, player.getPos(), new Vec3d(3, 3, 3));
-                }
-                if (!player.hasStatusEffect(StatusEffects.SLOWNESS)) {
-                    user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
-                    user.velocityModified = true;
-                    user.velocityDirty = true;
-                }
-            });
-        }
-        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
-
-        //rock.setVelocity(player, player.getPitch(), player.getYaw(), 0.0F, 1.5F, 1.0F);
+    public static void boogie(PlayerEntity player, HeroActionEntity heroAction) {
+        String swapType = HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.BOOGIE_SELECTION, "standard");
+        ActionUtils.performDelayedAction(player, BOOGIE_MAP.get(swapType), 0);
+        HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "standard");
+        HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECT_TIME, 0L);
     }
 
-    public static void blackFlash(PlayerEntity player) {
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-
-        tasks.put(7, (user, heroAction) -> {
-            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_3);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
-
-            CameraUtils.playCameraShake(player);
-            CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
-
-                livingEntity.timeUntilRegen = 0;
-                CombatUtils.strongKnockback(attacker, livingEntity, 10.0f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
-            });
-            CombatUtils.attack(heroAction, 400, Optional.of(BoundlessAPI.identifier("black_flash_impact")));
-        });
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
-        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
-        AttackUtils.startAttackTimer(player, 10);
+    public static boolean isSelectingBoogie(PlayerEntity player) {
+        return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.BOOGIE_SELECT_TIME, 0L);
     }
 }
