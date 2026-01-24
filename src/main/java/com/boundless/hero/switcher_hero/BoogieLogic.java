@@ -44,7 +44,7 @@ public class BoogieLogic {
 
         if (second instanceof LivingEntity livingEntity) {
             EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
-            first.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, secondPos);
+            first.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, firstPos);
         }
 
         if (second instanceof RockEntity rock && rock.getOwner() == first && rock.getOwner() instanceof PlayerEntity player) {
@@ -68,9 +68,9 @@ public class BoogieLogic {
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
+        BiConsumer<PlayerEntity, HeroActionEntity> swapType = BOOGIE_MAP.getOrDefault("standard", BoogieLogic::standardSwap);
 
-        tasks.put(3, BOOGIE_MAP.getOrDefault("standard", BoogieLogic::standardSwap));
-        ActionUtils.performAction(user, Action.builder().scheduledTasks(tasks).build());
+        ActionUtils.performDelayedAction(user, swapType, 3);
     }
 
     public static void rockThrow(PlayerEntity player) {

@@ -15,6 +15,13 @@ public class ActionUtils {
         return Action.builder().scheduledTasks(scheduledTasks).build();
     }
 
+    public static void performDelayedAction(PlayerEntity player, BiConsumer<PlayerEntity, HeroActionEntity> task, int ticksFromNow) {
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        tasks.put(ticksFromNow, task);
+        Action action = Action.builder().scheduledTasks(tasks).build();
+        performAction(player, action);
+    }
+
     public static LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> repeatTask(BiConsumer<PlayerEntity, HeroActionEntity> task, int startTick, int endTick) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> taskMap = new LinkedHashMap<>();
 
