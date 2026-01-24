@@ -3,9 +3,6 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-public class HeadbuttLogic {
+public class GrabLogic {
 
     // Todo: clean this up a LOT: also make it so that you can specify a grab offset
     public static void headbutt(PlayerEntity player) {

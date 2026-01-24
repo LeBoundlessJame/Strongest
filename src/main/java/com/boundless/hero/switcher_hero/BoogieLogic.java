@@ -1,11 +1,9 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.rock.RockEntity;
 import com.boundless.registry.SoundRegistry;
-import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
@@ -19,8 +17,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BoogieLogic {
@@ -31,7 +27,7 @@ public class BoogieLogic {
         HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> boogieMap = new HashMap<>();
         boogieMap.put("standard", BoogieLogic::standardSwap);
         boogieMap.put("swapWithPrimary", BoogieLogic::swapWithPrimary);
-        //boogieMap.put("swapWithSecondary", BoogieLogic::swapWithSecondary);
+        boogieMap.put("swapWithSecondary", BoogieLogic::swapWithSecondary);
         //boogieMap.put("feint", BoogieLogic::feint);
         return boogieMap;
     }
@@ -67,13 +63,21 @@ public class BoogieLogic {
         player.sendMessage(Text.of(Formatting.AQUA + "" + Formatting.BOLD + "Primary selected: " + target.getDisplayName().getString()), true);
     }
 
-    public static void swapWithPrimary(PlayerEntity player, HeroActionEntity heroAction) {
-        Integer id = HeroUtils.getHeroStack(player).get(SwitcherHero.PRIMARY_TARGET_ID);
+    public static void swapWithTarget(PlayerEntity player, String targetType) {
+        Integer id = HeroUtils.getHeroStack(player).get(targetType.equals("primary") ? SwitcherHero.PRIMARY_TARGET_ID : SwitcherHero.SECONDARY_TARGET_ID);
         if (id == null) return;
 
         Entity target = player.getWorld().getEntityById(id);
         if (target == null) return;
         swapEntities(player, target);
+    }
+
+    public static void swapWithPrimary(PlayerEntity player, HeroActionEntity heroAction) {
+        swapWithTarget(player, "primary");
+    }
+
+    public static void swapWithSecondary(PlayerEntity player, HeroActionEntity heroAction) {
+        swapWithTarget(player, "secondary");
     }
 
     public static void standardSwap(PlayerEntity player, HeroActionEntity heroAction) {

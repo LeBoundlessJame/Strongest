@@ -8,7 +8,7 @@ import com.boundless.util.AttackUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class LightAttackLogic {
+public class SwitcherLightLogic {
     public static void lightAttack(PlayerEntity player) {
         if (BoogieLogic.isSelectingBoogie(player)) {
             HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapWithPrimary");

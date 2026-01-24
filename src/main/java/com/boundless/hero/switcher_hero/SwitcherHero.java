@@ -18,7 +18,9 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 
 public class SwitcherHero extends Hero {
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(LightAttackLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(SwitcherLightLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(SwitcherMediumLogic::mediumAttack, 5, BoundlessAPI.identifier("todo_medium"), BoundlessAPI.hudPNG("leg"));
+
     public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
     public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
     public static Ability SELECT_TARGET = AbilityUtils.ability(BoogieLogic::selectTarget, 5, BoundlessAPI.identifier("select_target"), BoundlessAPI.hudPNG("rock_throw"));
@@ -41,7 +43,7 @@ public class SwitcherHero extends Hero {
     public SwitcherHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", SwitcherHero.LIGHT_ATTACK)
-                .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
+                .ability("key.use", SwitcherHero.MEDIUM_ATTACK)
                 .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
                 .ability("key.boundless.ability_two", SwitcherHero.ROCK_THROW)
                 .ability("key.boundless.ability_three", SwitcherHero.SELECT_TARGET)

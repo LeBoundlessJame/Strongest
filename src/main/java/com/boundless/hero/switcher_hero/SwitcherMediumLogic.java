@@ -1,0 +1,46 @@
+package com.boundless.hero.switcher_hero;
+
+import com.boundless.BoundlessAPI;
+import com.boundless.action.Attack;
+import com.boundless.hero.black_sparks_hero.BlackSparksHero;
+import com.boundless.registry.SoundRegistry;
+import com.boundless.util.AttackUtils;
+import com.boundless.util.HeroUtils;
+import net.minecraft.entity.player.PlayerEntity;
+
+public class SwitcherMediumLogic {
+    public static void mediumAttack(PlayerEntity player) {
+        if (BoogieLogic.isSelectingBoogie(player)) {
+            HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapWithSecondary");
+            return;
+        }
+
+        Attack doubleKick = Attack.builder()
+                .player(player)
+                .damage(BlackSparksHero.DAMAGE.lightAttack.get())
+                .impactSound(SoundRegistry.EARTH_IMPACT)
+                .animationSpeed(1.0f)
+                .damage(12f)
+                .animation(BoundlessAPI.identifier("double_kick"))
+                .impactTick(4)
+                .attackDuration(8)
+                .build();
+
+        AttackUtils.performAttack(doubleKick);
+
+        /*
+        CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
+                target.addVelocity(0, 0.5f, 0);
+                target.velocityModified = true;
+                target.timeUntilRegen = 0;
+            });
+         */
+
+
+        /*
+        tasks.put(4, kick);
+        tasks.put(8, kick);
+
+         */
+    }
+}

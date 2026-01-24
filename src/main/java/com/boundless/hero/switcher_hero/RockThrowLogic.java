@@ -27,6 +27,9 @@ public class RockThrowLogic {
         rock.setYaw(player.getYaw());
         rock.setGlowing(true);
         player.getWorld().spawnEntity(rock);
+
+        HeroUtils.getHeroStack(player).set(SwitcherHero.SECONDARY_TARGET_ID, rock.getId());
+
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("aura"), 2.0f, false, false, 3000);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
