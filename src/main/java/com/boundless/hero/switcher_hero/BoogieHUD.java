@@ -86,7 +86,6 @@ public class BoogieHUD {
                 float targetHeightPx = 20;
                 float scale = targetHeightPx / (livingEntity.getHeight() * 1.25f);
                 scale = Math.clamp(scale, 0, 9);
-                player.sendMessage(Text.of(String.valueOf(scale)), true);
 
                 drawContext.drawTexture(frame, 5, y + yOffset, 0, 0, 24, 24, 24, 24);
                 InventoryScreen.drawEntity(drawContext, boxX, y + yOffset, boxX + boxSize, boxY + boxSize, (int) scale, 0.0f, -20, 150, livingEntity);
