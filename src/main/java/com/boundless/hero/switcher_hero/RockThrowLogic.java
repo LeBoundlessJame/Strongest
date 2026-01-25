@@ -43,7 +43,7 @@ public class RockThrowLogic {
         for (int i = 0; i < 40; i++) {
             tasks.put(i, (user, action) -> {
                 if (player.age % 4 == 0) {
-                    EffekUtils.playEffect(BoundlessAPI.identifier("stars"), player, player.getPos(), new Vec3d(3, 3, 3));
+                    EffekUtils.playEffect(BoundlessAPI.identifier("todo_aura"), player, player.getPos(), new Vec3d(3, 3, 3));
                 }
                 if (!player.hasStatusEffect(StatusEffects.SLOWNESS)) {
                     user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
