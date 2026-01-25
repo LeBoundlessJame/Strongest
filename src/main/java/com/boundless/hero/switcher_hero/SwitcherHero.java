@@ -22,7 +22,7 @@ public class SwitcherHero extends Hero {
 
     public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
     public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
-    public static Ability BOOGIE_MENU = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, 5, BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("rock_throw"));
+    public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, 5, BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"));
 
     public static ComponentType<Long> LAST_REVIVE_TIMESTAMP = DataComponentRegistry.registerComponent("last_revive_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TIME_UNTIL_NEXT_REVIVE = DataComponentRegistry.registerComponent("time_until_next_revive", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -48,7 +48,7 @@ public class SwitcherHero extends Hero {
                 .ability("key.use", SwitcherHero.MEDIUM_ATTACK)
                 .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
                 .ability("key.boundless.ability_two", SwitcherHero.ROCK_THROW)
-                .ability("key.boundless.ability_three", SwitcherHero.BOOGIE_MENU)
+                .ability("key.boundless.ability_three", SwitcherHero.TARGET_SELECT)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
