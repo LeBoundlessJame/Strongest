@@ -1,6 +1,7 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.util.HeroUtils;
 import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +14,8 @@ public class SwitcherRenderer extends AzArmorRenderer {
 
     public SwitcherRenderer(Identifier model, Identifier texture) {
         super(AzArmorRendererConfig.builder(((entity, itemStack) -> model), (entity, stack) -> {
-            if (!(entity instanceof PlayerEntity player)) return TEXTURE;
-            if (isRevivedRecently(player, stack)) return PEAK;
+            if (!(entity instanceof PlayerEntity player)) return PEAK;
+            if (isRevivedRecently(player, HeroUtils.getHeroStack(player))) return PEAK;
             return TEXTURE;
         }).build());
     }
