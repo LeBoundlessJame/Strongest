@@ -14,8 +14,8 @@ public class ReviveLogic {
     public static void revive(PlayerEntity player) {
         EffekUtils.playEffect(BoundlessAPI.identifier("todo_aura"), player, player.getPos(), new Vec3d(3, 3, 3));
         EffekUtils.playEffect(BoundlessAPI.identifier("healing_burst"), player, player.getPos(), new Vec3d(1, 1, 1));
-        HeroUtils.getHeroStack(player).set(SwitcherHero.REVIVE_TIME, player.getWorld().getTime() + 10);
-
+        HeroUtils.getHeroStack(player).set(SwitcherHero.TIME_UNTIL_NEXT_REVIVE, player.getWorld().getTime() + 10);
+        HeroUtils.getHeroStack(player).set(SwitcherHero.LAST_REVIVE_TIMESTAMP, player.getWorld().getTime());
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("revive"));
 
         player.setHealth(1.0F);

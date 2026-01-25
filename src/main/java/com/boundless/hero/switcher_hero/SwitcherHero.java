@@ -24,7 +24,8 @@ public class SwitcherHero extends Hero {
     public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
     public static Ability BOOGIE_MENU = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, 5, BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("rock_throw"));
 
-    public static ComponentType<Long> REVIVE_TIME = DataComponentRegistry.registerComponent("revive_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> LAST_REVIVE_TIMESTAMP = DataComponentRegistry.registerComponent("last_revive_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
+    public static ComponentType<Long> TIME_UNTIL_NEXT_REVIVE = DataComponentRegistry.registerComponent("time_until_next_revive", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> CLAP_SELECT_TIME = DataComponentRegistry.registerComponent("clap_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TARGET_SELECT_TIME = DataComponentRegistry.registerComponent("target_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<String> BOOGIE_SELECTION = DataComponentRegistry.registerComponent("boogie_selection", builder -> ComponentType.<String>builder().codec(Codec.STRING));
@@ -59,6 +60,7 @@ public class SwitcherHero extends Hero {
                 .hudRenderer(BoogieHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
+                .armorRenderer(SwitcherRenderer::new)
                 .tickHandler(Hero::onHeroTick)
                 .modelIdentifier(BoundlessAPI.modelID("switcher"))
                 .build();
