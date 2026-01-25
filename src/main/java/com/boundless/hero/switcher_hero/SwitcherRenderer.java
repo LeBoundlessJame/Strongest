@@ -10,12 +10,20 @@ import net.minecraft.util.Identifier;
 
 public class SwitcherRenderer extends AzArmorRenderer {
     public static Identifier TEXTURE = BoundlessAPI.textureID("switcher");
-    public static Identifier PEAK = BoundlessAPI.textureID("switcher_peak");
+    public static Identifier DUO_TEXTURE = BoundlessAPI.textureID("duo");
+
+    public static Identifier MODEL = BoundlessAPI.modelID("switcher");
+    public static Identifier DUO_MODEL = BoundlessAPI.modelID("duo");
 
     public SwitcherRenderer(Identifier model, Identifier texture) {
-        super(AzArmorRendererConfig.builder(((entity, itemStack) -> model), (entity, stack) -> {
-            if (!(entity instanceof PlayerEntity player)) return PEAK;
-            if (isRevivedRecently(player, HeroUtils.getHeroStack(player))) return PEAK;
+        super(AzArmorRendererConfig.builder(((entity, itemStack) -> {
+            if (!(entity instanceof PlayerEntity player)) return MODEL;
+            if (isRevivedRecently(player, HeroUtils.getHeroStack(player))) return DUO_MODEL;
+            return MODEL;
+
+        }), (entity, stack) -> {
+            if (!(entity instanceof PlayerEntity player)) return TEXTURE;
+            if (isRevivedRecently(player, HeroUtils.getHeroStack(player))) return DUO_TEXTURE;
             return TEXTURE;
         }).build());
     }
@@ -23,6 +31,6 @@ public class SwitcherRenderer extends AzArmorRenderer {
     public static boolean isRevivedRecently(PlayerEntity player, ItemStack stack) {
         long lastRevive = stack.getOrDefault(SwitcherHero.LAST_REVIVE_TIMESTAMP, 0L);
 
-        return player.getWorld().getTime() > lastRevive + 15 && player.getWorld().getTime() < lastRevive + 600;
+        return player.getWorld().getTime() > lastRevive + 15 && player.getWorld().getTime() < lastRevive + 100;
     }
 }
