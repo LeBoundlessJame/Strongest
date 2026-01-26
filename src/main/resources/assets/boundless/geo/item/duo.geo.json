@@ -131,7 +131,7 @@
 					"name": "bipedLeftArm2",
 					"parent": "takada",
 					"pivot": [-12, 35, 13],
-					"rotation": [7.5, 0, -12.5]
+					"rotation": [0, 0, -13.37038]
 				},
 				{
 					"name": "armorLeftArm2",
@@ -151,7 +151,7 @@
 					"name": "bipedRightArm2",
 					"parent": "takada",
 					"pivot": [-22, 35, 13],
-					"rotation": [15, 0, 10]
+					"rotation": [0, 17.07228, 13.90399]
 				},
 				{
 					"name": "armorRightArm2",

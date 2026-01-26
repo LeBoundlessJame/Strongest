@@ -14,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ProjectileDeflection;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
@@ -27,6 +28,11 @@ public class RockEntity extends PersistentProjectileEntity {
     private static final AzCommand SPIN_COMMAND = AzCommand.create("base_controller",
             "spin", AzPlayBehaviors.LOOP
     );
+
+    @Override
+    protected boolean tryPickup(PlayerEntity player) {
+        return false;
+    }
 
     public RockEntity(EntityType<RockEntity> entityType, World world) {
         super(entityType, world);

@@ -31,6 +31,6 @@ public class SwitcherRenderer extends AzArmorRenderer {
     public static boolean isRevivedRecently(PlayerEntity player, ItemStack stack) {
         long lastRevive = stack.getOrDefault(SwitcherHero.LAST_REVIVE_TIMESTAMP, 0L);
 
-        return player.getWorld().getTime() > lastRevive + 15 && player.getWorld().getTime() < lastRevive + 100;
+        return player.getWorld().getTime() > lastRevive + 15 && player.getWorld().getTime() < lastRevive + 200;
     }
 }
