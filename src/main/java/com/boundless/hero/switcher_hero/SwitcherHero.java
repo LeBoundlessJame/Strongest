@@ -6,7 +6,9 @@ import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
+import com.boundless.hero.black_sparks_hero.BlackSparksHeroConfig;
 import com.boundless.registry.AttributeRegistry;
+import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
 import com.mojang.serialization.Codec;
@@ -17,12 +19,16 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 
 public class SwitcherHero extends Hero {
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(SwitcherLightLogic::lightAttack, 5, BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(SwitcherMediumLogic::mediumAttack, 5, BoundlessAPI.identifier("todo_medium"), BoundlessAPI.hudPNG("leg"));
+    public static SwitcherConfig CONFIG = ConfigRegistry.HERO_CONFIG.SWITCHER_CONFIG;
+    public static SwitcherConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
+    public static SwitcherConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
-    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, 5, BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
-    public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, 5, BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
-    public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, 5, BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"));
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(SwitcherLightLogic::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(SwitcherMediumLogic::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("todo_medium"), BoundlessAPI.hudPNG("leg"));
+
+    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, COOLDOWNS.clap.get(), BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
+    public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, COOLDOWNS.rockThrow.get(), BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
+    public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"));
 
     public static ComponentType<Long> LAST_REVIVE_TIMESTAMP = DataComponentRegistry.registerComponent("last_revive_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TIME_UNTIL_NEXT_REVIVE = DataComponentRegistry.registerComponent("time_until_next_revive", builder -> ComponentType.<Long>builder().codec(Codec.LONG));

@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 import java.util.Map;
 
+// Todo: this whole class could do with an expansion / elaboration
 public class DataComponentUtils {
     public static Map<Identifier, Long> updatedCooldownMap(ItemStack heroStack, Identifier abilityID, long value) {
         Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
@@ -28,34 +29,8 @@ public class DataComponentUtils {
         stack.set(component, !stack.getOrDefault(component, false));
     }
 
-    public static int getInt(ComponentType<Integer> component, PlayerEntity player, int defaultValue) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        return stack.getOrDefault(component, defaultValue);
-    }
-
-    public static void setInt(ComponentType<Integer> component, PlayerEntity player, int desiredValue) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, desiredValue);
-    }
-
-    public static void addOrSubtractInt(ComponentType<Integer> component, PlayerEntity player, int amount, int max) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, Math.clamp(DataComponentUtils.getInt(component, player, 0) + amount, 0, max));
-    }
-
     public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, DataComponentUtils.getInt(component, player, 0) + 1);
-    }
-
-
-    public static boolean consumeInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        int currentValue = stack.getOrDefault(component, 0);
-        boolean hasRequired = stack.getOrDefault(component, 0) >= amount;
-        if (hasRequired) {
-            stack.set(component, currentValue - amount);
-        }
-        return hasRequired;
+        stack.set(component, stack.getOrDefault(component, 0) + amount);
     }
 }

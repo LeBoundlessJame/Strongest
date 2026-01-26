@@ -22,7 +22,7 @@ public class SwitcherLightLogic {
 
         Attack hook = Attack.builder()
                 .player(player)
-                .damage(BlackSparksHero.DAMAGE.lightAttack.get())
+                .damage(SwitcherHero.DAMAGE.lightAttack.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)
                 .animationSpeed(1.0f)
                 .animation(BoundlessAPI.identifier("hook"))

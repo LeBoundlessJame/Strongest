@@ -22,6 +22,8 @@ public class DataComponentRegistry {
     public static ComponentType<Integer> SPRINT_TICKS = registerComponent("sprint_ticks", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Integer> ATTACK_COUNT = registerComponent("attack_count", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
 
+    public static ComponentType<Float> ENERGY_METER = DataComponentRegistry.registerComponent("energy_meter", builder -> ComponentType.<Float>builder().codec(Codec.FLOAT));
+
     public static final ComponentType<Map<String, KeybindHoldData>> HELD_KEYBIND = registerComponent("held_keybind", builder -> ComponentType.<Map<String, KeybindHoldData>>builder().codec(Codec.unboundedMap(Codec.STRING, CodecRegistry.KEYBIND_HOLD_CODEC)));
 
     public static <T> ComponentType<T> registerComponent(String name, UnaryOperator<ComponentType.Builder<T>> builder) {

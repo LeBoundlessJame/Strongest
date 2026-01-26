@@ -36,7 +36,7 @@ public class AttackUtils {
         int impactTick = attack.getImpactTick();
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
+        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         BiConsumer<PlayerEntity, HeroActionEntity> hit = (user, heroAction) -> {
@@ -62,6 +62,6 @@ public class AttackUtils {
 
     public static int incrementedAttackCount(PlayerEntity player) {
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        return DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
+        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
     }
 }

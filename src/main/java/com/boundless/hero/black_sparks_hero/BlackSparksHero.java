@@ -93,7 +93,7 @@ public class BlackSparksHero extends Hero {
         if (BlackFlashAbility.updateMinigameCombo(player, "m")) return;
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = DataComponentUtils.getInt(DataComponentRegistry.ATTACK_COUNT, player, 0);
+        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         BiConsumer<PlayerEntity, HeroActionEntity> kick = (user, heroAction) -> {

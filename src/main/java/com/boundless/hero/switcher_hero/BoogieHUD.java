@@ -3,6 +3,7 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.HeroHUD;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.util.EnergyUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
@@ -67,7 +68,7 @@ public class BoogieHUD {
 
          */
 
-        int meterHeight = MathHelper.clamp(MathHelper.lerp((player.getHealth() / player.getMaxHealth()), 119, 0), 0, 119);
+        int meterHeight = MathHelper.clamp(MathHelper.lerp((EnergyUtils.getEnergyMeter(player) / 100f), 119, 0), 0, 119);
         drawContext.drawTexture(METER_FRAME, (int) (5 / scale), (int) ((20) / scale), 0f, 127, 11, 127, 11, 127);
         drawContext.drawTexture(METER, (int) (5 / scale), (int) ((24 + meterHeight) / scale), 0f, 131, 11, 119 - meterHeight, 11, 127);
         matrixStack.pop();

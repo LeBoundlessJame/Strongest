@@ -22,7 +22,7 @@ public class SwitcherMediumLogic {
 
         Attack doubleKick = Attack.builder()
                 .player(player)
-                .damage(BlackSparksHero.DAMAGE.lightAttack.get())
+                .damage(SwitcherHero.DAMAGE.mediumAttackPerHit.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)
                 .animationSpeed(1.0f)
                 .damage(12f)

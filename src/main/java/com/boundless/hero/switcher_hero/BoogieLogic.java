@@ -109,7 +109,7 @@ public class BoogieLogic {
         ActionUtils.performDelayedAction(player, BOOGIE_MAP.get(swapType), 0);
         HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "standard");
         HeroUtils.getHeroStack(player).set(SwitcherHero.CLAP_SELECT_TIME, 0L);
-
+        EnergyUtils.changeEnergyPercentage(player, -5f);
     }
 
     public static boolean isSelectingClap(PlayerEntity player) {

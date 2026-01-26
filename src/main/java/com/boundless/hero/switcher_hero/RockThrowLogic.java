@@ -72,7 +72,8 @@ public class RockThrowLogic {
                 CombatUtils.strongKnockback(attacker, livingEntity, 10.0f);
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
             });
-            CombatUtils.attack(heroAction, 400, Optional.of(BoundlessAPI.identifier("black_flash_impact")));
+            CombatUtils.attack(heroAction, SwitcherHero.DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
+            EnergyUtils.changeEnergyPercentage(player, 20f);
         });
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
