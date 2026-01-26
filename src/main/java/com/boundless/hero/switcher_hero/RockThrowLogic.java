@@ -66,11 +66,11 @@ public class RockThrowLogic {
 
             CameraUtils.playCameraShake(player);
             CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
+                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
 
                 livingEntity.timeUntilRegen = 0;
                 CombatUtils.strongKnockback(attacker, livingEntity, 10.0f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 1, false, false, false));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
             });
             CombatUtils.attack(heroAction, SwitcherHero.DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
             EnergyUtils.changeEnergyPercentage(player, 20f);

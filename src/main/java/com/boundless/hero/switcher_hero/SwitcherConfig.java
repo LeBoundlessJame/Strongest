@@ -12,8 +12,10 @@ public class SwitcherConfig extends ConfigSection {
         super();
     }
 
-    public ValidatedFloat damageReduction = new ValidatedFloat(0.80f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+    public ValidatedFloat damageReduction = new ValidatedFloat(0.75f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
     public ValidatedInt impactFrameDuration = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+    public ValidatedLong timeBetweenRevives = new ValidatedLong(24000, 999999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+    public ValidatedLong reviveBuffDuration = new ValidatedLong(200, 999999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
 
     public SwitcherConfig.AbilityDamageConfig abilityDamageConfig = new SwitcherConfig.AbilityDamageConfig();
     public SwitcherConfig.AbilityCooldownConfig abilityCooldownConfig = new SwitcherConfig.AbilityCooldownConfig();
