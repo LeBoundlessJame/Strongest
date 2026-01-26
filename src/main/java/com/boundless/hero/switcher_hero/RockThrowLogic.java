@@ -45,7 +45,7 @@ public class RockThrowLogic {
                 if (player.age % 4 == 0) {
                     EffekUtils.playEffect(BoundlessAPI.identifier("todo_aura"), player, player.getPos(), new Vec3d(3, 3, 3));
                 }
-                if (!player.hasStatusEffect(StatusEffects.SLOWNESS)) {
+                if (!player.hasStatusEffect(StatusEffects.SLOWNESS) && !player.isSneaking()) {
                     user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
                     user.velocityModified = true;
                     user.velocityDirty = true;
