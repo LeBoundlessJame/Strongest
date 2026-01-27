@@ -15,6 +15,10 @@ import java.util.function.BiConsumer;
 
 public class GrabLogic {
 
+    public static void suplex(PlayerEntity player) {
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("suplex"), 1.0f, false, true, 3000);
+    }
+
     // Todo: clean this up a LOT: also make it so that you can specify a grab offset
     public static void headbutt(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;

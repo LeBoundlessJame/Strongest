@@ -1,6 +1,5 @@
 package com.boundless.hero.switcher_hero;
 
-import com.boundless.hero.black_sparks_hero.BlackSparksHeroConfig;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
