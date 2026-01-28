@@ -17,6 +17,33 @@ public class GrabLogic {
 
     public static void suplex(PlayerEntity player) {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("suplex"), 1.0f, false, true, 3000);
+
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+
+        BiConsumer<PlayerEntity, LivingEntity> logic = (attacker, target) -> {
+            if (attacker.getPassengerList().isEmpty() && !attacker.getWorld().isClient) {
+                ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+
+                target.startRiding(serverPlayer, true);
+                target.updatePassengerPosition(serverPlayer);
+                serverPlayer.networkHandler.send(new EntityPassengersSetS2CPacket(serverPlayer), null);
+            }
+        };
+
+        tasks.put(1, (user, action) -> {
+            CombatUtils.perEnemyLogic(action, logic);
+        });
+
+        tasks.put(100, (user, action) -> {
+            CombatUtils.attack(action, 10f, Optional.of(BoundlessAPI.identifier("melee_impact_crit")));
+            if (user.getWorld().isClient) return;
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+            serverPlayer.removeAllPassengers();
+            serverPlayer.networkHandler.send(new EntityPassengersSetS2CPacket(serverPlayer), null);
+        });
+
+        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+
     }
 
     // Todo: clean this up a LOT: also make it so that you can specify a grab offset

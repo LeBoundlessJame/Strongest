@@ -18,6 +18,12 @@ public abstract class GrabMixin {
     @Shadow
     private Vec3d pos;
 
+    private Vec3d customOffset = Vec3d.ZERO;
+
+    public void updateCustomOffset(Entity entity) {
+        this.customOffset = new Vec3d(Math.cos(entity.age * 0.1) * 0.5, Math.sin(entity.age * 0.1) * 0.5, 0);
+    }
+
     @Inject(method = "updatePassengerPosition(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity$PositionUpdater;)V", at = @At("HEAD"), cancellable = true)
     private void updatePassengerPosition(Entity passenger, Entity.PositionUpdater updater, CallbackInfo ci) {
         Entity grabUser = (Entity) (Object) this;
@@ -30,11 +36,11 @@ public abstract class GrabMixin {
     }
 
     @Unique
-    private Vec3d repositionRider(Entity user) {
-        Box box = user.getBoundingBox();
+    private Vec3d repositionRider(Entity grabUser) {
+        Box box = grabUser.getBoundingBox();
         double scale = box.getLengthX() + box.getLengthZ();
-
-        Vec3d rotationVec = user.getRotationVec(1.0F).normalize().multiply(scale);
-        return this.pos.add(rotationVec.x, 0.0D, rotationVec.z);
+        Vec3d rotationVec = grabUser.getRotationVec(1.0F).normalize().multiply(scale);
+        updateCustomOffset(grabUser);
+        return this.pos.add(rotationVec.x, 0.0f, rotationVec.z).add(this.customOffset);
     }
 }
