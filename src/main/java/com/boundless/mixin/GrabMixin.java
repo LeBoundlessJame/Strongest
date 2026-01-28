@@ -14,32 +14,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
-public abstract class GrabPositionMixin {
-
+public abstract class GrabMixin {
     @Shadow
     private Vec3d pos;
 
-    @Shadow
-    protected abstract Vec3d getPassengerAttachmentPos(Entity passenger, net.minecraft.entity.EntityDimensions dimensions, float tickDelta);
-
-    @Shadow
-    private net.minecraft.entity.EntityDimensions dimensions;
-
-    @Shadow
-    public abstract void setPose(EntityPose pose);
-
     @Inject(method = "updatePassengerPosition(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity$PositionUpdater;)V", at = @At("HEAD"), cancellable = true)
     private void updatePassengerPosition(Entity passenger, Entity.PositionUpdater updater, CallbackInfo ci) {
-        if (!((Object) this instanceof PlayerEntity player) || !HeroUtils.isHero(player)) {
-            return;
+        Entity grabUser = (Entity) (Object) this;
+        if (grabUser instanceof PlayerEntity player && HeroUtils.isHero(player)) {
+            ci.cancel();
+            Vec3d riderPos = repositionRider(grabUser);
+            Vec3d attachment = passenger.getVehicleAttachmentPos(grabUser);
+            updater.accept(passenger, riderPos.x - attachment.x, riderPos.y - attachment.y + 1.0, riderPos.z - attachment.z);
         }
-
-        ci.cancel();
-
-        Vec3d riderPos = repositionRider((Entity) (Object) this);
-        Vec3d attachment = passenger.getVehicleAttachmentPos((Entity) (Object) this);
-
-        updater.accept(passenger, riderPos.x - attachment.x, riderPos.y - attachment.y + 1.0, riderPos.z - attachment.z);
     }
 
     @Unique

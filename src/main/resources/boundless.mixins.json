@@ -6,7 +6,7 @@
     "AttackMixin",
     "CombatModeMixin",
     "EvasionMixin",
-    "GrabPositionMixin",
+    "GrabMixin",
     "HandSwingMixin",
     "InvulnerabilityMixin",
     "KeybindAccessor",
