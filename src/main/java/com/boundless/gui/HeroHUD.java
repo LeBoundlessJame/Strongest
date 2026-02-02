@@ -19,32 +19,35 @@ public class HeroHUD {
     public static void render(DrawContext context, RenderTickCounter renderTickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null || client.player == null || !HeroUtils.isHero(client.player)) return;
-        renderKeybindAbility(client, context, 1);
-        renderKeybindAbility(client, context, 2);
+        renderKeybindAbilities(client, context);
     }
 
-    public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset) {
+    public static void renderKeybindAbilities(MinecraftClient client, DrawContext context) {
+        if (client.player == null) return;
+        LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
+
+        int offset = 1;
+        for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
+            Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
+            if (ability == null || ability.isHide() || ability.getDisplayString() == null) continue;
+            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
+            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString());
+            offset += 1;
+        }
+    }
+
+    public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset, String boundKey, String abilityString) {
         int padX = 2;
         int padY = 2;
 
-        int x = client.textRenderer.getWidth(formattedAbilityString(client));
+        int x = client.textRenderer.getWidth(formattedAbilityString(boundKey, abilityString));
         int y = (10 + padY) * yOffset - padY;
 
         context.fill(10, y, 10 + (padX * 2) + x, y + 12, client.options.getTextBackgroundColor(0.4F));
-        context.drawText(client.textRenderer, formattedAbilityString(client), 12, y + padY, 0xffffffff, false);
+        context.drawText(client.textRenderer, formattedAbilityString(boundKey, abilityString), 12, y + padY, 0xffffffff, false);
     }
 
-    public static String formattedAbilityString(MinecraftClient client) {
-        if (client.player == null) return "";
-        LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
-        List<Map.Entry<String, Identifier>> entryList = new LinkedList<>(abilityLoadout.entrySet());
-        String boundKeyText = "";
-
-        for (int i = 0; i < abilityLoadout.size(); i++) {
-            Ability ability = AbilityRegistry.getAbilityFromID(entryList.get(i).getValue());
-            if (ability == null || ability.isHide()) continue;
-            boundKeyText = KeybindingUtils.getKeyBindingFromTranslation(entryList.get(i).getKey()).getBoundKeyLocalizedText().getString();
-        }
-        return boundKeyText + " - " + "Suplex";
+    public static String formattedAbilityString(String boundKey, String abilityString) {
+        return boundKey + " - " + abilityString;
     }
 }

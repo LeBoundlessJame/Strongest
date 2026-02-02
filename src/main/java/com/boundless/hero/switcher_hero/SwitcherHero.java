@@ -27,10 +27,10 @@ public class SwitcherHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(SwitcherLightLogic::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(SwitcherMediumLogic::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("todo_medium"), BoundlessAPI.hudPNG("leg"));
 
-    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, COOLDOWNS.clap.get(), BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"));
-    public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, COOLDOWNS.rockThrow.get(), BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"));
-    public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"));
-    public static Ability SUPLEX = AbilityUtils.ability(GrabLogic::suplex, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("suplex"), BoundlessAPI.hudPNG("divergent_fist"));
+    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::clap, COOLDOWNS.clap.get(), BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"), "Boogie");
+    public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, COOLDOWNS.rockThrow.get(), BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"), "Rock Throw");
+    public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"), "Select Target");
+    public static Ability SUPLEX = AbilityUtils.ability(GrabLogic::suplex, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("suplex"), BoundlessAPI.hudPNG("divergent_fist"), "Suplex");
 
     public static ComponentType<Long> LAST_REVIVE_TIMESTAMP = DataComponentRegistry.registerComponent("last_revive_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TIME_UNTIL_NEXT_REVIVE = DataComponentRegistry.registerComponent("time_until_next_revive", builder -> ComponentType.<Long>builder().codec(Codec.LONG));

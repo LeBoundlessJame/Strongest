@@ -14,14 +14,19 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class AbilityUtils {
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon) {
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon, String displayString) {
         return Ability
                 .builder()
                 .abilityLogic(abilityLogic)
                 .cooldown(cooldown)
                 .abilityID(abilityID)
                 .abilityIcon(abilityIcon)
+                .displayString(displayString)
                 .build();
+    }
+
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon) {
+        return ability(abilityLogic, cooldown, abilityID, abilityIcon, null);
     }
 
     public static HeldAbility heldAbility(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon, int requiredHoldTime, String keybind, String displayString) {
