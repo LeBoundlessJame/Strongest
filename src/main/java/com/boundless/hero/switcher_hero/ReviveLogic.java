@@ -1,6 +1,7 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.AnimationUtils;
 import com.boundless.util.EffekUtils;
@@ -11,7 +12,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class ReviveLogic {
-    public static void revive(PlayerEntity player) {
+    public static void revive(PlayerEntity player, HeroActionEntity heroAction) {
+        if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.TIME_UNTIL_NEXT_REVIVE, 0L))) return;
+
         EffekUtils.playEffect(BoundlessAPI.identifier("todo_aura"), player, player.getPos(), new Vec3d(3, 3, 3));
         EffekUtils.playEffect(BoundlessAPI.identifier("healing_burst"), player, player.getPos(), new Vec3d(1, 1, 1));
         HeroUtils.getHeroStack(player).set(SwitcherHero.TIME_UNTIL_NEXT_REVIVE, player.getWorld().getTime() + SwitcherHero.CONFIG.timeBetweenRevives.get());
@@ -23,4 +26,6 @@ public class ReviveLogic {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100, 255, false, false, true));
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 100, 0, false, false, true));
     }
+
+
 }

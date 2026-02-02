@@ -2,6 +2,7 @@ package com.boundless.hero.api;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,6 +47,9 @@ public class HeroData {
 
     @Builder.Default
     private final BiFunction<Identifier, Identifier, ? extends AzArmorRenderer> armorRenderer = HeroArmorRenderer::new;
+
+    @Builder.Default
+    private final BiConsumer<PlayerEntity, HeroActionEntity> customReviveLogic = null;
 
     @Singular
     private final List<String> heldKeybinds;

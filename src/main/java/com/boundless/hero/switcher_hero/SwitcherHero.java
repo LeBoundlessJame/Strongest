@@ -48,6 +48,7 @@ public class SwitcherHero extends Hero {
                 .armorRenderer(HeroArmorRenderer::new)
                 .armorRenderer(SwitcherRenderer::new)
                 .tickHandler(BoogieLogic::tick)
+                .customReviveLogic(ReviveLogic::revive)
                 .modelIdentifier(BoundlessAPI.modelID("switcher"))
                 .build();
         this.registerHero();
