@@ -1,7 +1,6 @@
 package com.boundless.mixin;
 
 import com.boundless.util.HeroUtils;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;

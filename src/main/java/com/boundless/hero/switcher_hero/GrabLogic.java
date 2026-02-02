@@ -3,7 +3,6 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Grab;
 import com.boundless.action.Action;
-import com.boundless.client.CameraShake;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;

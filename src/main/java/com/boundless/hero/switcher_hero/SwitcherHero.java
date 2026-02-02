@@ -2,7 +2,6 @@ package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
-import com.boundless.gui.HeroHUD;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
@@ -23,7 +22,7 @@ public class SwitcherHero extends Hero {
     public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::standardSwap, COOLDOWNS.clap.get(), BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"), "Boogie");
     public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, COOLDOWNS.rockThrow.get(), BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"), "Rock Throw");
     public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"), "Select Target");
-    public static Ability SUPLEX = AbilityUtils.ability(GrabLogic::suplex, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("suplex"), BoundlessAPI.hudPNG("divergent_fist"), "Suplex");
+    public static Ability SUPLEX = AbilityUtils.ability(GrabLogic::suplex, COOLDOWNS.suplex.get(), BoundlessAPI.identifier("suplex"), BoundlessAPI.hudPNG("divergent_fist"), "Suplex");
 
     public static Ability SWAP_TWO = AbilityUtils.ability(BoogieLogic::swapTwo, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_two"), "Swap Two");
     public static Ability SWAP_WITH_PRIMARY = AbilityUtils.ability(BoogieLogic::swapWithPrimary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_primary"), "Swap -> Primary");

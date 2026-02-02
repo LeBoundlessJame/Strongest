@@ -1,7 +1,6 @@
 package com.boundless.hero.armor;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;

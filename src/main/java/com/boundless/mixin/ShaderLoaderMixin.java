@@ -1,6 +1,5 @@
 package com.boundless.mixin;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;

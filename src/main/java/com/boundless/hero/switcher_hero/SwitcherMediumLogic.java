@@ -2,7 +2,6 @@ package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.action.Attack;
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AttackUtils;
 import com.boundless.util.HeroUtils;

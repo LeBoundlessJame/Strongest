@@ -1,7 +1,6 @@
 package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.api.Hero;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

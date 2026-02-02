@@ -2,12 +2,10 @@ package com.boundless.mixin;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.switcher_hero.BoogieLogic;
-import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AnimationUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.SoundUtils;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;

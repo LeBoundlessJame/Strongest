@@ -1,24 +1,18 @@
 package com.boundless.util;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.action.Attack;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_START;

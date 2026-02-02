@@ -25,6 +25,7 @@ public class SwitcherConfig extends ConfigSection {
         public ValidatedInt clap = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt targetSelect = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt rockThrow = new ValidatedInt(400, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt suplex = new ValidatedInt(300, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }
 
     public static class AbilityDamageConfig extends ConfigSection {

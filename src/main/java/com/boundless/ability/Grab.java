@@ -4,8 +4,6 @@ import com.boundless.registry.DataComponentRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Math;
 

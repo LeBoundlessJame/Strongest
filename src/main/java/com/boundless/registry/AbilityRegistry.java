@@ -1,8 +1,6 @@
 package com.boundless.registry;
 
 import com.boundless.ability.Ability;
-import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
-import com.boundless.hero.black_sparks_hero.DropkickLogic;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

@@ -3,8 +3,6 @@ package com.boundless.mixin;
 import com.boundless.ability.Grab;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;

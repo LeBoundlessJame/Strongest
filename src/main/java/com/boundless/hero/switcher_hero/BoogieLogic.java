@@ -1,7 +1,6 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.rock.RockEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;

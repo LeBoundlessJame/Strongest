@@ -1,7 +1,6 @@
 package com.boundless.action;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
 import lombok.Builder;
 import lombok.Getter;
