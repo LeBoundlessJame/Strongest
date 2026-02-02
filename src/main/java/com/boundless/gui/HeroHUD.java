@@ -11,8 +11,6 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class HeroHUD {
@@ -25,31 +23,38 @@ public class HeroHUD {
     public static void renderKeybindAbilities(MinecraftClient client, DrawContext context) {
         if (client.player == null) return;
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
+        LinkedHashMap<Identifier, Long> abilityCooldowns = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, new LinkedHashMap<>()));
 
         int offset = 1;
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
             if (ability == null || ability.isHide() || ability.getDisplayString() == null) continue;
             String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
-            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString());
+
+            long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);
+            int cooldown = Math.toIntExact(endTick - client.player.getWorld().getTime());
+
+            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString(), cooldown);
             offset += 1;
         }
     }
 
-    public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset, String boundKey, String abilityString) {
+    public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset, String boundKey, String abilityString, int cooldown) {
         int padX = 2;
         int padY = 2;
 
-        int x = client.textRenderer.getWidth(formattedAbilityString(boundKey, abilityString));
+        int x = client.textRenderer.getWidth(formattedAbilityString(boundKey, abilityString, cooldown));
         int y = (10 + padY) * yOffset - padY;
 
         context.fill(10, y, 10 + (padX * 2) + x, y + 12, client.options.getTextBackgroundColor(0.4F));
-        context.drawText(client.textRenderer, formattedAbilityString(boundKey, abilityString), 12, y + padY, 0xffffffff, false);
+        context.drawText(client.textRenderer, formattedAbilityString(boundKey, abilityString, cooldown), 12, y + padY, 0xffffffff, false);
         context.drawText(client.textRenderer, boundKey + " - ", 12, y + padY, 0xffbebebe, false);
+        context.drawText(client.textRenderer,  boundKey + " - " + abilityString + " (" + cooldown + ")", 12, y + padY, 0xffF5B027, false);
         context.drawText(client.textRenderer, boundKey, 12, y + padY, 0xff00fcff, false);
     }
 
-    public static String formattedAbilityString(String boundKey, String abilityString) {
+    public static String formattedAbilityString(String boundKey, String abilityString, int cooldown) {
+        if (cooldown > 0) return boundKey + " - " + abilityString + " (" + cooldown + ")";
         return boundKey + " - " + abilityString;
     }
 }
