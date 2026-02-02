@@ -73,7 +73,7 @@ public class BlackSparksHero extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("black_sparks_hero"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
-                .hudRenderer(OldHeroHUD::render)
+                .hudRenderer(BlackSparksHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(BlackSparksHeroRenderer::new)
                 .tickHandler(Hero::onHeroTick)
