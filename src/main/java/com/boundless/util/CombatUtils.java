@@ -6,6 +6,8 @@ import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
@@ -16,6 +18,11 @@ import java.util.function.BiConsumer;
 
 // Todo: Some of this class could definitely do with being removed and replaced
 public class CombatUtils {
+
+    public static void slow(LivingEntity livingEntity, int duration, int amplifier) {
+        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, duration, amplifier, false, false, false));
+    }
+
     public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual, BiConsumer<PlayerEntity, Entity> perEntityLogic) {
         heroAction.repositionBox();
         if (heroAction.getOwner() == null) return;

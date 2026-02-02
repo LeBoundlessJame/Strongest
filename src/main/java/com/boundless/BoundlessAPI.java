@@ -1,5 +1,6 @@
 package com.boundless;
 
+import com.boundless.ability.Grab;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -18,6 +19,7 @@ public class BoundlessAPI implements ModInitializer {
 		RenderLogicRegistry.initialize();
 		ConfigRegistry.initialize();
 		DataComponentRegistry.initialize();
+        Grab.initialize();
 		HeroRegistry.initialize();
 		PayloadRegistry.registerPayloads();
 		PayloadRegistry.registerC2SPackets();
