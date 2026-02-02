@@ -16,5 +16,8 @@
   "key.boundless.ability_four": "Ability 4",
   "key.boundless.ability_one": "Ability 1",
   "key.boundless.ability_three": "Ability 3",
-  "key.boundless.ability_two": "Ability 2"
+  "key.boundless.ability_two": "Ability 2",
+  "entity.boundless.rock": "Rock",
+  "boundless.top_speed_multiplier": "Top Speed Multiplier",
+  "boundless.ticks_until_max_speed": "Seconds Until Max Speed"
 }
