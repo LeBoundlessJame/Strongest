@@ -18,11 +18,6 @@ import java.util.function.BiConsumer;
 
 public class RockThrowLogic {
     public static void rockThrow(PlayerEntity player) {
-        if (BoogieLogic.isSelectingClap(player)) {
-            HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "feint");
-            return;
-        }
-
         if (player.getWorld().isClient) return;
         RockEntity rock = new RockEntity(player, player.getWorld());
         rock.setVelocity(player.getRotationVector().multiply(4));

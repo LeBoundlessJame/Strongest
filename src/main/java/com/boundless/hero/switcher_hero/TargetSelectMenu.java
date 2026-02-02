@@ -11,11 +11,6 @@ import net.minecraft.util.hit.EntityHitResult;
 
 public class TargetSelectMenu {
     public static void openTargetSelectMenu(PlayerEntity player) {
-        if (BoogieLogic.isSelectingClap(player)) {
-            HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapTwo");
-            return;
-        }
-
         HeroUtils.getHeroStack(player).set(SwitcherHero.TARGET_SELECT_TIME, player.getWorld().getTime() + 20);
 
         String displayString = "" + Formatting.AQUA + Formatting.BOLD + "Primary: " + "Left";
