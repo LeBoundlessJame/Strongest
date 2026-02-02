@@ -1,7 +1,7 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.HeroHUD;
+import com.boundless.hero.OldHeroHUD;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
@@ -32,7 +32,7 @@ public class BlackSparksHUD {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         if (minecraftClient == null || minecraftClient.player == null || !HeroUtils.isHero(minecraftClient.player)) return;
         PlayerEntity player = minecraftClient.player;
-        HeroHUD.render(drawContext, renderTickCounter);
+        OldHeroHUD.render(drawContext, renderTickCounter);
 
 
         if (minecraftClient.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {

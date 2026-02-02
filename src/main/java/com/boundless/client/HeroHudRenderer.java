@@ -1,6 +1,6 @@
 package com.boundless.client;
 
-import com.boundless.hero.HeroHUD;
+import com.boundless.hero.OldHeroHUD;
 import com.boundless.hero.api.HeroData;
 import com.boundless.util.HeroUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -16,7 +16,7 @@ public class HeroHudRenderer {
             if (heroData.getHudRenderer() != null) {
                 heroData.getHudRenderer().accept(drawContext, renderTickCounter);
             } else {
-                HeroHUD.render(drawContext, renderTickCounter);
+                OldHeroHUD.render(drawContext, renderTickCounter);
             }
         }));
     }

@@ -25,7 +25,7 @@ public class RockThrowLogic {
 
         if (player.getWorld().isClient) return;
         RockEntity rock = new RockEntity(player, player.getWorld());
-        rock.setVelocity(player.getRotationVector().multiply(5));
+        rock.setVelocity(player.getRotationVector().multiply(4));
         rock.setPosition(player.getPos().add(player.getRotationVector().multiply(2).x, 1.2, player.getRotationVector().multiply(2).z));
         rock.setNoGravity(true);
         rock.setPitch(player.getPitch());

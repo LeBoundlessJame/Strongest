@@ -1,10 +1,13 @@
 package com.boundless.gui;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
+import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -19,6 +22,18 @@ public class HeroHUD {
     public static void render(DrawContext context, RenderTickCounter renderTickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null || client.player == null || !HeroUtils.isHero(client.player)) return;
+
+        // Todo: make this a mixin
+        if (client.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
+            ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));
+        } else if (client.player.hasStatusEffect(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT)) {
+            ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/boogie_woogie.json"));
+        } else {
+            if (client.gameRenderer.getPostProcessor() != null) {
+                ((ShaderAccessor) client.gameRenderer).boundless$disablePostProcessor();
+            }
+        }
+
         renderKeybindAbilities(client, context);
     }
 

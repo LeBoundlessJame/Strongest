@@ -14,24 +14,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.HashMap;
-import java.util.function.BiConsumer;
-
 public class BoogieLogic {
-
-    public static HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> BOOGIE_MAP = getBoogieMap();
-
-    public static HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> getBoogieMap() {
-        HashMap<String, BiConsumer<PlayerEntity, HeroActionEntity>> boogieMap = new HashMap<>();
-        boogieMap.put("standard", BoogieLogic::standardSwap);
-        boogieMap.put("swapWithPrimary", BoogieLogic::swapWithPrimary);
-        boogieMap.put("swapWithSecondary", BoogieLogic::swapWithSecondary);
-        boogieMap.put("feint", BoogieLogic::feint);
-        boogieMap.put("swapTwo", BoogieLogic::swapTwo);
-        return boogieMap;
-    }
-
-    public static void swapTwo(PlayerEntity player, HeroActionEntity heroAction) {
+    public static void swapTwo(PlayerEntity player) {
         Integer primary = HeroUtils.getHeroStack(player).get(SwitcherHero.PRIMARY_TARGET_ID);
         Integer secondary = HeroUtils.getHeroStack(player).get(SwitcherHero.SECONDARY_TARGET_ID);
 
@@ -40,10 +24,9 @@ public class BoogieLogic {
         Entity secondaryTarget = player.getWorld().getEntityById(secondary);
         if (primaryTarget == null || secondaryTarget == null) return;
 
+        clap(player);
         swapEntities(primaryTarget, secondaryTarget);
     }
-
-    public static void feint(PlayerEntity player, HeroActionEntity heroAction) {}
 
     public static void swapEntities(Entity first, Entity second) {
         Vec3d firstPos = first.getPos();
@@ -73,43 +56,33 @@ public class BoogieLogic {
 
         Entity target = player.getWorld().getEntityById(id);
         if (target == null) return;
+        clap(player);
         swapEntities(player, target);
     }
 
-    public static void swapWithPrimary(PlayerEntity player, HeroActionEntity heroAction) {
+    public static void swapWithPrimary(PlayerEntity player) {
         swapWithTarget(player, "primary");
     }
 
-    public static void swapWithSecondary(PlayerEntity player, HeroActionEntity heroAction) {
+    public static void swapWithSecondary(PlayerEntity player) {
         swapWithTarget(player, "secondary");
     }
 
-    public static void standardSwap(PlayerEntity player, HeroActionEntity heroAction) {
+    public static void standardSwap(PlayerEntity player) {
         EntityHitResult result = RaycastUtils.raycast(player, 64);
         Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
 
         if (target == null || target == player) return;
+        clap(player);
         BoogieLogic.swapEntities(player, target);
     }
 
     public static void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
-
         TargetSelectMenu.closeMenu(user);
-
         AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
-        HeroUtils.getHeroStack(user).set(SwitcherHero.CLAP_SELECT_TIME, user.getWorld().getTime() + 5L);
-        HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECTION, "standard");
-        BoogieLogic.boogie(user, null);
-    }
-
-    public static void boogie(PlayerEntity player, HeroActionEntity heroAction) {
-        String swapType = HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.BOOGIE_SELECTION, "standard");
-        SoundUtils.playSound(player, SoundRegistry.CLAP_1, 8, 12);
-        ActionUtils.performDelayedAction(player, BOOGIE_MAP.get(swapType), 0);
-        HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "standard");
-        HeroUtils.getHeroStack(player).set(SwitcherHero.CLAP_SELECT_TIME, 0L);
-        EnergyUtils.changeEnergyPercentage(player, -5f);
+        SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);
+        EnergyUtils.changeEnergyPercentage(user, -5f);
     }
 
     public static boolean isSelectingClap(PlayerEntity player) {

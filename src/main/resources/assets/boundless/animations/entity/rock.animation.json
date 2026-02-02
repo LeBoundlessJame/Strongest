@@ -7,25 +7,8 @@
 			"bones": {
 				"bone": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.1": {
-							"vector": [360, -360, 0]
-						}
-					},
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.5": {
-							"vector": [-11, 20, 0],
-							"easing": "easeOutBack"
-						},
-						"1.1": {
-							"vector": [-11, 0, 0],
-							"easing": "easeInBack"
-						}
+						"0.0": [0, 0, 0],
+						"1.1": [360, -360, 0]
 					}
 				}
 			}

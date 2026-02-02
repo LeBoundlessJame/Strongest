@@ -1,7 +1,7 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.HeroHUD;
+import com.boundless.hero.OldHeroHUD;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.EnergyUtils;
 import com.boundless.util.HeroUtils;
@@ -14,7 +14,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
@@ -33,7 +32,7 @@ public class BoogieHUD {
         if (minecraftClient == null || minecraftClient.player == null || !HeroUtils.isHero(minecraftClient.player))
             return;
         PlayerEntity player = minecraftClient.player;
-        HeroHUD.render(drawContext, renderTickCounter);
+        OldHeroHUD.render(drawContext, renderTickCounter);
 
         if (minecraftClient.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
             ((ShaderAccessor) minecraftClient.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));

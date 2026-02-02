@@ -2,7 +2,6 @@ package com.boundless.hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
-import com.boundless.hero.api.Hero;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.GUIUtils;
@@ -19,7 +18,7 @@ import org.joml.Math;
 
 import java.util.*;
 
-public class HeroHUD {
+public class OldHeroHUD {
     public static Identifier ABILITY_FRAME =  BoundlessAPI.hudPNG("ability_frame_dark");
     public static void render(DrawContext drawContext, RenderTickCounter renderTickCounter) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();

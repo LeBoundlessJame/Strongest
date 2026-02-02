@@ -25,6 +25,10 @@ public class AbilityUtils {
                 .build();
     }
 
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString) {
+        return ability(abilityLogic, cooldown, abilityID, null, displayString);
+    }
+
     public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon) {
         return ability(abilityLogic, cooldown, abilityID, abilityIcon, null);
     }
