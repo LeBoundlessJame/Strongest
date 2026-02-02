@@ -10,6 +10,8 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -51,13 +53,20 @@ public class HeroHUD {
         context.drawText(client.textRenderer, boundKey + " - ", 12, y + padY, 0xffbebebe, false);
 
         if (cooldown > 0) {
-            context.drawText(client.textRenderer,  boundKey + " - " + abilityString + " (" + cooldown + ")", 12, y + padY, 0xffF5B027, false);
+            context.drawText(client.textRenderer,  boundKey + " - " + abilityString + " (" + cooldownToSeconds(cooldown) + ")", 12, y + padY, 0xffF5B027, false);
         }
         context.drawText(client.textRenderer, boundKey, 12, y + padY, 0xff00fcff, false);
     }
 
     public static String formattedAbilityString(String boundKey, String abilityString, int cooldown) {
-        if (cooldown > 0) return boundKey + " - " + abilityString + " (" + cooldown + ")";
+        if (cooldown > 0) return boundKey + " - " + abilityString + " (" + cooldownToSeconds(cooldown) + ")";
         return boundKey + " - " + abilityString;
+    }
+
+
+    public static String cooldownToSeconds(int cooldown) {
+        BigDecimal seconds = BigDecimal.valueOf(cooldown).divide(BigDecimal.valueOf(20), 10, RoundingMode.DOWN);
+        BigDecimal rounded = seconds.setScale(1, RoundingMode.DOWN);
+        return rounded + "s";
     }
 }
