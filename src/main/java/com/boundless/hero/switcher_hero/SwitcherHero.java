@@ -60,7 +60,16 @@ public class SwitcherHero extends Hero {
                 .ability("key.boundless.ability_four", SwitcherHero.SUPLEX)
                 .build();
 
+        AbilityLoadout loadout2 = AbilityLoadout.builder()
+                .ability("key.attack", SwitcherHero.LIGHT_ATTACK)
+                .ability("key.use", SwitcherHero.MEDIUM_ATTACK)
+                .ability("key.boundless.ability_one", SwitcherHero.BOOGIE)
+                .ability("key.boundless.ability_four", SwitcherHero.SUPLEX)
+                .build();
+
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
+        ABILITY_LOADOUTS.put("LOADOUT_2", loadout2);
+
         this.heroData = HeroData.builder()
                 .name("switcher_hero")
                 .textureIdentifier(BoundlessAPI.textureID("switcher"))
@@ -70,7 +79,7 @@ public class SwitcherHero extends Hero {
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
                 .armorRenderer(SwitcherRenderer::new)
-                .tickHandler(Hero::onHeroTick)
+                .tickHandler(BoogieLogic::tick)
                 .modelIdentifier(BoundlessAPI.modelID("switcher"))
                 .build();
         this.registerHero();
