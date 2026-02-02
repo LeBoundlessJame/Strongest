@@ -40,11 +40,12 @@ public class GrabLogic {
 
         tasks.put(6, (user, action) -> {
             //CombatUtils.attack(action, 10f, Optional.of(BoundlessAPI.identifier("melee_impact_crit")));
-            if (user.getPassengerList() != null && user.getPassengerList().getFirst() != null) {
+            if (!user.getPassengerList().isEmpty()) {
                 CameraUtils.playCameraShake(user);
                 user.getPassengerList().getFirst().damage(user.getDamageSources().generic(), 10f);
                 SoundUtils.playSound(user, SoundRegistry.EARTH_IMPACT);
             }
+
             if (user.getWorld().isClient) return;
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
             serverPlayer.removeAllPassengers();

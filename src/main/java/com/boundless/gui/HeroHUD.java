@@ -63,7 +63,6 @@ public class HeroHUD {
         return boundKey + " - " + abilityString;
     }
 
-
     public static String cooldownToSeconds(int cooldown) {
         BigDecimal seconds = BigDecimal.valueOf(cooldown).divide(BigDecimal.valueOf(20), 10, RoundingMode.DOWN);
         BigDecimal rounded = seconds.setScale(1, RoundingMode.DOWN);
