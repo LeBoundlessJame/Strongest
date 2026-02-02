@@ -56,6 +56,7 @@ public class GrabLogic {
         HeroUtils.getHeroStack(player).set(Grab.GRAB_END, player.getWorld().getTime() + 6);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         CombatUtils.slow(player, 20, 2);
+        AttackUtils.startAttackTimer(player, 40);
     }
 
     // Todo: clean this up a LOT: also make it so that you can specify a grab offset

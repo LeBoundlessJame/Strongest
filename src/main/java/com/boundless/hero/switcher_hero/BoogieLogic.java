@@ -84,10 +84,6 @@ public class BoogieLogic {
         EnergyUtils.changeEnergyPercentage(user, -5f);
     }
 
-    public static boolean isSelectingClap(PlayerEntity player) {
-        return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(SwitcherHero.CLAP_SELECT_TIME, 0L);
-    }
-
     public static void tick(PlayerEntity player) {
         if (player.isSneaking()) {
             HeroUtils.setLoadout(player, SwitcherHero.ABILITY_LOADOUTS.get("LOADOUT_2"));

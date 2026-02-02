@@ -14,10 +14,7 @@ public class SwitcherMediumLogic {
             return;
         }
 
-        if (BoogieLogic.isSelectingClap(player)) {
-            HeroUtils.getHeroStack(player).set(SwitcherHero.BOOGIE_SELECTION, "swapWithSecondary");
-            return;
-        }
+        if (!AttackUtils.canAttack(player)) return;
 
         Attack doubleKick = Attack.builder()
                 .player(player)
