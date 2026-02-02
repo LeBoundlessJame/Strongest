@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityPassengersSetS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.WorldEvents;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
@@ -43,7 +44,7 @@ public class GrabLogic {
         });
 
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
-
+        player.getWorld().syncWorldEvent(WorldEvents.SMASH_ATTACK, player.getSteppingPos(), 750)
     }
 
     // Todo: clean this up a LOT: also make it so that you can specify a grab offset

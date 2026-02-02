@@ -97,10 +97,10 @@ public class BoogieLogic {
 
         TargetSelectMenu.closeMenu(user);
 
-        AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 1.0f, false, true, 3000);
+        AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
         HeroUtils.getHeroStack(user).set(SwitcherHero.CLAP_SELECT_TIME, user.getWorld().getTime() + 5L);
         HeroUtils.getHeroStack(user).set(SwitcherHero.BOOGIE_SELECTION, "standard");
-        ActionUtils.performDelayedAction(user, BoogieLogic::boogie, 5);
+        BoogieLogic.boogie(user, null);
     }
 
     public static void boogie(PlayerEntity player, HeroActionEntity heroAction) {

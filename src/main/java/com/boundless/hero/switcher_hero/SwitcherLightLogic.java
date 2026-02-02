@@ -7,7 +7,9 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AttackUtils;
 import com.boundless.util.CameraUtils;
 import com.boundless.util.HeroUtils;
+import com.boundless.util.SoundUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvent;
 
 public class SwitcherLightLogic {
     public static void lightAttack(PlayerEntity player) {
