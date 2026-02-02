@@ -7,6 +7,7 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.black_sparks_hero.BlackSparksHero;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
@@ -17,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_START;
@@ -34,6 +36,7 @@ public class AttackUtils {
         int priority = attack.getAnimationPriority();
         int attackDuration = attack.getAttackDuration();
         int impactTick = attack.getImpactTick();
+        BiConsumer<PlayerEntity, Entity> perEntityLogic = attack.getPerEntityLogic();
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
@@ -42,7 +45,7 @@ public class AttackUtils {
         BiConsumer<PlayerEntity, HeroActionEntity> hit = (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
             SoundUtils.playSound(player, sound);
-            CombatUtils.attack(heroAction, damage, Optional.of(attackVFX));
+            CombatUtils.attack(heroAction, damage, Optional.of(attackVFX), perEntityLogic);
         };
         tasks.put(impactTick, hit);
         AnimationUtils.playSyncedAnimation(player, animation, animationSpeed, attackCount % 2 == 0, true, priority);

@@ -3,6 +3,7 @@ package com.boundless.util;
 import com.boundless.ability.combat.AttackDataBuilder;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,17 +16,24 @@ import java.util.function.BiConsumer;
 
 // Todo: Some of this class could definitely do with being removed and replaced
 public class CombatUtils {
-    public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
+    public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual, BiConsumer<PlayerEntity, Entity> perEntityLogic) {
         heroAction.repositionBox();
         if (heroAction.getOwner() == null) return;
         PlayerEntity player = (PlayerEntity) heroAction.getOwner();
 
         for (LivingEntity target : heroAction.getWorld().getEntitiesByClass(LivingEntity.class, heroAction.getBoundingBox(), entity -> true)) {
             if (target != player) {
+                if (perEntityLogic != null) {
+                    perEntityLogic.accept(player, target);
+                }
                 impactVisual.ifPresent((identifier) -> playImpactVisual(player, target, impactVisual.get()));
                 target.damage(target.getDamageSources().generic(), damage);
             }
         }
+    }
+
+    public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
+        CombatUtils.attack(heroAction, damage, impactVisual, null);
     }
 
     public static void perEnemyLogic(HeroActionEntity heroAction, BiConsumer<PlayerEntity, LivingEntity> logic) {
