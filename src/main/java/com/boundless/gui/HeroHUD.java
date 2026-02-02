@@ -8,8 +8,6 @@ import com.boundless.util.KeybindingUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
@@ -18,17 +16,22 @@ import java.util.List;
 import java.util.Map;
 
 public class HeroHUD {
-    public static void render(DrawContext drawContext, RenderTickCounter renderTickCounter) {
+    public static void render(DrawContext context, RenderTickCounter renderTickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null || client.player == null || !HeroUtils.isHero(client.player)) return;
+        renderKeybindAbility(client, context, 1);
+        renderKeybindAbility(client, context, 2);
+    }
 
+    public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset) {
         int padX = 2;
         int padY = 2;
-        int x = client.textRenderer.getWidth(formattedAbilityString(client));
-        int y = client.textRenderer.fontHeight + padY;
 
-        drawContext.fill(10, 10, 10 + (padX * 2) + x, y * 2, client.options.getTextBackgroundColor(0.4F));
-        drawContext.drawText(client.textRenderer, formattedAbilityString(client), 12, 12, 0xffffffff, false);
+        int x = client.textRenderer.getWidth(formattedAbilityString(client));
+        int y = (10 + padY) * yOffset - padY;
+
+        context.fill(10, y, 10 + (padX * 2) + x, y + 12, client.options.getTextBackgroundColor(0.4F));
+        context.drawText(client.textRenderer, formattedAbilityString(client), 12, y + padY, 0xffffffff, false);
     }
 
     public static String formattedAbilityString(MinecraftClient client) {

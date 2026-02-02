@@ -20,5 +20,7 @@ public class Ability {
     private final int iconWidth = 22;
     private final Identifier abilityIcon;
     private final Identifier abilityID;
+    @Builder.Default
+    private final String displayString;
     private final boolean hide;
 }
