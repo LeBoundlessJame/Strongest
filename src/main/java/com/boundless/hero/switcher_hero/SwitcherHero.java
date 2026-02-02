@@ -3,6 +3,7 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.gui.HeroHUD;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
@@ -65,7 +66,7 @@ public class SwitcherHero extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("switcher"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
-                .hudRenderer(BoogieHUD::render)
+                .hudRenderer(HeroHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
                 .armorRenderer(SwitcherRenderer::new)
