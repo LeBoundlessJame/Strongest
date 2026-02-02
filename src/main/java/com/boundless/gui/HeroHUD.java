@@ -49,7 +49,10 @@ public class HeroHUD {
         context.fill(10, y, 10 + (padX * 2) + x, y + 12, client.options.getTextBackgroundColor(0.4F));
         context.drawText(client.textRenderer, formattedAbilityString(boundKey, abilityString, cooldown), 12, y + padY, 0xffffffff, false);
         context.drawText(client.textRenderer, boundKey + " - ", 12, y + padY, 0xffbebebe, false);
-        context.drawText(client.textRenderer,  boundKey + " - " + abilityString + " (" + cooldown + ")", 12, y + padY, 0xffF5B027, false);
+
+        if (cooldown > 0) {
+            context.drawText(client.textRenderer,  boundKey + " - " + abilityString + " (" + cooldown + ")", 12, y + padY, 0xffF5B027, false);
+        }
         context.drawText(client.textRenderer, boundKey, 12, y + padY, 0xff00fcff, false);
     }
 
