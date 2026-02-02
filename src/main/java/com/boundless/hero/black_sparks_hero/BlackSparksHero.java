@@ -7,6 +7,7 @@ import com.boundless.ability.HeldAbility;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.gui.HeroHUD;
+import com.boundless.hero.OldHeroHUD;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.BlackSparksHeroRenderer;
@@ -72,7 +73,7 @@ public class BlackSparksHero extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("black_sparks_hero"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
-                .hudRenderer(HeroHUD::render)
+                .hudRenderer(OldHeroHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(BlackSparksHeroRenderer::new)
                 .tickHandler(Hero::onHeroTick)
