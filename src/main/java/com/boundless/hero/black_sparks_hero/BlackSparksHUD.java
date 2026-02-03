@@ -1,6 +1,7 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.gui.HeroHUD;
 import com.boundless.hero.OldHeroHUD;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.GUIUtils;
@@ -22,9 +23,6 @@ public class BlackSparksHUD {
     public static Identifier DIVERGENT_FIST =  BoundlessAPI.hudPNG("divergent_fist");
     public static Identifier BLACK_FLASH =  BoundlessAPI.hudPNG("black_flash");
 
-    public static Identifier METER_FRAME = BoundlessAPI.hudPNG("meter_frame");
-    public static Identifier METER = BoundlessAPI.hudPNG("meter");
-
     public static Identifier METER_FRAME_HORIZONTAL = BoundlessAPI.hudPNG("meter_frame_horizontal");
     public static Identifier METER_HORIZONTAL = BoundlessAPI.hudPNG("meter_horizontal");
 
@@ -32,8 +30,7 @@ public class BlackSparksHUD {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         if (minecraftClient == null || minecraftClient.player == null || !HeroUtils.isHero(minecraftClient.player)) return;
         PlayerEntity player = minecraftClient.player;
-        OldHeroHUD.render(drawContext, renderTickCounter);
-
+        HeroHUD.render(drawContext, renderTickCounter);
 
         if (minecraftClient.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
             ((ShaderAccessor)minecraftClient.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));
@@ -73,10 +70,6 @@ public class BlackSparksHUD {
             matrixStack.pop();
         }
 
-        // Todo: My use of magic numbers here is brutal. Come back later to add some clarity
-        int meterHeight = MathHelper.clamp(MathHelper.lerp((player.getHealth() / player.getMaxHealth()), 119, 0), 0, 119);
-        drawContext.drawTexture(METER_FRAME, (int) (5 / scale), (int) ((20) / scale), 0f, 127, 11, 127, 11, 127);
-        drawContext.drawTexture(METER, (int) (5 / scale), (int) ((24 + meterHeight) / scale), 0f, 131, 11, 119 - meterHeight, 11, 127);
         matrixStack.pop();
     }
 

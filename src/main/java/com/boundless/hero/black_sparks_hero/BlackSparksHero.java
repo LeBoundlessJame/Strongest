@@ -34,11 +34,11 @@ public class BlackSparksHero extends Hero {
     public static BlackSparksHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
-    public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), BoundlessAPI.hudPNG("spin_kick"));
-    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::startBlackFlashMinigame, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), BoundlessAPI.hudPNG("black_flash"));
+    public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::startBlackFlashMinigame, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
 
-    public static HeldAbility LIGHT_ATTACK = new DivergentLightAttackAbility(BlackFlashAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack", "Divergent Fist");
-    public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one", "dash");
+    public static HeldAbility LIGHT_ATTACK = new DivergentLightAttackAbility(BlackFlashAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack", "(Hold) Divergent Fist");
+    public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one", "Dash (Hold To Leap)");
 
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
