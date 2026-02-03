@@ -78,13 +78,14 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
+        // Todo: find slash_white and fix it
         List<Identifier> slashes = List.of(BoundlessAPI.identifier("slash_white"), BoundlessAPI.identifier("slash_red"), BoundlessAPI.identifier("slash_white_plain"));
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
             if (playerEntity.getWorld() instanceof ServerWorld) {
-                int environmentQuality = 4;
+                int environmentQuality = 8;
                 for (int x = 0; x < environmentQuality; x++) {
-                    for (int y = 0; y < environmentQuality; y++) {
+                    for (int y = 0; y < environmentQuality / 2; y++) {
                         for (int z = 0; z < environmentQuality; z++) {
 
                             float xPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getX() - domainRadius, domainOrigin.getX() + domainRadius);
@@ -96,7 +97,7 @@ public class ShrineHeroDestruction {
                                 slash = slashes.get(player.getRandom().nextBetween(1, 2));
                             }
 
-                            EffekUtils.playRandomRotatedEffect(slash, player, new Vec3d(xPos, yPos, zPos), new Vec3d(4.0f, 4.0f, 4.0f));
+                            EffekUtils.playRandomRotatedEffect(slash, player, new Vec3d(xPos, yPos, zPos), new Vec3d(1, 1, 1));
                         }
                     }
                 }
