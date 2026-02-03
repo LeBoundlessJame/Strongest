@@ -7,6 +7,16 @@ import net.minecraft.client.gui.DrawContext;
 import java.util.ArrayList;
 
 public class GUIUtils {
+
+    public static void drawLabelledText(DrawContext context, MinecraftClient client, String string, int color, int x, int y, int padX, int padY) {
+        int width = client.textRenderer.getWidth(string);
+        int height = client.textRenderer.fontHeight;
+
+        context.fill(x, y, x + (padX * 2) + width, y + padY + height, client.options.getTextBackgroundColor(0.4F));
+        context.drawText(client.textRenderer, string, x + padX, y + padY, color, false);
+    }
+
+
     public static void drawOutlinedText(DrawContext drawContext, MinecraftClient instance, String string, int j, int k, ArrayList<Float> colors) {
         drawContext.drawText(instance.textRenderer, string, j + 1, k, 0, false);
         drawContext.drawText(instance.textRenderer, string, j - 1, k, 0, false);
