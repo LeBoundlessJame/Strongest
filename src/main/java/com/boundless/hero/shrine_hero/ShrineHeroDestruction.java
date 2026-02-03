@@ -78,10 +78,18 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
+        for (LivingEntity livingEntity: player.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 400, 0, false, false, false));
+        }
+
         // Todo: find slash_white and fix it
         List<Identifier> slashes = List.of(BoundlessAPI.identifier("slash_white"), BoundlessAPI.identifier("slash_red"), BoundlessAPI.identifier("slash_white_plain"));
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
+            if (playerEntity.age % 3 == 0) {
+                CameraUtils.playCameraShake(playerEntity);
+            }
+
             if (playerEntity.getWorld() instanceof ServerWorld) {
                 int environmentQuality = 8;
                 for (int x = 0; x < environmentQuality; x++) {
