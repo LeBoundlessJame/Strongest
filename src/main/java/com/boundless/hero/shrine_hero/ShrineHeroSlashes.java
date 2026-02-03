@@ -94,7 +94,7 @@ public class ShrineHeroSlashes {
             livingEntity.setVelocity(player.getRotationVector().x * force, 0, player.getRotationVector().z * force);
             livingEntity.velocityModified = true;
             SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 10, 11);
-            EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("dismantle_star"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
+            EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
             EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
             CameraUtils.playCameraShake(player);
         }
