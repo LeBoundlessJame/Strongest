@@ -57,6 +57,7 @@ public class ShrineHeroDestruction {
         ActionUtils.performAction(player, shootOpen);
     }
 
+    // Todo: make literally all of this better
     public static void shrine(PlayerEntity player) {
         String message = "§c§l§ka§c §c§l''Ryoiki Tenkai''. §c§l§ka§c";
 

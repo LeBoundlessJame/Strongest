@@ -21,6 +21,34 @@ import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
 public class ShrineHeroSlashes {
     public static Ability DISMANTLE = AbilityUtils.ability(ShrineHeroSlashes::dismantle, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle"), "Dismantle");
     public static Ability CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::cleave, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("cleave"), "Cleave");
+    public static Ability SPIDERWEB_CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::spiderwebCleave, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("spiderweb_cleave"), "Spider-Web Cleave");
+
+    public static void spiderwebCleave(PlayerEntity player) {
+        Attack cleave = Attack.builder()
+                .player(player)
+                .damage(5f)
+                .impactSound(SoundRegistry.EARTH_IMPACT)
+                .animationSpeed(1.0f)
+                .damage(12f)
+                .animation(BoundlessAPI.identifier("spiderweb_cleave"))
+                .impactTick(4)
+                .attackDuration(8)
+                .perEntityLogic((user, entity) -> {
+                    CameraUtils.playCameraShake(user);
+                    if (entity instanceof LivingEntity livingEntity) {
+                        EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
+                        livingEntity.damage(livingEntity.getDamageSources().generic(), 18);
+                        livingEntity.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
+                        livingEntity.velocityModified = true;
+                        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 10, 3, false, false, false));                    }
+                })
+                .build();
+
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 255, false, false, false));
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spiderweb_cleave"), 2f, false, true, 3000);
+        EffekUtils.playEffect(BoundlessAPI.identifier("spiderweb_cleave"), player, player.getPos().add(0, 0.05f, 0), new Vec3d(2, 1, 2));
+        AttackUtils.performAttack(cleave);
+    }
 
     public static void cleave(PlayerEntity player) {
         Attack cleave = Attack.builder()
@@ -46,7 +74,6 @@ public class ShrineHeroSlashes {
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 1, true, false, false));
         AttackUtils.performAttack(cleave);
     }
-
 
     public static void dismantle(PlayerEntity player) {
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
