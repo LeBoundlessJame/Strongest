@@ -84,7 +84,7 @@ public class ShrineHeroDestruction {
         }
 
         // Todo: find slash_white and fix it
-        List<Identifier> slashes = List.of(BoundlessAPI.identifier("slash_white"), BoundlessAPI.identifier("slash_red"), BoundlessAPI.identifier("slash_white_plain"));
+        List<Identifier> slashes = List.of(BoundlessAPI.identifier("dismantle_star"), BoundlessAPI.identifier("slash_red"), BoundlessAPI.identifier("slash_white_plain"));
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
             if (playerEntity.age % 3 == 0) {
