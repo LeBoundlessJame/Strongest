@@ -5,7 +5,7 @@
 			"loop": "hold_on_last_frame",
 			"animation_length": 5,
 			"bones": {
-				"MalevolentShrine": {
+				"shrine": {
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
