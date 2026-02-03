@@ -2,10 +2,12 @@ package com.boundless.mixin;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.switcher_hero.BoogieLogic;
+import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AnimationUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.SoundUtils;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
@@ -25,9 +27,14 @@ public class EvasionMixin {
         if (source.isIn(DamageTypeTags.IS_PROJECTILE) && HeroUtils.isHero(player) && source.getAttacker() != null) {
             AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("clap"), 2.0f, false, false, 3000);
             SoundUtils.playSound(player, SoundRegistry.CLAP_1);
+            cir.cancel();
+
+            if (source.getAttacker() instanceof LivingEntity livingEntity) {
+                if (SwitcherHero.isSwitcher(livingEntity)) return;
+            }
+
             BoogieLogic.swapEntities(player, source.getAttacker());
             source.getAttacker().damage(source, amount);
-            cir.cancel();
         }
 
     }

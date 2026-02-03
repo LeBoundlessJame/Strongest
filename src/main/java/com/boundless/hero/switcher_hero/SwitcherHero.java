@@ -10,6 +10,11 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 
 public class SwitcherHero extends Hero {
     public static SwitcherConfig CONFIG = ConfigRegistry.HERO_CONFIG.SWITCHER_CONFIG;
@@ -52,5 +57,10 @@ public class SwitcherHero extends Hero {
                 .modelIdentifier(BoundlessAPI.modelID("switcher"))
                 .build();
         this.registerHero();
+    }
+
+    // Todo: Don't make this hard coded based on string name
+    public static boolean isSwitcher(LivingEntity livingEntity) {
+        return livingEntity.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(SwitcherHero.getArmorSet().get(1));
     }
 }

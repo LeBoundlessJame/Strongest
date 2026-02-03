@@ -20,7 +20,7 @@ import java.util.Map;
 
 public abstract class Hero {
     @Getter
-    ArrayList<Item> armorSet;
+    public static ArrayList<Item> armorSet;
     @Getter
     public HeroData heroData;
     @Getter
@@ -29,7 +29,7 @@ public abstract class Hero {
     public static ArrayList<HeldAbility> HELD_ABILITIES = new ArrayList<>();
 
     public void registerHero() {
-        this.armorSet = RegistryUtils.registerHero(this);
+        armorSet = RegistryUtils.registerHero(this);
 
         if (!ABILITY_LOADOUTS.isEmpty()) {
             for (AbilityLoadout loadout : ABILITY_LOADOUTS.values()) {
