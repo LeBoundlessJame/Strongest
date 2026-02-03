@@ -48,7 +48,7 @@ public class OldHeroHUD {
             matrixStack.scale(scale, scale, scale);
 
             ArrayList<Float> colors = GUIUtils.hexToUnitColor("bcced4");
-            GUIUtils.drawOutlinedText(drawContext, minecraftClient, boundKeyText.getString(), (int) (45 / scale), (int) ((20 + (i * 21) + 8) / scale), colors);
+            //GUIUtils.drawOutlinedText(drawContext, minecraftClient, boundKeyText.getString(), (int) (45 / scale), (int) ((20 + (i * 21) + 8) / scale), colors);
             matrixStack.pop();
 
             long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);

@@ -59,8 +59,8 @@ public class BlackSparksHUD {
             drawContext.drawTexture(METER_FRAME_HORIZONTAL, drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() - 62, 0, 0, 127, 11, 127, 11);
             drawContext.drawTexture(METER_HORIZONTAL, drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() - 62, 0, 0, meterWidth, 11, 127, 11);
 
-            GUIUtils.drawLabelledText(drawContext, minecraftClient, getTargetComboString(player), 0xfffc5454, drawContext.getScaledWindowWidth() / 2 - minecraftClient.textRenderer.getWidth(getTargetComboString(player)) / 2, drawContext.getScaledWindowHeight() / 2 + 10, 2, 2);
-            GUIUtils.drawLabelledText(drawContext, minecraftClient, getComboString(player), 0xff1bc7b6, drawContext.getScaledWindowWidth() / 2 - minecraftClient.textRenderer.getWidth(getTargetComboString(player)) / 2, drawContext.getScaledWindowHeight() / 2 + 10, 2, 2, 0.0f);
+            GUIUtils.drawLabelledOutlinedText(drawContext, minecraftClient, getTargetComboString(player), 0xfffc5454, drawContext.getScaledWindowWidth() / 2 - minecraftClient.textRenderer.getWidth(getTargetComboString(player)) / 2, drawContext.getScaledWindowHeight() / 2 + 10, 2, 2, 0.5f);
+            GUIUtils.drawLabelledOutlinedText(drawContext, minecraftClient, getComboString(player), 0xff1bc7b6, drawContext.getScaledWindowWidth() / 2 - minecraftClient.textRenderer.getWidth(getTargetComboString(player)) / 2, drawContext.getScaledWindowHeight() / 2 + 10, 2, 2, 0.0f);
 
             /*
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, getTargetComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);

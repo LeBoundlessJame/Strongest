@@ -20,15 +20,21 @@ public class GUIUtils {
         context.drawText(client.textRenderer, string, x + padX, y + padY, color, false);
     }
 
-    public static void drawOutlinedText(DrawContext drawContext, MinecraftClient instance, String string, int j, int k, ArrayList<Float> colors) {
-        drawContext.drawText(instance.textRenderer, string, j + 1, k, 0, false);
-        drawContext.drawText(instance.textRenderer, string, j - 1, k, 0, false);
-        drawContext.drawText(instance.textRenderer, string, j, k + 1, 0, false);
-        drawContext.drawText(instance.textRenderer, string, j, k - 1, 0, false);
+    public static void drawLabelledOutlinedText(DrawContext context, MinecraftClient client, String string, int color, int x, int y, int padX, int padY, float fallbackOpacity) {
+        int width = client.textRenderer.getWidth(string);
+        int height = client.textRenderer.fontHeight;
 
-        RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
-        drawContext.drawText(instance.textRenderer, string, j, k, 0xffffff, false);
-        RenderSystem.setShaderColor(1, 1, 1, 1.0f);
+        context.fill(x, y, x + (padX * 2) + width, y + padY + height, client.options.getTextBackgroundColor(fallbackOpacity));
+        drawOutlinedText(context, client, string, x + padX, y + padY, color);
+    }
+
+    public static void drawOutlinedText(DrawContext drawContext, MinecraftClient instance, String string, int j, int k, int color) {
+        drawContext.drawText(instance.textRenderer, string, j + 1, k, 0xff000000, false);
+        drawContext.drawText(instance.textRenderer, string, j - 1, k, 0xff000000, false);
+        drawContext.drawText(instance.textRenderer, string, j, k + 1, 0xff000000, false);
+        drawContext.drawText(instance.textRenderer, string, j, k - 1, 0xff000000, false);
+
+        drawContext.drawText(instance.textRenderer, string, j, k, color, false);
     }
 
     // todo: I found this on https://www.baeldung.com/java-convert-hex-to-rgb so all credit to them for this!
