@@ -1,0 +1,97 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"open": {
+			"animation_length": 3,
+			"bones": {
+				"rightArm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": [-58.65949, -34.7862, -21.04814],
+							"easing": "easeOutQuart"
+						},
+						"1.0": {
+							"vector": [-70.7731, 2.41196, -94.63909],
+							"easing": "easeInOutQuart"
+						},
+						"1.5": {
+							"vector": [-58.4333, -17.2294, -10.3141],
+							"easing": "easeInOutQuart"
+						},
+						"2.0": {
+							"vector": [-88.34906, -24.72705, -10.53558],
+							"easing": "easeInOutQuint"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.5": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuint"
+						},
+						"2.2917": {
+							"vector": [-1, 0, 5],
+							"easing": "easeInOutQuint"
+						},
+						"2.5": {
+							"vector": [-1, 0, 2],
+							"easing": "easeInOutQuint"
+						}
+					}
+				},
+				"leftArm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": [-122.49511, 4.91228, -93.59511],
+							"easing": "easeOutQuart"
+						},
+						"1.0": {
+							"vector": [-69.74116, -29.25501, 75.30652],
+							"easing": "easeInOutQuart"
+						},
+						"1.5": {
+							"vector": [-91.03128, 13.12479, -30.00135],
+							"easing": "easeInOutQuart"
+						},
+						"2.0": {
+							"vector": [-101.78414, 25.42304, -32.15694]
+						},
+						"2.2917": {
+							"vector": [-101.78414, 25.42304, -32.15694],
+							"easing": "easeInOutExpo"
+						},
+						"2.5": {
+							"vector": [-97.79884, 15.50728, -16.90016]
+						},
+						"2.625": {
+							"vector": [-101.78414, 25.42304, -32.15694],
+							"easing": "easeOutQuad"
+						}
+					},
+					"position": {
+						"2.2917": {
+							"vector": [0, 0, 0]
+						},
+						"2.5": {
+							"vector": [2, 0, 8],
+							"easing": "easeInOutExpo"
+						},
+						"2.625": {
+							"vector": [0, 0, 0],
+							"easing": "easeOutQuad"
+						}
+					}
+				}
+			}
+		}
+	},
+	"azurelib_format_version": 2
+}

@@ -15,6 +15,8 @@ import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 
+import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
+
 public class ShrineHero extends Hero {
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
 
@@ -29,11 +31,11 @@ public class ShrineHero extends Hero {
 
     public ShrineHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
-                .ability("key.attack", com.boundless.hero.black_sparks_hero.BlackSparksHero.LIGHT_ATTACK)
-                .ability("key.use", com.boundless.hero.black_sparks_hero.BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", com.boundless.hero.black_sparks_hero.BlackSparksHero.DASH)
-                .ability("key.boundless.ability_two", com.boundless.hero.black_sparks_hero.BlackSparksHero.SPIN_KICK)
-                .ability("key.boundless.ability_three", com.boundless.hero.black_sparks_hero.BlackSparksHero.BLACK_FLASH)
+                .ability("key.attack", LIGHT_ATTACK)
+                .ability("key.use", ShrineHeroMelee.MEDIUM_ATTACK)
+                .ability("key.boundless.ability_one", ShrineHeroSlashes.DISMANTLE)
+                .ability("key.boundless.ability_two", ShrineHeroSlashes.CLEAVE)
+                .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
