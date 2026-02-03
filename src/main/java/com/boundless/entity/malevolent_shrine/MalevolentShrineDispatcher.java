@@ -1,7 +1,7 @@
 package com.boundless.entity.malevolent_shrine;
 
-import mod.azure.azurelib.rewrite.animation.dispatch.command.AzCommand;
-import mod.azure.azurelib.rewrite.animation.play_behavior.AzPlayBehaviors;
+import mod.azure.azurelib.common.animation.dispatch.command.AzCommand;
+import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 
 public class MalevolentShrineDispatcher {
     private final MalevolentShrineEntity entity;
