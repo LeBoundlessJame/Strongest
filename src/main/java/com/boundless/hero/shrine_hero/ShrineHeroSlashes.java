@@ -7,6 +7,7 @@ import com.boundless.client.CameraShake;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -54,9 +55,10 @@ public class ShrineHeroSlashes {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 13, 16);
 
-        EntityHitResult raycastResult = RaycastUtils.raycast(player, 64);
+        EntityHitResult result = RaycastUtils.raycast(player, 64);
+        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
 
-        if (raycastResult != null && raycastResult.getEntity() instanceof LivingEntity livingEntity) {
+        if (target instanceof LivingEntity livingEntity) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 0, false, false, false));
             livingEntity.timeUntilRegen = 0;
             livingEntity.damage(livingEntity.getDamageSources().generic(), 20f);

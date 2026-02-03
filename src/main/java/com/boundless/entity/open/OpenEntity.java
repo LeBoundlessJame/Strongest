@@ -3,6 +3,7 @@ package com.boundless.entity.open;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
+import com.boundless.util.CameraUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.EntityType;
@@ -51,6 +52,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         livingEntity.timeUntilRegen = 0;
         livingEntity.damage(livingEntity.getDamageSources().generic(), 500f);
         livingEntity.setOnFireFor(10);
+        CameraUtils.playCameraShake((PlayerEntity) this.getOwner());
         SoundUtils.playSound((PlayerEntity) this.getOwner(), SoundEvents.ITEM_FIRECHARGE_USE, 5, 8);
         this.discard();
     }
