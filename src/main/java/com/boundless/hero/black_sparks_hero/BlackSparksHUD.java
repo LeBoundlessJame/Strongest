@@ -19,10 +19,6 @@ import net.minecraft.util.math.MathHelper;
 import java.util.ArrayList;
 
 public class BlackSparksHUD {
-    public static Identifier MOUSE =  BoundlessAPI.hudPNG("mouse");
-    public static Identifier DIVERGENT_FIST =  BoundlessAPI.hudPNG("divergent_fist");
-    public static Identifier BLACK_FLASH =  BoundlessAPI.hudPNG("black_flash");
-
     public static Identifier METER_FRAME_HORIZONTAL = BoundlessAPI.hudPNG("meter_frame_horizontal");
     public static Identifier METER_HORIZONTAL = BoundlessAPI.hudPNG("meter_horizontal");
 
