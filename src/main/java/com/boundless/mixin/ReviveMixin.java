@@ -1,8 +1,6 @@
 package com.boundless.mixin;
 
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.switcher_hero.ReviveLogic;
-import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

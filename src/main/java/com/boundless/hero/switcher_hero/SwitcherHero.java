@@ -11,12 +11,8 @@ import com.boundless.registry.HeroRegistry;
 import com.boundless.util.AbilityUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
 
 public class SwitcherHero extends Hero {
     public static SwitcherConfig CONFIG = ConfigRegistry.HERO_CONFIG.SWITCHER_CONFIG;
