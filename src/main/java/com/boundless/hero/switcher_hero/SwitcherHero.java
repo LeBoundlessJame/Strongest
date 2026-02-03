@@ -7,6 +7,7 @@ import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.HeroRegistry;
 import com.boundless.util.AbilityUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
@@ -14,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 
 public class SwitcherHero extends Hero {
@@ -59,8 +61,7 @@ public class SwitcherHero extends Hero {
         this.registerHero();
     }
 
-    // Todo: Don't make this hard coded based on string name
     public static boolean isSwitcher(LivingEntity livingEntity) {
-        return livingEntity.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(SwitcherHero.getArmorSet().get(1));
+        return livingEntity.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(HeroRegistry.SWITCHER_HERO.getArmorSet().get(1));
     }
 }
