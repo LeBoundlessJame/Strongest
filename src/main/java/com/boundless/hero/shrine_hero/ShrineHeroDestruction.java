@@ -3,20 +3,34 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Action;
+import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
 
 public class ShrineHeroDestruction {
     public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("open"), "Open");
+    public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
 
     public static void open(PlayerEntity player) {
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
@@ -43,4 +57,69 @@ public class ShrineHeroDestruction {
         ActionUtils.performAction(player, shootOpen);
     }
 
+    public static void shrine(PlayerEntity player) {
+        String message = "§c§l§ka§c §c§l''Ryoiki Tenkai''. §c§l§ka§c";
+
+        int domainExpansionDuration = 400;
+        float domainRadius = 100;
+        float domainTickDamage = 1;
+
+        BlockPos domainOrigin = player.getBlockPos();
+
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 3, false, false, false));
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
+        SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
+
+        Vec3d shrinePosition = new Vec3d(player.getX() - player.getRotationVector().multiply(5).x, player.getY(), player.getZ() - player.getRotationVector().multiply(5).z);
+        MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());
+        shrine.setPosition(shrinePosition);
+        shrine.setPitch(player.getPitch());
+        shrine.setYaw(player.getYaw());
+        shrine.setMaxLifetime(domainExpansionDuration);
+        player.getWorld().spawnEntity(shrine);
+
+        List<Identifier> slashes = List.of(BoundlessAPI.identifier("slash_white"), BoundlessAPI.identifier("slash_red"), BoundlessAPI.identifier("slash_white_plain"));
+
+        BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
+            if (playerEntity.getWorld() instanceof ServerWorld) {
+                int environmentQuality = 4;
+                for (int x = 0; x < environmentQuality; x++) {
+                    for (int y = 0; y < environmentQuality; y++) {
+                        for (int z = 0; z < environmentQuality; z++) {
+
+                            float xPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getX() - domainRadius, domainOrigin.getX() + domainRadius);
+                            float yPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getY() - domainRadius, domainOrigin.getY() + domainRadius);
+                            float zPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getZ() - domainRadius, domainOrigin.getZ() + domainRadius);
+
+                            Identifier slash = slashes.getFirst();
+                            if (playerEntity.getRandom().nextBetween(0, 1) >= 0.95) {
+                                slash = slashes.get(player.getRandom().nextBetween(1, 2));
+                            }
+
+                            EffekUtils.playRandomRotatedEffect(slash, player, new Vec3d(xPos, yPos, zPos), new Vec3d(4.0f, 4.0f, 4.0f));
+                        }
+                    }
+                }
+            }
+
+            Identifier slash = slashes.get(player.getRandom().nextBetween(0, 2));
+
+            for (LivingEntity livingEntity : playerEntity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
+                if (livingEntity != playerEntity) {
+                    livingEntity.damage(livingEntity.getDamageSources().magic(), domainTickDamage);
+                    livingEntity.timeUntilRegen = 0;
+
+                    if (playerEntity.getWorld() instanceof ServerWorld) {
+                        for (int i = 0; i < 1; i++) {
+                            EffekUtils.playRandomRotatedEffect(slash, livingEntity, new Vec3d(livingEntity.getX() + (livingEntity.getRandom().nextBetween(-1, 1) * 0.8), livingEntity.getBodyY(0.5) + (livingEntity.getRandom().nextBetween(-1, 1) * 0.8), livingEntity.getZ() + (livingEntity.getRandom().nextBetween(-1, 1) * 0.8)), new Vec3d(0.1f, 0.1f, 0.1f));
+                        }
+                    }
+                }
+            }
+
+        };
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks;
+        scheduledTasks = ActionUtils.repeatTask(sureHitTask, 50, domainExpansionDuration);
+        ActionUtils.performAction(player, ActionUtils.action(scheduledTasks));
+    }
 }

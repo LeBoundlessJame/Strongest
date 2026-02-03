@@ -2,6 +2,7 @@ package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
 import com.boundless.entity.rock.RockEntity;
 import net.minecraft.entity.Entity;
@@ -14,6 +15,7 @@ public class EntityRegistry {
     public static final EntityType<HeroActionEntity> HERO_ACTION_ENTITY = registerEntityType("hero_action", HeroActionEntity::new, 1, 1);
     public static final EntityType<RockEntity> ROCK = registerEntityType("rock", RockEntity::new, 0.8f, 0.8f);
     public static final EntityType<OpenEntity> OPEN_ENTITY = registerEntityType("open", OpenEntity::new, 1, 1);
+    public static final EntityType<MalevolentShrineEntity> MALEVOLENT_SHRINE = registerEntityType("malevolent_shrine", MalevolentShrineEntity::new, 8, 8);
 
     public static <T extends Entity> EntityType<T> registerEntityType(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.identifier(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));
