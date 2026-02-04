@@ -19,6 +19,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class OpenEntity extends PersistentProjectileEntity {
@@ -35,6 +36,12 @@ public class OpenEntity extends PersistentProjectileEntity {
     @Override
     protected boolean tryPickup(PlayerEntity player) {
         return false;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_trail"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.1, 0.1, 0.1));
     }
 
     @Override
