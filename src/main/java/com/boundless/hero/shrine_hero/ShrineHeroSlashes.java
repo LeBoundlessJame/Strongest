@@ -22,6 +22,11 @@ public class ShrineHeroSlashes {
     public static Ability DISMANTLE = AbilityUtils.ability(ShrineHeroSlashes::dismantle, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle"), "Dismantle");
     public static Ability CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::cleave, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("cleave"), "Cleave");
     public static Ability SPIDERWEB_CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::spiderwebCleave, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("spiderweb_cleave"), "Spider-Web Cleave");
+    public static Ability DISMANTLE_BARRAGE = AbilityUtils.ability(ShrineHeroSlashes::dismantleBarrage, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle_barrage"), "Dismantle Barrage");
+
+    public static void dismantleBarrage(PlayerEntity player) {
+        EffekUtils.playEffect(BoundlessAPI.identifier("surehit_rendition"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 0.2f);
+    }
 
     public static void spiderwebCleave(PlayerEntity player) {
         Attack cleave = Attack.builder()
