@@ -48,7 +48,7 @@ public class OpenEntity extends PersistentProjectileEntity {
     public void onBlockHit(BlockHitResult result) {
         super.onBlockHit(result);
         if (this.getOwner() == null) return;
-        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
+        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_destruction"), this, this.getPos().add(0f, 0.1f, 0f), 3);
         this.discard();
     }
     @Override

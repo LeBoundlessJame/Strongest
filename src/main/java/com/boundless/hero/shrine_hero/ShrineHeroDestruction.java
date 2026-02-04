@@ -39,7 +39,7 @@ public class ShrineHeroDestruction {
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 45, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"));
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
 
         Action shootOpen = ActionUtils.singleAction(45, (user, heroAction) -> {
             OpenEntity openEntity = new OpenEntity(user, user.getWorld());
