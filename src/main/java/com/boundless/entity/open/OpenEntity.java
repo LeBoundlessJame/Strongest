@@ -41,7 +41,7 @@ public class OpenEntity extends PersistentProjectileEntity {
     @Override
     public void tick() {
         super.tick();
-        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_trail"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.1, 0.1, 0.1));
+        //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_trail"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.1, 0.1, 0.1));
     }
 
     @Override
