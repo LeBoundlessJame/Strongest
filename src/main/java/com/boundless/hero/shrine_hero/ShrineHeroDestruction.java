@@ -92,13 +92,11 @@ public class ShrineHeroDestruction {
         };
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
-            if (player.age % 3 == 0) {
-                SoundUtils.playSound(player, SoundRegistry.SLASH_1, 5, 15);
-            } else if (player.age % 2 == 0) {
-                SoundUtils.playSound(player, SoundRegistry.HEAVY_CUT_2, 5, 13);
-            }
+            SoundUtils.playSound(player, SoundRegistry.HEAVY_CUT_2, 5, 13);
 
             if (player.age % 2 == 0) {
+                SoundUtils.playSound(player, SoundRegistry.HEAVY_CUT_2, 5, 13);
+
                 for (LivingEntity livingEntity : playerEntity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
                     if (livingEntity != playerEntity) {
                         livingEntity.timeUntilRegen = 0;
