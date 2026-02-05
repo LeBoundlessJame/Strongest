@@ -81,39 +81,14 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
-        EffekUtils.playEffect(BoundlessAPI.identifier("optimised_shrine"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
-
-        /*
-        for (LivingEntity livingEntity: player.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 400, 0, false, false, false));
-        }
-
-         */
+        BiConsumer<PlayerEntity, HeroActionEntity> domainBeginTask = (playerEntity, heroAction) -> {
+            SoundUtils.playSound(playerEntity, SoundEvents.ITEM_ELYTRA_FLYING);
+            EffekUtils.playEffect(BoundlessAPI.identifier("optimised_shrine"), playerEntity, playerEntity.getPos().add(0f, 0.1f, 0f).add(playerEntity.getRotationVector().normalize().multiply(10)), 5.0f);
+            System.out.println("Fr");
+        };
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
-            if (playerEntity.age % 3 == 0) {
-                //CameraUtils.playCameraShake(playerEntity);
-                /*
-                if (player.getWorld() instanceof ServerWorld) {
-                    int environmentQuality = 8;
-                    for (int x = 0; x < environmentQuality; x++) {
-                        for (int y = 0; y < environmentQuality / 2; y++) {
-                            for (int z = 0; z < environmentQuality; z++) {
-
-                                float xPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getX() - domainRadius, domainOrigin.getX() + domainRadius);
-                                float yPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getY() - domainRadius, domainOrigin.getY() + domainRadius);
-                                float zPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getZ() - domainRadius, domainOrigin.getZ() + domainRadius);
-
-                                EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("dismantle_star"), player, new Vec3d(xPos, yPos, zPos), new Vec3d(1, 1, 1));
-                            }
-                        }
-                    }
-                }
-
-                 */
-            }
-
             if (player.age % 3 == 0) {
                 for (LivingEntity livingEntity : playerEntity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
                     if (livingEntity != playerEntity) {
@@ -121,11 +96,16 @@ public class ShrineHeroDestruction {
                         livingEntity.timeUntilRegen = 0;
                     }
                 }
-
             }
         };
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks;
-        scheduledTasks = ActionUtils.repeatTask(sureHitTask, 50, domainExpansionDuration);
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> domainSetupTasks = new LinkedHashMap<>();
+
+        scheduledTasks = ActionUtils.repeatTask(sureHitTask, 60, domainExpansionDuration);
         ActionUtils.performAction(player, ActionUtils.action(scheduledTasks));
+
+        domainSetupTasks.put(60, domainBeginTask);
+        Action domainBegin = Action.builder().scheduledTasks(domainSetupTasks).build();
+        ActionUtils.performAction(player, domainBegin);
     }
 }
