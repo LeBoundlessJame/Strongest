@@ -98,6 +98,7 @@ public class ShrineHeroSlashes {
 
         if (target instanceof LivingEntity livingEntity) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 0, false, false, false));
+            SoundUtils.playSound(player, SoundRegistry.HEAVY_CUT_3, 13, 16);
             livingEntity.timeUntilRegen = 0;
             livingEntity.damage(livingEntity.getDamageSources().generic(), 20f);
 
