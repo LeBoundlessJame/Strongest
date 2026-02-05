@@ -81,7 +81,7 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
-        EffekUtils.playEffect(BoundlessAPI.identifier("surehit_rendition"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
+        EffekUtils.playEffect(BoundlessAPI.identifier("optimised_shrine"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
 
         /*
@@ -94,7 +94,7 @@ public class ShrineHeroDestruction {
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
             if (playerEntity.age % 3 == 0) {
                 //CameraUtils.playCameraShake(playerEntity);
-
+                /*
                 if (player.getWorld() instanceof ServerWorld) {
                     int environmentQuality = 8;
                     for (int x = 0; x < environmentQuality; x++) {
@@ -110,6 +110,8 @@ public class ShrineHeroDestruction {
                         }
                     }
                 }
+
+                 */
             }
 
             if (player.age % 3 == 0) {
