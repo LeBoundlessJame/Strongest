@@ -25,7 +25,10 @@ public class ShrineHeroSlashes {
     public static Ability DISMANTLE_BARRAGE = AbilityUtils.ability(ShrineHeroSlashes::dismantleBarrage, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle_barrage"), "Dismantle Barrage");
 
     public static void dismantleBarrage(PlayerEntity player) {
+        /*
         EffekUtils.playEffect(BoundlessAPI.identifier("surehit_rendition"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 2.0f);
+         */
+        EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_barrage"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 1.0f);
     }
 
     public static void spiderwebCleave(PlayerEntity player) {
@@ -101,7 +104,7 @@ public class ShrineHeroSlashes {
             SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 10, 11);
             EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
             EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
-            CameraUtils.playCameraShake(player);
+            //CameraUtils.playCameraShake(player);
         }
     }
 }
