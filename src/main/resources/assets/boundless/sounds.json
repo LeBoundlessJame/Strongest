@@ -43,6 +43,31 @@
     "sounds": [
       "boundless:rock_crumbling"
     ]
+  },
+
+  "heavy_cut_1": {
+    "sounds": [
+      "boundless:heavy_cut_1"
+    ]
+  },
+  "heavy_cut_2": {
+    "sounds": [
+      "boundless:heavy_cut_2"
+    ]
+  },
+  "heavy_cut_3": {
+    "sounds": [
+      "boundless:heavy_cut_3"
+    ]
+  },
+  "slash_1": {
+    "sounds": [
+      "boundless:slash_1"
+    ]
+  },
+  "slash_2": {
+    "sounds": [
+      "boundless:slash_2"
+    ]
   }
 }
-

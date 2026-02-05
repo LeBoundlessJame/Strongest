@@ -6,6 +6,7 @@ import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
@@ -81,6 +82,8 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
+        SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
         BiConsumer<PlayerEntity, HeroActionEntity> domainBeginTask = (playerEntity, heroAction) -> {
             SoundUtils.playSound(playerEntity, SoundEvents.ITEM_ELYTRA_FLYING);
@@ -92,6 +95,7 @@ public class ShrineHeroDestruction {
             if (player.age % 3 == 0) {
                 for (LivingEntity livingEntity : playerEntity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
                     if (livingEntity != playerEntity) {
+                        livingEntity.timeUntilRegen = 0;
                         livingEntity.damage(livingEntity.getDamageSources().magic(), domainTickDamage);
                         livingEntity.timeUntilRegen = 0;
                     }
