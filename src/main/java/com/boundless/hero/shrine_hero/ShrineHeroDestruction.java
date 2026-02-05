@@ -81,54 +81,46 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
+        EffekUtils.playEffect(BoundlessAPI.identifier("surehit_rendition"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
+        //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
+
+        /*
         for (LivingEntity livingEntity: player.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 400, 0, false, false, false));
         }
 
-        // Todo: find slash_white and fix it
-        List<Identifier> slashes = List.of(BoundlessAPI.identifier("dismantle_star"), BoundlessAPI.identifier("slash_red"), BoundlessAPI.identifier("slash_white_plain"));
+         */
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
             if (playerEntity.age % 3 == 0) {
-                CameraUtils.playCameraShake(playerEntity);
-            }
+                //CameraUtils.playCameraShake(playerEntity);
 
-            if (playerEntity.getWorld() instanceof ServerWorld) {
-                int environmentQuality = 8;
-                for (int x = 0; x < environmentQuality; x++) {
-                    for (int y = 0; y < environmentQuality / 2; y++) {
-                        for (int z = 0; z < environmentQuality; z++) {
+                if (player.getWorld() instanceof ServerWorld) {
+                    int environmentQuality = 8;
+                    for (int x = 0; x < environmentQuality; x++) {
+                        for (int y = 0; y < environmentQuality / 2; y++) {
+                            for (int z = 0; z < environmentQuality; z++) {
 
-                            float xPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getX() - domainRadius, domainOrigin.getX() + domainRadius);
-                            float yPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getY() - domainRadius, domainOrigin.getY() + domainRadius);
-                            float zPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getZ() - domainRadius, domainOrigin.getZ() + domainRadius);
+                                float xPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getX() - domainRadius, domainOrigin.getX() + domainRadius);
+                                float yPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getY() - domainRadius, domainOrigin.getY() + domainRadius);
+                                float zPos = MathHelper.nextFloat(player.getRandom(), domainOrigin.getZ() - domainRadius, domainOrigin.getZ() + domainRadius);
 
-                            Identifier slash = slashes.getFirst();
-                            if (playerEntity.getRandom().nextBetween(0, 1) >= 0.95) {
-                                slash = slashes.get(player.getRandom().nextBetween(1, 2));
+                                EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("dismantle_star"), player, new Vec3d(xPos, yPos, zPos), new Vec3d(1, 1, 1));
                             }
-
-                            EffekUtils.playRandomRotatedEffect(slash, player, new Vec3d(xPos, yPos, zPos), new Vec3d(1, 1, 1));
                         }
                     }
                 }
             }
 
-            Identifier slash = slashes.get(player.getRandom().nextBetween(0, 2));
-
-            for (LivingEntity livingEntity : playerEntity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
-                if (livingEntity != playerEntity) {
-                    livingEntity.damage(livingEntity.getDamageSources().magic(), domainTickDamage);
-                    livingEntity.timeUntilRegen = 0;
-
-                    if (playerEntity.getWorld() instanceof ServerWorld) {
-                        for (int i = 0; i < 1; i++) {
-                            EffekUtils.playRandomRotatedEffect(slash, livingEntity, new Vec3d(livingEntity.getX() + (livingEntity.getRandom().nextBetween(-1, 1) * 0.8), livingEntity.getBodyY(0.5) + (livingEntity.getRandom().nextBetween(-1, 1) * 0.8), livingEntity.getZ() + (livingEntity.getRandom().nextBetween(-1, 1) * 0.8)), new Vec3d(0.1f, 0.1f, 0.1f));
-                        }
+            if (player.age % 3 == 0) {
+                for (LivingEntity livingEntity : playerEntity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(domainOrigin).expand(100, 50, 100), entity -> true)) {
+                    if (livingEntity != playerEntity) {
+                        livingEntity.damage(livingEntity.getDamageSources().magic(), domainTickDamage);
+                        livingEntity.timeUntilRegen = 0;
                     }
                 }
-            }
 
+            }
         };
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks;
         scheduledTasks = ActionUtils.repeatTask(sureHitTask, 50, domainExpansionDuration);
