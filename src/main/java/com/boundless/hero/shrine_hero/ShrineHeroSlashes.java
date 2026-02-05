@@ -2,8 +2,9 @@ package com.boundless.hero.shrine_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
+import com.boundless.action.Action;
 import com.boundless.action.Attack;
-import com.boundless.client.CameraShake;
+import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
@@ -15,6 +16,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.LinkedHashMap;
+import java.util.function.BiConsumer;
 
 import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
 
@@ -28,29 +32,38 @@ public class ShrineHeroSlashes {
         /*
         EffekUtils.playEffect(BoundlessAPI.identifier("surehit_rendition"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 2.0f);
          */
-        EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_barrage"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 1.0f);
+
+        EntityHitResult result = RaycastUtils.raycast(player, 64);
+        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
+        if (!(target instanceof LivingEntity livingEntity)) return;
+        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 5, false, false, false));
+
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> slashes = new LinkedHashMap<>();
+
+        for (int i = 0; i < 40; i++) {
+            slashes.put(i, (user, heroAction) -> {
+                livingEntity.timeUntilRegen = 0;
+                livingEntity.damage(player.getDamageSources().generic(), 2);
+            });
+        }
+
+        Action barrage = Action.builder().scheduledTasks(slashes).build();
+        ActionUtils.performAction(player, barrage);
+
+        EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_barrage"), player, target.getPos(), 1.0f);
     }
 
     public static void spiderwebCleave(PlayerEntity player) {
-        Attack cleave = Attack.builder()
-                .player(player)
-                .damage(5f)
-                .impactSound(SoundRegistry.EARTH_IMPACT)
-                .animationSpeed(1.0f)
-                .damage(12f)
-                .animation(BoundlessAPI.identifier("spiderweb_cleave"))
-                .impactTick(4)
-                .attackDuration(8)
-                .perEntityLogic((user, entity) -> {
-                    CameraUtils.playCameraShake(user);
-                    if (entity instanceof LivingEntity livingEntity) {
-                        EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
-                        livingEntity.damage(livingEntity.getDamageSources().generic(), 18);
-                        livingEntity.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
-                        livingEntity.velocityModified = true;
-                        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 10, 3, false, false, false));                    }
-                })
-                .build();
+        Attack cleave = Attack.builder().player(player).damage(5f).impactSound(SoundRegistry.EARTH_IMPACT).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("spiderweb_cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
+            CameraUtils.playCameraShake(user);
+            if (entity instanceof LivingEntity livingEntity) {
+                EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
+                livingEntity.damage(livingEntity.getDamageSources().generic(), 18);
+                livingEntity.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
+                livingEntity.velocityModified = true;
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 10, 3, false, false, false));
+            }
+        }).build();
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 255, false, false, false));
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spiderweb_cleave"), 2f, false, true, 3000);
@@ -59,25 +72,15 @@ public class ShrineHeroSlashes {
     }
 
     public static void cleave(PlayerEntity player) {
-        Attack cleave = Attack.builder()
-                .player(player)
-                .damage(5f)
-                .impactSound(SoundRegistry.EARTH_IMPACT)
-                .animationSpeed(1.0f)
-                .damage(12f)
-                .animation(BoundlessAPI.identifier("cleave"))
-                .impactTick(4)
-                .attackDuration(8)
-                .perEntityLogic((user, entity) -> {
-                    CameraUtils.playCameraShake(user);
-                    if (entity instanceof LivingEntity livingEntity) {
-                        livingEntity.damage(livingEntity.getDamageSources().generic(), livingEntity.getMaxHealth() * 0.10f);
-                        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 4, true, false, false));
-                        EffekUtils.playRotatedEffect(BoundlessAPI.identifier("upgraded_cleave"), livingEntity, new Vec3d(livingEntity.getX() - player.getRotationVector().x, livingEntity.getBodyY(0.5), livingEntity.getZ() - player.getRotationVector().z), new Vec3d(livingEntity.getHeight() / 10, livingEntity.getHeight() / 10, livingEntity.getHeight() / 10), new Vec3d(0, 0, player.getRotationVector().z));
-                        EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
-                    }
-                })
-                .build();
+        Attack cleave = Attack.builder().player(player).damage(5f).impactSound(SoundRegistry.EARTH_IMPACT).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
+            CameraUtils.playCameraShake(user);
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.damage(livingEntity.getDamageSources().generic(), livingEntity.getMaxHealth() * 0.10f);
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 4, true, false, false));
+                EffekUtils.playRotatedEffect(BoundlessAPI.identifier("upgraded_cleave"), livingEntity, new Vec3d(livingEntity.getX() - player.getRotationVector().x, livingEntity.getBodyY(0.5), livingEntity.getZ() - player.getRotationVector().z), new Vec3d(livingEntity.getHeight() / 10, livingEntity.getHeight() / 10, livingEntity.getHeight() / 10), new Vec3d(0, 0, player.getRotationVector().z));
+                EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
+            }
+        }).build();
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 1, true, false, false));
         AttackUtils.performAttack(cleave);
