@@ -37,9 +37,11 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public void tick() {
         this.setInvisible(age == 0);
         super.tick();
-        if (age == 0 && this.getWorld().isClient) {
-           dispatcher.domainBegin();
-           System.out.println(this.getPos());
+
+        if (age == 0) {
+           if (this.getWorld().isClient) {
+               dispatcher.domainBegin();
+           }
            bindSurehitEffect(new Vec3d(0, 0, 0), scale);
         }
 
