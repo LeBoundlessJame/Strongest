@@ -81,14 +81,12 @@ public class ShrineHeroDestruction {
         shrine.setYaw(player.getYaw());
         shrine.setScale(domainRadius / 20f);
         shrine.setMaxLifetime(domainExpansionDuration);
+        shrine.setDelay(10);
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
 
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
-        BiConsumer<PlayerEntity, HeroActionEntity> domainBeginTask = (playerEntity, heroAction) -> {
-            SoundUtils.playSound(playerEntity, SoundEvents.ITEM_ELYTRA_FLYING);
-        };
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
             SoundUtils.playSound(player, SoundRegistry.HEAVY_CUT_2, 5, 13);
@@ -105,14 +103,9 @@ public class ShrineHeroDestruction {
                 }
             }
         };
+
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks;
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> domainSetupTasks = new LinkedHashMap<>();
-
-        scheduledTasks = ActionUtils.repeatTask(sureHitTask, 60, domainExpansionDuration);
+        scheduledTasks = ActionUtils.repeatTask(sureHitTask, 10, domainExpansionDuration);
         ActionUtils.performAction(player, ActionUtils.action(scheduledTasks));
-
-        domainSetupTasks.put(60, domainBeginTask);
-        Action domainBegin = Action.builder().scheduledTasks(domainSetupTasks).build();
-        ActionUtils.performAction(player, domainBegin);
     }
 }

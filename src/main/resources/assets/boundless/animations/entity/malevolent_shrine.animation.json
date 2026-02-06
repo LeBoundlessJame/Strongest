@@ -3,14 +3,14 @@
 	"animations": {
 		"domain_begin": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 5,
+			"animation_length": 1,
 			"bones": {
 				"shrine": {
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"2.5": {
+						"0.5": {
 							"vector": [1, 1, 1],
 							"easing": "easeInOutCirc"
 						}
@@ -21,7 +21,7 @@
 						"0.0": {
 							"vector": [0, 180, 0]
 						},
-						"2.5": {
+						"0.5": {
 							"vector": [0, 0, 0],
 							"easing": "easeOutQuad"
 						}

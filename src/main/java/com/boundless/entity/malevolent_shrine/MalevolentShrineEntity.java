@@ -32,6 +32,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public int maxLifetime = 1200;
     public int age;
     public float scale = 1f;
+    public int delay;
 
     @Override
     public void tick() {
@@ -42,7 +43,10 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
            if (this.getWorld().isClient) {
                dispatcher.domainBegin();
            }
-           bindSurehitEffect(new Vec3d(0, 0, 0), scale);
+        }
+
+        if (age == delay) {
+            bindSurehitEffect(this.getPos(), this.getScale());
         }
 
         if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
@@ -94,9 +98,8 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     public void bindSurehitEffect(Vec3d pos, float scale) {
         ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(this.getWorld(), BoundlessAPI.identifier("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + this.getId()));
-        particleEmitter.scale(scale);
-        particleEmitter.bindOnEntity(this);
         particleEmitter.position(pos);
+        particleEmitter.scale(scale);
         AAALevel.addParticle(this.getWorld(), true, particleEmitter);
     }
 
