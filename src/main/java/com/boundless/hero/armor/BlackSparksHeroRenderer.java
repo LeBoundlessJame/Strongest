@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+// Todo: come back to this
 public class BlackSparksHeroRenderer extends AzArmorRenderer {
     public static Identifier TEXTURE = BoundlessAPI.textureID("black_sparks_hero");
     public static Identifier CHARGING_1 = BoundlessAPI.textureID("black_sparks_hero_charging_1");
