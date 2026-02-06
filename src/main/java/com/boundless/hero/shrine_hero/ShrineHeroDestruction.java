@@ -79,17 +79,15 @@ public class ShrineHeroDestruction {
         shrine.setPosition(shrinePosition);
         shrine.setPitch(player.getPitch());
         shrine.setYaw(player.getYaw());
+        shrine.setScale(domainRadius / 20f);
         shrine.setMaxLifetime(domainExpansionDuration);
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
 
-        float domainParticleScale = domainRadius / 20f;
-
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
         BiConsumer<PlayerEntity, HeroActionEntity> domainBeginTask = (playerEntity, heroAction) -> {
             SoundUtils.playSound(playerEntity, SoundEvents.ITEM_ELYTRA_FLYING);
-            MalevolentShrineEntity.bindSurehitEffect(shrine, shrine.getPos().add(0, 2, 0), domainParticleScale);
         };
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {

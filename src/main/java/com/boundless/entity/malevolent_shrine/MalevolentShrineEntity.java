@@ -31,6 +31,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     public int maxLifetime = 1200;
     public int age;
+    public float scale = 1f;
 
     @Override
     public void tick() {
@@ -38,10 +39,12 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         super.tick();
         if (age == 0 && this.getWorld().isClient) {
            dispatcher.domainBegin();
+           System.out.println(this.getPos());
+           bindSurehitEffect(new Vec3d(0, 0, 0), scale);
         }
 
         if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
-            MalevolentShrineEntity.destroySurehitEffect(this);
+            destroySurehitEffect();
             this.discard();
         }
         age++;
@@ -87,20 +90,19 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         }
     }
 
-    public static void bindSurehitEffect(MalevolentShrineEntity entity, Vec3d pos, float scale) {
-        ParticleEmitterInfo particleEmitter =
-                ParticleEmitterInfo.create(entity.getWorld(), BoundlessAPI.identifier("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + entity.getId()));
+    public void bindSurehitEffect(Vec3d pos, float scale) {
+        ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(this.getWorld(), BoundlessAPI.identifier("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + this.getId()));
         particleEmitter.scale(scale);
-        particleEmitter.bindOnEntity(entity);
+        particleEmitter.bindOnEntity(this);
         particleEmitter.position(pos);
-        AAALevel.addParticle(entity.getWorld(), true, particleEmitter);
+        AAALevel.addParticle(this.getWorld(), true, particleEmitter);
     }
 
-    public static void destroySurehitEffect(MalevolentShrineEntity entity) {
+    public void destroySurehitEffect() {
         var effect = EffectRegistry.get(BoundlessAPI.identifier("optimised_shrine"));
 
         if (effect != null) {
-            Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + entity.getId()));
+            Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + this.getId()));
             emitter.ifPresent(particleEmitter -> particleEmitter.sendTrigger(0));
         }
     }
