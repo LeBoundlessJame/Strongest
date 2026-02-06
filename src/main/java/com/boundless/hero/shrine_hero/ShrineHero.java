@@ -43,6 +43,7 @@ public class ShrineHero extends Hero {
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
         this.heroData = HeroData.builder()
                 .name("shrine_hero")
+                .modelIdentifier(BoundlessAPI.modelID("brawler"))
                 .textureIdentifier(BoundlessAPI.textureID("shrine_hero"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
