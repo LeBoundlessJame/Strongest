@@ -1,8 +1,13 @@
 package com.boundless.entity.malevolent_shrine;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.registry.EntityRegistry;
 import lombok.Getter;
 import lombok.Setter;
+import mod.chloeprime.aaaparticles.api.client.effekseer.ParticleEmitter;
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
+import mod.chloeprime.aaaparticles.client.registry.EffectRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,9 +15,13 @@ import net.minecraft.entity.Ownable;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Setter
@@ -32,6 +41,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         }
 
         if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
+            MalevolentShrineEntity.destroySurehitEffect(this);
             this.discard();
         }
         age++;
@@ -74,6 +84,24 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             return this.owner;
         } else {
             return null;
+        }
+    }
+
+    public static void bindSurehitEffect(MalevolentShrineEntity entity, Vec3d pos, float scale) {
+        ParticleEmitterInfo particleEmitter =
+                ParticleEmitterInfo.create(entity.getWorld(), BoundlessAPI.identifier("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + entity.getId()));
+        particleEmitter.scale(scale);
+        particleEmitter.bindOnEntity(entity);
+        particleEmitter.position(pos);
+        AAALevel.addParticle(entity.getWorld(), true, particleEmitter);
+    }
+
+    public static void destroySurehitEffect(MalevolentShrineEntity entity) {
+        var effect = EffectRegistry.get(BoundlessAPI.identifier("optimised_shrine"));
+
+        if (effect != null) {
+            Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + entity.getId()));
+            emitter.ifPresent(particleEmitter -> particleEmitter.sendTrigger(0));
         }
     }
 }

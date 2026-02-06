@@ -64,7 +64,7 @@ public class ShrineHeroDestruction {
     public static void shrine(PlayerEntity player) {
         String message = "§c§l§ka§c §c§l''Ryoiki Tenkai''. §c§l§ka§c";
 
-        int domainExpansionDuration = 400;
+        int domainExpansionDuration = 100;
         float domainRadius = 200;
         float domainTickDamage = 1;
 
@@ -89,7 +89,7 @@ public class ShrineHeroDestruction {
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
         BiConsumer<PlayerEntity, HeroActionEntity> domainBeginTask = (playerEntity, heroAction) -> {
             SoundUtils.playSound(playerEntity, SoundEvents.ITEM_ELYTRA_FLYING);
-            EffekUtils.playEffect(BoundlessAPI.identifier("optimised_shrine"), shrine, shrine.getPos().add(0, 2, 0), domainParticleScale);
+            MalevolentShrineEntity.bindSurehitEffect(shrine, shrine.getPos().add(0, 2, 0), domainParticleScale);
         };
 
         BiConsumer<PlayerEntity, HeroActionEntity> sureHitTask = (playerEntity, heroAction) -> {
