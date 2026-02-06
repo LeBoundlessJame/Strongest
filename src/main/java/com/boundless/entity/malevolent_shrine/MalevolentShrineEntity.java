@@ -54,11 +54,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             bindSurehitEffect(this.getPos(), this.getScale());
         }
 
-        this.playSound(SoundRegistry.HEAVY_CUT_2, 1.0f, this.getRandom().nextBetween(5, 13) * 0.1f);
-
         if (this.age % 2 == 0) {
-            this.playSound(SoundRegistry.HEAVY_CUT_2, 1.0f, this.getRandom().nextBetween(5, 13) * 0.1f);
-
             // Todo: maybe make it so that you can tweak domain x, y , z via binding vow
             // Todo: reinstate custom damage amount
             for (LivingEntity livingEntity : this.getWorld().getEntitiesByClass(LivingEntity.class, new Box(this.getBlockPos()).expand(domainRadius.getX(), domainRadius.getY() / 2, domainRadius.getZ()), entity -> true)) {
