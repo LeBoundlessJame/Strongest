@@ -64,8 +64,8 @@ public class ShrineHeroDestruction {
     public static void shrine(PlayerEntity player) {
         //String message = "§c§l§ka§c §c§l''Ryoiki Tenkai''. §c§l§ka§c";
 
-        int domainExpansionDuration = 100;
-        float domainRadius = 200;
+        int domainExpansionDuration = 200;
+        float domainRadius = 100;
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 3, false, false, false));
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
