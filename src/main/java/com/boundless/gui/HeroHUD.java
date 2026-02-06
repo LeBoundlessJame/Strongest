@@ -28,6 +28,8 @@ public class HeroHUD {
             ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT)) {
             ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/boogie_woogie.json"));
+        } else if (client.player.hasStatusEffect(StatusEffectRegistry.INVERT_EFFECT)) {
+            ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.ofVanilla("shaders/post/invert.json"));
         } else {
             if (client.gameRenderer.getPostProcessor() != null) {
                 ((ShaderAccessor) client.gameRenderer).boundless$disablePostProcessor();

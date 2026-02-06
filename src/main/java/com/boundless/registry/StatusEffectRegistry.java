@@ -14,6 +14,7 @@ public class StatusEffectRegistry {
     public static final RegistryEntry<StatusEffect> IMPACT_FRAME_EFFECT = registerStatusEffect("impact_frame_effect", new ImpactFrameEffect(StatusEffectCategory.BENEFICIAL, 0x5d8385));
     public static final RegistryEntry<StatusEffect> CLAP_IMPACT_FRAME_EFFECT = registerStatusEffect("clap_impact_frame_effect", new ImpactFrameEffect(StatusEffectCategory.BENEFICIAL, 0x5d8385));
     public static final RegistryEntry<StatusEffect> BONE_BREAK_EFFECT = registerStatusEffect("bone_break_effect", new ImpactFrameEffect(StatusEffectCategory.HARMFUL, 0xffffff));
+    public static final RegistryEntry<StatusEffect> INVERT_EFFECT = registerStatusEffect("invert_effect", new ImpactFrameEffect(StatusEffectCategory.HARMFUL, 0xffffff));
 
     private static RegistryEntry<StatusEffect> registerStatusEffect(String name, StatusEffect statusEffect) {
         return Registry.registerReference(Registries.STATUS_EFFECT, BoundlessAPI.identifier(name), statusEffect);
