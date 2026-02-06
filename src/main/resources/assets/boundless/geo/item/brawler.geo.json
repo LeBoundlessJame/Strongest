@@ -12,14 +12,6 @@
 			},
 			"bones": [
 				{
-					"name": "bb_main",
-					"pivot": [0, 0, 0],
-					"cubes": [
-						{"origin": [-5, 21.3, -4], "size": [10, 3, 9], "inflate": 0.25, "pivot": [0.5, 22.8, 0], "rotation": [10, 0, 0], "uv": [0, 64]},
-						{"origin": [-5, 21.3, -4], "size": [10, 3, 9], "inflate": 0.5, "pivot": [0.5, 22.8, 0], "rotation": [10, 0, 0], "uv": [0, 76]}
-					]
-				},
-				{
 					"name": "bipedHead",
 					"pivot": [0, 24, 0]
 				},
@@ -44,7 +36,11 @@
 				{
 					"name": "armorBody",
 					"parent": "bipedBody",
-					"pivot": [0, 24, 0]
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-5, 21.3, -4], "size": [10, 3, 9], "inflate": 0.25, "pivot": [0.5, 22.8, 0], "rotation": [10, 0, 0], "uv": [0, 64]},
+						{"origin": [-5, 21.3, -4], "size": [10, 3, 9], "inflate": 0.5, "pivot": [0.5, 22.8, 0], "rotation": [10, 0, 0], "uv": [0, 76]}
+					]
 				},
 				{
 					"name": "Body",
