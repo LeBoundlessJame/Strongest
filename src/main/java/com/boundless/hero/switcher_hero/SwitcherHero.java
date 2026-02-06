@@ -9,10 +9,12 @@ import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
 import com.boundless.util.AbilityUtils;
+import com.boundless.util.HeroUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class SwitcherHero extends Hero {
     public static SwitcherConfig CONFIG = ConfigRegistry.HERO_CONFIG.SWITCHER_CONFIG;
@@ -50,11 +52,19 @@ public class SwitcherHero extends Hero {
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
                 .armorRenderer(SwitcherRenderer::new)
-                .tickHandler(BoogieLogic::tick)
+                .tickHandler(this::tick)
                 .customReviveLogic(ReviveLogic::revive)
                 .modelIdentifier(BoundlessAPI.modelID("switcher"))
                 .build();
         this.registerHero();
+    }
+
+    public void tick(PlayerEntity player) {
+        if (player.isSneaking()) {
+            HeroUtils.setLoadout(player, this.getABILITY_LOADOUTS().get("LOADOUT_2"));
+        } else {
+            HeroUtils.setLoadout(player, this.getABILITY_LOADOUTS().get("LOADOUT_1"));
+        }
     }
 
     public static boolean isSwitcher(LivingEntity livingEntity) {

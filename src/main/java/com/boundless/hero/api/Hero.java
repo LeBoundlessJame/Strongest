@@ -24,7 +24,7 @@ public abstract class Hero {
     @Getter
     public HeroData heroData;
     @Getter
-    public static LinkedHashMap<String, AbilityLoadout> ABILITY_LOADOUTS = new LinkedHashMap<>();
+    public LinkedHashMap<String, AbilityLoadout> ABILITY_LOADOUTS = new LinkedHashMap<>();
     @Getter
     public static ArrayList<HeldAbility> HELD_ABILITIES = new ArrayList<>();
 

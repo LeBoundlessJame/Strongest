@@ -83,13 +83,4 @@ public class BoogieLogic {
         SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);
         EnergyUtils.changeEnergyPercentage(user, -5f);
     }
-
-    public static void tick(PlayerEntity player) {
-        if (player.isSneaking()) {
-            HeroUtils.setLoadout(player, SwitcherHero.ABILITY_LOADOUTS.get("LOADOUT_2"));
-        } else {
-            HeroUtils.setLoadout(player, SwitcherHero.ABILITY_LOADOUTS.get("LOADOUT_1"));
-        }
-    }
-
 }
