@@ -23,6 +23,7 @@
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
     "CameraMixin",
+    "CameraVisibilityMixin",
     "ShaderLoaderMixin",
     "SkinLayerMixin"
   ]

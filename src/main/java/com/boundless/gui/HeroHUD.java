@@ -36,7 +36,17 @@ public class HeroHUD {
             }
         }
 
+        handleCamera(client);
         renderKeybindAbilities(client, context);
+    }
+
+    public static void handleCamera(MinecraftClient client) {
+        if (client.player == null || !HeroUtils.isHero(client.player)) return;
+        Integer boundCameraID = HeroUtils.getHeroStack(client.player).get(DataComponentRegistry.BOUND_CAMERA_ID);
+
+        if (boundCameraID != null) {
+
+        }
     }
 
     public static void renderKeybindAbilities(MinecraftClient client, DrawContext context) {
@@ -70,7 +80,7 @@ public class HeroHUD {
         context.drawText(client.textRenderer, boundKey + " - ", 12, y + padY, 0xffbebebe, false);
 
         if (cooldown > 0) {
-            context.drawText(client.textRenderer,  boundKey + " - " + abilityString + " (" + cooldownToSeconds(cooldown) + ")", 12, y + padY, 0xffF5B027, false);
+            context.drawText(client.textRenderer, boundKey + " - " + abilityString + " (" + cooldownToSeconds(cooldown) + ")", 12, y + padY, 0xffF5B027, false);
         }
         context.drawText(client.textRenderer, boundKey, 12, y + padY, 0xff00fcff, false);
     }
