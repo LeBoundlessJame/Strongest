@@ -3,6 +3,7 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Action;
+import com.boundless.entity.camera.CameraEntity;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
@@ -71,6 +72,7 @@ public class ShrineHeroDestruction {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
+
         Vec3d shrinePosition = new Vec3d(player.getX() - player.getRotationVector().multiply(5).x, player.getY(), player.getZ() - player.getRotationVector().multiply(5).z);
         MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());
         shrine.setPosition(shrinePosition);
@@ -81,6 +83,19 @@ public class ShrineHeroDestruction {
         shrine.setMaxLifetime(domainExpansionDuration);
         shrine.setDelay(10);
         player.getWorld().spawnEntity(shrine);
+
+        CameraUtils.bindCameraToPlayer(player, shrine);
+        /*
+        Vec3d cameraPos = new Vec3d(player.getX() + player.getRotationVector().multiply(5).x, player.getY(), player.getZ() + player.getRotationVector().multiply(5).z);
+        CameraEntity camera = new CameraEntity(player, player.getWorld());
+        camera.setPosition(cameraPos);
+        camera.setPitch(-player.getPitch());
+        camera.setYaw(player.getYaw());
+        camera.setMaxLifetime(100);
+        player.getWorld().spawnEntity(camera);
+
+         */
+
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
 

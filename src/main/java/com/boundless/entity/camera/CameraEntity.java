@@ -1,6 +1,7 @@
 package com.boundless.entity.camera;
 
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.EntityRegistry;
 import com.boundless.util.DataComponentUtils;
 import com.boundless.util.HeroUtils;
 import lombok.Getter;
@@ -27,11 +28,11 @@ public class CameraEntity extends Entity implements Ownable {
     private int maxLifetime = 20;
 
     public CameraEntity(EntityType<?> type, World world) {
-        super(EntityType.MARKER, world);
+        super(EntityRegistry.CAMERA_ENTITY, world);
     }
 
     public CameraEntity(LivingEntity livingEntity, World world) {
-        super(EntityType.MARKER, world);
+        super(EntityRegistry.CAMERA_ENTITY, world);
         this.setOwner(livingEntity);
     }
 

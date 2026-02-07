@@ -11,6 +11,7 @@ import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 import java.math.BigDecimal;
@@ -41,11 +42,18 @@ public class HeroHUD {
     }
 
     public static void handleCamera(MinecraftClient client) {
-        if (client.player == null || !HeroUtils.isHero(client.player)) return;
+        if (client.player == null || client.player.getWorld() == null) return;
         Integer boundCameraID = HeroUtils.getHeroStack(client.player).get(DataComponentRegistry.BOUND_CAMERA_ID);
 
         if (boundCameraID != null) {
+            Entity camera = client.player.getWorld().getEntityById(boundCameraID);
 
+            // Todo: rework this into interfaces for setting / removing camera
+            if (camera != null) {
+                client.setCameraEntity(camera);
+            } else {
+                client.setCameraEntity(client.player);
+            }
         }
     }
 

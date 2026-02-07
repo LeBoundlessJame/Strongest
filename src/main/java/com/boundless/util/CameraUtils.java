@@ -1,13 +1,21 @@
 package com.boundless.util;
 
 import com.boundless.client.CameraShake;
+import com.boundless.entity.camera.CameraEntity;
 import com.boundless.networking.payloads.CameraShakePayload;
+import com.boundless.registry.DataComponentRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CameraUtils {
+
+    public static void bindCameraToPlayer(PlayerEntity player, Entity camera) {
+        if (!HeroUtils.isHero(player)) return;
+        HeroUtils.getHeroStack(player).set(DataComponentRegistry.BOUND_CAMERA_ID, camera.getId());
+    }
 
     public static void playCameraShake(PlayerEntity player) {
         if (!player.getWorld().isClient) {

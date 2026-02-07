@@ -1,8 +1,10 @@
 package com.boundless.entity.malevolent_shrine;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.util.HeroUtils;
 import com.boundless.util.SoundUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +17,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Ownable;
 import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -128,5 +131,13 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + this.getId()));
             emitter.ifPresent(particleEmitter -> particleEmitter.sendTrigger(0));
         }
+    }
+
+    @Override
+    public void remove(Entity.RemovalReason reason) {
+        if (this.getOwner() instanceof PlayerEntity player && HeroUtils.isHero(player)) {
+            HeroUtils.getHeroStack(player).set(DataComponentRegistry.BOUND_CAMERA_ID, null);
+        }
+        this.setRemoved(reason);
     }
 }
