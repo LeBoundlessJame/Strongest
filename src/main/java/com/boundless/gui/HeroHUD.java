@@ -42,6 +42,7 @@ public class HeroHUD {
         renderKeybindAbilities(client, context);
     }
 
+    // Todo: revisit
     public static void handleCamera(MinecraftClient client) {
         if (client.player == null || client.player.getWorld() == null) return;
         Integer boundCameraID = HeroUtils.getHeroStack(client.player).get(DataComponentRegistry.BOUND_CAMERA_ID);

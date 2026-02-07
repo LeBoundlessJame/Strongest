@@ -85,6 +85,7 @@ public class CameraEntity extends Entity implements Ownable {
         }
     }
 
+    // Todo: revisit
     @Override
     public void remove(Entity.RemovalReason reason) {
         if (this.getOwner() instanceof PlayerEntity player && HeroUtils.isHero(player)) {

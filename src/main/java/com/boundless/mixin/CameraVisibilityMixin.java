@@ -1,20 +1,12 @@
 package com.boundless.mixin;
 
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.HeroUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(WorldRenderer.class)
 public class CameraVisibilityMixin {
+
+    /* Todo: revisit
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;getFocusedEntity()Lnet/minecraft/entity/Entity;"))
     private Entity boundless$getFocusedEntity(Camera camera) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -36,4 +28,6 @@ public class CameraVisibilityMixin {
 
         return dispatcher.shouldRender(entity, frustum, x, y, z);
     }
+
+     */
 }
