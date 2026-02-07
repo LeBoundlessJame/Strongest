@@ -32,8 +32,6 @@ public class ShrineHeroSlashes {
     public static void cleave(PlayerEntity player) {
         Attack cleave = Attack.builder().player(player).damage(5f).impactSound(SoundRegistry.EARTH_IMPACT).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
             CameraUtils.playCameraShake(user);
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVERT_EFFECT, 10, 4, true, false, false));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 2, true, false, false));
 
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.damage(livingEntity.getDamageSources().generic(), livingEntity.getMaxHealth() * 0.10f);
