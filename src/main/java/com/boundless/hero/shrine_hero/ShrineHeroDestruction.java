@@ -73,6 +73,7 @@ public class ShrineHeroDestruction {
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
 
+        /*
         Vec3d shrinePosition = new Vec3d(player.getX() - player.getRotationVector().multiply(5).x, player.getY(), player.getZ() - player.getRotationVector().multiply(5).z);
         MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());
         shrine.setPosition(shrinePosition);
@@ -85,17 +86,17 @@ public class ShrineHeroDestruction {
         player.getWorld().spawnEntity(shrine);
 
         CameraUtils.bindCameraToPlayer(player, shrine);
-        /*
-        Vec3d cameraPos = new Vec3d(player.getX() + player.getRotationVector().multiply(5).x, player.getY(), player.getZ() + player.getRotationVector().multiply(5).z);
-        CameraEntity camera = new CameraEntity(player, player.getWorld());
-        camera.setPosition(cameraPos);
-        camera.setPitch(-player.getPitch());
-        camera.setYaw(player.getYaw());
-        camera.setMaxLifetime(100);
-        player.getWorld().spawnEntity(camera);
 
          */
 
+        Vec3d cameraPos = new Vec3d(player.getX() + player.getRotationVector().normalize().multiply(2).x, player.getY(), player.getZ() + player.getRotationVector().normalize().multiply(2).z);
+        CameraEntity camera = new CameraEntity(player, player.getWorld());
+        camera.setPosition(cameraPos);
+        camera.setPitch(-player.getPitch());
+        camera.setYaw(-player.getYaw());
+        camera.setMaxLifetime(100);
+        player.getWorld().spawnEntity(camera);
+        CameraUtils.bindCameraToPlayer(player, camera);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
 

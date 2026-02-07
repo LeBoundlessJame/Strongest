@@ -27,13 +27,16 @@ public class CameraEntity extends Entity implements Ownable {
     @Getter @Setter
     private int maxLifetime = 20;
 
+    // Todo: using an armor stand is wild. rework this!
     public CameraEntity(EntityType<?> type, World world) {
-        super(EntityRegistry.CAMERA_ENTITY, world);
+        super(EntityType.ARMOR_STAND, world);
+        this.setInvisible(true);
     }
 
     public CameraEntity(LivingEntity livingEntity, World world) {
-        super(EntityRegistry.CAMERA_ENTITY, world);
+        super(EntityType.ARMOR_STAND, world);
         this.setOwner(livingEntity);
+        this.setInvisible(true);
     }
 
     @Override

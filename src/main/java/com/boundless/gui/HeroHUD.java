@@ -10,6 +10,7 @@ import com.boundless.util.KeybindingUtils;
 import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.option.Perspective;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
@@ -51,6 +52,7 @@ public class HeroHUD {
             // Todo: rework this into interfaces for setting / removing camera
             if (camera != null) {
                 client.setCameraEntity(camera);
+                client.options.setPerspective(Perspective.THIRD_PERSON_FRONT);
             } else {
                 client.setCameraEntity(client.player);
             }
