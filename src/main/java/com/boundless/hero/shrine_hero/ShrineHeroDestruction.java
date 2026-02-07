@@ -84,6 +84,7 @@ public class ShrineHeroDestruction {
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CINEMATIC_BARS, 100, 0, false, false, false));
 
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
     }

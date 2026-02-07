@@ -12,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
@@ -30,19 +31,32 @@ public class HeroHUD {
             ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/black_flash.json"));
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT)) {
             ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.of(BoundlessAPI.MOD_ID, "shaders/post/boogie_woogie.json"));
-        } else if (client.player.hasStatusEffect(StatusEffectRegistry.INVERT_EFFECT)) {
-            ((ShaderAccessor) client.gameRenderer).boundless$loadShader(Identifier.ofVanilla("shaders/post/invert.json"));
         } else {
             if (client.gameRenderer.getPostProcessor() != null) {
                 ((ShaderAccessor) client.gameRenderer).boundless$disablePostProcessor();
             }
         }
 
-        handleCamera(client);
-        renderKeybindAbilities(client, context);
+        if (client.player.hasStatusEffect(StatusEffectRegistry.CINEMATIC_BARS)) {
+            drawCinematicBars(client, context);
+        } else {
+            renderKeybindAbilities(client, context);
+        }
+    }
+
+    public static void drawCinematicBars(MinecraftClient client, DrawContext context) {
+        MatrixStack matrices = context.getMatrices();
+        matrices.push();
+        matrices.translate(0, 0, 10000);
+
+        int barThickness = 40;
+        context.fill(0, 0, context.getScaledWindowWidth(), barThickness, 0xff000000);
+        context.fill(0, context.getScaledWindowHeight(), context.getScaledWindowWidth(), context.getScaledWindowHeight() - barThickness, 0xff000000);
+        matrices.pop();
     }
 
     // Todo: revisit
+    /*
     public static void handleCamera(MinecraftClient client) {
         if (client.player == null || client.player.getWorld() == null) return;
         Integer boundCameraID = HeroUtils.getHeroStack(client.player).get(DataComponentRegistry.BOUND_CAMERA_ID);
@@ -59,6 +73,8 @@ public class HeroHUD {
             }
         }
     }
+
+     */
 
     public static void renderKeybindAbilities(MinecraftClient client, DrawContext context) {
         if (client.player == null) return;
