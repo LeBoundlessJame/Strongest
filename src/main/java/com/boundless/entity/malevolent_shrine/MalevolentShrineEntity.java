@@ -135,9 +135,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     @Override
     public void remove(Entity.RemovalReason reason) {
-        if (this.getOwner() instanceof PlayerEntity player && HeroUtils.isHero(player)) {
-            HeroUtils.getHeroStack(player).set(DataComponentRegistry.BOUND_CAMERA_ID, null);
-        }
+        destroySurehitEffect();
         this.setRemoved(reason);
     }
 }
