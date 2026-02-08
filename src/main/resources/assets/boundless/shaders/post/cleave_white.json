@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "boundless:cleave_white",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    },
+    {
+      "name": "boundless:cleave_white",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

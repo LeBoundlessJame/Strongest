@@ -30,8 +30,11 @@ public class HeroHUD {
         // Todo: make this a mixin
         if (client.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
             //((ShaderAccessor) client.gameRenderer).boundless$loadShader(ShaderRegistry.CLEAVE);
-            ShaderRegistry.CLEAVE_SHADER.render(renderTickCounter.getTickDelta(true));
-        } else {
+            ShaderRegistry.CLEAVE_RED.render(renderTickCounter.getTickDelta(true));
+        } else if (client.player.hasStatusEffect(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT)) {
+            ShaderRegistry.CLEAVE_WHITE.render(renderTickCounter.getTickDelta(true));
+        }
+        else {
             if (client.gameRenderer.getPostProcessor() != null) {
                 ((ShaderAccessor) client.gameRenderer).boundless$disablePostProcessor();
             }

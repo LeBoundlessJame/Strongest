@@ -4,12 +4,12 @@
   ],
   "passes": [
     {
-      "name": "boundless:cleave",
+      "name": "boundless:cleave_red",
       "intarget": "minecraft:main",
       "outtarget": "swap"
     },
     {
-      "name": "boundless:cleave",
+      "name": "boundless:cleave_red",
       "intarget": "swap",
       "outtarget": "minecraft:main"
     }
