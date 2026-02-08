@@ -24,6 +24,9 @@ repositories {
 		name = "FzzyMaven"
 		url = uri("https://maven.fzzyhmstrs.me/")
 	}
+    maven {
+        url = "https://maven.ladysnake.org/releases/"
+    }
 }
 
 fabricApi {
@@ -33,25 +36,26 @@ fabricApi {
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
-	modImplementation "mod.azure.azurelib:azurelib-fabric-${project.minecraft_version}:${project.azurelib_version}"
+    modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
+    modImplementation "mod.azure.azurelib:azurelib-fabric-${project.minecraft_version}:${project.azurelib_version}"
 
-	compileOnly 'org.projectlombok:lombok:1.18.34'
-	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-	modImplementation "maven.modrinth:aaa-particles:1.21-1.4.7-fabric"
-	modImplementation "maven.modrinth:architectury-api:13.0.8+fabric"
+    modImplementation "maven.modrinth:aaa-particles:1.21-1.4.7-fabric"
+    modImplementation "maven.modrinth:architectury-api:13.0.8+fabric"
 
-	modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
 
+    modImplementation "org.ladysnake:satin:2.0.0"
 }
 
 processResources {
