@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -41,7 +42,8 @@ public class OpenEntity extends PersistentProjectileEntity {
     @Override
     public void tick() {
         super.tick();
-        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_trail"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.1, 0.1, 0.1));
+        this.getWorld().addImportantParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0, 1, 0);
+        this.getWorld().addImportantParticle(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 0, -1, 0);
     }
 
     @Override
