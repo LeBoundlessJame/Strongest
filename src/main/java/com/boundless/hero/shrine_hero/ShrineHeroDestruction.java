@@ -42,7 +42,7 @@ public class ShrineHeroDestruction {
 
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 45, 3, true, false, false));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
 
@@ -51,7 +51,7 @@ public class ShrineHeroDestruction {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
         }
 
-        Action shootOpen = ActionUtils.singleAction(45, (user, heroAction) -> {
+        Action shootOpen = ActionUtils.singleAction(90, (user, heroAction) -> {
             OpenEntity openEntity = new OpenEntity(user, user.getWorld());
             openEntity.setVelocity(user.getRotationVector().multiply(4));
             openEntity.setPosition(user.getPos().add(user.getRotationVector().multiply(2).x, 1, user.getRotationVector().multiply(2).z));
