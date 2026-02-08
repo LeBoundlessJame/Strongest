@@ -5,6 +5,7 @@ import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
 public class EffekUtils {
@@ -55,7 +56,7 @@ public class EffekUtils {
                 .clone()
                 .scale((float) scale.x, (float) scale.y, (float) scale.z)
                 .bindOnEntity(user);
-
+        
         AAALevel.addParticle(user.getWorld(), true, instance);
         return instance;
     }

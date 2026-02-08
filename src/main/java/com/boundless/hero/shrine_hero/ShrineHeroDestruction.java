@@ -40,7 +40,7 @@ public class ShrineHeroDestruction {
     public static void open(PlayerEntity player) {
         //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
 
-        EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.2, 0.2, 0.2), new Vec3d(0, 0, 0));
+        EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
 
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
