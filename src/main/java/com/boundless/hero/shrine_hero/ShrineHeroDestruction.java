@@ -40,18 +40,19 @@ public class ShrineHeroDestruction {
     public static void open(PlayerEntity player) {
         //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
 
-        EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
-
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
 
-
         for (int i = 0; i < 20; i++) {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
         }
+
+        Action spawnFlames = ActionUtils.singleAction(70, (user, heroAction) -> {
+            EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
+        });
 
         Action shootOpen = ActionUtils.singleAction(90, (user, heroAction) -> {
             OpenEntity openEntity = new OpenEntity(user, user.getWorld());
@@ -68,6 +69,7 @@ public class ShrineHeroDestruction {
             playerEntity.sendMessage(Text.of(playerEntity != player ? message : message.replace("'", "")), true);
         }
 
+        ActionUtils.performAction(player, spawnFlames);
         ActionUtils.performAction(player, shootOpen);
     }
 
