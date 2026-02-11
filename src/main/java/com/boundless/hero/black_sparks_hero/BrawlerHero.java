@@ -35,7 +35,7 @@ public class BrawlerHero extends Hero {
 
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
-    public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerHero::startBlackFlashMinigame, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
 
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
@@ -92,8 +92,6 @@ public class BrawlerHero extends Hero {
             return;
         }
 
-        if (BlackFlashAbility.updateMinigameCombo(player, "m")) return;
-
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
@@ -128,9 +126,5 @@ public class BrawlerHero extends Hero {
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         AttackUtils.startAttackTimer(player, 10);
-    }
-
-    public static void startBlackFlashMinigame(PlayerEntity player) {
-        BlackFlashAbility.startMinigame(player, "");
     }
 }

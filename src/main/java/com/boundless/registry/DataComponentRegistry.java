@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
+// Todo: Clean this up!!
 public class DataComponentRegistry {
     public static ComponentType<Boolean> VANILLA_MECHANICS = registerComponent("vanilla_mechanics", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
     public static final ComponentType<Map<String, Identifier>> ABILITY_LOADOUT = registerComponent("ability_loadout", builder -> ComponentType.<Map<String, Identifier>>builder().codec(Codec.unboundedMap(Codec.STRING, Identifier.CODEC)));

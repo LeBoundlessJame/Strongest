@@ -52,6 +52,6 @@ public class BlackFlashAbility {
     }
 
     public static float getBlackFlashChance(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.0f);
+        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.01f);
     }
 }

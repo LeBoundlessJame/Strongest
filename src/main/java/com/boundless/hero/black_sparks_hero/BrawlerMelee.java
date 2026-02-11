@@ -5,6 +5,7 @@ import com.boundless.action.Action;
 import com.boundless.action.Attack;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -62,5 +63,9 @@ public class BrawlerMelee {
 
     public static void manjiKick(PlayerEntity player) {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("manji_kick_parry"), 1f, false, true, 3000);
+    }
+
+    public static void blackFlash(PlayerEntity player) {
+        HeroUtils.getHeroStack(player).set(StrongestComponents.BLACK_FLASH_CHANCE, 1.0f);
     }
 }
