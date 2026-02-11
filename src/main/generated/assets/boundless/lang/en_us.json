@@ -19,5 +19,6 @@
   "key.boundless.ability_two": "Ability 2",
   "entity.boundless.rock": "Rock",
   "boundless.top_speed_multiplier": "Top Speed Multiplier",
-  "boundless.ticks_until_max_speed": "Seconds Until Max Speed"
+  "boundless.ticks_until_max_speed": "Seconds Until Max Speed",
+  "death.attack.bypass_defence": "%1$s was eviscerated!"
 }
