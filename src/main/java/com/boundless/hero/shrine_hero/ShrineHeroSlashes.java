@@ -5,15 +5,18 @@ import com.boundless.ability.Ability;
 import com.boundless.action.Action;
 import com.boundless.action.Attack;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -37,9 +40,7 @@ public class ShrineHeroSlashes {
             player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
 
             if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CINEMATIC_BARS, 6, 0, false, false, false));
-
-                livingEntity.damage(livingEntity.getDamageSources().generic(), calculateCleaveDamage(livingEntity));
+                livingEntity.damage(DamageTypeRegistry.getDamageSource(livingEntity, DamageTypeRegistry.BYPASS_DEFENCE), calculateCleaveDamage(livingEntity));
                 player.getWorld().syncWorldEvent(WorldEvents.SMASH_ATTACK, livingEntity.getSteppingPos(), 750);
 
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 4, true, false, false));
