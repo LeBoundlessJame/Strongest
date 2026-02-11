@@ -34,6 +34,8 @@ public class ShrineHeroSlashes {
     public static Ability DISMANTLE_BARRAGE = AbilityUtils.ability(ShrineHeroSlashes::dismantleBarrage, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle_barrage"), "Dismantle Barrage");
 
     public static void cleave(PlayerEntity player) {
+        System.out.println(player.getHealth());
+
         Attack cleave = Attack.builder().player(player).damage(5f).impactSound(SoundRegistry.SLASH_1).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
             CameraUtils.playCameraShake(user);
             player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));

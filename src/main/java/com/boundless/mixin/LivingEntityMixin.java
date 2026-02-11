@@ -32,7 +32,10 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
     protected void boundless$modifyAppliedDamage(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
-        if (source.isOf(DamageTypeRegistry.BYPASS_DEFENCE)) cir.setReturnValue(amount);
+        if (source.isOf(DamageTypeRegistry.BYPASS_DEFENCE)) {
+            cir.setReturnValue(amount);
+            return;
+        }
 
         float damageResistance = (float) (this.getAttributeValue(AttributeRegistry.DAMAGE_RESISTANCE) - 1);
         float resistanceReduction = 0.0f;
