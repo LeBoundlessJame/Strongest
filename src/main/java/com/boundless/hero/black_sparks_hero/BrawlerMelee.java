@@ -31,6 +31,7 @@ public class BrawlerMelee {
         AttackUtils.performAttack(hook);
     }
 
+    // Todo: make some pre, post and replacement 'events' for attacks
     public static void divergentFist(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
