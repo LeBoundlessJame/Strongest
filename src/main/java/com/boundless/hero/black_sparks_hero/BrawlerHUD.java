@@ -2,10 +2,8 @@ package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.gui.HeroHUD;
-import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
-import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
@@ -15,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
-public class BlackSparksHUD {
+public class BrawlerHUD {
     public static Identifier METER_FRAME_HORIZONTAL = BoundlessAPI.hudPNG("meter_frame_horizontal");
     public static Identifier METER_HORIZONTAL = BoundlessAPI.hudPNG("meter_horizontal");
 
@@ -36,8 +34,8 @@ public class BlackSparksHUD {
             matrixStack.translate(0, 0, 10000);
             ItemStack stack = HeroUtils.getHeroStack(player);
 
-            float target = stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
-            float start = stack.getOrDefault(BlackSparksHero.MINIGAME_START_TIMESTAMP, 0L);
+            float target = stack.getOrDefault(BrawlerHero.MINIGAME_END_TIMESTAMP, 0L);
+            float start = stack.getOrDefault(BrawlerHero.MINIGAME_START_TIMESTAMP, 0L);
             float current = player.getWorld().getTime() - start;
             float progress = current / (target - start);
 
@@ -63,7 +61,7 @@ public class BlackSparksHUD {
 
     public static String getComboString(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        String comboProgress = stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+        String comboProgress = stack.getOrDefault(BrawlerHero.CURRENT_MINIGAME_COMBO, "");
 
         if (comboProgress.isEmpty()) return "";
         return "Black Flash: " + formattedCombo(comboProgress);
@@ -71,7 +69,7 @@ public class BlackSparksHUD {
 
     public static String getTargetComboString(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        String combo = stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+        String combo = stack.getOrDefault(BrawlerHero.TARGET_MINIGAME_COMBO, "");
         return "Black Flash: " + formattedCombo(combo);
     }
 

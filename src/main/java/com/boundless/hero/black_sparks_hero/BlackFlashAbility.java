@@ -20,8 +20,8 @@ import java.util.function.BiConsumer;
 public class BlackFlashAbility {
     public static List<String> BLACK_FLASH_COMBOS = List.of("llll", "lllml", "lmmlm");
 
-    public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
-    public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
+    public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
+    public static BrawlerHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
 
     public static void divergentFist(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
@@ -78,7 +78,7 @@ public class BlackFlashAbility {
     }
 
     public static boolean blackFlashMinigameActive(PlayerEntity player) {
-        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+        return player.getWorld().getTime() < HeroUtils.getHeroStack(player).getOrDefault(BrawlerHero.MINIGAME_END_TIMESTAMP, 0L);
     }
 
     // Returns true if it is the final hit of the minigame combo
@@ -86,20 +86,20 @@ public class BlackFlashAbility {
     public static boolean updateMinigameCombo(PlayerEntity player, String attack) {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
-        String currentCombo = stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
-        String targetCombo = stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
+        String currentCombo = stack.getOrDefault(BrawlerHero.CURRENT_MINIGAME_COMBO, "");
+        String targetCombo = stack.getOrDefault(BrawlerHero.TARGET_MINIGAME_COMBO, "");
 
-        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
+        stack.set(BrawlerHero.CURRENT_MINIGAME_COMBO, currentCombo + attack);
         currentCombo = currentCombo + attack;
 
-        boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+        boolean withinTimePeriod = player.getWorld().getTime() <= stack.getOrDefault(BrawlerHero.MINIGAME_END_TIMESTAMP, 0L);
 
         if (!withinTimePeriod) {
             endMinigame(player);
             return false;
         }
 
-        if (stack.getOrDefault(BlackSparksHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BlackSparksHero.TARGET_MINIGAME_COMBO, ""))) {
+        if (stack.getOrDefault(BrawlerHero.CURRENT_MINIGAME_COMBO, "").equals(stack.getOrDefault(BrawlerHero.TARGET_MINIGAME_COMBO, ""))) {
             BlackFlashAbility.blackFlash(player);
             endMinigame(player);
             return true;
@@ -112,18 +112,18 @@ public class BlackFlashAbility {
     public static void startMinigame(PlayerEntity player, String beginningAttack) {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
-        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
-        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CONFIG.blackFlashTimeWindow.get());
-        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, BLACK_FLASH_COMBOS.get(player.getRandom().nextInt(BLACK_FLASH_COMBOS.size())));
-        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, beginningAttack);
+        stack.set(BrawlerHero.MINIGAME_START_TIMESTAMP, player.getWorld().getTime());
+        stack.set(BrawlerHero.MINIGAME_END_TIMESTAMP, player.getWorld().getTime() + CONFIG.blackFlashTimeWindow.get());
+        stack.set(BrawlerHero.TARGET_MINIGAME_COMBO, BLACK_FLASH_COMBOS.get(player.getRandom().nextInt(BLACK_FLASH_COMBOS.size())));
+        stack.set(BrawlerHero.CURRENT_MINIGAME_COMBO, beginningAttack);
     }
 
     public static void endMinigame(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
-        stack.set(BlackSparksHero.MINIGAME_START_TIMESTAMP, 0L);
-        stack.set(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
-        stack.set(BlackSparksHero.TARGET_MINIGAME_COMBO, "");
-        stack.set(BlackSparksHero.CURRENT_MINIGAME_COMBO, "");
+        stack.set(BrawlerHero.MINIGAME_START_TIMESTAMP, 0L);
+        stack.set(BrawlerHero.MINIGAME_END_TIMESTAMP, 0L);
+        stack.set(BrawlerHero.TARGET_MINIGAME_COMBO, "");
+        stack.set(BrawlerHero.CURRENT_MINIGAME_COMBO, "");
     }
 }

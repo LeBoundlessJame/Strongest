@@ -12,11 +12,9 @@ import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -25,7 +23,7 @@ import net.minecraft.world.WorldEvents;
 import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
-import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
+import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
 
 public class ShrineHeroSlashes {
     public static Ability DISMANTLE = AbilityUtils.ability(ShrineHeroSlashes::dismantle, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle"), "Dismantle");

@@ -6,8 +6,8 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedLong;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedNumber;
 
-public class BlackSparksHeroConfig extends ConfigSection {
-    public BlackSparksHeroConfig() {
+public class BrawlerHeroConfig extends ConfigSection {
+    public BrawlerHeroConfig() {
         super();
     }
 

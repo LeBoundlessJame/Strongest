@@ -4,14 +4,12 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Attack;
 import com.boundless.hero.switcher_hero.SwitcherHero;
-import com.boundless.hero.switcher_hero.SwitcherLightLogic;
-import com.boundless.hero.switcher_hero.SwitcherMediumLogic;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.AttackUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
+import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
 
 public class ShrineHeroMelee {
 

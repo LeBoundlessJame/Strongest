@@ -10,7 +10,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
-import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
+import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
 
 public class ShrineHeroOther {
     public static Ability HEAL = AbilityUtils.ability(ShrineHeroOther::heal, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_heal"), "Reverse Cursed Technique");

@@ -71,7 +71,7 @@ public class DashAbility extends HeldAbility {
     public static void chargedLeap(PlayerEntity player) {
         if (player.getWorld().isClient) return;
 
-        HeroUtils.getHeroStack(player).set(BlackSparksHero.CHARGED_LEAP_TIME_WINDOW, player.getWorld().getTime() + 15);
+        HeroUtils.getHeroStack(player).set(BrawlerHero.CHARGED_LEAP_TIME_WINDOW, player.getWorld().getTime() + 15);
 
         if (player.isOnGround()) {
             SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);

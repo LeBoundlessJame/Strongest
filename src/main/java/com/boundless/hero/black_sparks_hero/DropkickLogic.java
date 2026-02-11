@@ -18,8 +18,8 @@ public class DropkickLogic {
 
     public static void dropkick(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, false);
-        stack.set(BlackSparksHero.CHARGED_LEAP_TIME_WINDOW, 0L);
+        stack.set(BrawlerHero.DROPKICK_DAMAGE_TRIGGERED, false);
+        stack.set(BrawlerHero.CHARGED_LEAP_TIME_WINDOW, 0L);
 
         Entity target = RaycastUtils.thickRaycast(player, 32, 2);
         if (target == null) return;
@@ -33,10 +33,10 @@ public class DropkickLogic {
             int remainingMoveTicks = moveToTargetDuration - i;
 
             tasks.put(i, (user, heroAction) -> {
-                if (stack.getOrDefault(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, false)) return;
+                if (stack.getOrDefault(BrawlerHero.DROPKICK_DAMAGE_TRIGGERED, false)) return;
 
-                if (user.distanceTo(target) < 5 && !stack.getOrDefault(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, false)) {
-                    stack.set(BlackSparksHero.DROPKICK_DAMAGE_TRIGGERED, true);
+                if (user.distanceTo(target) < 5 && !stack.getOrDefault(BrawlerHero.DROPKICK_DAMAGE_TRIGGERED, false)) {
+                    stack.set(BrawlerHero.DROPKICK_DAMAGE_TRIGGERED, true);
                     CombatUtils.aoeAttack(player, 4, DropkickLogic::dropkickAoe);
                     return;
                 }
@@ -64,12 +64,12 @@ public class DropkickLogic {
         EffekUtils.playRotatedEffect(BoundlessAPI.identifier("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
 
         CameraUtils.playCameraShake(player);
-        target.damage(target.getDamageSources().generic(), BlackSparksHero.DAMAGE.spinKick.get());
+        target.damage(target.getDamageSources().generic(), BrawlerHero.DAMAGE.spinKick.get());
         CombatUtils.uppercutKnockback(player, target);
         CombatUtils.playImpactVisual(player, target, BoundlessAPI.identifier("landing_impact"));
     }
 
     public static boolean canDropkick(PlayerEntity player) {
-        return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(BlackSparksHero.CHARGED_LEAP_TIME_WINDOW, 0L);
+        return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(BrawlerHero.CHARGED_LEAP_TIME_WINDOW, 0L);
     }
 }

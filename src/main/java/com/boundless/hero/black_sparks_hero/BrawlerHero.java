@@ -8,7 +8,7 @@ import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.armor.BlackSparksHeroRenderer;
+import com.boundless.hero.switcher_hero.SwitcherLightLogic;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -28,16 +28,16 @@ import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-public class BlackSparksHero extends Hero {
-    public static BlackSparksHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
-    public static BlackSparksHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
-    public static BlackSparksHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
+public class BrawlerHero extends Hero {
+    public static BrawlerHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
+    public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
+    public static BrawlerHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BlackSparksHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
-    public static Ability SPIN_KICK = AbilityUtils.ability(BlackSparksHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
-    public static Ability BLACK_FLASH = AbilityUtils.ability(BlackSparksHero::startBlackFlashMinigame, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
+    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
+    public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerHero::startBlackFlashMinigame, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
 
-    public static HeldAbility LIGHT_ATTACK = new DivergentLightAttackAbility(BlackFlashAbility::divergentFist, null, COOLDOWNS.lightAttack.get(), 22, 22, BoundlessAPI.hudPNG("arm"), BoundlessAPI.identifier("yuji_light"), false, 10, "key.attack", "(Hold) Divergent Fist");
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one", "Dash (Hold To Leap)");
 
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -56,13 +56,13 @@ public class BlackSparksHero extends Hero {
             .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.identifier("ticks_until_max_speed"), 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .build();
 
-    public BlackSparksHero() {
+    public BrawlerHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
-                .ability("key.attack", BlackSparksHero.LIGHT_ATTACK)
-                .ability("key.use", BlackSparksHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", BlackSparksHero.DASH)
-                .ability("key.boundless.ability_two", BlackSparksHero.SPIN_KICK)
-                .ability("key.boundless.ability_three", BlackSparksHero.BLACK_FLASH)
+                .ability("key.attack", BrawlerHero.LIGHT_ATTACK)
+                .ability("key.use", BrawlerHero.MEDIUM_ATTACK)
+                .ability("key.boundless.ability_one", BrawlerHero.DASH)
+                .ability("key.boundless.ability_two", BrawlerHero.SPIN_KICK)
+                .ability("key.boundless.ability_three", BrawlerHero.BLACK_FLASH)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
@@ -70,7 +70,7 @@ public class BlackSparksHero extends Hero {
                 .name("black_sparks_hero")
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
-                .hudRenderer(BlackSparksHUD::render)
+                .hudRenderer(BrawlerHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .modelIdentifier(BoundlessAPI.modelID("brawler"))
                 .textureIdentifier(BoundlessAPI.textureID("brawler"))

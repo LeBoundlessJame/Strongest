@@ -3,35 +3,20 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Action;
-import com.boundless.entity.camera.CameraEntity;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.particle.ParticleUtil;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.intprovider.IntProvider;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.function.BiConsumer;
-
-import static com.boundless.hero.black_sparks_hero.BlackSparksHero.COOLDOWNS;
+import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
 
 public class ShrineHeroDestruction {
     public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("open"), "Open");

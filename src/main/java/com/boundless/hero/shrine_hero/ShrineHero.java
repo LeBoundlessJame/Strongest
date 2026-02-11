@@ -5,7 +5,7 @@ import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
-import com.boundless.hero.black_sparks_hero.BlackSparksHUD;
+import com.boundless.hero.black_sparks_hero.BrawlerHUD;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.mojang.serialization.Codec;
@@ -48,7 +48,7 @@ public class ShrineHero extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("shrine_hero"))
                 .defaultAbilityLoadout(loadout)
                 .attributes(ATTRIBUTES)
-                .hudRenderer(BlackSparksHUD::render)
+                .hudRenderer(BrawlerHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)

@@ -1,7 +1,7 @@
 package com.boundless.hero.armor;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.black_sparks_hero.BlackSparksHero;
+import com.boundless.hero.black_sparks_hero.BrawlerHero;
 import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +23,7 @@ public class BlackSparksHeroRenderer extends AzArmorRenderer {
     }
 
     public static boolean inBlackFlashMinigame(PlayerEntity player, ItemStack stack) {
-        long minigameEnd = stack.getOrDefault(BlackSparksHero.MINIGAME_END_TIMESTAMP, 0L);
+        long minigameEnd = stack.getOrDefault(BrawlerHero.MINIGAME_END_TIMESTAMP, 0L);
 
         return player.getWorld().getTime() <= minigameEnd;
     }
