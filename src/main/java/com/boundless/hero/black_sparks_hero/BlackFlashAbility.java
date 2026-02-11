@@ -29,10 +29,10 @@ public class BlackFlashAbility {
         SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
         CameraUtils.playCameraShake(player);
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 3, 4, true, false, false));
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
-
         CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 3, 4, true, false, false));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
+
             livingEntity.timeUntilRegen = 0;
             CombatUtils.strongKnockback(attacker, livingEntity, knockback);
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
