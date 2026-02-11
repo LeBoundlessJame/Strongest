@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.rock.RockEntity;
+import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
@@ -54,20 +55,7 @@ public class RockThrowLogic {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
         tasks.put(7, (user, heroAction) -> {
-            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_3);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
-
-            CameraUtils.playCameraShake(player);
-            CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
-
-                livingEntity.timeUntilRegen = 0;
-                CombatUtils.strongKnockback(attacker, livingEntity, 10.0f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
-            });
-            CombatUtils.attack(heroAction, SwitcherHero.DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
+            BlackFlashAbility.blackFlash(player, 200, 10, heroAction);
             EnergyUtils.changeEnergyPercentage(player, 20f);
         });
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);

@@ -29,6 +29,7 @@ public class BrawlerHUD {
         matrixStack.scale(scale, scale, scale);
 
         // Todo: Fix this rendering behind chat
+        /*
         if (BlackFlashAbility.blackFlashMinigameActive(player)) {
             matrixStack.push();
             matrixStack.translate(0, 0, 10000);
@@ -51,10 +52,12 @@ public class BrawlerHUD {
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, getTargetComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);
             colors = GUIUtils.hexToUnitColor("1bc7b6");
             GUIUtils.drawOutlinedText(drawContext, minecraftClient, getComboString(player), drawContext.getScaledWindowWidth() / 2 - 70, drawContext.getScaledWindowHeight() / 2 + 10, colors);
-            */
+
            matrixStack.pop();
 
         }
+
+         */
 
         matrixStack.pop();
     }

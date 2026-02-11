@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.action.Attack;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
@@ -45,6 +46,10 @@ public class BrawlerMelee {
         });
         tasks.put(15, (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
+            if (BlackFlashAbility.calculateBlackFlash(player)) {
+                BlackFlashAbility.blackFlash(player, 200, 10, heroAction);
+                return;
+            }
 
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
 

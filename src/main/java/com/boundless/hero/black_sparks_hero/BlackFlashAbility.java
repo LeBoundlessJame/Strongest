@@ -3,6 +3,7 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
@@ -22,6 +23,7 @@ public class BlackFlashAbility {
     public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
     public static BrawlerHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
 
+    /*
     public static void blackFlash(PlayerEntity player) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
@@ -51,7 +53,39 @@ public class BlackFlashAbility {
         player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
     }
 
+     */
+
+    public static void blackFlash(PlayerEntity player, float damage, float knockback, HeroActionEntity heroAction) {
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+
+        SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+        SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
+        SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_3);
+        SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
+        CameraUtils.playCameraShake(player);
+
+        CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
+            attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
+
+            livingEntity.timeUntilRegen = 0;
+            CombatUtils.strongKnockback(attacker, livingEntity, knockback);
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
+            CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.identifier("black_flash_impact")));
+        });
+
+        AttackUtils.startAttackTimer(player, 10);
+        resetBlackFlashChance(player);
+    }
+
+    public static void resetBlackFlashChance(PlayerEntity player) {
+        HeroUtils.getHeroStack(player).set(StrongestComponents.BLACK_FLASH_CHANCE, 0.01f);
+    }
+
     public static float getBlackFlashChance(PlayerEntity player) {
         return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.01f);
+    }
+
+    public static boolean calculateBlackFlash(PlayerEntity player) {
+        return player.getRandom().nextBetween(0, 1) / 100f >= 1 - BlackFlashAbility.getBlackFlashChance(player);
     }
 }
