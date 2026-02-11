@@ -40,6 +40,9 @@ public class ShrineHeroSlashes {
             player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
 
             if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
+
                 livingEntity.damage(DamageTypeRegistry.getDamageSource(livingEntity, DamageTypeRegistry.BYPASS_DEFENCE), calculateCleaveDamage(livingEntity));
                 player.getWorld().syncWorldEvent(WorldEvents.SMASH_ATTACK, livingEntity.getSteppingPos(), 750);
 
