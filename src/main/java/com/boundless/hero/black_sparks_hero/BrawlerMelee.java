@@ -47,6 +47,7 @@ public class BrawlerMelee {
         tasks.put(15, (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
             if (BlackFlashAbility.calculateBlackFlash(player)) {
+                CombatUtils.attack(heroAction, 0.0f, Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
                 BlackFlashAbility.blackFlash(player, 200, 10, heroAction);
                 return;
             }

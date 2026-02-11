@@ -64,12 +64,14 @@ public class BlackFlashAbility {
         SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
         CameraUtils.playCameraShake(player);
 
-        CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-            attacker.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 3, 4, true, false, false));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
 
+        CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
             livingEntity.timeUntilRegen = 0;
             CombatUtils.strongKnockback(attacker, livingEntity, knockback);
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, SwitcherHero.CONFIG.impactFrameDuration.get(), 1, false, false, false));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
             CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.identifier("black_flash_impact")));
         });
 
