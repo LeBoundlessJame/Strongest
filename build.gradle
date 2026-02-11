@@ -56,6 +56,7 @@ dependencies {
     modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
 
     modImplementation "org.ladysnake:satin:2.0.0"
+    include "org.ladysnake:satin:2.0.0"
 }
 
 processResources {
