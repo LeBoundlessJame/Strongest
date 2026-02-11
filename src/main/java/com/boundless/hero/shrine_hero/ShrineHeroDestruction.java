@@ -39,12 +39,17 @@ public class ShrineHeroDestruction {
 
     public static void open(PlayerEntity player) {
         //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
+        if (true) {
+            EffekUtils.playEffect(BoundlessAPI.identifier("open_explosion"), player, player.getPos(), new Vec3d(1, 1, 1));
+            return;
+        }
 
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
+
 
         for (int i = 0; i < 20; i++) {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
