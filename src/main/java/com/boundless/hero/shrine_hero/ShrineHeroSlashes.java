@@ -43,7 +43,7 @@ public class ShrineHeroSlashes {
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
 
-                livingEntity.damage(DamageTypeRegistry.getDamageSource(livingEntity, DamageTypeRegistry.BYPASS_DEFENCE), calculateCleaveDamage(livingEntity));
+                livingEntity.damage(DamageTypeRegistry.getDamageSource(livingEntity, DamageTypeRegistry.BYPASS_DEFENCE), livingEntity.getHealth());
                 player.getWorld().syncWorldEvent(WorldEvents.SMASH_ATTACK, livingEntity.getSteppingPos(), 750);
 
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 4, true, false, false));
@@ -125,11 +125,4 @@ public class ShrineHeroSlashes {
             //CameraUtils.playCameraShake(player);
         }
     }
-
-    public static float calculateCleaveDamage(LivingEntity livingEntity) {
-        float damage = livingEntity.getHealth();
-        System.out.println(damage);
-        return damage;
-    }
-
 }
