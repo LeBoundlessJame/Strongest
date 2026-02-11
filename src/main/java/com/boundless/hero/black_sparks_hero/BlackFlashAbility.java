@@ -20,41 +20,6 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class BlackFlashAbility {
-    public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG.abilityDamageConfig;
-    public static BrawlerHeroConfig CONFIG = ConfigRegistry.HERO_CONFIG.BLACK_SPARKS_CONFIG;
-
-    /*
-    public static void blackFlash(PlayerEntity player) {
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        tasks.put(4, (user, heroAction) -> {
-            if (CombatUtils.isRolling(player)) return;
-
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_3);
-            SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
-
-            CameraUtils.playCameraShake(player);
-            CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-                livingEntity.timeUntilRegen = 0;
-                CombatUtils.knockback(attacker, livingEntity, 2.0f);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, CONFIG.impactFrameDuration.get(), 1, false, false, false));
-            });
-            CombatUtils.attack(heroAction, DAMAGE.blackFlash.get(), Optional.of(BoundlessAPI.identifier("black_flash_impact")));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
-        });
-        Action impact = Action.builder().scheduledTasks(tasks).build();
-
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), true, 5000);
-        ActionUtils.performAction(player, impact);
-        AttackUtils.startAttackTimer(player, 6);
-
-        if (player.getWorld().isClient) return;
-        player.sendMessage(Text.of("§c§l§ka§c §c§lKOKUSEN! §c§l§ka§c"), true);
-    }
-
-     */
-
     public static void blackFlash(PlayerEntity player, float damage, float knockback, HeroActionEntity heroAction) {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
