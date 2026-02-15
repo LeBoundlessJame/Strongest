@@ -1,12 +1,17 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.action.Action;
 import com.boundless.action.AdvancedAttack;
 import com.boundless.action.SingleAttack;
+import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import net.minecraft.entity.player.PlayerEntity;
+
+import java.util.LinkedHashMap;
+import java.util.function.BiConsumer;
 
 import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 
@@ -31,10 +36,18 @@ public class BrawlerMelee {
     public static void divergentFist(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
+        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
+        tasks.put(4, (user, action) -> MeleeUtils.basicHit(user, action, 20f, 10, "hook"));
+        Action divergentFist = Action.builder().scheduledTasks(tasks).build();
+        ActionUtils.performAction(player, divergentFist);
+
+                /*
         AdvancedAttack divergentFist = AdvancedAttack.builder()
                 .player(player)
-                .hit(4, (user, action) -> ActionUtils.basicHit(20f))
+                .hit(4, (user, action) -> MeleeUtils.basicHit(20f, hook, ))
                 .build();
+
+                 */
 
         /*
            Attack divergentFist = Attack.builder()
