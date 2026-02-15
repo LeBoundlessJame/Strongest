@@ -1,7 +1,7 @@
 package com.boundless.util;
 
 import com.boundless.action.Action;
-import com.boundless.action.Attack;
+import com.boundless.action.SingleAttack;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.Entity;
@@ -18,19 +18,19 @@ import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_START;
 
 public class AttackUtils {
-    public static void performAttack(Attack attack) {
-        PlayerEntity player = attack.getPlayer();
+    public static void performAttack(SingleAttack singleAttack) {
+        PlayerEntity player = singleAttack.getPlayer();
         if (!AttackUtils.canAttack(player)) return;
 
-        float damage = attack.getDamage();
-        SoundEvent sound = attack.getImpactSound();
-        Identifier animation = attack.getAnimation();
-        Identifier attackVFX = attack.getImpactVFX();
-        float animationSpeed = attack.getAnimationSpeed();
-        int priority = attack.getAnimationPriority();
-        int attackDuration = attack.getAttackDuration();
-        int impactTick = attack.getImpactTick();
-        BiConsumer<PlayerEntity, Entity> perEntityLogic = attack.getPerEntityLogic();
+        float damage = singleAttack.getDamage();
+        SoundEvent sound = singleAttack.getImpactSound();
+        Identifier animation = singleAttack.getAnimation();
+        Identifier attackVFX = singleAttack.getImpactVFX();
+        float animationSpeed = singleAttack.getAnimationSpeed();
+        int priority = singleAttack.getAnimationPriority();
+        int attackDuration = singleAttack.getAttackDuration();
+        int impactTick = singleAttack.getImpactTick();
+        BiConsumer<PlayerEntity, Entity> perEntityLogic = singleAttack.getPerEntityLogic();
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);

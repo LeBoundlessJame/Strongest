@@ -2,7 +2,7 @@ package com.boundless.hero.shrine_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
-import com.boundless.action.Attack;
+import com.boundless.action.SingleAttack;
 import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AbilityUtils;
@@ -19,7 +19,7 @@ public class ShrineHeroMelee {
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        Attack doubleKick = Attack.builder()
+        SingleAttack doubleKick = SingleAttack.builder()
                 .player(player)
                 .damage(SwitcherHero.DAMAGE.mediumAttackPerHit.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)
@@ -36,7 +36,7 @@ public class ShrineHeroMelee {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        Attack hook = Attack.builder()
+        SingleAttack hook = SingleAttack.builder()
                 .player(player)
                 .damage(SwitcherHero.DAMAGE.lightAttack.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)

@@ -1,7 +1,7 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.action.Attack;
+import com.boundless.action.SingleAttack;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AttackUtils;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +15,7 @@ public class SwitcherMediumLogic {
 
         if (!AttackUtils.canAttack(player)) return;
 
-        Attack doubleKick = Attack.builder()
+        SingleAttack doubleKick = SingleAttack.builder()
                 .player(player)
                 .damage(SwitcherHero.DAMAGE.mediumAttackPerHit.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)

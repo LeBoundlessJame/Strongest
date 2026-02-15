@@ -1,18 +1,12 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.action.Action;
-import com.boundless.action.Attack;
-import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.switcher_hero.SwitcherHero;
+import com.boundless.action.AdvancedAttack;
+import com.boundless.action.SingleAttack;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import net.minecraft.entity.player.PlayerEntity;
-
-import java.util.LinkedHashMap;
-import java.util.Optional;
-import java.util.function.BiConsumer;
 
 import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 
@@ -20,7 +14,7 @@ public class BrawlerMelee {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        Attack hook = Attack.builder()
+        SingleAttack hook = SingleAttack.builder()
                 .player(player)
                 .damage(DAMAGE.lightAttack.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)
@@ -36,6 +30,29 @@ public class BrawlerMelee {
     // Todo: make some pre, post and replacement 'events' for attacks
     public static void divergentFist(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
+
+        AdvancedAttack divergentFist = AdvancedAttack.builder()
+                .player(player)
+                .hit(4, (user, action) -> ActionUtils.basicHit(20f))
+                .build();
+
+        /*
+           Attack divergentFist = Attack.builder()
+                .player(player)
+                .damage(DAMAGE.lightAttack.get())
+                .impactSound(SoundRegistry.EARTH_IMPACT)
+                .animationSpeed(1.0f)
+                .animation(BoundlessAPI.identifier("hook"))
+                .hit(4, (player, action) -> { ActionUtils.basicHit(20f) })
+                .hit(15, BrawlerMelee::divergentImpact)
+                .attackDuration(15)
+                .build();
+
+        AttackUtils.performAttack(divergentFist);
+
+         */
+
+        /*
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         tasks.put(4, (user, heroAction) -> {
@@ -65,6 +82,12 @@ public class BrawlerMelee {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
         ActionUtils.performAction(player, divergence);
         AttackUtils.startAttackTimer(player, 10);
+
+         */
+    }
+
+    public static void divergentImpact(PlayerEntity player) {
+
     }
 
     public static void manjiKick(PlayerEntity player) {

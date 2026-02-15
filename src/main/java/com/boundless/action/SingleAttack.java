@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import java.util.function.BiConsumer;
 
 @Builder @Getter
-public class Attack {
+public class SingleAttack {
     PlayerEntity player;
     @Builder.Default
     float damage = 1f;

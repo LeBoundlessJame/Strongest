@@ -3,7 +3,7 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Action;
-import com.boundless.action.Attack;
+import com.boundless.action.SingleAttack;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -32,7 +32,7 @@ public class ShrineHeroSlashes {
     public static Ability DISMANTLE_BARRAGE = AbilityUtils.ability(ShrineHeroSlashes::dismantleBarrage, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle_barrage"), "Dismantle Barrage");
 
     public static void cleave(PlayerEntity player) {
-        Attack cleave = Attack.builder().player(player).damage(5f).impactSound(SoundRegistry.SLASH_1).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
+        SingleAttack cleave = SingleAttack.builder().player(player).damage(5f).impactSound(SoundRegistry.SLASH_1).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
             CameraUtils.playCameraShake(user);
             player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
             player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
@@ -81,7 +81,7 @@ public class ShrineHeroSlashes {
     }
 
     public static void spiderwebCleave(PlayerEntity player) {
-        Attack cleave = Attack.builder().player(player).damage(5f).impactSound(SoundRegistry.EARTH_IMPACT).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("spiderweb_cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
+        SingleAttack cleave = SingleAttack.builder().player(player).damage(5f).impactSound(SoundRegistry.EARTH_IMPACT).animationSpeed(1.0f).damage(12f).animation(BoundlessAPI.identifier("spiderweb_cleave")).impactTick(4).attackDuration(8).perEntityLogic((user, entity) -> {
             CameraUtils.playCameraShake(user);
             if (entity instanceof LivingEntity livingEntity) {
                 EffekUtils.playEffect(BoundlessAPI.identifier("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
