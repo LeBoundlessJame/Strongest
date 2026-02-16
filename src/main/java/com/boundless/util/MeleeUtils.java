@@ -28,7 +28,6 @@ public class MeleeUtils {
     }
 
     public static void knockback(PlayerEntity player, LivingEntity target, Vec3d knockbackMultiplier) {
-        // default: 1.2
         target.setVelocity(player.getRotationVector().x * knockbackMultiplier.x,  1 * knockbackMultiplier.y, player.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
     }
