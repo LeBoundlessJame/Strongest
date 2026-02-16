@@ -9,10 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.function.BiConsumer;
 
 public class MeleeUtils {
-    public static void basicHit(PlayerEntity player, HeroActionEntity action, float damage, int duration, String animName) {
-        // Todo: attackCount % 2 == 0
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier(animName), 1.0f, true, true, 3000);
-
+    public static void basicHit(PlayerEntity player, HeroActionEntity action, float damage) {
         MeleeUtils.forEach(player, action, (user, entity) -> {
             entity.damage(entity.getDamageSources().generic(), damage);
             if (!(entity instanceof LivingEntity livingEntity)) return;
@@ -20,8 +17,6 @@ public class MeleeUtils {
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
             CombatUtils.uppercutKnockback(player, livingEntity);
         });
-
-        AttackUtils.startAttackTimer(player, duration);
     }
 
     public static void forEach(PlayerEntity player, HeroActionEntity action, BiConsumer<PlayerEntity, Entity> logic) {

@@ -36,9 +36,15 @@ public class BrawlerMelee {
     public static void divergentFist(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        tasks.put(4, (user, action) -> MeleeUtils.basicHit(user, action, 20f, 10, "hook"));
-        Action divergentFist = Action.builder().scheduledTasks(tasks).build();
+        // Todo: attackCount % 2 == 0
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
+
+        Action divergentFist = Action.builder()
+                .scheduledTask(4, (user, action) -> MeleeUtils.basicHit(user, action, 20f))
+                .scheduledTask(15, (user, action) -> MeleeUtils.basicHit(user, action, 80f))
+                .build();
+
+        AttackUtils.startAttackTimer(player, 20);
         ActionUtils.performAction(player, divergentFist);
 
                 /*
