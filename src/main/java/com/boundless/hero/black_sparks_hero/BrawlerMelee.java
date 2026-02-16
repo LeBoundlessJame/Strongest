@@ -10,6 +10,7 @@ import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
@@ -28,7 +29,7 @@ public class BrawlerMelee {
                     MeleeUtils.forEach(player, action, (attacker, entity) -> {
                         if (BlackFlashAbility.calculateBlackFlash(attacker)) {
                             // Todo: make it so that upwards knockback is optional
-                            BlackFlashAbility.blackFlash(attacker, 80, 0f, action);
+                            BlackFlashAbility.blackFlash(attacker, 80, new Vec3d(0.2f, 0.0f, 0.2f), action);
                             return;
                         }
                         MeleeUtils.basicHit(user, action, DAMAGE.lightAttack.get());
@@ -63,7 +64,7 @@ public class BrawlerMelee {
         MeleeUtils.forEach(player, action, (user, entity) -> {
             if (BlackFlashAbility.calculateBlackFlash(player)) {
                 CombatUtils.playImpactVisual(player, (LivingEntity) entity, BoundlessAPI.identifier("divergent_fist_impact"));
-                BlackFlashAbility.blackFlash(player, 200, 10, action);
+                BlackFlashAbility.blackFlash(player, 200, new Vec3d(10f, 1.0f, 10f), action);
                 return;
             }
 

@@ -55,7 +55,7 @@ public class RockThrowLogic {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
         tasks.put(7, (user, heroAction) -> {
-            BlackFlashAbility.blackFlash(player, 200, 10, heroAction);
+            BlackFlashAbility.blackFlash(player, 200, new Vec3d(10f, 1.0f, 10f), heroAction);
             EnergyUtils.changeEnergyPercentage(player, 20f);
         });
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
