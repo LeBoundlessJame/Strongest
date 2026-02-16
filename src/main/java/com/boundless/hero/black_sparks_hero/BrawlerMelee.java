@@ -8,6 +8,7 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.LinkedHashMap;
@@ -39,74 +40,34 @@ public class BrawlerMelee {
         // Todo: attackCount % 2 == 0
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
 
+        SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         Action divergentFist = Action.builder()
                 .scheduledTask(4, (user, action) -> MeleeUtils.basicHit(user, action, 20f))
-                .scheduledTask(15, (user, action) -> MeleeUtils.basicHit(user, action, 80f))
+                .scheduledTask(20, (user, action) -> BrawlerMelee.divergentImpact(user, action, 80f))
                 .build();
 
         AttackUtils.startAttackTimer(player, 20);
         ActionUtils.performAction(player, divergentFist);
+    }
 
-                /*
-        AdvancedAttack divergentFist = AdvancedAttack.builder()
-                .player(player)
-                .hit(4, (user, action) -> MeleeUtils.basicHit(20f, hook, ))
-                .build();
+    public static void divergentImpact(PlayerEntity player, HeroActionEntity action, float damage) {
+        CameraUtils.playCameraShake(player);
 
-                 */
-
-        /*
-           Attack divergentFist = Attack.builder()
-                .player(player)
-                .damage(DAMAGE.lightAttack.get())
-                .impactSound(SoundRegistry.EARTH_IMPACT)
-                .animationSpeed(1.0f)
-                .animation(BoundlessAPI.identifier("hook"))
-                .hit(4, (player, action) -> { ActionUtils.basicHit(20f) })
-                .hit(15, BrawlerMelee::divergentImpact)
-                .attackDuration(15)
-                .build();
-
-        AttackUtils.performAttack(divergentFist);
-
-         */
-
-        /*
-
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        tasks.put(4, (user, heroAction) -> {
-            if (CombatUtils.isRolling(player)) return;
-
-            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.attack(heroAction, DAMAGE.divergentFistPunch.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
-        });
-        tasks.put(15, (user, heroAction) -> {
-            if (CombatUtils.isRolling(player)) return;
+        MeleeUtils.forEach(player, action, (user, entity) -> {
             if (BlackFlashAbility.calculateBlackFlash(player)) {
-                CombatUtils.attack(heroAction, 0.0f, Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
-                BlackFlashAbility.blackFlash(player, 200, 10, heroAction);
+                CombatUtils.playImpactVisual(player, (LivingEntity) entity, BoundlessAPI.identifier("divergent_fist_impact"));
+                BlackFlashAbility.blackFlash(player, 200, 10, action);
                 return;
             }
 
+            entity.timeUntilRegen = 0;
+            entity.damage(entity.getDamageSources().generic(), damage);
+            if (!(entity instanceof LivingEntity livingEntity)) return;
+
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
-
-            CameraUtils.playCameraShake(player);
-            CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-                livingEntity.timeUntilRegen = 0;
-            });
-            CombatUtils.attack(heroAction, DAMAGE.divergentFistImpact.get(), Optional.of(BoundlessAPI.identifier("divergent_fist_impact")));
+            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("divergent_fist_impact"));
+            CombatUtils.uppercutKnockback(player, livingEntity);
         });
-        Action divergence = Action.builder().scheduledTasks(tasks).build();
-
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"));
-        ActionUtils.performAction(player, divergence);
-        AttackUtils.startAttackTimer(player, 10);
-
-         */
-    }
-
-    public static void divergentImpact(PlayerEntity player) {
-
     }
 
     public static void manjiKick(PlayerEntity player) {
