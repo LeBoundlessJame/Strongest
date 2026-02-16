@@ -39,6 +39,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         return false;
     }
 
+    // Todo: add age increment, + despawn after a while
     @Override
     public void tick() {
         super.tick();
