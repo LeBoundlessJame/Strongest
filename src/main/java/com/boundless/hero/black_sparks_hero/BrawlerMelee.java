@@ -20,17 +20,24 @@ public class BrawlerMelee {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        SingleAttack hook = SingleAttack.builder()
-                .player(player)
-                .damage(DAMAGE.lightAttack.get())
-                .impactSound(SoundRegistry.EARTH_IMPACT)
-                .animationSpeed(1.0f)
-                .animation(BoundlessAPI.identifier("hook"))
-                .impactTick(4)
-                .attackDuration(4)
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
+
+        SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
+        Action hook = Action.builder()
+                .scheduledTask(4, (user, action) -> {
+                    MeleeUtils.forEach(player, action, (attacker, entity) -> {
+                        if (BlackFlashAbility.calculateBlackFlash(attacker)) {
+                            // Todo: make it so that upwards knockback is optional
+                            BlackFlashAbility.blackFlash(attacker, 80, 0f, action);
+                            return;
+                        }
+                        MeleeUtils.basicHit(user, action, DAMAGE.lightAttack.get());
+                    });
+                })
                 .build();
 
-        AttackUtils.performAttack(hook);
+        AttackUtils.startAttackTimer(player, 4);
+        ActionUtils.performAction(player, hook);
     }
 
     // Todo: make some pre, post and replacement 'events' for attacks
