@@ -66,7 +66,7 @@ public class BrawlerMelee {
 
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("divergent_fist_impact"));
-            CombatUtils.uppercutKnockback(player, livingEntity);
+            CombatUtils.strongKnockback(player, livingEntity, 5);
         });
     }
 

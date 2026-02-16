@@ -17,7 +17,6 @@ public class MeleeUtils {
 
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.uppercutKnockback(player, livingEntity);
         });
     }
 
