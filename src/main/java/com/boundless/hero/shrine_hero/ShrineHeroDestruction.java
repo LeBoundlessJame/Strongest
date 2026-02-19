@@ -25,7 +25,8 @@ public class ShrineHeroDestruction {
     public static void open(PlayerEntity player) {
         //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
         if (true) {
-            EffekUtils.playEffect(BoundlessAPI.identifier("open_explosion"), player, player.getPos(), new Vec3d(1, 1, 1));
+            System.out.println("Poopy");
+            EffekUtils.playEffect(BoundlessAPI.identifier("mythical_beast"), player, player.getPos(), new Vec3d(0.5, 0.5, 0.5));
             return;
         }
 
