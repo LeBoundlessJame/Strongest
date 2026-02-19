@@ -3,12 +3,14 @@ package com.boundless.entity.open;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.CameraUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -52,15 +54,20 @@ public class OpenEntity extends PersistentProjectileEntity {
         super.onBlockHit(result);
         if (this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
+        //((LivingEntity) this.getOwner()).addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
 
         //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_destruction"), this, this.getPos().add(0f, 0.1f, 0f), 1);
         this.discard();
     }
+
+    // Todo: make impact frame apply to each entity in the radius, make it radius based
     @Override
     public void onEntityHit(EntityHitResult result) {
         super.onEntityHit(result);
         if (result.getEntity() == null || !((result.getEntity()) instanceof LivingEntity livingEntity) || this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), livingEntity, livingEntity.getPos().add(0f, 0.1f, 0f), 0.5f);
+        //((LivingEntity) this.getOwner()).addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
+
         livingEntity.timeUntilRegen = 0;
         livingEntity.damage(livingEntity.getDamageSources().generic(), 500f);
         livingEntity.setOnFireFor(10);

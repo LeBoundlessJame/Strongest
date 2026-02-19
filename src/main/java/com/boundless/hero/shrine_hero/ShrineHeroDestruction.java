@@ -37,9 +37,11 @@ public class ShrineHeroDestruction {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
         }
 
+        /*
         Action spawnFlames = ActionUtils.singleAction(70, (user, heroAction) -> {
-            EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
+            //EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
         });
+         */
 
         Action shootOpen = ActionUtils.singleAction(90, (user, heroAction) -> {
             OpenEntity openEntity = new OpenEntity(user, user.getWorld());
@@ -56,7 +58,7 @@ public class ShrineHeroDestruction {
             playerEntity.sendMessage(Text.of(playerEntity != player ? message : message.replace("'", "")), true);
         }
 
-        ActionUtils.performAction(player, spawnFlames);
+        //ActionUtils.performAction(player, spawnFlames);
         ActionUtils.performAction(player, shootOpen);
     }
 
@@ -83,7 +85,6 @@ public class ShrineHeroDestruction {
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CINEMATIC_BARS, 100, 0, false, false, false));
 
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
     }
