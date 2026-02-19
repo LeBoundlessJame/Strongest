@@ -18,11 +18,13 @@ import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
@@ -115,16 +117,31 @@ public class BrawlerHero extends Hero {
     }
 
     public static void spinKick(PlayerEntity player) {
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        tasks.put(7, (user, heroAction) -> {
-            if (CombatUtils.isRolling(player)) return;
+        if (!AttackUtils.canAttack(player)) return;
 
-            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.knockbackAttack(heroAction, DAMAGE.spinKick.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
-        });
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 2000);
-        ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
+
+        SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
+
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
+
+        Action kick = Action.builder()
+                .scheduledTask(7, (user, action) ->
+                        MeleeUtils.forEach(player, action, (attacker, entity) -> {
+                            if (BlackFlashAbility.calculateBlackFlash(player)) {
+                                BlackFlashAbility.blackFlash(player, 80, new Vec3d(10f, 1.0f, 10f), action);
+                                return;
+                            }
+
+                            entity.damage(entity.getDamageSources().generic(), 40);
+                            if (!(entity instanceof LivingEntity livingEntity)) return;
+
+                            SoundUtils.playSound(player, SoundRegistry.IMPACT_HEAVY_1);
+                            CombatUtils.strongKnockback(player, livingEntity, 5);
+                        }))
+                .build();
+
         AttackUtils.startAttackTimer(player, 10);
+        ActionUtils.performAction(player, kick);
     }
 }
