@@ -83,6 +83,8 @@ public class BrawlerMelee {
     }
 
     public static void blackFlash(PlayerEntity player) {
+        EffekUtils.playBoundEffect(BoundlessAPI.identifier("black_flash_aura"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
+
         HeroUtils.getHeroStack(player).set(StrongestComponents.BLACK_FLASH_CHANCE, 1.0f);
     }
 }
