@@ -30,13 +30,13 @@ public class BlackFlashAbility {
         CameraUtils.playCameraShake(player);
 
         CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-            playBlackFlashVisuals(attacker, 5);
+            playBlackFlashVisuals(attacker, 6);
 
             livingEntity.timeUntilRegen = 0;
             MeleeUtils.knockback(player, livingEntity, knockbackMultiplier);
             CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.identifier("flash")));
             if (livingEntity instanceof PlayerEntity target) {
-                playBlackFlashVisuals(target, 5);
+                playBlackFlashVisuals(target, 6);
             }
         });
 
