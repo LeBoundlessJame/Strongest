@@ -30,7 +30,7 @@ public class BlackFlashAbility {
         CameraUtils.playCameraShake(player);
 
         CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-            playBlackFlashVisuals(attacker, 6);
+            playBlackFlashVisuals(attacker, 5);
 
             livingEntity.timeUntilRegen = 0;
             MeleeUtils.knockback(player, livingEntity, knockbackMultiplier);
