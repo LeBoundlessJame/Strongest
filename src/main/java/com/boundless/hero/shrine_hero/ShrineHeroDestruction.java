@@ -23,12 +23,8 @@ public class ShrineHeroDestruction {
     public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
 
     public static void open(PlayerEntity player) {
-        //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
-        if (true) {
-            System.out.println("Poopy");
-            EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), player, player.getPos(), new Vec3d(0.25, 0.25, 0.25));
-            return;
-        }
+        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
+        //            EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), player, player.getPos(), new Vec3d(0.25, 0.25, 0.25));
 
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
