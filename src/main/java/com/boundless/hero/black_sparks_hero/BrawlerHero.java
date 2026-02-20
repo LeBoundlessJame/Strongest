@@ -38,6 +38,7 @@ public class BrawlerHero extends Hero {
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
     public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
+    public static Ability MANJI_KICK = AbilityUtils.ability(BrawlerMelee::manjiKick, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("manji_kick"), "Manji Kick");
 
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
@@ -68,6 +69,7 @@ public class BrawlerHero extends Hero {
                 .ability("key.boundless.ability_two", BrawlerHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BrawlerHero.BLACK_FLASH)
                 .ability("key.boundless.ability_four", BrawlerHero.DIVERGENT_FIST)
+                .ability("key.boundless.ability_five", BrawlerHero.MANJI_KICK)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
