@@ -5,6 +5,7 @@ import com.boundless.action.Action;
 import com.boundless.action.AdvancedAttack;
 import com.boundless.action.SingleAttack;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
@@ -19,9 +20,12 @@ import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 
 public class BrawlerMelee {
     public static void lightAttack(PlayerEntity player) {
+        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+
         if (!AttackUtils.canAttack(player)) return;
 
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         Action hook = Action.builder()
@@ -40,7 +44,6 @@ public class BrawlerMelee {
         AttackUtils.startAttackTimer(player, 4);
         ActionUtils.performAction(player, hook);
     }
-
     // Todo: make some pre, post and replacement 'events' for attacks
     public static void divergentFist(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
@@ -77,9 +80,13 @@ public class BrawlerMelee {
             CombatUtils.strongKnockback(player, livingEntity, 5);
         });
     }
-
+// Todo: Find a fix for manji kick animation. (I made A VERY sus as fuck fix, but like it works :sob:)
     public static void manjiKick(PlayerEntity player) {
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("manji_kick_parry"), 1f, false, true, 3000);
+        Action manjiKick = Action.builder()
+                .scheduledTask(4, (user, action) -> AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("manji_kick_parry"), 1.5f, false, true, 3001))
+                .scheduledTask(20, (user, action) -> AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("idle"), 1f, false, true, 3002))
+                .build();
+        ActionUtils.performAction(player, manjiKick);
     }
 
     public static void blackFlash(PlayerEntity player) {
