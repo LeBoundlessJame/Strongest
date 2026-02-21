@@ -51,6 +51,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         this.getWorld().addImportantParticle(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 0, -1, 0);
     }
 
+    // Todo: make it so that explosion doesn't do damage
     @Override
     public void onBlockHit(BlockHitResult result) {
         super.onBlockHit(result);
