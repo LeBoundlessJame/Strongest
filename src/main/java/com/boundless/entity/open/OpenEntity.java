@@ -3,6 +3,7 @@ package com.boundless.entity.open;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
+import com.boundless.registry.GameRulesRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.AOEUtils;
 import com.boundless.util.CameraUtils;
@@ -18,6 +19,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -59,8 +61,11 @@ public class OpenEntity extends PersistentProjectileEntity {
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
 
         if (!this.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) this.getWorld();
+            if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
+                this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
+            }
             openDamage(200);
-            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
         }
 
         this.discard();
@@ -70,12 +75,15 @@ public class OpenEntity extends PersistentProjectileEntity {
     @Override
     public void onEntityHit(EntityHitResult result) {
         super.onEntityHit(result);
-        if (result.getEntity() == null || !((result.getEntity()) instanceof LivingEntity livingEntity) || this.getOwner() == null) return;
-        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), livingEntity, livingEntity.getPos().add(0f, 0.1f, 0f), 0.5f);
+        if (result.getEntity() == null || this.getOwner() == null) return;
+        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
 
         if (!this.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) this.getWorld();
+            if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
+                this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
+            }
             openDamage(200);
-            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
         }
 
         this.discard();
