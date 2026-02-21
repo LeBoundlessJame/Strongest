@@ -4,9 +4,11 @@ import com.boundless.BoundlessAPI;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.util.AOEUtils;
 import com.boundless.util.CameraUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -54,9 +56,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         super.onBlockHit(result);
         if (this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
-        //((LivingEntity) this.getOwner()).addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
-
-        //EffekUtils.playEffect(BoundlessAPI.identifier("fuga_destruction"), this, this.getPos().add(0f, 0.1f, 0f), 1);
+        openDamage(200);
         this.discard();
     }
 
@@ -66,13 +66,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         super.onEntityHit(result);
         if (result.getEntity() == null || !((result.getEntity()) instanceof LivingEntity livingEntity) || this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), livingEntity, livingEntity.getPos().add(0f, 0.1f, 0f), 0.5f);
-        //((LivingEntity) this.getOwner()).addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
-
-        livingEntity.timeUntilRegen = 0;
-        livingEntity.damage(livingEntity.getDamageSources().generic(), 500f);
-        livingEntity.setOnFireFor(10);
-        CameraUtils.playCameraShake((PlayerEntity) this.getOwner());
-        SoundUtils.playSound((PlayerEntity) this.getOwner(), SoundEvents.ITEM_FIRECHARGE_USE, 5, 8);
+        openDamage(200);
         this.discard();
     }
 
@@ -88,5 +82,17 @@ public class OpenEntity extends PersistentProjectileEntity {
     @Override
     protected ItemStack getDefaultItemStack() {
         return Items.ARROW.getDefaultStack();
+    }
+
+    public void openDamage(float amount) {
+        CameraUtils.playCameraShake((PlayerEntity) this.getOwner());
+        SoundUtils.playSound((PlayerEntity) this.getOwner(), SoundEvents.ITEM_FIRECHARGE_USE, 5, 8);
+
+        AOEUtils.forEach(this, 10, (open, target) -> {
+            if (target instanceof PlayerEntity player) CameraUtils.playCameraShake(player);
+            target.timeUntilRegen = 0;
+            target.damage(this.getDamageSources().lava(), amount);
+            target.setOnFireFor(10);
+        });
     }
 }
