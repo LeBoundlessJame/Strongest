@@ -56,7 +56,12 @@ public class OpenEntity extends PersistentProjectileEntity {
         super.onBlockHit(result);
         if (this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
-        openDamage(200);
+
+        if (!this.getWorld().isClient) {
+            openDamage(200);
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
+        }
+
         this.discard();
     }
 
@@ -66,7 +71,12 @@ public class OpenEntity extends PersistentProjectileEntity {
         super.onEntityHit(result);
         if (result.getEntity() == null || !((result.getEntity()) instanceof LivingEntity livingEntity) || this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), livingEntity, livingEntity.getPos().add(0f, 0.1f, 0f), 0.5f);
-        openDamage(200);
+
+        if (!this.getWorld().isClient) {
+            openDamage(200);
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
+        }
+
         this.discard();
     }
 
@@ -88,7 +98,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         CameraUtils.playCameraShake((PlayerEntity) this.getOwner());
         SoundUtils.playSound((PlayerEntity) this.getOwner(), SoundEvents.ITEM_FIRECHARGE_USE, 5, 8);
 
-        AOEUtils.forEach(this, 10, (open, target) -> {
+        AOEUtils.forEach(this, 35, (open, target) -> {
             if (target instanceof PlayerEntity player) CameraUtils.playCameraShake(player);
             target.timeUntilRegen = 0;
             target.damage(this.getDamageSources().lava(), amount);
