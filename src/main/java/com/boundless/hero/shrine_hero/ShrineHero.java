@@ -18,8 +18,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
 
 public class ShrineHero extends Hero {
-    public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
-
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 40f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.8f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
@@ -36,7 +34,6 @@ public class ShrineHero extends Hero {
                 .ability("key.boundless.ability_one", ShrineHeroSlashes.DISMANTLE)
                 .ability("key.boundless.ability_two", ShrineHeroSlashes.CLEAVE)
                 .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
-                .ability("key.boundless.ability_four", ShrineHeroOther.HEAL)
                 .ability("key.boundless.ability_five", ShrineHeroDestruction.SHRINE)
 
                 .build();
