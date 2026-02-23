@@ -1,6 +1,7 @@
 package com.boundless.entity.open;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.GameRulesRegistry;
@@ -28,6 +29,9 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Set;
 
 public class OpenEntity extends PersistentProjectileEntity {
 
@@ -63,6 +67,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         if (!this.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) this.getWorld();
             if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
+                performFurnaceNukeIfPossible();
                 this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
             }
             openDamage(200);
@@ -81,6 +86,7 @@ public class OpenEntity extends PersistentProjectileEntity {
         if (!this.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) this.getWorld();
             if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
+                performFurnaceNukeIfPossible();
                 this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
             }
             openDamage(200);
@@ -112,6 +118,19 @@ public class OpenEntity extends PersistentProjectileEntity {
             target.timeUntilRegen = 0;
             target.damage(this.getDamageSources().lava(), amount);
             target.setOnFireFor(10);
+        });
+    }
+
+    public void performFurnaceNukeIfPossible() {
+        List<MalevolentShrineEntity> entries = this.getWorld().getEntitiesByClass(MalevolentShrineEntity.class, this.getBoundingBox().expand(200, 200, 200), entity -> entity.getOwner() == this.getOwner());
+        if (entries.isEmpty()) return;
+        MalevolentShrineEntity shrine = entries.getFirst();
+        if (shrine == null) return;
+
+        shrine.entitiesInRange.forEach(entity -> {
+            this.getWorld().createExplosion(shrine, entity.getX(), entity.getY(), entity.getZ(), 5f, true, World.ExplosionSourceType.BLOCK);
+            entity.timeUntilRegen = 0;
+            entity.damage(this.getDamageSources().generic(), 1000f);
         });
     }
 }
