@@ -70,8 +70,9 @@ public class ShrineHeroDestruction {
         int domainExpansionDuration = 200;
         float domainRadius = 100;
 
-        //player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 3, false, false, false));
-        //AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, 100, 0, false, false, false));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 2, false, false, false));
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
         Vec3d shrinePosition = new Vec3d(player.getX() - player.getRotationVector().multiply(5).x, player.getY(), player.getZ() - player.getRotationVector().multiply(5).z);
@@ -82,7 +83,7 @@ public class ShrineHeroDestruction {
         shrine.setScale(domainRadius / 20f);
         shrine.setDomainRadius(new Vec3d(domainRadius, domainRadius, domainRadius));
         shrine.setMaxLifetime(domainExpansionDuration);
-        shrine.setDelay(10);
+        shrine.setDelay(100);
         shrine.setOwner(player);
         player.getWorld().spawnEntity(shrine);
 

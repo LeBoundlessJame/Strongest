@@ -55,41 +55,48 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     @Override
     public void tick() {
-        this.setInvisible(false);
+        this.setInvisible(age == 0);
         super.tick();
-
-        if (age == 1) {
-            if (this.getWorld().isClient) {
-                dispatcher.domainBegin();
-            }
+        if (this.getAge() == 0 && this.getWorld().isClient) {
+            this.dispatcher.domainBegin();
         }
+        //System.out.println(String.valueOf(this.getAge()) + this.getWorld());
+        age++;
+        return;
 
-        if (this.getOwner() == null) return;
+        //System.out.println(String.valueOf(age) + this.getWorld());
 
-        entitiesInRange.forEach(entity -> {
-            entity.timeUntilRegen = 0;
-            entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
+        /*
+        if (age > delay) {
+            entitiesInRange.forEach(entity -> {
+                entity.timeUntilRegen = 0;
+                entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
 
-            if (entity.age % 5 == 0 && entity.isAlive()) {
-                EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), entity, entity.getPos().add(0, entity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
-            }
-        });
+                if (entity.age % 5 == 0 && entity.isAlive()) {
+                    EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), entity, entity.getPos().add(0, entity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
+                }
+            });
+        }
 
         if (age % 20 == 0) {
             entitiesInRange.clear();
             entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
         }
 
+
         if (age == delay) {
             bindSurehitEffect(this.getPos(), this.getScale());
         }
 
-        if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
+
+
+        if (age >= maxLifetime || this.getOwner() == null || !this.getOwner().isAlive()) {
             destroySurehitEffect();
             this.discard();
         }
 
         age++;
+        */
     }
 
     public MalevolentShrineEntity(EntityType<?> type, World world) {
