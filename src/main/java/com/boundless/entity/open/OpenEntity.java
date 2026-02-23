@@ -81,6 +81,8 @@ public class OpenEntity extends PersistentProjectileEntity {
     public void onEntityHit(EntityHitResult result) {
         super.onEntityHit(result);
         if (result.getEntity() == null || this.getOwner() == null) return;
+
+        //        EffekUtils.playEffect(BoundlessAPI.identifier("domain_fuga"), this, this.getPos().add(0f, 0.1f, 0f), 10);
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
 
         if (!this.getWorld().isClient) {
