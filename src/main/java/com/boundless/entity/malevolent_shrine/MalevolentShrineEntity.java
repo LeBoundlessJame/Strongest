@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.SoundUtils;
 import lombok.Getter;
@@ -27,7 +28,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Setter
@@ -39,13 +42,31 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public int age;
     public float scale = 1f;
     public int delay;
-    public Vec3d domainRadius = new Vec3d(1, 1, 1);
+    public Vec3d domainRadius = new Vec3d(100, 100, 100);
     public int damagePerSlash = 1;
+    public HashSet<LivingEntity> entitiesInRange = new HashSet<>();
 
     @Override
     public void tick() {
         this.setInvisible(age == 0);
         super.tick();
+
+        if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
+            destroySurehitEffect();
+            this.discard();
+        }
+
+        if (this.getOwner() == null) return;
+
+        entitiesInRange.forEach(entity -> {
+            entity.timeUntilRegen = 0;
+            entity.damage(entity.getDamageSources().generic(), 1);
+        });
+
+        if (age % 20 == 0) {
+            entitiesInRange.clear();
+            entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> true));
+        }
 
         if (age == 0) {
            if (this.getWorld().isClient) {
@@ -67,11 +88,6 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
                     livingEntity.timeUntilRegen = 0;
                 }
             }
-        }
-
-        if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
-            destroySurehitEffect();
-            this.discard();
         }
 
         age++;
