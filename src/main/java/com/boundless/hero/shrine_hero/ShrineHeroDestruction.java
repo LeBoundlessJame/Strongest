@@ -65,12 +65,13 @@ public class ShrineHeroDestruction {
     // Todo: make literally all of this better
     public static void shrine(PlayerEntity player) {
         //String message = "§c§l§ka§c §c§l''Ryoiki Tenkai''. §c§l§ka§c";
+        if (player.getWorld().isClient) return;
 
         int domainExpansionDuration = 200;
         float domainRadius = 100;
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 3, false, false, false));
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
+        //player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 3, false, false, false));
+        //AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
         Vec3d shrinePosition = new Vec3d(player.getX() - player.getRotationVector().multiply(5).x, player.getY(), player.getZ() - player.getRotationVector().multiply(5).z);
@@ -80,8 +81,9 @@ public class ShrineHeroDestruction {
         shrine.setYaw(player.getYaw());
         shrine.setScale(domainRadius / 20f);
         shrine.setDomainRadius(new Vec3d(domainRadius, domainRadius, domainRadius));
-        shrine.setMaxLifetime(1200);
+        shrine.setMaxLifetime(domainExpansionDuration);
         shrine.setDelay(10);
+        shrine.setOwner(player);
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);

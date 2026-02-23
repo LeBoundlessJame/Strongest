@@ -49,13 +49,19 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public HashSet<LivingEntity> entitiesInRange = new HashSet<>();
 
     @Override
+    public boolean isCollidable() {
+        return true;
+    }
+
+    @Override
     public void tick() {
-        this.setInvisible(age == 0);
+        this.setInvisible(false);
         super.tick();
 
-        if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
-            destroySurehitEffect();
-            this.discard();
+        if (age == 1) {
+            if (this.getWorld().isClient) {
+                dispatcher.domainBegin();
+            }
         }
 
         if (this.getOwner() == null) return;
@@ -74,14 +80,13 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
         }
 
-        if (age == 0) {
-           if (this.getWorld().isClient) {
-               dispatcher.domainBegin();
-           }
-        }
-
         if (age == delay) {
             bindSurehitEffect(this.getPos(), this.getScale());
+        }
+
+        if (age >= maxLifetime || (!this.getWorld().isClient && this.getOwner() == null || (this.getOwner() != null && !this.getOwner().isAlive()))) {
+            destroySurehitEffect();
+            this.discard();
         }
 
         age++;
@@ -139,7 +144,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
         if (effect != null) {
             Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + this.getId()));
-            emitter.ifPresent(particleEmitter -> particleEmitter.sendTrigger(0));
+            emitter.ifPresent(particleEmitter -> particleEmitter.stop());
         }
     }
 
