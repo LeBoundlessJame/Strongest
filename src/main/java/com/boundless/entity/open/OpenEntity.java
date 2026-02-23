@@ -67,7 +67,6 @@ public class OpenEntity extends PersistentProjectileEntity {
         if (!this.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) this.getWorld();
             if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
-                performFurnaceNukeIfPossible();
                 this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
             }
             openDamage(200);
@@ -82,13 +81,11 @@ public class OpenEntity extends PersistentProjectileEntity {
         super.onEntityHit(result);
         if (result.getEntity() == null || this.getOwner() == null) return;
 
-        //        EffekUtils.playEffect(BoundlessAPI.identifier("domain_fuga"), this, this.getPos().add(0f, 0.1f, 0f), 10);
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
 
         if (!this.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) this.getWorld();
             if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
-                performFurnaceNukeIfPossible();
                 this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
             }
             openDamage(200);
@@ -115,24 +112,11 @@ public class OpenEntity extends PersistentProjectileEntity {
         CameraUtils.playCameraShake((PlayerEntity) this.getOwner());
         SoundUtils.playSound((PlayerEntity) this.getOwner(), SoundEvents.ITEM_FIRECHARGE_USE, 5, 8);
 
-        AOEUtils.forEach(this, 35, (open, target) -> {
+        AOEUtils.forEach(this, 20, (open, target) -> {
             if (target instanceof PlayerEntity player) CameraUtils.playCameraShake(player);
             target.timeUntilRegen = 0;
             target.damage(this.getDamageSources().lava(), amount);
             target.setOnFireFor(10);
-        });
-    }
-
-    public void performFurnaceNukeIfPossible() {
-        List<MalevolentShrineEntity> entries = this.getWorld().getEntitiesByClass(MalevolentShrineEntity.class, this.getBoundingBox().expand(200, 200, 200), entity -> entity.getOwner() == this.getOwner());
-        if (entries.isEmpty()) return;
-        MalevolentShrineEntity shrine = entries.getFirst();
-        if (shrine == null) return;
-
-        shrine.entitiesInRange.forEach(entity -> {
-            this.getWorld().createExplosion(shrine, entity.getX(), entity.getY(), entity.getZ(), 5f, true, World.ExplosionSourceType.BLOCK);
-            entity.timeUntilRegen = 0;
-            entity.damage(this.getDamageSources().generic(), 1000f);
         });
     }
 }
