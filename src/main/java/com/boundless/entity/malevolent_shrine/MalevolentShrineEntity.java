@@ -57,17 +57,21 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public void tick() {
         this.setInvisible(age == 0);
         super.tick();
+
         if (this.getAge() == 0 && this.getWorld().isClient) {
             this.dispatcher.domainBegin();
         }
-        //System.out.println(String.valueOf(this.getAge()) + this.getWorld());
-        age++;
-        return;
 
-        //System.out.println(String.valueOf(age) + this.getWorld());
+        if (this.getAge() > this.getMaxLifetime()) {
+            this.discard();
+        }
 
-        /*
-        if (age > delay) {
+        if (this.getAge() % 20 == 0) {
+            entitiesInRange.clear();
+            entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
+        }
+
+        if (this.getAge() > delay && !this.getWorld().isClient) {
             entitiesInRange.forEach(entity -> {
                 entity.timeUntilRegen = 0;
                 entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
@@ -78,25 +82,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             });
         }
 
-        if (age % 20 == 0) {
-            entitiesInRange.clear();
-            entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
-        }
-
-
-        if (age == delay) {
-            bindSurehitEffect(this.getPos(), this.getScale());
-        }
-
-
-
-        if (age >= maxLifetime || this.getOwner() == null || !this.getOwner().isAlive()) {
-            destroySurehitEffect();
-            this.discard();
-        }
-
         age++;
-        */
     }
 
     public MalevolentShrineEntity(EntityType<?> type, World world) {
@@ -113,17 +99,23 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {}
+    protected void initDataTracker(DataTracker.Builder builder) {
+    }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {}
+    protected void readCustomDataFromNbt(NbtCompound nbt) {
+    }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {}
+    protected void writeCustomDataToNbt(NbtCompound nbt) {
+    }
 
-    @Nullable @Setter
+    @Nullable
+    @Setter
     private Entity owner;
-    @Nullable @Setter @Getter
+    @Nullable
+    @Setter
+    @Getter
     private UUID ownerUuid;
 
     @Nullable
