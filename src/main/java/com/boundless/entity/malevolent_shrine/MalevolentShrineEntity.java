@@ -60,12 +60,12 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
         entitiesInRange.forEach(entity -> {
             entity.timeUntilRegen = 0;
-            entity.damage(entity.getDamageSources().generic(), 1);
+            entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
         });
 
         if (age % 20 == 0) {
             entitiesInRange.clear();
-            entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> true));
+            entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
         }
 
         if (age == 0) {
@@ -76,18 +76,6 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
         if (age == delay) {
             bindSurehitEffect(this.getPos(), this.getScale());
-        }
-
-        if (this.age % 20 == 0) {
-            // Todo: maybe make it so that you can tweak domain x, y , z via binding vow
-            // Todo: reinstate custom damage amount
-            for (LivingEntity livingEntity : this.getWorld().getEntitiesByClass(LivingEntity.class, new Box(this.getBlockPos()).expand(domainRadius.getX(), domainRadius.getY() / 2, domainRadius.getZ()), entity -> true)) {
-                if (livingEntity != this.getOwner()) {
-                    livingEntity.timeUntilRegen = 0;
-                    livingEntity.damage(livingEntity.getDamageSources().magic(), this.getDamagePerSlash());
-                    livingEntity.timeUntilRegen = 0;
-                }
-            }
         }
 
         age++;
