@@ -61,6 +61,10 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         entitiesInRange.forEach(entity -> {
             entity.timeUntilRegen = 0;
             entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
+
+            if (entity.age % 5 == 0 && entity.isAlive()) {
+                EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), entity, entity.getPos().add(0, entity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
+            }
         });
 
         if (age % 20 == 0) {

@@ -80,7 +80,7 @@ public class ShrineHeroDestruction {
         shrine.setYaw(player.getYaw());
         shrine.setScale(domainRadius / 20f);
         shrine.setDomainRadius(new Vec3d(domainRadius, domainRadius, domainRadius));
-        shrine.setMaxLifetime(domainExpansionDuration);
+        shrine.setMaxLifetime(1200);
         shrine.setDelay(10);
         player.getWorld().spawnEntity(shrine);
 
