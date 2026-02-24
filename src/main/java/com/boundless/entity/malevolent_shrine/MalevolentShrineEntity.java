@@ -82,6 +82,10 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             });
         }
 
+        if (this.getAge() % 100 == 0) {
+            bindSurehitEffect(this.getPos(), 20f);
+        }
+
         age++;
     }
 
