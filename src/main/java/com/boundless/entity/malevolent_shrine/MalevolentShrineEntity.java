@@ -44,7 +44,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public int maxLifetime = 1200;
     public int age;
     public float scale = 1f;
-    public int delay;
+    public int delay = 60;
     public Vec3d domainRadius = new Vec3d(100, 100, 100);
     public int damagePerSlash = 1;
     public HashSet<LivingEntity> entitiesInRange = new HashSet<>();
@@ -63,8 +63,8 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             this.dispatcher.domainBegin();
         }
 
-        if (this.getAge() > this.getMaxLifetime()) {
-            this.discard();
+        if (this.age >= this.getDelay() && this.getAge() % 100 == 0) {
+            bindSurehitEffect(this.getPos(), 15f);
         }
 
         if (this.getAge() % 20 == 0) {
@@ -83,12 +83,12 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             });
         }
 
-        if (this.getAge() % 100 == 0) {
-            bindSurehitEffect(this.getPos(), 15f);
-        }
-
         if (this.getAge() >= delay && this.getAge() % 20 == 0) {
             applyShrineShaderInRadius();
+        }
+
+        if (this.getAge() > this.getMaxLifetime()) {
+            this.discard();
         }
 
         age++;

@@ -68,7 +68,6 @@ public class ShrineHeroDestruction {
 
     // Todo: make literally all of this better
     public static void shrine(PlayerEntity player) {
-        //String message = "§c§l§ka§c §c§l''Ryoiki Tenkai''. §c§l§ka§c";
         if (player.getWorld().isClient) return;
 
         int domainExpansionDuration = 1200;
@@ -96,8 +95,6 @@ public class ShrineHeroDestruction {
         for (PlayerEntity playerEntity: player.getWorld().getEntitiesByClass(PlayerEntity.class, player.getBoundingBox().expand(shrine.domainRadius.getX(), shrine.domainRadius.getY(), shrine.domainRadius.getZ()), entity -> true)) {
             playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, delay, 0, false, false, false));
         }
-
-        //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
     }
 
     public static void performFurnaceNukeIfPossible(PlayerEntity player) {
