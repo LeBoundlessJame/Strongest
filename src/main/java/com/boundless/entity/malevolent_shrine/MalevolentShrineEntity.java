@@ -35,7 +35,6 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public final MalevolentShrineDispatcher dispatcher;
 
     public int maxLifetime = 1200;
-    public int age;
     public float scale = 1f;
     public int delay = 60;
     public Vec3d domainRadius = new Vec3d(100, 100, 100);
@@ -60,20 +59,25 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     @Override
     public void tick() {
-        this.setInvisible(age == 0);
-        super.tick();
-
-        if (this.getAge() == 0 && this.getWorld().isClient) {
+        this.setInvisible(this.age == 0);
+        if (this.age == 0 && this.getWorld().isClient) {
             this.dispatcher.domainBegin();
         }
+        super.tick();
 
-        if (this.getAge() > this.getMaxLifetime()) {
+        if (this.age > this.getMaxLifetime()) {
             this.discard();
         }
 
-        shrineLogic();
-
-        age++;
+        if (this.furnaceNukeActive) {
+            if (furnaceNukeTicks < furnaceNukeDuration) {
+                furnaceNukeTicks++;
+            } else {
+                furnaceNukeActive = false;
+            }
+        } else {
+            shrineLogic();
+        }
     }
 
     public void applyShrineShaderInRadius() {
@@ -84,8 +88,8 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     public void initiateFurnaceNuke() {
         destroySurehitEffect();
-        setFurnaceNukeTicks(0);
-        setFurnaceNukeActive(true);
+        furnaceNukeTicks = 0;
+        furnaceNukeActive = true;
 
         for (PlayerEntity playerEntity : this.getWorld().getEntitiesByClass(PlayerEntity.class, this.getBoundingBox().expand(this.domainRadius.getX(), this.domainRadius.getY(), this.domainRadius.getZ()), entity -> true)) {
             playerEntity.removeStatusEffect(StatusEffectRegistry.GRAYSCALE);
@@ -94,20 +98,20 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void shrineLogic() {
-        if (this.getAge() >= delay && this.getAge() % 20 == 0) {
+        if (this.age >= delay && this.age % 20 == 0) {
             applyShrineShaderInRadius();
         }
 
-        if (this.age >= this.getDelay() && this.getAge() % 100 == 0) {
+        if (this.age >= this.getDelay() && this.age % 100 == 0) {
             bindSurehitEffect(this.getPos(), 15f);
         }
 
-        if (this.getAge() % 20 == 0) {
+        if (this.age % 20 == 0) {
             entitiesInRange.clear();
             entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
         }
 
-        if (this.getAge() > delay && !this.getWorld().isClient) {
+        if (this.age > delay && !this.getWorld().isClient) {
             entitiesInRange.forEach(entity -> {
                 entity.timeUntilRegen = 0;
                 entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
