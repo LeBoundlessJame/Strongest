@@ -20,6 +20,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Ownable;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -86,6 +87,10 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             bindSurehitEffect(this.getPos(), 15f);
         }
 
+        if (this.getAge() >= delay && this.getAge() % 20 == 0) {
+            applyShrineShaderInRadius();
+        }
+
         age++;
     }
 
@@ -148,6 +153,12 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         if (effect != null) {
             Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + this.getId()));
             emitter.ifPresent(particleEmitter -> particleEmitter.stop());
+        }
+    }
+
+    public void applyShrineShaderInRadius() {
+        for (PlayerEntity playerEntity: this.getWorld().getEntitiesByClass(PlayerEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> true)) {
+            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, 21, 0, false, false, false));
         }
     }
 

@@ -73,8 +73,8 @@ public class ShrineHeroDestruction {
 
         int domainExpansionDuration = 1200;
         float domainRadius = 200;
+        int delay = 60;
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, 100, 0, false, false, false));
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 2, false, false, false));
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
@@ -87,11 +87,15 @@ public class ShrineHeroDestruction {
         shrine.setScale(domainRadius / 20f);
         shrine.setDomainRadius(new Vec3d(domainRadius, domainRadius, domainRadius));
         shrine.setMaxLifetime(domainExpansionDuration);
-        shrine.setDelay(60);
+        shrine.setDelay(delay);
         shrine.setOwner(player);
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
+
+        for (PlayerEntity playerEntity: player.getWorld().getEntitiesByClass(PlayerEntity.class, player.getBoundingBox().expand(shrine.domainRadius.getX(), shrine.domainRadius.getY(), shrine.domainRadius.getZ()), entity -> true)) {
+            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, delay, 0, false, false, false));
+        }
 
         //EffekUtils.playEffect(BoundlessAPI.identifier("shrine_visuals"), player, player.getPos().add(0f, 0.1f, 0f).add(player.getRotationVector().normalize().multiply(10)), 5.0f);
     }
