@@ -1,10 +1,8 @@
 package com.boundless.hero.shrine_hero;
 
-import com.boundless.hero.switcher_hero.SwitcherConfig;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
-import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedLong;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedNumber;
 
 public class ShrineConfig extends ConfigSection {
@@ -13,18 +11,26 @@ public class ShrineConfig extends ConfigSection {
     }
 
     public ValidatedFloat damageReduction = new ValidatedFloat(0.8f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
-    public ValidatedLong reviveBuffDuration = new ValidatedLong(200, 999999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
 
     public ShrineConfig.AbilityDamageConfig abilityDamageConfig = new ShrineConfig.AbilityDamageConfig();
     public ShrineConfig.AbilityCooldownConfig abilityCooldownConfig = new ShrineConfig.AbilityCooldownConfig();
+    public ShrineConfig.DomainConfig domainConfig = new ShrineConfig.DomainConfig();
 
     public static class AbilityCooldownConfig extends ConfigSection {
         public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt mediumAttack = new ValidatedInt(10, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt clap = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt targetSelect = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt rockThrow = new ValidatedInt(400, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt suplex = new ValidatedInt(300, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt cleave = new ValidatedInt(400, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt dismantle = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt open = new ValidatedInt(1200, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt domainExpansion = new ValidatedInt(6000, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+    }
+
+    public static class DomainConfig extends ConfigSection {
+        public ValidatedInt domainDuration = new ValidatedInt(600, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt initialDelay = new ValidatedInt(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt timeBetweenSlashes = new ValidatedInt(1, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt timeBetweenMobChecks = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt timeBetweenShaderApplications = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }
 
     public static class AbilityDamageConfig extends ConfigSection {
