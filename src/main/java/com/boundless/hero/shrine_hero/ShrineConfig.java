@@ -31,6 +31,8 @@ public class ShrineConfig extends ConfigSection {
         public ValidatedInt timeBetweenSlashes = new ValidatedInt(1, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt timeBetweenMobChecks = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt timeBetweenShaderApplications = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat weakestSlashDamage = new ValidatedFloat(4.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestSlashDamage = new ValidatedFloat(12.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
     }
 
     public static class AbilityDamageConfig extends ConfigSection {
