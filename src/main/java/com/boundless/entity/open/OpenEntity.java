@@ -2,6 +2,8 @@ package com.boundless.entity.open;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
+import com.boundless.hero.shrine_hero.ShrineHelper;
+import com.boundless.hero.shrine_hero.ShrineHero;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.GameRulesRegistry;
@@ -69,7 +71,7 @@ public class OpenEntity extends PersistentProjectileEntity {
             if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
                 this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
             }
-            openDamage(200);
+            openDamage(ShrineHelper.getScaledDamage((PlayerEntity) this.getOwner(), ShrineHero.DAMAGE.weakestOpenDamage.get(), ShrineHero.DAMAGE.strongestOpenDamage.get()));
         }
 
         this.discard();
@@ -88,7 +90,7 @@ public class OpenEntity extends PersistentProjectileEntity {
             if (serverWorld.getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
                 this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 20f, true, World.ExplosionSourceType.BLOCK);
             }
-            openDamage(200);
+            openDamage(ShrineHelper.getScaledDamage((PlayerEntity) this.getOwner(), ShrineHero.DAMAGE.weakestOpenDamage.get(), ShrineHero.DAMAGE.strongestOpenDamage.get()));
         }
 
         this.discard();

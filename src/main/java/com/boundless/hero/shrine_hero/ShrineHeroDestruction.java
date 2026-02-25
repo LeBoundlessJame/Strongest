@@ -5,6 +5,7 @@ import com.boundless.ability.Ability;
 import com.boundless.action.Action;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
+import com.boundless.registry.GameRulesRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
@@ -19,32 +20,21 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
-
 public class ShrineHeroDestruction {
-    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("open"), "Open");
-    public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
+    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open");
+    public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
 
     public static void open(PlayerEntity player) {
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
-        //            EffekUtils.playEffect(BoundlessAPI.identifier("fuga_upgraded"), player, player.getPos(), new Vec3d(0.25, 0.25, 0.25));
-
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
 
-
         for (int i = 0; i < 20; i++) {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
         }
-
-        /*
-        Action spawnFlames = ActionUtils.singleAction(70, (user, heroAction) -> {
-            //EffekUtils.playBoundEffect(BoundlessAPI.identifier("fire"), player, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
-        });
-         */
 
         Action shootOpen = ActionUtils.singleAction(90, (user, heroAction) -> {
             OpenEntity openEntity = new OpenEntity(user, user.getWorld());
@@ -62,7 +52,6 @@ public class ShrineHeroDestruction {
             playerEntity.sendMessage(Text.of(playerEntity != player ? message : message.replace("'", "")), true);
         }
 
-        //ActionUtils.performAction(player, spawnFlames);
         ActionUtils.performAction(player, shootOpen);
     }
 
@@ -99,9 +88,11 @@ public class ShrineHeroDestruction {
         EffekUtils.playEffect(BoundlessAPI.identifier("domain_fuga"), shrine, shrine.getPos().add(0f, 0.1f, 0f), 10);
 
         shrine.entitiesInRange.forEach(entity -> {
-            player.getWorld().createExplosion(shrine, entity.getX(), entity.getY(), entity.getZ(), 10f, true, World.ExplosionSourceType.BLOCK);
+            if (!shrine.getWorld().isClient && shrine.getWorld().getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
+                player.getWorld().createExplosion(shrine, entity.getX(), entity.getY(), entity.getZ(), 10f, true, World.ExplosionSourceType.BLOCK);
+            }
             entity.timeUntilRegen = 0;
-            entity.damage(entity.getDamageSources().generic(), ShrineHero.DOMAIN.initialDelay.get());
+            entity.damage(entity.getDamageSources().generic(), ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestFurnaceArrowDamage.get(), ShrineHero.DAMAGE.strongestFurnaceArrowDamage.get()));
         });
     }
 }
