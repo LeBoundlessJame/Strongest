@@ -44,7 +44,6 @@ public class ShrineHero extends Hero {
                 .ability("key.boundless.ability_two", ShrineHeroSlashes.CLEAVE)
                 .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
                 .ability("key.boundless.ability_five", ShrineHeroDestruction.SHRINE)
-
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);

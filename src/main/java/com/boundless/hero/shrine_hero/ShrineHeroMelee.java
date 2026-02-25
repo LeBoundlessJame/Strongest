@@ -12,9 +12,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
 
 public class ShrineHeroMelee {
-
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(ShrineHeroMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(ShrineHeroMelee::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("shrine_medium_attack"), BoundlessAPI.hudPNG("leg"));
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(ShrineHeroMelee::lightAttack, ShrineHero.COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(ShrineHeroMelee::mediumAttack, ShrineHero.COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("shrine_medium_attack"), BoundlessAPI.hudPNG("leg"));
 
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
@@ -24,7 +23,7 @@ public class ShrineHeroMelee {
                 .damage(SwitcherHero.DAMAGE.mediumAttackPerHit.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)
                 .animationSpeed(1.0f)
-                .damage(12f)
+                .damage(ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestMediumAttackPerHit.get(), ShrineHero.DAMAGE.strongestMediumAttackPerHit.get()))
                 .animation(BoundlessAPI.identifier("double_kick"))
                 .impactTick(4)
                 .attackDuration(8)
@@ -38,7 +37,7 @@ public class ShrineHeroMelee {
 
         SingleAttack hook = SingleAttack.builder()
                 .player(player)
-                .damage(SwitcherHero.DAMAGE.lightAttack.get())
+                .damage(ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestLightAttack.get(), ShrineHero.DAMAGE.strongestLightAttack.get()))
                 .impactSound(SoundRegistry.EARTH_IMPACT)
                 .animationSpeed(1.0f)
                 .animation(BoundlessAPI.identifier("hook"))

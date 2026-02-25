@@ -33,7 +33,6 @@ import java.util.UUID;
 @Setter
 @Getter
 public class MalevolentShrineEntity extends Entity implements Ownable {
-
     public final MalevolentShrineDispatcher dispatcher;
 
     public int maxLifetime = ShrineHero.DOMAIN.domainDuration.get();
