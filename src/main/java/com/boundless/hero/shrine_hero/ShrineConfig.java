@@ -12,9 +12,9 @@ public class ShrineConfig extends ConfigSection {
 
     public ValidatedFloat damageReduction = new ValidatedFloat(0.8f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
 
-    public ShrineConfig.AbilityDamageConfig abilityDamageConfig = new ShrineConfig.AbilityDamageConfig();
-    public ShrineConfig.AbilityCooldownConfig abilityCooldownConfig = new ShrineConfig.AbilityCooldownConfig();
-    public ShrineConfig.DomainConfig domainConfig = new ShrineConfig.DomainConfig();
+    public ShrineConfig.AbilityDamageConfig ABILITY_DAMAGE_CONFIG = new ShrineConfig.AbilityDamageConfig();
+    public ShrineConfig.AbilityCooldownConfig ABILITY_COOLDOWN_CONFIG = new ShrineConfig.AbilityCooldownConfig();
+    public ShrineConfig.DomainConfig DOMAIN_CONFIG = new ShrineConfig.DomainConfig();
 
     public static class AbilityCooldownConfig extends ConfigSection {
         public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
@@ -29,6 +29,7 @@ public class ShrineConfig extends ConfigSection {
         public ValidatedInt domainDuration = new ValidatedInt(600, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt initialDelay = new ValidatedInt(60, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt timeBetweenSlashes = new ValidatedInt(1, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt timeBetweenSlashVFX = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt timeBetweenMobChecks = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt timeBetweenShaderApplications = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedFloat weakestSlashDamage = new ValidatedFloat(4.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);

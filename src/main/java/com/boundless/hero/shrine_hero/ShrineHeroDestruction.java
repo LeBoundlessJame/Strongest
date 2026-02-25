@@ -70,11 +70,7 @@ public class ShrineHeroDestruction {
     public static void shrine(PlayerEntity player) {
         if (player.getWorld().isClient) return;
 
-        int domainExpansionDuration = 1200;
-        float domainRadius = 200;
-        int delay = 60;
-
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 2, false, false, false));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, ShrineHero.DOMAIN.initialDelay.get(), 2, false, false, false));
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
@@ -82,17 +78,14 @@ public class ShrineHeroDestruction {
         shrine.setPosition(new Vec3d(player.getX() - player.getRotationVector().multiply(6).x, player.getY(), player.getZ() - player.getRotationVector().multiply(6).z));
         shrine.setPitch(player.getPitch());
         shrine.setYaw(player.getYaw());
-        shrine.setDomainRadius(new Vec3d(domainRadius, domainRadius, domainRadius));
-        shrine.setMaxLifetime(domainExpansionDuration);
-        shrine.setDelay(delay);
         shrine.setOwner(player);
         player.getWorld().spawnEntity(shrine);
 
         SoundUtils.playSound(player, SoundRegistry.ROCK_CRUMBLING);
 
         for (PlayerEntity playerEntity: player.getWorld().getEntitiesByClass(PlayerEntity.class, player.getBoundingBox().expand(shrine.domainRadius.getX(), shrine.domainRadius.getY(), shrine.domainRadius.getZ()), entity -> true)) {
-            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, delay, 0, false, false, false));
-            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, delay + 20, 0, false, false, false));
+            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, ShrineHero.DOMAIN.initialDelay.get(), 0, false, false, false));
+            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, ShrineHero.DOMAIN.initialDelay.get() + 20, 0, false, false, false));
         }
     }
 
@@ -108,7 +101,7 @@ public class ShrineHeroDestruction {
         shrine.entitiesInRange.forEach(entity -> {
             player.getWorld().createExplosion(shrine, entity.getX(), entity.getY(), entity.getZ(), 10f, true, World.ExplosionSourceType.BLOCK);
             entity.timeUntilRegen = 0;
-            entity.damage(entity.getDamageSources().generic(), 1000f);
+            entity.damage(entity.getDamageSources().generic(), ShrineHero.DOMAIN.initialDelay.get());
         });
     }
 }

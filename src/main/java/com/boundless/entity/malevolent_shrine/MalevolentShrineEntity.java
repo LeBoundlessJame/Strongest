@@ -1,6 +1,8 @@
 package com.boundless.entity.malevolent_shrine;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.hero.shrine_hero.ShrineHelper;
+import com.boundless.hero.shrine_hero.ShrineHero;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.EffekUtils;
@@ -34,14 +36,20 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
     public final MalevolentShrineDispatcher dispatcher;
 
-    public int maxLifetime = 1200;
-    public int delay = 60;
+    public int maxLifetime = ShrineHero.DOMAIN.domainDuration.get();
+    public int delay = ShrineHero.DOMAIN.initialDelay.get();
+    // Todo: make this a config in a future update
     public Vec3d domainRadius = new Vec3d(200, 200, 200);
-    public int damagePerSlash = 1;
     public HashSet<LivingEntity> entitiesInRange = new HashSet<>();
     public boolean furnaceNukeActive = false;
     public int furnaceNukeTicks = 0;
     public int furnaceNukeDuration = 100;
+
+    // I made this a function just in case the owner doesn't exist by the time this variable is initialized
+    public float getDamagePerSlash() {
+        if (this.getOwner() == null) return 0;
+        return ShrineHelper.getScaledDamage((PlayerEntity) this.getOwner(), ShrineHero.DOMAIN.weakestSlashDamage.get(), ShrineHero.DOMAIN.strongestSlashDamage.get());
+    }
 
     public MalevolentShrineEntity(EntityType<?> type, World world) {
         super(type, world);
@@ -82,7 +90,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public void applyShrineShaderInRadius() {
         if (this.getWorld().isClient) return;
         for (PlayerEntity playerEntity : this.getWorld().getEntitiesByClass(PlayerEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> true)) {
-            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, 21, 0, false, false, false));
+            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, ShrineHero.DOMAIN.timeBetweenShaderApplications.get() + 1, 0, false, false, false));
         }
     }
 
@@ -106,17 +114,19 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             bindSurehitEffect(this.getPos(), 15f);
         }
 
-        if (this.age % 20 == 0) {
+        if (this.age % ShrineHero.DOMAIN.timeBetweenMobChecks.get() == 0) {
             entitiesInRange.clear();
             entitiesInRange.addAll(this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> entity != this.getOwner()));
         }
 
         if (this.age > delay && !this.getWorld().isClient) {
             entitiesInRange.forEach(entity -> {
-                entity.timeUntilRegen = 0;
-                entity.damage(entity.getDamageSources().generic(), this.getDamagePerSlash());
+                if (entity.age % ShrineHero.DOMAIN.timeBetweenSlashes.get() == 0) {
+                    entity.timeUntilRegen = 0;
+                    entity.damage(entity.getDamageSources().generic(), getDamagePerSlash());
+                }
 
-                if (entity.age % 5 == 0 && entity.isAlive()) {
+                if (entity.age % ShrineHero.DOMAIN.timeBetweenSlashVFX.get() == 0 && entity.isAlive()) {
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), entity, entity.getPos().add(0, entity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
                 }
             });
