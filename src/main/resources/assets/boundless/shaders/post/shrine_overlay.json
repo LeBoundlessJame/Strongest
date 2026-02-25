@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "boundless:shrine_overlay",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    },
+    {
+      "name": "boundless:shrine_overlay",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

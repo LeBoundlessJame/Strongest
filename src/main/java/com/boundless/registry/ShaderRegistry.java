@@ -12,8 +12,6 @@ public class ShaderRegistry {
             .manage(BoundlessAPI.identifier("shaders/post/cleave_white.json"));
     public static final ManagedShaderEffect GRAYSCALE = ShaderEffectManager.getInstance()
             .manage(BoundlessAPI.identifier("shaders/post/grayscale.json"));
-
-    private static boolean enabled = true;
-
-
+    public static final ManagedShaderEffect SHRINE_OVERLAY = ShaderEffectManager.getInstance()
+            .manage(BoundlessAPI.identifier("shaders/post/shrine_overlay.json"));
 }

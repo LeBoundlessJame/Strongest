@@ -33,6 +33,8 @@ public class HeroHUD {
             ShaderRegistry.CLEAVE_RED.render(renderTickCounter.getTickDelta(true));
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT)) {
             ShaderRegistry.CLEAVE_WHITE.render(renderTickCounter.getTickDelta(true));
+        } else if (client.player.hasStatusEffect(StatusEffectRegistry.SHRINE_EFFECT)) {
+            ShaderRegistry.SHRINE_OVERLAY.render(renderTickCounter.getTickDelta(true));
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.GRAYSCALE)) {
             ShaderRegistry.GRAYSCALE.render(renderTickCounter.getTickDelta(true));
         }

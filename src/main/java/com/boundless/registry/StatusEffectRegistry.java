@@ -15,6 +15,7 @@ public class StatusEffectRegistry {
     public static final RegistryEntry<StatusEffect> CLAP_IMPACT_FRAME_EFFECT = registerStatusEffect("clap_impact_frame_effect", new ImpactFrameEffect(StatusEffectCategory.BENEFICIAL, 0x5d8385));
     public static final RegistryEntry<StatusEffect> BONE_BREAK_EFFECT = registerStatusEffect("bone_break_effect", new ImpactFrameEffect(StatusEffectCategory.HARMFUL, 0xffffff));
     public static final RegistryEntry<StatusEffect> CINEMATIC_BARS = registerStatusEffect("cinematic_bars_effect", new ImpactFrameEffect(StatusEffectCategory.NEUTRAL, 0xffffff));
+    public static final RegistryEntry<StatusEffect> SHRINE_EFFECT = registerStatusEffect("shrine_effect", new ImpactFrameEffect(StatusEffectCategory.BENEFICIAL, 0x5d8385));
     public static final RegistryEntry<StatusEffect> GRAYSCALE = registerStatusEffect("grayscale_effect", new ImpactFrameEffect(StatusEffectCategory.NEUTRAL, 0xffffff));
 
     private static RegistryEntry<StatusEffect> registerStatusEffect(String name, StatusEffect statusEffect) {
