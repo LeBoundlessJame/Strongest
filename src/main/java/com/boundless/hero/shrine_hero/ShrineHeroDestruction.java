@@ -94,6 +94,7 @@ public class ShrineHeroDestruction {
 
         for (PlayerEntity playerEntity: player.getWorld().getEntitiesByClass(PlayerEntity.class, player.getBoundingBox().expand(shrine.domainRadius.getX(), shrine.domainRadius.getY(), shrine.domainRadius.getZ()), entity -> true)) {
             playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.GRAYSCALE, delay, 0, false, false, false));
+            playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, delay + 20, 0, false, false, false));
         }
     }
 
@@ -103,6 +104,7 @@ public class ShrineHeroDestruction {
         MalevolentShrineEntity shrine = entries.getFirst();
         if (shrine == null) return;
 
+        shrine.initiateFurnaceNuke();
         EffekUtils.playEffect(BoundlessAPI.identifier("domain_fuga"), shrine, shrine.getPos().add(0f, 0.1f, 0f), 10);
 
         shrine.entitiesInRange.forEach(entity -> {
