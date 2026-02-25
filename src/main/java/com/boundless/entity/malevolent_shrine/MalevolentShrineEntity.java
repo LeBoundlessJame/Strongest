@@ -42,7 +42,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public HashSet<LivingEntity> entitiesInRange = new HashSet<>();
     public boolean furnaceNukeActive = false;
     public int furnaceNukeTicks = 0;
-    public int furnaceNukeDuration = 300;
+    public int furnaceNukeDuration = 100;
 
     public MalevolentShrineEntity(EntityType<?> type, World world) {
         super(type, world);
@@ -81,6 +81,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void applyShrineShaderInRadius() {
+        if (this.getWorld().isClient) return;
         for (PlayerEntity playerEntity : this.getWorld().getEntitiesByClass(PlayerEntity.class, this.getBoundingBox().expand(domainRadius.getX(), domainRadius.getY(), domainRadius.getZ()), entity -> true)) {
             playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.SHRINE_EFFECT, 21, 0, false, false, false));
         }
@@ -102,7 +103,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             applyShrineShaderInRadius();
         }
 
-        if (this.age >= this.getDelay() && this.age % 100 == 0) {
+        if (!this.getWorld().isClient && this.age >= this.getDelay() && this.age % 100 == 0) {
             bindSurehitEffect(this.getPos(), 15f);
         }
 
