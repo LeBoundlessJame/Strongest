@@ -1,0 +1,49 @@
+package com.boundless.hero.shrine_hero;
+
+import com.boundless.hero.switcher_hero.SwitcherConfig;
+import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedLong;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedNumber;
+
+public class ShrineConfig extends ConfigSection {
+    public ShrineConfig() {
+        super();
+    }
+
+    public ValidatedFloat damageReduction = new ValidatedFloat(0.8f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+    public ValidatedLong reviveBuffDuration = new ValidatedLong(200, 999999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+
+    public ShrineConfig.AbilityDamageConfig abilityDamageConfig = new ShrineConfig.AbilityDamageConfig();
+    public ShrineConfig.AbilityCooldownConfig abilityCooldownConfig = new ShrineConfig.AbilityCooldownConfig();
+
+    public static class AbilityCooldownConfig extends ConfigSection {
+        public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt mediumAttack = new ValidatedInt(10, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt clap = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt targetSelect = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt rockThrow = new ValidatedInt(400, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt suplex = new ValidatedInt(300, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
+    }
+
+    public static class AbilityDamageConfig extends ConfigSection {
+        public ValidatedFloat weakestLightAttack = new ValidatedFloat(12.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestLightAttack = new ValidatedFloat(22.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+
+        public ValidatedFloat weakestMediumAttackPerHit = new ValidatedFloat(6.5f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestMediumAttackPerHit = new ValidatedFloat(12.5f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+
+        public ValidatedFloat weakestDismantle = new ValidatedFloat(8.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestDismantle = new ValidatedFloat(20.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+
+        public ValidatedFloat weakestMaxCleaveDamage = new ValidatedFloat(100.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestMaxCleaveDamage = new ValidatedFloat(1000.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+
+        public ValidatedFloat weakestOpenDamage = new ValidatedFloat(200.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestOpenDamage = new ValidatedFloat(500.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+
+        public ValidatedFloat weakestFurnaceArrowDamage = new ValidatedFloat(800.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat strongestFurnaceArrowDamage = new ValidatedFloat(1000.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+    }
+}

@@ -35,9 +35,8 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     public final MalevolentShrineDispatcher dispatcher;
 
     public int maxLifetime = 1200;
-    public float scale = 1f;
     public int delay = 60;
-    public Vec3d domainRadius = new Vec3d(100, 100, 100);
+    public Vec3d domainRadius = new Vec3d(200, 200, 200);
     public int damagePerSlash = 1;
     public HashSet<LivingEntity> entitiesInRange = new HashSet<>();
     public boolean furnaceNukeActive = false;

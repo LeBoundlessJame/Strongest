@@ -78,12 +78,10 @@ public class ShrineHeroDestruction {
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
-        Vec3d shrinePosition = new Vec3d(player.getX() - player.getRotationVector().multiply(6).x, player.getY(), player.getZ() - player.getRotationVector().multiply(6).z);
         MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());
-        shrine.setPosition(shrinePosition);
+        shrine.setPosition(new Vec3d(player.getX() - player.getRotationVector().multiply(6).x, player.getY(), player.getZ() - player.getRotationVector().multiply(6).z));
         shrine.setPitch(player.getPitch());
         shrine.setYaw(player.getYaw());
-        shrine.setScale(domainRadius / 20f);
         shrine.setDomainRadius(new Vec3d(domainRadius, domainRadius, domainRadius));
         shrine.setMaxLifetime(domainExpansionDuration);
         shrine.setDelay(delay);
