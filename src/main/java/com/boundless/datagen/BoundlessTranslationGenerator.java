@@ -34,9 +34,9 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add("key.boundless.ability_five", "Ability 5");
         translationBuilder.add("key.boundless.combat_mode_toggle", "Combat Mode Toggle");
 
-        translationBuilder.add("death.attack.bypass_defence", "%1s's weaknesses were exploited");
-        translationBuilder.add("death.attack.cursed_energy", "%1s was cursed to death");
-        translationBuilder.add("death.attack.shrine", "%1s met a malevolent fate");
+        translationBuilder.add("death.attack.bypass_defence", "%1$s's weaknesses were exploited");
+        translationBuilder.add("death.attack.cursed_energy", "%1$s was cursed to death");
+        translationBuilder.add("death.attack.shrine_slashes", "%1$s met a malevolent fate");
 
         translationBuilder.add("category.boundless.controls", "Boundless Controls");
         translationBuilder.add("boundless.damage_resistance", "Damage Resistance");
