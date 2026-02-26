@@ -5,8 +5,6 @@ import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.rock.RockEntity;
 import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
-import com.boundless.registry.SoundRegistry;
-import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.LinkedHashMap;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class RockThrowLogic {

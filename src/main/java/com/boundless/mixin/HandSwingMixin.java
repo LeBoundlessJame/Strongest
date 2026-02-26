@@ -1,6 +1,5 @@
 package com.boundless.mixin;
 
-import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

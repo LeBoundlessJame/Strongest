@@ -1,6 +1,5 @@
 package com.boundless.gui;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -11,10 +10,8 @@ import com.boundless.util.KeybindingUtils;
 import com.boundless.util.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.option.Perspective;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 import java.math.BigDecimal;

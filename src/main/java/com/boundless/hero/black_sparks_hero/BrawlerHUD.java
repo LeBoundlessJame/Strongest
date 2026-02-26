@@ -2,7 +2,6 @@ package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.gui.HeroHUD;
-import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -11,7 +10,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 public class BrawlerHUD {
     public static Identifier METER_FRAME_HORIZONTAL = BoundlessAPI.hudPNG("meter_frame_horizontal");

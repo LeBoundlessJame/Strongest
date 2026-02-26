@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-import javax.xml.crypto.Data;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;

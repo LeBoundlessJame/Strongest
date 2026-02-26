@@ -1,39 +1,28 @@
 package com.boundless.entity.open;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.hero.shrine_hero.ShrineHelper;
 import com.boundless.hero.shrine_hero.ShrineHero;
-import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.GameRulesRegistry;
-import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.AOEUtils;
 import com.boundless.util.CameraUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.List;
-import java.util.Set;
 
 public class OpenEntity extends PersistentProjectileEntity {
 

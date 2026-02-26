@@ -7,8 +7,6 @@ import lombok.Setter;
 import lombok.Singular;
 import net.minecraft.entity.player.PlayerEntity;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 

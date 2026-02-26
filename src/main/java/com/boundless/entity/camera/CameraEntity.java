@@ -1,8 +1,6 @@
 package com.boundless.entity.camera;
 
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.EntityRegistry;
-import com.boundless.util.DataComponentUtils;
 import com.boundless.util.HeroUtils;
 import lombok.Getter;
 import lombok.Setter;

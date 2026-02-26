@@ -1,7 +1,6 @@
 package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
-import net.minecraft.util.Identifier;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
 

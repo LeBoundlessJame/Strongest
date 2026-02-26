@@ -1,10 +1,7 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.switcher_hero.SwitcherHero;
-import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.registry.StrongestComponents;
@@ -12,14 +9,9 @@ import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 public class BlackFlashAbility {
     public static void blackFlash(PlayerEntity player, float damage, Vec3d knockbackMultiplier, HeroActionEntity heroAction) {

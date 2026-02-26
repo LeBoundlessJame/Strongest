@@ -9,8 +9,6 @@ import com.boundless.util.AbilityUtils;
 import com.boundless.util.AttackUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
-
 public class ShrineHeroMelee {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(ShrineHeroMelee::lightAttack, ShrineHero.COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(ShrineHeroMelee::mediumAttack, ShrineHero.COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("shrine_medium_attack"), BoundlessAPI.hudPNG("leg"));

@@ -23,8 +23,6 @@ import net.minecraft.world.WorldEvents;
 import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
-import static com.boundless.hero.black_sparks_hero.BrawlerHero.COOLDOWNS;
-
 public class ShrineHeroSlashes {
     public static Ability DISMANTLE = AbilityUtils.ability(ShrineHeroSlashes::dismantle, ShrineHero.COOLDOWNS.dismantle.get(), BoundlessAPI.identifier("dismantle"), "Dismantle");
     public static Ability CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::cleave, ShrineHero.COOLDOWNS.cleave.get(), BoundlessAPI.identifier("cleave"), "Cleave");

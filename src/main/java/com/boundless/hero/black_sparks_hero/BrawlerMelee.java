@@ -2,8 +2,6 @@ package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.action.Action;
-import com.boundless.action.AdvancedAttack;
-import com.boundless.action.SingleAttack;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
@@ -12,9 +10,6 @@ import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.LinkedHashMap;
-import java.util.function.BiConsumer;
 
 import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 
