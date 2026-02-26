@@ -2,6 +2,7 @@ package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.ability.BasicAbilities;
 import com.boundless.registry.AttributeRegistry;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -16,6 +17,7 @@ public class SwitcherStats {
             .ability("key.boundless.ability_two", SwitcherHero.ROCK_THROW)
             .ability("key.boundless.ability_three", SwitcherHero.TARGET_SELECT)
             .ability("key.boundless.ability_four", SwitcherHero.SUPLEX)
+            .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
             .build();
 
     public static AbilityLoadout LOADOUT_2 = AbilityLoadout.builder()
@@ -25,6 +27,7 @@ public class SwitcherStats {
             .ability("key.boundless.ability_two", SwitcherHero.SWAP_WITH_PRIMARY)
             .ability("key.boundless.ability_three", SwitcherHero.SWAP_WITH_SECONDARY)
             .ability("key.boundless.ability_four", SwitcherHero.SWAP_TWO)
+            .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
             .build();
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()

@@ -3,6 +3,7 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.ability.BasicAbilities;
 import com.boundless.ability.HeldAbility;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
@@ -70,6 +71,7 @@ public class BrawlerHero extends Hero {
                 .ability("key.boundless.ability_three", BrawlerHero.BLACK_FLASH)
                 .ability("key.boundless.ability_four", BrawlerHero.DIVERGENT_FIST)
                 .ability("key.boundless.ability_five", BrawlerHero.MANJI_KICK)
+                .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);

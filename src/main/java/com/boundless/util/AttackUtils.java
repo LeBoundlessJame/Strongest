@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
+import javax.xml.crypto.Data;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -54,7 +55,12 @@ public class AttackUtils {
     }
 
     public static boolean canAttack(PlayerEntity player) {
-        return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L);
+        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true) && player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L);
+    }
+
+    public static void toggleCombatMode(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        stack.set(DataComponentRegistry.COMBAT_MODE_ENABLED, !stack.getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true));
     }
 
     public static int incrementedAttackCount(PlayerEntity player) {
