@@ -10,10 +10,13 @@ import com.boundless.hero.switcher_hero.SwitcherConfig;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.HeroRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 
@@ -59,5 +62,9 @@ public class ShrineHero extends Hero {
                 .tickHandler(Hero::onHeroTick)
                 .build();
         this.registerHero();
+    }
+
+    public static boolean canEatFinger(LivingEntity livingEntity) {
+        return livingEntity.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(HeroRegistry.SHRINE_HERO.getArmorSet().get(1));
     }
 }
