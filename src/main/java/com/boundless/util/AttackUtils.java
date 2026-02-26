@@ -55,12 +55,12 @@ public class AttackUtils {
     }
 
     public static boolean canAttack(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true) && player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L);
+        return HeroUtils.combatModeEnabled(player) && player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L);
     }
 
     public static void toggleCombatMode(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(DataComponentRegistry.COMBAT_MODE_ENABLED, !stack.getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true));
+        stack.set(DataComponentRegistry.COMBAT_MODE_ENABLED, !HeroUtils.combatModeEnabled(player));
     }
 
     public static int incrementedAttackCount(PlayerEntity player) {
