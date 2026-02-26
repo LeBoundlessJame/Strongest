@@ -13,12 +13,15 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Builder
 @Getter
@@ -53,4 +56,6 @@ public class HeroData {
 
     @Singular
     private final List<String> heldKeybinds;
+
+    private final Function<ItemStack, List<Text>> customTooltips;
 }

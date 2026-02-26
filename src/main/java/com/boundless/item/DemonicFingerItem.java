@@ -18,8 +18,8 @@ public class DemonicFingerItem extends Item {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (world.isClient || (!(user instanceof PlayerEntity player))) return super.finishUsing(stack, world, user);
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 20, 0, false, false, false));
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20, 0, false, false, false));
+        user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100, 0, false, false, false));
+        user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, false));
 
         if (ShrineHero.canEatFinger(user)) {
             HeroUtils.getHeroStack(player).set(ShrineHero.FINGER_COUNT, HeroUtils.getHeroStack(player).getOrDefault(ShrineHero.FINGER_COUNT, 0) + 1);

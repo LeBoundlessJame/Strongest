@@ -19,6 +19,12 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
+import java.util.List;
 
 import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
 
@@ -60,8 +66,15 @@ public class ShrineHero extends Hero {
                 .tickHandler(Hero::heroSprintHandler)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
+                .customTooltips(ShrineHero::customTooltip)
                 .build();
         this.registerHero();
+    }
+
+    public static List<Text> customTooltip(ItemStack stack) {
+        int fingersConsumed = stack.getOrDefault(ShrineHero.FINGER_COUNT, 0);
+        MutableText mutableText = Text.literal("Fingers Consumed: " + fingersConsumed).formatted(Formatting.RED, Formatting.BOLD);
+        return List.of(mutableText);
     }
 
     public static boolean canEatFinger(LivingEntity livingEntity) {
