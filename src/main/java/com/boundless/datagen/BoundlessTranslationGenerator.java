@@ -36,6 +36,8 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add("key.boundless.ability_three", "Ability 3");
         translationBuilder.add("key.boundless.ability_four", "Ability 4");
         translationBuilder.add("key.boundless.ability_five", "Ability 5");
+        translationBuilder.add("key.boundless.combat_mode_toggle", "Combat Mode Toggle");
+
         translationBuilder.add("category.boundless.controls", "Boundless Controls");
         translationBuilder.add("boundless.damage_resistance", "Damage Resistance");
 
