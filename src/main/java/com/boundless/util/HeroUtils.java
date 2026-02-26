@@ -38,4 +38,7 @@ public class HeroUtils {
         HeroUtils.getHeroStack(player).set(DataComponentRegistry.ABILITY_LOADOUT, loadoutMap);
     }
 
+    public static boolean combatModeEnabled(PlayerEntity player) {
+        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true);
+    }
 }

@@ -1,6 +1,5 @@
 package com.boundless.mixin;
 
-import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.Entity;
@@ -14,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class AttackMixin {
     @Inject(at = @At("HEAD"), method = "attack", cancellable = true)
     public void boundless$attack(Entity target, CallbackInfo ci) {
-        if (HeroUtils.getHeroStack((PlayerEntity) (Object)this).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true)) ci.cancel();
+        if (HeroUtils.combatModeEnabled((PlayerEntity) (Object)this)) ci.cancel();
     }
 
     @ModifyReturnValue(at = @At("RETURN"), method = "isBlockBreakingRestricted")
     public boolean boundless$isBlockBreakingRestricted(boolean original) {
-        return original || (HeroUtils.getHeroStack((PlayerEntity) (Object)this).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true));
+        return original || (HeroUtils.combatModeEnabled((PlayerEntity) (Object)this));
     }
 }
