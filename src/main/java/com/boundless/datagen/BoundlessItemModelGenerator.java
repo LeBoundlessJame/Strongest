@@ -3,6 +3,7 @@ package com.boundless.datagen;
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.registry.ItemRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -33,6 +34,8 @@ public class BoundlessItemModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(ItemRegistry.DEMONIC_FINGER, Models.GENERATED);
+
         for (Hero hero : HeroRegistry.HEROES) {
             ArrayList<Item> armor = hero.getArmorSet();
             MASK.upload(ModelIds.getItemModelId(armor.get(0)), heroTexture(hero.heroData.getTextureIdentifier()), itemModelGenerator.writer);
