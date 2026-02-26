@@ -11,6 +11,7 @@ public class KeybindRegistry {
     public static KeyBinding ABILITY_THREE = registerKeybinding("ability_three", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_C);
     public static KeyBinding ABILITY_FOUR = registerKeybinding("ability_four", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X);
     public static KeyBinding ABILITY_FIVE = registerKeybinding("ability_five", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Z);
+    public static KeyBinding COMBAT_MODE_TOGGLE = registerKeybinding("combat_mode_toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_TAB);
 
     public static void initialize() {}
 
