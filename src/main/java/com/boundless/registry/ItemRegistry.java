@@ -15,7 +15,7 @@ public class ItemRegistry {
     public static ArrayList<Item> ITEMS = new ArrayList<>();
 
     public static final Item PLAYFUL_CLOUD = registerItem(BoundlessAPI.identifier("playful_cloud"), new Item(new Item.Settings().maxCount(1)));
-    public static final Item DEMONIC_FINGER = registerItem(BoundlessAPI.identifier("demonic_finger"), new DemonicFingerItem(new Item.Settings().food(new FoodComponent.Builder().build()).maxCount(20)));
+    public static final Item DEMONIC_FINGER = registerItem(BoundlessAPI.identifier("demonic_finger"), new DemonicFingerItem(new Item.Settings().food(new FoodComponent.Builder().snack().build()).maxCount(20)));
 
     public static Item registerItem(Identifier identifier, Item item) {
         return Registry.register(Registries.ITEM, identifier, item);

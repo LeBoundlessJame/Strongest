@@ -16,7 +16,7 @@ public class ShrineHeroMelee {
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(ShrineHeroMelee::mediumAttack, ShrineHero.COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("shrine_medium_attack"), BoundlessAPI.hudPNG("leg"));
 
     public static void mediumAttack(PlayerEntity player) {
-        if (!AttackUtils.canAttack(player)) return;
+        if (!AttackUtils.canAttack(player) || player.isUsingItem()) return;
 
         SingleAttack doubleKick = SingleAttack.builder()
                 .player(player)
