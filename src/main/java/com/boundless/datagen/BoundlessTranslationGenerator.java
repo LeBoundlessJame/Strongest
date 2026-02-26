@@ -2,6 +2,7 @@ package com.boundless.datagen;
 
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.registry.ItemRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -20,6 +21,9 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(StatusEffectRegistry.INVULNERABILITY_EFFECT.value(), "Invulnerability");
+        translationBuilder.add(ItemRegistry.DEMONIC_FINGER, "Demonic Finger");
+        translationBuilder.add(ItemRegistry.PLAYFUL_CLOUD, "Playful Cloud");
+
         translationBuilder.add("itemGroup.boundless.boundless_group", "Boundless");
         translationBuilder.add("key.boundless.ability_one", "Ability 1");
         translationBuilder.add("key.boundless.ability_two", "Ability 2");
