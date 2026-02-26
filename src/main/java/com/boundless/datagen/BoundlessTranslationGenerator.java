@@ -26,10 +26,6 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(ItemRegistry.DEMONIC_FINGER, "Demonic Finger");
         translationBuilder.add(ItemRegistry.PLAYFUL_CLOUD, "Playful Cloud");
 
-        translationBuilder.add(DamageTypeRegistry.SHRINE_SLASHES.getRegistry(), "Shrine Slashes");
-        translationBuilder.add(DamageTypeRegistry.CURSED_ENERGY.getRegistry(), "Cursed Energy");
-        translationBuilder.add(DamageTypeRegistry.BYPASS_DEFENCE.getRegistry(), "Defence Bypass");
-
         translationBuilder.add("itemGroup.boundless.boundless_group", "Boundless");
         translationBuilder.add("key.boundless.ability_one", "Ability 1");
         translationBuilder.add("key.boundless.ability_two", "Ability 2");
