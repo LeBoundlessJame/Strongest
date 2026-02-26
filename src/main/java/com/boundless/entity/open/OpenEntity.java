@@ -116,9 +116,11 @@ public class OpenEntity extends PersistentProjectileEntity {
 
         AOEUtils.forEach(this, 20, (open, target) -> {
             if (target instanceof PlayerEntity player) CameraUtils.playCameraShake(player);
-            target.timeUntilRegen = 0;
-            target.damage(this.getDamageSources().lava(), amount);
-            target.setOnFireFor(10);
+            if (target != this.getOwner()) {
+                target.timeUntilRegen = 0;
+                target.damage(this.getDamageSources().lava(), amount);
+                target.setOnFireFor(10);
+            }
         });
     }
 }

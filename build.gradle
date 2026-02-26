@@ -16,8 +16,8 @@ repositories {
 		url = "https://api.modrinth.com/maven"
 	}
 	maven {
-		name "KosmX's maven"
-		url 'https://maven.kosmx.dev/'
+		name = "KosmX's maven"
+		url = 'https://maven.kosmx.dev/'
 	}
 	maven {url 'https://maven.azuredoom.com/mods'}
 	maven {
