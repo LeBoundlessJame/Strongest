@@ -3,6 +3,7 @@ package com.boundless.entity.malevolent_shrine;
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.shrine_hero.ShrineHelper;
 import com.boundless.hero.shrine_hero.ShrineHero;
+import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.EffekUtils;
@@ -122,7 +123,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             entitiesInRange.forEach(entity -> {
                 if (entity.age % ShrineHero.DOMAIN.timeBetweenSlashes.get() == 0) {
                     entity.timeUntilRegen = 0;
-                    entity.damage(entity.getDamageSources().generic(), getDamagePerSlash());
+                    entity.damage(DamageTypeRegistry.getDamageSource(entity, DamageTypeRegistry.SHRINE_SLASHES), getDamagePerSlash());
                 }
 
                 if (entity.age % ShrineHero.DOMAIN.timeBetweenSlashVFX.get() == 0 && entity.isAlive()) {

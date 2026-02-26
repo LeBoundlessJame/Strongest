@@ -77,6 +77,7 @@ public class ShrineHero extends Hero {
         return List.of(mutableText);
     }
 
+    // Todo: Make it so that yuji can also eat the finger
     public static boolean canEatFinger(LivingEntity livingEntity) {
         return livingEntity.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(HeroRegistry.SHRINE_HERO.getArmorSet().get(1));
     }
