@@ -1,5 +1,6 @@
 package com.boundless.mixin;
 
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +15,7 @@ public class HandSwingMixin {
     @Inject(at = @At("HEAD"), method = "swingHand(Lnet/minecraft/util/Hand;)V", cancellable = true)
     public void boundless$attack(Hand hand, CallbackInfo ci) {
         if (((LivingEntity)(Object)this) instanceof PlayerEntity player) {
-            if (HeroUtils.isHero(player)) ci.cancel();
+            if (HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true)) ci.cancel();
         }
     }
 }
