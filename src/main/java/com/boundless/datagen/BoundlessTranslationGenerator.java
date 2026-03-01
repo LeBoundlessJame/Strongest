@@ -2,6 +2,7 @@ package com.boundless.datagen;
 
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.*;
+import com.boundless.util.KeybindingUtils;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.item.Item;
@@ -28,18 +29,17 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(ItemRegistry.PLAYFUL_CLOUD, "Playful Cloud");
 
         translationBuilder.add("itemGroup.boundless.boundless_group", "Boundless");
-        translationBuilder.add("key.boundless.ability_one", "Ability 1");
-        translationBuilder.add("key.boundless.ability_two", "Ability 2");
-        translationBuilder.add("key.boundless.ability_three", "Ability 3");
-        translationBuilder.add("key.boundless.ability_four", "Ability 4");
-        translationBuilder.add("key.boundless.ability_five", "Ability 5");
-        translationBuilder.add("key.boundless.combat_mode_toggle", "Combat Mode Toggle");
+        translationBuilder.add(KeybindRegistry.ABILITY_ONE.getTranslationKey(), "Ability 1");
+        translationBuilder.add(KeybindRegistry.ABILITY_TWO.getTranslationKey(), "Ability 2");
+        translationBuilder.add(KeybindRegistry.ABILITY_THREE.getTranslationKey(), "Ability 3");
+        translationBuilder.add(KeybindRegistry.ABILITY_FOUR.getTranslationKey(), "Ability 4");
+        translationBuilder.add(KeybindRegistry.ABILITY_FIVE.getTranslationKey(), "Ability 5");
+        translationBuilder.add(KeybindRegistry.COMBAT_MODE_TOGGLE.getTranslationKey(), "Combat Mode Toggle");
+        translationBuilder.add("category.boundless.controls", "Boundless Controls");
 
         translationBuilder.add("death.attack.bypass_defence", "%1$s's weaknesses were exploited");
         translationBuilder.add("death.attack.cursed_energy", "%1$s was cursed to death");
         translationBuilder.add("death.attack.shrine_slashes", "%1$s met a malevolent fate");
-
-        translationBuilder.add("category.boundless.controls", "Boundless Controls");
 
         for (Hero hero : HeroRegistry.HEROES) {
             ArrayList<Item> armor = hero.getArmorSet();
