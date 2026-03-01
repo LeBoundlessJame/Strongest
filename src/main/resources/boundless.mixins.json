@@ -13,8 +13,7 @@
     "LeapingMixin",
     "LivingEntityMixin",
     "ReviveMixin",
-    "SpeedMixin",
-    "aaaparticles_fix.NetworkMixin"
+    "SpeedMixin"
   ],
   "injectors": {
     "defaultRequire": 1
