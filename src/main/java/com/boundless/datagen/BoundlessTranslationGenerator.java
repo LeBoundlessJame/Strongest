@@ -1,10 +1,7 @@
 package com.boundless.datagen;
 
 import com.boundless.hero.api.Hero;
-import com.boundless.registry.DamageTypeRegistry;
-import com.boundless.registry.HeroRegistry;
-import com.boundless.registry.ItemRegistry;
-import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.item.Item;
@@ -23,6 +20,10 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(StatusEffectRegistry.INVULNERABILITY_EFFECT.value(), "Invulnerability");
 
+        translationBuilder.add(AttributeRegistry.TOP_SPEED_MULTIPLIER, "Top-Speed Multiplier");
+        translationBuilder.add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, "Max-Speed Buildup Time");
+        translationBuilder.add(AttributeRegistry.DAMAGE_RESISTANCE, "Damage Resistance");
+
         translationBuilder.add(ItemRegistry.DEMONIC_FINGER, "Demonic Finger");
         translationBuilder.add(ItemRegistry.PLAYFUL_CLOUD, "Playful Cloud");
 
@@ -39,7 +40,6 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add("death.attack.shrine_slashes", "%1$s met a malevolent fate");
 
         translationBuilder.add("category.boundless.controls", "Boundless Controls");
-        translationBuilder.add("boundless.damage_resistance", "Damage Resistance");
 
         for (Hero hero : HeroRegistry.HEROES) {
             ArrayList<Item> armor = hero.getArmorSet();
