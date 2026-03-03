@@ -43,6 +43,13 @@ public class AbilityUtils {
         heroStack.set(DataComponentRegistry.COOLDOWN_DATA, updatedCooldownData);
     }
 
+    public static Long getRemainingCooldown(PlayerEntity player, Identifier abilityID) {
+        ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
+        Map<Identifier, Long> cooldownData = heroStack.get(DataComponentRegistry.COOLDOWN_DATA);
+        if (cooldownData == null || cooldownData.get(abilityID) == null) return null;
+        return cooldownData.get(abilityID);
+    }
+
     public static boolean canUseAbility(PlayerEntity player, Identifier abilityID) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());

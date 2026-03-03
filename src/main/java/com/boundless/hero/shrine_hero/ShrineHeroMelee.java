@@ -7,6 +7,7 @@ import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.AttackUtils;
+import com.boundless.util.MeleeUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class ShrineHeroMelee {
@@ -43,6 +44,7 @@ public class ShrineHeroMelee {
                 .attackDuration(4)
                 .build();
 
+        MeleeUtils.disorient(player, 100);
         player.setVelocity(player.getVelocity().multiply(0.33, 1, 0.33));
         AttackUtils.performAttack(hook);
     }

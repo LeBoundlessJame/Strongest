@@ -1,13 +1,17 @@
 package com.boundless.util;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.ability.Ability;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class MeleeUtils {
@@ -30,5 +34,17 @@ public class MeleeUtils {
     public static void knockback(PlayerEntity player, LivingEntity target, Vec3d knockbackMultiplier) {
         target.setVelocity(player.getRotationVector().x * knockbackMultiplier.x,  1 * knockbackMultiplier.y, player.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
+    }
+
+    /** Put all players abilities on cooldown temporarily **/
+    public static void disorient(PlayerEntity player, int cooldownDuration) {
+        Map<String, Identifier> abilities = HeroUtils.getHeroStack(player).get(DataComponentRegistry.ABILITY_LOADOUT);
+        if (abilities == null || abilities.isEmpty()) return;
+        for (Identifier abilityID: abilities.values()) {
+            Long remainingCooldown = AbilityUtils.getRemainingCooldown(player, abilityID);
+            if (remainingCooldown != null && remainingCooldown < cooldownDuration) {
+                AbilityUtils.setAbilityCooldown(player, abilityID, cooldownDuration);
+            }
+        }
     }
 }
