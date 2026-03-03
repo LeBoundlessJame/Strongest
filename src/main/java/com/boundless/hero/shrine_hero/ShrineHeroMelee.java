@@ -44,7 +44,10 @@ public class ShrineHeroMelee {
                 .attackDuration(4)
                 .build();
 
-        MeleeUtils.disorient(player, 100);
+        if (!player.getWorld().isClient) {
+            MeleeUtils.disorient(player, 100);
+        }
+
         player.setVelocity(player.getVelocity().multiply(0.33, 1, 0.33));
         AttackUtils.performAttack(hook);
     }
