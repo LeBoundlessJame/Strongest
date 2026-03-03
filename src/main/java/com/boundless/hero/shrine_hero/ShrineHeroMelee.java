@@ -46,9 +46,10 @@ public class ShrineHeroMelee {
                 .attackDuration(4)
                 .perEntityLogic((user, target) -> {
                     // Todo: make this a configurable 'padding' window
-                    if (target instanceof LivingEntity livingEntity) {
+                    if (target instanceof LivingEntity livingEntity && !player.getWorld().isClient) {
                         CombatUtils.slow(livingEntity, 14, 255);
-                        livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.33, 0.33, 0.33));
+                        //livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.33, 0.33, 0.33));
+                        livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.5, 0.25, 0.5).add(player.getVelocity()));
                         livingEntity.velocityModified = true;
                         livingEntity.velocityDirty = true;
                     }
@@ -61,7 +62,7 @@ public class ShrineHeroMelee {
                 .build();
 
         MeleeUtils.disorient(player, 5);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
         AttackUtils.performAttack(hook);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
     }
 }
