@@ -7,6 +7,7 @@ import com.boundless.ability.HeldAbility;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.RegistryUtils;
 import lombok.Getter;
@@ -55,7 +56,7 @@ public abstract class Hero {
 
     public static void heroSprintHandler(PlayerEntity player) {
         ItemStack heroStack = HeroUtils.getHeroStack(player);
-        if (player.isSprinting()) {
+        if (player.isSprinting() && !player.hasStatusEffect(StatusEffectRegistry.LIMITED_SPEED)) {
             heroStack.set(DataComponentRegistry.SPRINT_TICKS, heroStack.getOrDefault(DataComponentRegistry.SPRINT_TICKS, 0) + 1);
         } else {
             heroStack.set(DataComponentRegistry.SPRINT_TICKS, 0);
