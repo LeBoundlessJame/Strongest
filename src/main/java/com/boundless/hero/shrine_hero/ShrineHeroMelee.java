@@ -55,12 +55,12 @@ public class ShrineHeroMelee {
 
                     if (target instanceof PlayerEntity playerTarget) {
                         playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, 100, 0, false, false, false));
-                        MeleeUtils.disorient(playerTarget, 4 + 10);
+                        MeleeUtils.disorient(playerTarget, 8);
                     }
                 })
                 .build();
 
-        MeleeUtils.disorient(player, 200);
+        MeleeUtils.disorient(player, 5);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
         AttackUtils.performAttack(hook);
     }
