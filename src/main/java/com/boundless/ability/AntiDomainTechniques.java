@@ -10,6 +10,6 @@ public class AntiDomainTechniques {
     public static Ability SIMPLE_DOMAIN = AbilityUtils.ability(AntiDomainTechniques::simpleDomain, 5, BoundlessAPI.identifier("simple_domain"), null, "Simple Domain");
 
     public static void simpleDomain(PlayerEntity player) {
-        EffekUtils.playBoundEffect(BoundlessAPI.identifier("simple_domain"), player, new Vec3d(1, 1, 1), new Vec3d(0, 0, 0));
+        EffekUtils.playEffect(BoundlessAPI.identifier("simple_domain"), player, player.getPos(), new Vec3d(1, 1, 1));
     }
 }
