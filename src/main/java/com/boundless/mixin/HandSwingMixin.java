@@ -14,6 +14,7 @@ public class HandSwingMixin {
     @Inject(at = @At("HEAD"), method = "swingHand(Lnet/minecraft/util/Hand;)V", cancellable = true)
     public void boundless$attack(Hand hand, CallbackInfo ci) {
         if (((LivingEntity)(Object)this) instanceof PlayerEntity player) {
+            if (!HeroUtils.isHero(player)) return;
             if (HeroUtils.combatModeEnabled(player)) ci.cancel();
         }
     }

@@ -43,6 +43,7 @@ public class ShrineHeroMelee {
                 .attackDuration(4)
                 .build();
 
+        player.setVelocity(player.getVelocity().multiply(0.33, 1, 0.33));
         AttackUtils.performAttack(hook);
     }
 }

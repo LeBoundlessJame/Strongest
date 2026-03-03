@@ -13,11 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class AttackMixin {
     @Inject(at = @At("HEAD"), method = "attack", cancellable = true)
     public void boundless$attack(Entity target, CallbackInfo ci) {
-        if (HeroUtils.combatModeEnabled((PlayerEntity) (Object)this)) ci.cancel();
+        PlayerEntity player = (PlayerEntity) (Object)this;
+        if (!HeroUtils.isHero(player)) return;
+        if (HeroUtils.combatModeEnabled(player)) ci.cancel();
     }
 
     @ModifyReturnValue(at = @At("RETURN"), method = "isBlockBreakingRestricted")
     public boolean boundless$isBlockBreakingRestricted(boolean original) {
-        return original || (HeroUtils.combatModeEnabled((PlayerEntity) (Object)this));
+        return original || HeroUtils.isHero((PlayerEntity) (Object)this) && HeroUtils.combatModeEnabled((PlayerEntity) (Object)this);
     }
 }
