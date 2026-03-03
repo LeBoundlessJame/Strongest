@@ -7,10 +7,7 @@ import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.AbilityUtils;
-import com.boundless.util.AttackUtils;
-import com.boundless.util.CombatUtils;
-import com.boundless.util.MeleeUtils;
+import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -63,6 +60,7 @@ public class ShrineHeroMelee {
                 })
                 .build();
 
+        MeleeUtils.disorient(player, 200);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
         AttackUtils.performAttack(hook);
     }

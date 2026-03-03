@@ -47,7 +47,7 @@ public class AbilityUtils {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> cooldownData = heroStack.get(DataComponentRegistry.COOLDOWN_DATA);
         if (cooldownData == null || cooldownData.get(abilityID) == null) return null;
-        return cooldownData.get(abilityID);
+        return player.getWorld().getTime() - cooldownData.get(abilityID);
     }
 
     public static boolean canUseAbility(PlayerEntity player, Identifier abilityID) {

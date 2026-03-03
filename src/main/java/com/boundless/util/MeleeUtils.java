@@ -41,9 +41,8 @@ public class MeleeUtils {
         Map<String, Identifier> abilities = HeroUtils.getHeroStack(player).get(DataComponentRegistry.ABILITY_LOADOUT);
         if (abilities == null || abilities.isEmpty()) return;
         for (Identifier abilityID: abilities.values()) {
-            Long cooldown = AbilityUtils.getRemainingCooldown(player, abilityID);
-            if (cooldown != null) {
-                long remainingCooldown = cooldown - player.getWorld().getTime();
+            Long remainingCooldown = AbilityUtils.getRemainingCooldown(player, abilityID);
+            if (remainingCooldown != null) {
                 if (remainingCooldown < cooldownDuration) {
                     AbilityUtils.setAbilityCooldown(player, abilityID, cooldownDuration);
                 }
