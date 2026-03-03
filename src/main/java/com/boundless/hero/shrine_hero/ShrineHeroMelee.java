@@ -11,8 +11,10 @@ import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 
 public class ShrineHeroMelee {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(ShrineHeroMelee::lightAttack, ShrineHero.COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
@@ -40,6 +42,7 @@ public class ShrineHeroMelee {
 
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, stack.getOrDefault(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0) + 1);
+        System.out.println(stack.get(DataComponentRegistry.LIGHT_ATTACK_COUNTER));
 
         SingleAttack hook = SingleAttack.builder()
                 .player(player)
@@ -55,7 +58,9 @@ public class ShrineHeroMelee {
                         CombatUtils.slow(livingEntity, 14, 255);
 
                         if (MeleeUtils.isFinalLightAttack(player)) {
-                            CombatUtils.knockback(player, livingEntity, 2.0f);
+                            CameraUtils.playCameraShake(player);
+                            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
+                            MeleeUtils.knockback(player, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
                         } else {
                             livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.5, 0.25, 0.5).add(player.getVelocity()));
                             livingEntity.velocityModified = true;
