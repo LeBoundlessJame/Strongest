@@ -47,7 +47,13 @@ public class AbilityUtils {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> cooldownData = heroStack.get(DataComponentRegistry.COOLDOWN_DATA);
         if (cooldownData == null || cooldownData.get(abilityID) == null) return null;
-        return player.getWorld().getTime() - cooldownData.get(abilityID);
+        return cooldownData.get(abilityID) - player.getWorld().getTime();
+    }
+
+    public static boolean isOnCooldown(PlayerEntity player, Identifier abilityID) {
+        Long remaining = getRemainingCooldown(player, abilityID);
+        if (remaining == null) return false;
+        return remaining > 0;
     }
 
     public static boolean canUseAbility(PlayerEntity player, Identifier abilityID) {
@@ -79,7 +85,8 @@ public class AbilityUtils {
             abilityConsumer.accept(player);
             if (!player.getWorld().isClient) {
                 long cooldown = ability.getCooldown();
-                if (cooldown > 0) {
+                if (cooldown > 0 && !AbilityUtils.isOnCooldown(player, abilityID)) {
+                    System.out.println("Applying cooldown to " + abilityID);
                     setAbilityCooldown(player, abilityID, cooldown);
                 }
             }
