@@ -4,10 +4,15 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.SingleAttack;
 import com.boundless.hero.switcher_hero.SwitcherHero;
+import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.AttackUtils;
+import com.boundless.util.CombatUtils;
 import com.boundless.util.MeleeUtils;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class ShrineHeroMelee {
@@ -44,11 +49,21 @@ public class ShrineHeroMelee {
                 .attackDuration(4)
                 .perEntityLogic((user, target) -> {
                     // Todo: make this a configurable 'padding' window
-                    if (target instanceof PlayerEntity playerTarget) MeleeUtils.disorient(playerTarget, 4 + 10);
+                    if (target instanceof LivingEntity livingEntity) {
+                        CombatUtils.slow(livingEntity, 14, 255);
+                        livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.33, 0.33, 0.33));
+                        livingEntity.velocityModified = true;
+                        livingEntity.velocityDirty = true;
+                    }
+
+                    if (target instanceof PlayerEntity playerTarget) {
+                        playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, 100, 0, false, false, false));
+                        MeleeUtils.disorient(playerTarget, 4 + 10);
+                    }
                 })
                 .build();
 
-        player.setVelocity(player.getVelocity().multiply(0.33, 1, 0.33));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
         AttackUtils.performAttack(hook);
     }
 }

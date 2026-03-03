@@ -11,6 +11,7 @@ public class HeroConfig extends Config {
         super(BoundlessAPI.identifier("hero_config"));
     }
 
+    public CombatConfig COMBAT_CONFIG = new CombatConfig();
     public BrawlerHeroConfig BLACK_SPARKS_CONFIG = new BrawlerHeroConfig();
     public SwitcherConfig SWITCHER_CONFIG = new SwitcherConfig();
     public ShrineConfig SHRINE_CONFIG = new ShrineConfig();
