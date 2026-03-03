@@ -70,7 +70,6 @@ public class BrawlerHero extends Hero {
                 .ability("key.boundless.ability_two", BrawlerHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BrawlerHero.BLACK_FLASH)
                 .ability("key.boundless.ability_four", BrawlerHero.DIVERGENT_FIST)
-                .ability("key.boundless.ability_five", AntiDomainTechniques.SIMPLE_DOMAIN)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .build();
 
