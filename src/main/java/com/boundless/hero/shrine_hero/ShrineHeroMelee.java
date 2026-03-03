@@ -42,11 +42,11 @@ public class ShrineHeroMelee {
                 .animation(BoundlessAPI.identifier("hook"))
                 .impactTick(4)
                 .attackDuration(4)
+                .perEntityLogic((user, target) -> {
+                    // Todo: make this a configurable 'padding' window
+                    if (target instanceof PlayerEntity playerTarget) MeleeUtils.disorient(playerTarget, 4 + 10);
+                })
                 .build();
-
-        if (!player.getWorld().isClient) {
-            MeleeUtils.disorient(player, 100);
-        }
 
         player.setVelocity(player.getVelocity().multiply(0.33, 1, 0.33));
         AttackUtils.performAttack(hook);
