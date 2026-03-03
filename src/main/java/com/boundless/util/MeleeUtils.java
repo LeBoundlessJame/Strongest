@@ -49,4 +49,8 @@ public class MeleeUtils {
             }
         }
     }
+
+    public static boolean isFinalLightAttack(PlayerEntity player) {
+        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0) % 5 == 0;
+    }
 }

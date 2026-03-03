@@ -23,6 +23,7 @@ public class DataComponentRegistry {
     public static ComponentType<Float> ENERGY_METER = DataComponentRegistry.registerComponent("energy_meter", builder -> ComponentType.<Float>builder().codec(Codec.FLOAT));
     public static ComponentType<Integer> BOUND_CAMERA_ID = DataComponentRegistry.registerComponent("bound_camera_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Boolean> COMBAT_MODE_ENABLED = DataComponentRegistry.registerComponent("combat_mode_enabled", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
+    public static ComponentType<Integer> LIGHT_ATTACK_COUNTER = DataComponentRegistry.registerInt("light_attack_counter");
 
     public static final ComponentType<Map<String, KeybindHoldData>> HELD_KEYBIND = registerComponent("held_keybind", builder -> ComponentType.<Map<String, KeybindHoldData>>builder().codec(Codec.unboundedMap(Codec.STRING, CodecRegistry.KEYBIND_HOLD_CODEC)));
 

@@ -5,12 +5,14 @@ import com.boundless.ability.Ability;
 import com.boundless.action.SingleAttack;
 import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 public class ShrineHeroMelee {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(ShrineHeroMelee::lightAttack, ShrineHero.COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
@@ -36,6 +38,9 @@ public class ShrineHeroMelee {
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, stack.getOrDefault(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0) + 1);
+
         SingleAttack hook = SingleAttack.builder()
                 .player(player)
                 .damage(ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestLightAttack.get(), ShrineHero.DAMAGE.strongestLightAttack.get()))
@@ -48,18 +53,26 @@ public class ShrineHeroMelee {
                     // Todo: make this a configurable 'padding' window
                     if (target instanceof LivingEntity livingEntity && !player.getWorld().isClient) {
                         CombatUtils.slow(livingEntity, 14, 255);
-                        //livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.33, 0.33, 0.33));
-                        livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.5, 0.25, 0.5).add(player.getVelocity()));
-                        livingEntity.velocityModified = true;
-                        livingEntity.velocityDirty = true;
+
+                        if (MeleeUtils.isFinalLightAttack(player)) {
+                            CombatUtils.knockback(player, livingEntity, 2.0f);
+                        } else {
+                            livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.5, 0.25, 0.5).add(player.getVelocity()));
+                            livingEntity.velocityModified = true;
+                            livingEntity.velocityDirty = true;
+                        }
                     }
 
                     if (target instanceof PlayerEntity playerTarget) {
                         playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, 100, 0, false, false, false));
-                        MeleeUtils.disorient(playerTarget, 8);
+                        MeleeUtils.disorient(playerTarget, MeleeUtils.isFinalLightAttack(player) ? 20 : 8);
                     }
                 })
                 .build();
+
+        if (MeleeUtils.isFinalLightAttack(player)) {
+            stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0);
+        }
 
         MeleeUtils.disorient(player, 5);
         AttackUtils.performAttack(hook);
