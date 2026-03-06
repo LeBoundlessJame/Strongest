@@ -35,6 +35,7 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(KeybindRegistry.ABILITY_FOUR.getTranslationKey(), "Ability 4");
         translationBuilder.add(KeybindRegistry.ABILITY_FIVE.getTranslationKey(), "Ability 5");
         translationBuilder.add(KeybindRegistry.COMBAT_MODE_TOGGLE.getTranslationKey(), "Combat Mode Toggle");
+        translationBuilder.add(KeybindRegistry.EVASIVE.getTranslationKey(), "Evasive Ability");
         translationBuilder.add("category.boundless.controls", "Boundless Controls");
 
         translationBuilder.add("death.attack.bypass_defence", "%1$s's weaknesses were exploited");
