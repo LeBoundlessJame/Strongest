@@ -3,10 +3,12 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
+import com.boundless.ability.MeleeAbilities;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
+import com.boundless.hero.black_sparks_hero.BrawlerHero;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -54,6 +56,7 @@ public class ShrineHero extends Hero {
                 .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
                 .ability("key.boundless.ability_five", ShrineHeroDestruction.SHRINE)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
+                .ability("key.boundless.evasive", MeleeAbilities.DODGE)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);

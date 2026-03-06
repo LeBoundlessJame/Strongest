@@ -86,7 +86,6 @@ public class AbilityUtils {
             if (!player.getWorld().isClient) {
                 long cooldown = ability.getCooldown();
                 if (cooldown > 0 && !AbilityUtils.isOnCooldown(player, abilityID)) {
-                    System.out.println("Applying cooldown to " + abilityID);
                     setAbilityCooldown(player, abilityID, cooldown);
                 }
             }
