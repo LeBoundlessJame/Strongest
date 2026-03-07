@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 
 // I'd normally put helpers in with util but here feels like a nice place for it!
 public class AttackHelper {
-    public void meleeAttack(PlayerEntity player, float damage, int duration, int impactTick, Identifier anim, float animSpeed, BiConsumer<PlayerEntity, Entity> perEnemyLogic, SoundEvent sound) {
+    public static void meleeAttack(PlayerEntity player, float damage, int duration, int impactTick, Identifier anim, float animSpeed, BiConsumer<PlayerEntity, Entity> perEnemyLogic, SoundEvent sound) {
         SingleAttack attack = SingleAttack.builder()
                 .player(player)
                 .damage(damage)

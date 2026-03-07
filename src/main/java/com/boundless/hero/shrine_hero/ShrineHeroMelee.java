@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.MeleeAbilities;
 import com.boundless.action.SingleAttack;
+import com.boundless.combat.AttackHelper;
 import com.boundless.combat.Combo;
 import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
@@ -58,21 +59,15 @@ public class ShrineHeroMelee {
         }
 
         if (comboTriggered) return;
+        float scaledDamage = ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestLightAttack.get(), ShrineHero.DAMAGE.strongestLightAttack.get());
 
-        SingleAttack hook = SingleAttack.builder()
-                .player(player)
-                .damage(ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestLightAttack.get(), ShrineHero.DAMAGE.strongestLightAttack.get()))
-                .impactSound(SoundRegistry.EARTH_IMPACT)
-                .animationSpeed(1.0f)
-                .animation(BoundlessAPI.identifier("hook"))
-                .impactTick(4)
-                .attackDuration(4)
-                .perEntityLogic((user, target) ->
-                MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8))
-                .build();
+        AttackHelper.meleeAttack(player, scaledDamage,
+        4, 4, BoundlessAPI.identifier("hook"), 1.0f,
+        (user, target) ->
+        MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8),
+        SoundRegistry.EARTH_IMPACT);
 
         MeleeUtils.disorient(player, 5);
-        AttackUtils.performAttack(hook);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
     }
 
