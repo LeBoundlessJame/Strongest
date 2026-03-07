@@ -2,6 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
+import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
@@ -35,7 +36,7 @@ public class MeleeAbilities {
         }
 
         if (target instanceof PlayerEntity playerTarget) {
-            playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, 100, 0, false, false, false));
+            playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
             MeleeUtils.disorient(playerTarget, disorientDuration);
         }
     }
