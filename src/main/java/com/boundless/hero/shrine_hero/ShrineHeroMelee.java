@@ -51,6 +51,8 @@ public class ShrineHeroMelee {
 
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
+
         boolean comboTriggered = false;
 
         for (Combo combo: ShrineHero.COMBOS) {
@@ -68,18 +70,20 @@ public class ShrineHeroMelee {
         SoundRegistry.EARTH_IMPACT);
 
         MeleeUtils.disorient(player, 5);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
     }
 
     public static void knockbackAttack(PlayerEntity player) {
-
-        /*
-        CameraUtils.playCameraShake(player);
-        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
-        MeleeUtils.knockback(player, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
-
-         */
-
+        AttackHelper.meleeAttack(player, 20,
+                4, 4, BoundlessAPI.identifier("hook"), 1.0f,
+                (user, target) -> {
+                    MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8);
+                    CameraUtils.playCameraShake(user);
+                    if (target instanceof LivingEntity livingEntity) {
+                        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
+                        MeleeUtils.knockback(user, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
+                    }
+                },
+                SoundRegistry.EARTH_IMPACT);
         //player.getWorld().setBlockBreakingInfo(player.getId(), player.getBlockPos().down(), 5);
     }
 }

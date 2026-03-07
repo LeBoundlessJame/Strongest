@@ -27,6 +27,8 @@ public class MeleeAbilities {
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {
+        target.timeUntilRegen = 0;
+
         if (target instanceof LivingEntity livingEntity && !player.getWorld().isClient) {
             CombatUtils.slow(livingEntity, slowDuration, slowStr);
 
