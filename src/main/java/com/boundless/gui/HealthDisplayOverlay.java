@@ -12,28 +12,28 @@ import org.joml.Math;
 import java.util.ArrayList;
 
 public class HealthDisplayOverlay {
-    public static final Identifier HEALTH_BAR_BACKGROUND = BoundlessAPI.identifier("health_bar_background");
-    public static final Identifier HEALTH_BAR_PROGRESS = BoundlessAPI.identifier("health_bar_progress");
+    public static final Identifier HEALTH_BAR_BACKGROUND = BoundlessAPI.hudPNG("health_bar_background");
+    public static final Identifier HEALTH_BAR_PROGRESS = BoundlessAPI.hudPNG("health_bar_progress");
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
         if (player == null) return;
 
         int x = context.getScaledWindowWidth() / 2 - 91;
-        int l = context.getScaledWindowHeight() - 39;
+        int y = context.getScaledWindowHeight() - 39;
         int maxWidth = 80;
         int healthProgress = (int) Math.lerp(0, maxWidth, player.getHealth() / player.getMaxHealth());
 
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("f23d3d");
         RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
 
-        context.drawGuiTexture(HEALTH_BAR_BACKGROUND, 80, 9, 0, 0, x, l, 80, 9);
-        context.drawGuiTexture(HEALTH_BAR_PROGRESS, 80, 9, 0, 0, x, l, healthProgress, 9);
+        context.drawTexture(HEALTH_BAR_BACKGROUND, x, y, 0, 0, 0, 80, 9, 80, 9);
+        context.drawTexture(HEALTH_BAR_PROGRESS, x, y, 0, 0, 0, healthProgress, 9, 80, 9);
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         String healthPercentage = Math.round(player.getHealth() / player.getMaxHealth() * 100) + "%";
         int j = ((context.getScaledWindowWidth() / 2) - 40 - client.textRenderer.getWidth(healthPercentage));
-        context.drawText(client.textRenderer, healthPercentage, j, l - 8, 0xf23d3d, false);
+        context.drawText(client.textRenderer, healthPercentage, j, y - 8, 0xf23d3d, true);
     }
 }
