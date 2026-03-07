@@ -4,18 +4,14 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
-
 import java.util.Objects;
 import java.util.function.Consumer;
 
-// Todo: in the future, make it list based potentially
 public class Combo {
     public String sequence;
     public Consumer<PlayerEntity> logic;
     public ComponentType<String> component;
 
-    // Todo: might need to be a biconsumer later, I'll see...
     public Combo(String sequence, Consumer<PlayerEntity> logic) {
         this.sequence = sequence;
         this.logic = logic;
@@ -23,20 +19,20 @@ public class Combo {
     }
 
     public void updateAndEvaluateCombo(PlayerEntity player, String attack) {
+        if (this.getProgress(player).length() > this.sequence.length()) resetProgress(player);
+
         if (matchesTargetCombo(player, attack)) {
-            player.sendMessage(Text.of("matches combo!"));
             logic.accept(player);
             resetProgress(player);
         } else if (Objects.equals(attack, requiredAttack(player))) {
             updateProgress(player, attack);
-            player.sendMessage(Text.of("update combo progress: now " + getProgress(player)));
         } else {
-            player.sendMessage(Text.of("reset progress"));
             resetProgress(player);
         }
     }
 
     public boolean matchesTargetCombo(PlayerEntity player, String attack) {
+        if (this.getProgress(player).length() == this.sequence.length()) return this.getProgress(player).equals(this.sequence);
         return (this.getProgress(player) + attack).equals(this.sequence);
     }
 
