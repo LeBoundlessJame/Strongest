@@ -5,6 +5,7 @@ import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.ShaderRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.util.ComboRenderHelper;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import com.boundless.util.ShaderAccessor;
@@ -41,22 +42,8 @@ public class HeroHUD {
             }
         }
 
-        if (client.player.hasStatusEffect(StatusEffectRegistry.CINEMATIC_BARS)) {
-            drawCinematicBars(client, context);
-        } else {
-            renderKeybindAbilities(client, context);
-        }
-    }
-
-    public static void drawCinematicBars(MinecraftClient client, DrawContext context) {
-        MatrixStack matrices = context.getMatrices();
-        matrices.push();
-        matrices.translate(0, 0, 10000);
-
-        int barThickness = 40;
-        context.fill(0, 0, context.getScaledWindowWidth(), barThickness, 0xff000000);
-        context.fill(0, context.getScaledWindowHeight(), context.getScaledWindowWidth(), context.getScaledWindowHeight() - barThickness, 0xff000000);
-        matrices.pop();
+        renderKeybindAbilities(client, context);
+        ComboRenderHelper.renderPlayerCombos(client, context);
     }
 
     // Todo: revisit

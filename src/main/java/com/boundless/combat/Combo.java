@@ -9,12 +9,14 @@ import java.util.function.Consumer;
 
 public class Combo {
     public String sequence;
+    public String comboName;
     public Consumer<PlayerEntity> logic;
     public ComponentType<String> component;
 
-    public Combo(String sequence, Consumer<PlayerEntity> logic) {
+    public Combo(String sequence, Consumer<PlayerEntity> logic, String comboName) {
         this.sequence = sequence;
         this.logic = logic;
+        this.comboName = comboName;
         this.component = DataComponentRegistry.registerString(this.sequence);
     }
 
