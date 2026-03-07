@@ -45,10 +45,14 @@ public class ShrineHeroMelee {
 
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
+        boolean comboTriggered = false;
 
         for (Combo combo: ShrineHero.COMBOS) {
+            if (!comboTriggered && combo.matchesTargetCombo(player, "l")) comboTriggered = true;
             combo.updateAndEvaluateCombo(player, "l");
         }
+
+        if (comboTriggered) return;
 
         /*
         ItemStack stack = HeroUtils.getHeroStack(player);
@@ -99,5 +103,6 @@ public class ShrineHeroMelee {
 
     public static void headbutt(PlayerEntity player) {
         player.sendMessage(Text.of("Headbutt!"));
+        //player.getWorld().setBlockBreakingInfo(player.getId(), player.getBlockPos().down(), 5);
     }
 }
