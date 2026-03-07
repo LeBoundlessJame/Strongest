@@ -1,11 +1,14 @@
 package com.boundless.gui;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.GUIUtils;
+import com.boundless.util.HeroUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.joml.Math;
 
@@ -14,6 +17,9 @@ import java.util.ArrayList;
 public class StatOverlays {
     public static final Identifier HEALTH_BAR_BACKGROUND = BoundlessAPI.hudPNG("health_bar_background");
     public static final Identifier HEALTH_BAR_PROGRESS = BoundlessAPI.hudPNG("health_bar_progress");
+    public static final Identifier SWORD = BoundlessAPI.hudPNG("sword");
+    public static final Identifier VANILLA_MODE = BoundlessAPI.hudPNG("vanilla_mode");
+    public static final Identifier SHIELD = BoundlessAPI.hudPNG("shield");
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
@@ -57,5 +63,17 @@ public class StatOverlays {
         String healthPercentage = Math.round(player.getHealth() / player.getMaxHealth() * 100) + "%";
         int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(healthPercentage));
         context.drawText(client.textRenderer, healthPercentage, j, y - 8, 0x1bc7b6, true);
+    }
+
+    public static void renderCombatModeIndicator(MinecraftClient client, DrawContext context) {
+        if (client.player == null) return;
+        ItemStack stack = HeroUtils.getHeroStack(client.player);
+
+        int x = context.getScaledWindowWidth() / 2 - 10;
+        int y = context.getScaledWindowHeight() - 50;
+
+        if (stack.getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, false)) {
+            context.drawTexture(SWORD, x, y, 0, 0, 0, 22, 22, 22, 22);
+        }
     }
 }
