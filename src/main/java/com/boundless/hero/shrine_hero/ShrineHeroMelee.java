@@ -74,7 +74,7 @@ public class ShrineHeroMelee {
 
     public static void knockbackAttack(PlayerEntity player) {
         AttackHelper.meleeAttack(player, 20,
-                4, 4, BoundlessAPI.identifier("hook"), 1.0f,
+                8, 6, BoundlessAPI.identifier("hook"), 0.8f,
                 (user, target) -> {
                     MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8);
                     CameraUtils.playCameraShake(user);
