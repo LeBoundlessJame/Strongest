@@ -3,6 +3,7 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.SingleAttack;
+import com.boundless.combat.Combo;
 import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -14,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 public class ShrineHeroMelee {
@@ -34,15 +36,30 @@ public class ShrineHeroMelee {
                 .attackDuration(8)
                 .build();
 
+        for (Combo combo: ShrineHero.COMBOS) {
+            combo.updateAndEvaluateCombo(player, "m");
+        }
+
         AttackUtils.performAttack(doubleKick);
     }
 
     public static void lightAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
+        for (Combo combo: ShrineHero.COMBOS) {
+            combo.updateAndEvaluateCombo(player, "l");
+        }
+
+        /*
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, stack.getOrDefault(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0) + 1);
         System.out.println(stack.get(DataComponentRegistry.LIGHT_ATTACK_COUNTER));
+
+        if (MeleeUtils.isFinalLightAttack(player)) {
+            stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0);
+        }
+
+         */
 
         SingleAttack hook = SingleAttack.builder()
                 .player(player)
@@ -75,12 +92,12 @@ public class ShrineHeroMelee {
                 })
                 .build();
 
-        if (MeleeUtils.isFinalLightAttack(player)) {
-            stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0);
-        }
-
         MeleeUtils.disorient(player, 5);
         AttackUtils.performAttack(hook);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
+    }
+
+    public static void headbutt(PlayerEntity player) {
+        player.sendMessage(Text.of("Headbutt!"));
     }
 }

@@ -1,39 +1,43 @@
 package com.boundless.combat;
 
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 
 import java.util.Objects;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 // Todo: in the future, make it list based potentially
 public class Combo {
     public String sequence;
-    public BiConsumer<PlayerEntity, HeroActionEntity> logic;
+    public Consumer<PlayerEntity> logic;
     public ComponentType<String> component;
 
-    public Combo(String sequence, BiConsumer<PlayerEntity, HeroActionEntity> logic) {
+    // Todo: might need to be a biconsumer later, I'll see...
+    public Combo(String sequence, Consumer<PlayerEntity> logic) {
         this.sequence = sequence;
         this.logic = logic;
         this.component = DataComponentRegistry.registerString(this.sequence);
     }
 
     public void updateAndEvaluateCombo(PlayerEntity player, String attack) {
-        if (matchesTargetCombo(player)) {
-            logic.accept(player, null);
+        if (matchesTargetCombo(player, attack)) {
+            player.sendMessage(Text.of("matches combo!"));
+            logic.accept(player);
             resetProgress(player);
         } else if (Objects.equals(attack, requiredAttack(player))) {
             updateProgress(player, attack);
+            player.sendMessage(Text.of("update combo progress: now " + getProgress(player)));
         } else {
+            player.sendMessage(Text.of("reset progress"));
             resetProgress(player);
         }
     }
 
-    public boolean matchesTargetCombo(PlayerEntity player) {
-        return this.getProgress(player).equals(this.sequence);
+    public boolean matchesTargetCombo(PlayerEntity player, String attack) {
+        return (this.getProgress(player) + attack).equals(this.sequence);
     }
 
     public void updateProgress(PlayerEntity player, String attack) {
@@ -49,7 +53,6 @@ public class Combo {
     }
 
     public String requiredAttack(PlayerEntity player) {
-        if (getProgress(player).isEmpty()) return String.valueOf(this.sequence.charAt(0));
-        return String.valueOf(this.sequence.charAt(getProgress(player).length() - 1));
+        return String.valueOf(this.sequence.charAt(getProgress(player).length()));
     }
 }

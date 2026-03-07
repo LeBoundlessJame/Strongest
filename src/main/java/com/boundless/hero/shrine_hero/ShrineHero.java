@@ -4,11 +4,11 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
 import com.boundless.ability.MeleeAbilities;
+import com.boundless.combat.Combo;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
-import com.boundless.hero.black_sparks_hero.BrawlerHero;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -31,6 +31,8 @@ import java.util.List;
 import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
 
 public class ShrineHero extends Hero {
+    public static List<Combo> COMBOS = List.of(new Combo("lml", ShrineHeroMelee::headbutt));
+
     public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerComponent("finger_count", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
 
     public static ShrineConfig CONFIG = ConfigRegistry.HERO_CONFIG.SHRINE_CONFIG;
