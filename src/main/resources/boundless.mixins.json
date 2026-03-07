@@ -8,7 +8,7 @@
     "EvasionMixin",
     "GrabMixin",
     "HandSwingMixin",
-    "HealthOverlayMixin",
+    "StatOverlayMixin",
     "InvulnerabilityMixin",
     "KeybindAccessor",
     "LeapingMixin",

@@ -1,11 +1,10 @@
 package com.boundless.mixin;
 
-import com.boundless.gui.HealthDisplayOverlay;
+import com.boundless.gui.StatOverlays;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.GameRenderer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public class HealthOverlayMixin {
+public class StatOverlayMixin {
 
     @Shadow
     @Final
@@ -24,6 +23,7 @@ public class HealthOverlayMixin {
     public void boundless$renderStatusBars(DrawContext context, CallbackInfo ci) {
         if (!HeroUtils.isHero(client.player)) return;
         ci.cancel();
-        HealthDisplayOverlay.renderHealthOverlay(client, context);
+        StatOverlays.renderHealthOverlay(client, context);
+        StatOverlays.renderCursedEnergyOverlay(client, context);
     }
 }
