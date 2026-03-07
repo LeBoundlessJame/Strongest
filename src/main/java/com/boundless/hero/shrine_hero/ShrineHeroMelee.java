@@ -2,6 +2,7 @@ package com.boundless.hero.shrine_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
+import com.boundless.ability.MeleeAbilities;
 import com.boundless.action.SingleAttack;
 import com.boundless.combat.Combo;
 import com.boundless.hero.switcher_hero.SwitcherHero;
@@ -54,17 +55,6 @@ public class ShrineHeroMelee {
 
         if (comboTriggered) return;
 
-        /*
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, stack.getOrDefault(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0) + 1);
-        System.out.println(stack.get(DataComponentRegistry.LIGHT_ATTACK_COUNTER));
-
-        if (MeleeUtils.isFinalLightAttack(player)) {
-            stack.set(DataComponentRegistry.LIGHT_ATTACK_COUNTER, 0);
-        }
-
-         */
-
         SingleAttack hook = SingleAttack.builder()
                 .player(player)
                 .damage(ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestLightAttack.get(), ShrineHero.DAMAGE.strongestLightAttack.get()))
@@ -73,27 +63,8 @@ public class ShrineHeroMelee {
                 .animation(BoundlessAPI.identifier("hook"))
                 .impactTick(4)
                 .attackDuration(4)
-                .perEntityLogic((user, target) -> {
-                    // Todo: make this a configurable 'padding' window
-                    if (target instanceof LivingEntity livingEntity && !player.getWorld().isClient) {
-                        CombatUtils.slow(livingEntity, 14, 255);
-
-                        if (MeleeUtils.isFinalLightAttack(player)) {
-                            CameraUtils.playCameraShake(player);
-                            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
-                            MeleeUtils.knockback(player, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
-                        } else {
-                            livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.5, 0.25, 0.5).add(player.getVelocity()));
-                            livingEntity.velocityModified = true;
-                            livingEntity.velocityDirty = true;
-                        }
-                    }
-
-                    if (target instanceof PlayerEntity playerTarget) {
-                        playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, 100, 0, false, false, false));
-                        MeleeUtils.disorient(playerTarget, MeleeUtils.isFinalLightAttack(player) ? 20 : 8);
-                    }
-                })
+                .perEntityLogic((user, target) ->
+                MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8))
                 .build();
 
         MeleeUtils.disorient(player, 5);
@@ -101,8 +72,14 @@ public class ShrineHeroMelee {
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
     }
 
-    public static void headbutt(PlayerEntity player) {
-        player.sendMessage(Text.of("Headbutt!"));
+    public static void knockbackAttack(PlayerEntity player) {
+        /*
+        CameraUtils.playCameraShake(player);
+        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
+        MeleeUtils.knockback(player, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
+
+         */
+
         //player.getWorld().setBlockBreakingInfo(player.getId(), player.getBlockPos().down(), 5);
     }
 }

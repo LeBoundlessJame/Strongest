@@ -5,10 +5,10 @@ import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.AbilityUtils;
-import com.boundless.util.HeroUtils;
-import com.boundless.util.SoundUtils;
+import com.boundless.util.*;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -24,4 +24,20 @@ public class MeleeAbilities {
             ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
         }
     }
+
+    public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {
+        if (target instanceof LivingEntity livingEntity && !player.getWorld().isClient) {
+            CombatUtils.slow(livingEntity, slowDuration, slowStr);
+
+            livingEntity.setVelocity(player.getRotationVector().normalize().multiply(0.5, 0.25, 0.5).add(player.getVelocity()));
+            livingEntity.velocityModified = true;
+            livingEntity.velocityDirty = true;
+        }
+
+        if (target instanceof PlayerEntity playerTarget) {
+            playerTarget.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, 100, 0, false, false, false));
+            MeleeUtils.disorient(playerTarget, disorientDuration);
+        }
+    }
+
 }
