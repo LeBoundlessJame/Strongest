@@ -25,6 +25,14 @@ public class ShrineHeroMelee {
 
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player) || player.isUsingItem()) return;
+        boolean comboTriggered = false;
+
+        for (Combo combo: ShrineHero.COMBOS) {
+            if (!comboTriggered && combo.matchesTargetCombo(player, "m")) comboTriggered = true;
+            combo.updateAndEvaluateCombo(player, "m");
+        }
+
+        if (comboTriggered) return;
 
         SingleAttack doubleKick = SingleAttack.builder()
                 .player(player)
@@ -36,10 +44,6 @@ public class ShrineHeroMelee {
                 .impactTick(4)
                 .attackDuration(8)
                 .build();
-
-        for (Combo combo: ShrineHero.COMBOS) {
-            combo.updateAndEvaluateCombo(player, "m");
-        }
 
         AttackUtils.performAttack(doubleKick);
     }
@@ -73,6 +77,7 @@ public class ShrineHeroMelee {
     }
 
     public static void knockbackAttack(PlayerEntity player) {
+
         /*
         CameraUtils.playCameraShake(player);
         livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));

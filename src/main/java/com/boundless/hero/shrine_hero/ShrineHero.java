@@ -31,7 +31,7 @@ import java.util.List;
 import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
 
 public class ShrineHero extends Hero {
-    public static List<Combo> COMBOS = List.of(new Combo("lml", ShrineHeroMelee::headbutt));
+    public static List<Combo> COMBOS = List.of(new Combo("lllll", ShrineHeroMelee::knockbackAttack));
 
     public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerInt("finger_count");
 
