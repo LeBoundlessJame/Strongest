@@ -4,13 +4,27 @@ import com.boundless.combat.Combo;
 import com.boundless.hero.shrine_hero.ShrineHero;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class ComboRenderHelper {
     public static void renderPlayerCombos(MinecraftClient client, DrawContext context) {
-        int width = context.getScaledWindowWidth();
-
         for (Combo combo: ShrineHero.COMBOS) {
-            GUIUtils.drawLabelledText(context, client, combo.comboName, 0xff0000, width - 50, 10, 2, 2, 0.4f);
+            int x = context.getScaledWindowWidth() - client.textRenderer.getWidth(getRequiredComboString(combo)) - 12;
+            GUIUtils.drawLabelledOutlinedText(context, client, getRequiredComboString(combo), 0xff0000, x, 10, 2, 2, 0.4f);
         }
+    }
+
+    public static String getRequiredComboString(Combo combo) {
+        return combo.comboName + ": " + formattedCombo(combo.sequence);
+    }
+
+    public static String getCurrentComboString(PlayerEntity player, Combo combo) {
+        String comboProgress = HeroUtils.getHeroStack(player).getOrDefault(combo.component, "");
+        if (comboProgress.isEmpty()) return "";
+        return combo.comboName + ": " + formattedCombo(comboProgress);
+    }
+
+    public static String formattedCombo(String combo) {
+        return combo.replaceAll("(.)", "$1 > ").replaceAll(" > $", "");
     }
 }
