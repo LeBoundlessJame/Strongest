@@ -10,7 +10,7 @@ public class ComboRenderHelper {
     public static void renderPlayerCombos(MinecraftClient client, DrawContext context) {
         for (Combo combo: ShrineHero.COMBOS) {
             int x = context.getScaledWindowWidth() - client.textRenderer.getWidth(getRequiredComboString(combo)) - 12;
-            GUIUtils.drawLabelledOutlinedText(context, client, getRequiredComboString(combo), 0xfffc5454, x, 10, 2, 2, 0.8f);
+            GUIUtils.drawLabelledOutlinedText(context, client, getRequiredComboString(combo), 0xfffc5454, x, 10, 2, 2, 0.4f);
             GUIUtils.drawLabelledOutlinedText(context, client, getCurrentComboString(client.player, combo), 0xff1bc7b6, x, 10, 2, 2, 0f);
         }
     }
