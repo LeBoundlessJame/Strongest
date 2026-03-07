@@ -33,7 +33,7 @@ import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
 public class ShrineHero extends Hero {
     public static List<Combo> COMBOS = List.of(new Combo("lml", ShrineHeroMelee::headbutt));
 
-    public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerComponent("finger_count", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
+    public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerInt("finger_count");
 
     public static ShrineConfig CONFIG = ConfigRegistry.HERO_CONFIG.SHRINE_CONFIG;
     public static ShrineConfig.AbilityDamageConfig DAMAGE = CONFIG.ABILITY_DAMAGE_CONFIG;
