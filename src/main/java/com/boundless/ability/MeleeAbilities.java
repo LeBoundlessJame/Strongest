@@ -1,6 +1,7 @@
 package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.combat.CombatSystem;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -13,17 +14,24 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.hit.BlockHitResult;
 
 public class MeleeAbilities {
     public static Ability DODGE = AbilityUtils.ability(MeleeAbilities::dash, 20, BoundlessAPI.identifier("dodge"), "Dodge");
 
     public static void dash(PlayerEntity player) {
+        /*
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVULNERABILITY_EFFECT, 20, 0, true, false, false));
         HeroUtils.getHeroStack(player).set(DataComponentRegistry.ROLLING_END, player.getWorld().getTime() + 20);
         if (!player.getWorld().isClient) {
             ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
         }
+
+         */
+        BlockHitResult result = RaycastUtils.blockRaycast(player, 32);
+        if (result == null) return;
+        CombatSystem.moveToPos(player, result.getPos(), 20, 2);
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {
