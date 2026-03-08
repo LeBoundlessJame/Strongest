@@ -1,6 +1,5 @@
 package com.boundless.hero.black_sparks_hero;
 
-import com.boundless.ability.AntiDomainTechniques;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;

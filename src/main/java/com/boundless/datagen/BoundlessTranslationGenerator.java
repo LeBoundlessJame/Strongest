@@ -2,7 +2,6 @@ package com.boundless.datagen;
 
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.*;
-import com.boundless.util.KeybindingUtils;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.item.Item;

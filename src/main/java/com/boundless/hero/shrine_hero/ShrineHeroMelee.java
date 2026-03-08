@@ -8,16 +8,16 @@ import com.boundless.combat.AttackHelper;
 import com.boundless.combat.Combo;
 import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
-import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.*;
+import com.boundless.util.AbilityUtils;
+import com.boundless.util.AttackUtils;
+import com.boundless.util.CameraUtils;
+import com.boundless.util.MeleeUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 public class ShrineHeroMelee {

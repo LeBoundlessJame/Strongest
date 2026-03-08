@@ -4,6 +4,7 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
+
 import java.util.Objects;
 import java.util.function.Consumer;
 

@@ -13,7 +13,6 @@ import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
-import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;

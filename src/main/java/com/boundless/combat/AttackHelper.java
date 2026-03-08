@@ -1,11 +1,6 @@
 package com.boundless.combat;
 
-import com.boundless.BoundlessAPI;
-import com.boundless.ability.MeleeAbilities;
 import com.boundless.action.SingleAttack;
-import com.boundless.hero.shrine_hero.ShrineHelper;
-import com.boundless.hero.shrine_hero.ShrineHero;
-import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AttackUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
