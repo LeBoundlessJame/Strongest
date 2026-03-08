@@ -17,12 +17,15 @@ public class CombatSystem {
 
         for (int i = 0; i < maxTicks; i++) {
             tasks.put(i, (user, action) -> {
+                if (action.isCancelled()) return;
+
                 Vec3d toTarget = target.subtract(user.getPos());
 
-                if (toTarget.lengthSquared() < 0.25) {
+                if (toTarget.lengthSquared() < 0.5) {
                     user.setVelocity(Vec3d.ZERO);
                     user.velocityModified = true;
                     player.sendMessage(Text.of("Got close enough fr fr"));
+                    action.setCancelled(true);
                     return;
                 }
 

@@ -31,6 +31,8 @@ public class HeroActionEntity extends PersistentProjectileEntity {
     private int maxLifetime = 20;
     private float remainingActions = 1;
     private LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks;
+    @Getter @Setter
+    private boolean isCancelled = false;
 
     private static final TrackedData<Float> WIDTH_X = DataTracker.registerData(HeroActionEntity.class, TrackedDataHandlerRegistry.FLOAT);
     private static final TrackedData<Float> HEIGHT = DataTracker.registerData(HeroActionEntity.class, TrackedDataHandlerRegistry.FLOAT);
@@ -91,7 +93,7 @@ public class HeroActionEntity extends PersistentProjectileEntity {
         scheduledActionsCheck();
         super.tick();
 
-        if (customTickLogic != null && this.getOwner() instanceof PlayerEntity player) {
+        if (customTickLogic != null && this.getOwner() instanceof PlayerEntity player && !this.isCancelled()) {
             customTickLogic.accept(player, this);
         }
 
