@@ -1,8 +1,10 @@
 package com.boundless.mixin;
 
+import com.boundless.registry.GameRulesRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,7 +16,8 @@ public class HungerPreventionMixin {
     // Todo: make this configurable in the future
     @Inject(method = "update", at = @At("HEAD"), cancellable = true)
     public void boundless$update(PlayerEntity player, CallbackInfo ci) {
-        if (!HeroUtils.isHero(player)) return;
+        if (!HeroUtils.isHero(player) || !player.getWorld().getGameRules().getBoolean(GameRulesRegistry.DISABLE_TECHNIQUE_HUNGER)) return;
+
         HungerManager hungerManager = ((HungerManager) (Object) this);
         hungerManager.setFoodLevel(20);
         hungerManager.setSaturationLevel(20);

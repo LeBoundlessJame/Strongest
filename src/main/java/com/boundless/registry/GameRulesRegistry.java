@@ -6,6 +6,7 @@ import net.minecraft.world.GameRules;
 
 public class GameRulesRegistry {
     public static final GameRules.Key<GameRules.BooleanRule> TECHNIQUE_DESTRUCTION = registerGamerule("techniqueDestruction", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+    public static final GameRules.Key<GameRules.BooleanRule> DISABLE_TECHNIQUE_HUNGER = registerGamerule("disableTechniqueHunger", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
 
     private static <T extends GameRules.Rule<T>> GameRules.Key<T> registerGamerule(String name, GameRules.Category category, GameRules.Type<T> type) {
         return GameRuleRegistry.register(name, category, type);
