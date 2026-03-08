@@ -21,15 +21,14 @@ public class CombatSystem {
 
                 Vec3d toTarget = target.subtract(user.getPos());
 
-                if (toTarget.lengthSquared() < 0.5) {
+                if (toTarget.lengthSquared() < 1) {
                     user.setVelocity(Vec3d.ZERO);
                     user.velocityModified = true;
-                    player.sendMessage(Text.of("Got close enough fr fr"));
                     action.setCancelled(true);
                     return;
                 }
 
-                Vec3d velocity = toTarget.normalize().multiply(maxSpeed);
+                Vec3d velocity = toTarget.normalize().multiply(Math.min(toTarget.length(), maxSpeed));
 
                 if (toTarget.length() < maxSpeed) {
                     velocity = toTarget;
