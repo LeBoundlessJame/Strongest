@@ -31,6 +31,7 @@ public class MeleeAbilities {
          */
         // Maybe speed=2?
         CombatSystem.moveToEntity(player, 32, 20, 2);
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("offensive_dash"));
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {
