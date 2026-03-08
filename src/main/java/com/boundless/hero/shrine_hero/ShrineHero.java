@@ -70,6 +70,7 @@ public class ShrineHero extends Hero {
                 .attributes(ATTRIBUTES)
                 .hudRenderer(BrawlerHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
+                .tickHandler(Hero::regenTick)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
                 .customTooltips(ShrineHero::customTooltip)

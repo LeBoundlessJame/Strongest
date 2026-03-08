@@ -63,6 +63,11 @@ public abstract class Hero {
         }
     }
 
+    // Todo: make this figure configurable
+    public static void regenTick(PlayerEntity player) {
+        player.heal(player.getMaxHealth() / 50);
+    }
+
     public static void onHeroTick(PlayerEntity player) {
         for (HeldAbility heldAbility: HELD_ABILITIES) {
             heldAbility.holdTickLogic(player);
