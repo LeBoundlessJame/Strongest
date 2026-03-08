@@ -29,9 +29,8 @@ public class MeleeAbilities {
         }
 
          */
-        BlockHitResult result = RaycastUtils.blockRaycast(player, 32);
-        if (result == null) return;
-        CombatSystem.moveToPos(player, result.getPos(), 20, 2);
+        // Maybe speed=2?
+        CombatSystem.moveToEntity(player, 32, 20, 2);
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {
