@@ -38,19 +38,25 @@ public class CombatSystem {
                 Vec3d toTarget = target.subtract(user.getPos());
 
                 // Todo: make damage configurable, same damage as light attack
+                if (!action.getEntitiesInBox().isEmpty()) {
+                    action.getEntitiesInBox().forEach((entity) -> {
+                        AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("hook"));
+                        MeleeAbilities.basicPerEnemyLogic(user, entity, 14, 255, 8);
+                        entity.damage(entity.getDamageSources().playerAttack(user), 20);
+                        if (entity instanceof PlayerEntity targetPlayer) {
+                            MeleeUtils.disorient(targetPlayer, 8);
+                        }
+                    });
+                    MeleeUtils.disorient(player, 5);
+                    AttackUtils.startAttackTimer(player, 10);
+                    action.setCancelled(true);
+                    return;
+                }
+
                 if (toTarget.length() < distanceFromEntity) {
                     action.setCancelled(true);
-                    if (!action.getEntitiesInBox().isEmpty()) {
-                        action.getEntitiesInBox().forEach((entity) -> {
-                            AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("hook"));
-                            MeleeAbilities.basicPerEnemyLogic(user, entity, 14, 255, 8);
-                            entity.damage(entity.getDamageSources().playerAttack(user), 20);
-                            AttackUtils.startAttackTimer(player, 10);
-                        });
-                    }
                     //user.setVelocity(Vec3d.ZERO);
                     //user.velocityModified = true;
-                    ShrineHeroMelee.lightAttack(user);
                     return;
                 }
 

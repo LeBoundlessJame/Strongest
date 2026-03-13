@@ -7,6 +7,7 @@ import com.boundless.networking.PayloadRegistry;
 import com.boundless.util.AnimationUtils;
 import com.boundless.util.MeleeUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -21,7 +22,9 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
     public static void receive(EvasionServerPayload payload, ServerPlayNetworking.Context context) {
         PlayerEntity player = context.player();
 
-        if (payload.direction.equals("forward") && CombatSystem.getRaycastEntity(player, 32, 1.5f) != null) {
+        Entity raycastEntity = CombatSystem.getRaycastEntity(player, 32, 1.5f);
+
+        if (payload.direction.equals("forward") && raycastEntity != null && raycastEntity.distanceTo(player) > 6) {
             MeleeAbilities.offensiveDash(player);
             return;
         }
