@@ -15,14 +15,13 @@ import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
 public class CombatSystem {
-    public static void moveToEntity(PlayerEntity player, float range, int maxTicks, double maxSpeed, float distanceFromEntity) {
+    public static Entity getRaycastEntity(PlayerEntity player, float range, float radius) {
         EntityHitResult result = RaycastUtils.raycast(player, range);
-        Entity entity = null;
-        if (result == null) {
-            entity = RaycastUtils.thickRaycast(player, range, 1.5f);
-        } else {
-            entity = result.getEntity();
-        }
+        return result == null ? RaycastUtils.thickRaycast(player, range, radius) : result.getEntity();
+    }
+
+    public static void moveToEntity(PlayerEntity player, float range, int maxTicks, double maxSpeed, float distanceFromEntity) {
+        Entity entity = getRaycastEntity(player, range, 1.5f);
         if (entity == null) return;
 
         moveToPos(player, entity.getPos(), maxTicks, maxSpeed, distanceFromEntity);
