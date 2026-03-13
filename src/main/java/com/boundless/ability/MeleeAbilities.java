@@ -27,10 +27,13 @@ public class MeleeAbilities {
             ServerPlayNetworking.send((ServerPlayerEntity) player, new EvasionClientPayload(player.getUuid()));
         }
 
+        /*
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 5, 10);
         CombatSystem.moveToEntity(player, 32, 20, 2, 5.5f);
         EffekUtils.playVisual(player, BoundlessAPI.identifier("flight_boost"));
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("offensive_dash"));
+
+         */
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {

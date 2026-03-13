@@ -21,11 +21,10 @@ public record EvasionClientPayload(UUID user) implements CustomPayload {
 
     public static void receive(EvasionClientPayload payload, ClientPlayNetworking.Context context) {
         PlayerEntity user = context.player().getWorld().getPlayerByUuid(payload.user());
-        MinecraftClient client = context.client();
 
-        client.execute(() -> {
-            if (user == null || client.player == null || user.getUuid().equals(client.player.getUuid())) return;
-            String direction = client.options.forwardKey.isPressed() ? "forward" : "back";
+        context.client().execute(() -> {
+            if (!user.getUuid().equals(context.client().player.getUuid())) return;
+            String direction = context.client().options.forwardKey.isPressed() ? "forward" : "back";
             ClientPlayNetworking.send(new EvasionServerPayload(direction));
         });
     }
