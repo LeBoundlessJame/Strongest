@@ -17,27 +17,18 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
 
     public static void receive(EvasionServerPayload payload, ServerPlayNetworking.Context context) {
         PlayerEntity player = context.player();
-        String animation = "front_handspring";
-        float animationSpeed = 1.0f;
-
-        if (payload.direction.equals("back")) {
-            animation = "roll_back";
-            animationSpeed = 1.25f;
-        } else {
-            animation = player.isOnGround() ? "front_handspring" : "roll_forward";
-            animationSpeed = player.isOnGround() ? 1.75f : 1.0f;
-        }
-
+        String animation = payload.direction.equals("back") ? "roll_back" : (player.isOnGround() ? "front_handspring" : "roll_forward");
+        float animationSpeed = payload.direction.equals("back") ? 1.25f : (player.isOnGround() ? 1.75f : 1.0f);
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier(animation), animationSpeed, false, true, 9999);
-        float groundRollDist = 1.5f;
-        float rollDistMultiplier = player.isOnGround() ? groundRollDist : groundRollDist / 2;
 
-        Vec3d normalizedRotationVector = player.getRotationVector().normalize().multiply(rollDistMultiplier);
+        float groundRollDist = 1.5f;
+        Vec3d normalizedRotationVector = player.getRotationVector().normalize().multiply(groundRollDist);
+
         if (payload.direction.equals("back")) {
             normalizedRotationVector = normalizedRotationVector.multiply(-1);
         }
 
-        player.addVelocity(new Vec3d(normalizedRotationVector.x, 0.25, normalizedRotationVector.z));
+        player.addVelocity(new Vec3d(normalizedRotationVector.x, normalizedRotationVector.y, normalizedRotationVector.z));
         player.velocityDirty = true;
         player.velocityModified = true;
     }
