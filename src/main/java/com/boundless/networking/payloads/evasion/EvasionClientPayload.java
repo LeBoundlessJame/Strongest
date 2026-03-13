@@ -2,6 +2,7 @@ package com.boundless.networking.payloads.evasion;
 
 import com.boundless.networking.PayloadRegistry;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -20,12 +21,12 @@ public record EvasionClientPayload(UUID user) implements CustomPayload {
 
     public static void receive(EvasionClientPayload payload, ClientPlayNetworking.Context context) {
         PlayerEntity user = context.player().getWorld().getPlayerByUuid(payload.user());
+        MinecraftClient client = context.client();
 
-        context.client().execute(() -> {
-            if (user.getUuid().equals(context.client().player.getUuid())) {
-                String direction = context.client().options.backKey.isPressed() ? "back" : "forward";
-                ClientPlayNetworking.send(new EvasionServerPayload(direction));
-            }
+        client.execute(() -> {
+            if (user == null || client.player == null || user.getUuid().equals(client.player.getUuid())) return;
+            String direction = client.options.forwardKey.isPressed() ? "forward" : "back";
+            ClientPlayNetworking.send(new EvasionServerPayload(direction));
         });
     }
 

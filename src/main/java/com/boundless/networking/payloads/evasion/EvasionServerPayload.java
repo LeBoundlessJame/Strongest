@@ -13,10 +13,7 @@ import net.minecraft.util.math.Vec3d;
 
 public record EvasionServerPayload(String direction) implements CustomPayload {
     public static final CustomPayload.Id<EvasionServerPayload> ID = new CustomPayload.Id<>(PayloadRegistry.EVASION_SERVER);
-
-    public static final PacketCodec<RegistryByteBuf, EvasionServerPayload> CODEC = PacketCodec.tuple(
-            PacketCodecs.STRING, EvasionServerPayload::direction,
-            EvasionServerPayload::new);
+    public static final PacketCodec<RegistryByteBuf, EvasionServerPayload> CODEC = PacketCodec.tuple(PacketCodecs.STRING, EvasionServerPayload::direction, EvasionServerPayload::new);
 
     public static void receive(EvasionServerPayload payload, ServerPlayNetworking.Context context) {
         PlayerEntity player = context.player();
