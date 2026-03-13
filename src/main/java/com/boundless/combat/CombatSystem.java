@@ -1,11 +1,11 @@
 package com.boundless.combat;
 
+import com.boundless.BoundlessAPI;
+import com.boundless.ability.MeleeAbilities;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.shrine_hero.ShrineHeroMelee;
-import com.boundless.util.ActionUtils;
-import com.boundless.util.AttackUtils;
-import com.boundless.util.RaycastUtils;
+import com.boundless.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
@@ -37,12 +37,20 @@ public class CombatSystem {
 
                 Vec3d toTarget = target.subtract(user.getPos());
 
+                // Todo: make damage configurable, same damage as light attack
                 if (toTarget.length() < distanceFromEntity) {
                     action.setCancelled(true);
+                    if (!action.getEntitiesInBox().isEmpty()) {
+                        action.getEntitiesInBox().forEach((entity) -> {
+                            AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("hook"));
+                            MeleeAbilities.basicPerEnemyLogic(user, entity, 14, 255, 8);
+                            entity.damage(entity.getDamageSources().playerAttack(user), 20);
+                            AttackUtils.startAttackTimer(player, 10);
+                        });
+                    }
                     //user.setVelocity(Vec3d.ZERO);
                     //user.velocityModified = true;
                     ShrineHeroMelee.lightAttack(user);
-                    AttackUtils.startAttackTimer(player, 10);
                     return;
                 }
 

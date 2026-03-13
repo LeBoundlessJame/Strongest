@@ -5,6 +5,7 @@ import com.boundless.entity.ModEntityDimensions;
 import com.boundless.registry.EntityRegistry;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 public class HeroActionEntity extends PersistentProjectileEntity {
@@ -100,6 +102,10 @@ public class HeroActionEntity extends PersistentProjectileEntity {
         if (!this.getWorld().isClient) {
             lifetime++;
         }
+    }
+
+    public List<LivingEntity> getEntitiesInBox() {
+        return this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox(), entity -> entity != this.getOwner());
     }
 
     @Override
