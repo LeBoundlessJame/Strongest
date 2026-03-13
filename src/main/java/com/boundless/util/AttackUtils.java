@@ -37,7 +37,6 @@ public class AttackUtils {
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
         BiConsumer<PlayerEntity, HeroActionEntity> hit = (user, heroAction) -> {
-            if (CombatUtils.isRolling(player)) return;
             SoundUtils.playSound(player, sound);
             CombatUtils.attack(heroAction, damage, Optional.of(attackVFX), perEntityLogic);
         };

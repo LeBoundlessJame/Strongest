@@ -37,6 +37,7 @@ public class CombatSystem {
 
                 Vec3d toTarget = target.subtract(user.getPos());
 
+                /*
                 // Todo: make damage configurable, same damage as light attack
                 if (!action.getEntitiesInBox().isEmpty()) {
                     action.getEntitiesInBox().forEach((entity) -> {
@@ -52,6 +53,8 @@ public class CombatSystem {
                     action.setCancelled(true);
                     return;
                 }
+
+                 */
 
                 if (toTarget.length() < distanceFromEntity) {
                     action.setCancelled(true);
