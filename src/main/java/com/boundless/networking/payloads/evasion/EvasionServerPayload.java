@@ -21,6 +21,7 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
 
     public static void receive(EvasionServerPayload payload, ServerPlayNetworking.Context context) {
         PlayerEntity player = context.player();
+        player.setFireTicks(0);
 
         Entity raycastEntity = CombatSystem.getRaycastEntity(player, 32, 1.5f);
 
