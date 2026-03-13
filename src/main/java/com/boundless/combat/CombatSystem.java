@@ -74,6 +74,12 @@ public class CombatSystem {
             });
         }
 
+        tasks.put(maxTicks + 1, (user, action) -> {
+            if (AttackUtils.canAttack(user)) {
+                AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("idle"));
+            }
+        });
+
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         //AttackUtils.startAttackTimer(player, maxTicks);
     }
