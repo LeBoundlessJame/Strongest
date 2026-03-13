@@ -24,7 +24,7 @@ public record EvasionClientPayload(UUID user) implements CustomPayload {
 
         context.client().execute(() -> {
             if (!user.getUuid().equals(context.client().player.getUuid())) return;
-            String direction = context.client().options.forwardKey.isPressed() ? "forward" : "back";
+            String direction = context.client().options.backKey.isPressed() ? "back" : "forward";
             ClientPlayNetworking.send(new EvasionServerPayload(direction));
         });
     }

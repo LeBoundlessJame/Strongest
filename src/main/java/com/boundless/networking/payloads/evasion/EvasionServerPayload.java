@@ -33,7 +33,9 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
         float groundRollDist = 1.5f;
         Vec3d normalizedRotationVector = player.getRotationVector().normalize().multiply(groundRollDist);
 
-        normalizedRotationVector = normalizedRotationVector.multiply(-1);
+        if (payload.direction.equals("back")) {
+            normalizedRotationVector = normalizedRotationVector.multiply(-1);
+        }
 
         player.addVelocity(new Vec3d(normalizedRotationVector.x, normalizedRotationVector.y, normalizedRotationVector.z));
         player.velocityDirty = true;
