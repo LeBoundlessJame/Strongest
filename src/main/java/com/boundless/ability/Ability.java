@@ -25,5 +25,5 @@ public class Ability {
     private final boolean hide;
 
     @Builder.Default
-    private final float percentCost = 0.0f;
+    private final int percentCost = 0;
 }

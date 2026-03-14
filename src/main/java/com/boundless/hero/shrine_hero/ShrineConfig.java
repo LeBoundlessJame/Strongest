@@ -58,9 +58,9 @@ public class ShrineConfig extends ConfigSection {
     }
 
     public static class AbilityCostConfig extends ConfigSection {
-        public ValidatedFloat dismantlePercentageCost = new ValidatedFloat(0.04f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedFloat cleavePercentageCost = new ValidatedFloat(0.2f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedFloat openPercentageCost = new ValidatedFloat(0.3f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedFloat domainExpansionCost = new ValidatedFloat(0.5f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt dismantlePercentageCost = new ValidatedInt(4, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt cleavePercentageCost = new ValidatedInt(20, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt openPercentageCost = new ValidatedInt(30, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt domainExpansionCost = new ValidatedInt(50, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }
 }

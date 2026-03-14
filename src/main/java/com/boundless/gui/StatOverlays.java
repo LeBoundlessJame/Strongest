@@ -11,6 +11,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import org.joml.Math;
 
 import java.util.ArrayList;
@@ -48,12 +49,12 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        float percentageRemaining = MeterUtils.getRemainingMeter(player);
+        int percentageRemaining = MeterUtils.getRemainingMeter(player);
 
         int x = context.getScaledWindowWidth() / 2 + 11;
         int y = context.getScaledWindowHeight() - 39;
         int maxWidth = 80;
-        int healthProgress = (int) Math.lerp(0, maxWidth, percentageRemaining);
+        int healthProgress = maxWidth * percentageRemaining / 100;
 
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("1bc7b6");
         RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
@@ -63,7 +64,7 @@ public class StatOverlays {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String meterPercentage = Math.roundHalfDown(percentageRemaining * 100) + "%";
+        String meterPercentage = percentageRemaining + "%";
         int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(meterPercentage));
         context.drawText(client.textRenderer, meterPercentage, j, y - 8, 0x1bc7b6, true);
     }

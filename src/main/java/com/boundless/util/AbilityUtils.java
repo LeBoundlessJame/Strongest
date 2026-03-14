@@ -28,7 +28,7 @@ public class AbilityUtils {
         return ability(abilityLogic, cooldown, abilityID, null, displayString);
     }
 
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, float percentageCost) {
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, int percentageCost) {
         return Ability
                 .builder()
                 .abilityLogic(abilityLogic)
@@ -87,7 +87,7 @@ public class AbilityUtils {
         if (ability == null) return false;
         Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {
-            float percentCost = ability.getPercentCost();
+            int percentCost = ability.getPercentCost();
             boolean abilityUsed = false;
 
             if (MeterUtils.getRemainingMeter(player) >= percentCost) {
