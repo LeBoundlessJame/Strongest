@@ -10,10 +10,7 @@ import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.AbilityUtils;
-import com.boundless.util.AttackUtils;
-import com.boundless.util.CameraUtils;
-import com.boundless.util.MeleeUtils;
+import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -65,9 +62,11 @@ public class ShrineHeroMelee {
 
         AttackHelper.meleeAttack(player, scaledDamage,
         4, 4, BoundlessAPI.identifier("hook"), 1.0f,
-        (user, target) ->
-        MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8),
-        SoundRegistry.EARTH_IMPACT);
+        (user, target) -> {
+            MeleeAbilities.basicPerEnemyLogic(user, target, 14, 255, 8);
+            SoundUtils.playSound(user, SoundRegistry.EARTH_IMPACT);
+        },
+        SoundRegistry.MISS_HIT);
 
         MeleeUtils.disorient(player, 5);
     }
@@ -82,8 +81,9 @@ public class ShrineHeroMelee {
                         livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
                         MeleeUtils.knockback(user, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
                     }
+                    SoundUtils.playSound(user, SoundRegistry.ENERGY_IMPACT_HEAVY);
                 },
-                SoundRegistry.EARTH_IMPACT);
+                SoundRegistry.MISS_HIT);
         //player.getWorld().setBlockBreakingInfo(player.getId(), player.getBlockPos().down(), 5);
     }
 }
