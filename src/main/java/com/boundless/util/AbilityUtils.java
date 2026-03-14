@@ -29,6 +29,17 @@ public class AbilityUtils {
         return ability(abilityLogic, cooldown, abilityID, null, displayString);
     }
 
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, float percentageCost) {
+        return Ability
+                .builder()
+                .abilityLogic(abilityLogic)
+                .cooldown(cooldown)
+                .abilityID(abilityID)
+                .displayString(displayString)
+                .percentCost(percentageCost)
+                .build();
+    }
+
     public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon) {
         return ability(abilityLogic, cooldown, abilityID, abilityIcon, null);
     }
@@ -80,13 +91,17 @@ public class AbilityUtils {
         Ability ability = AbilityRegistry.getAbilityFromID(abilityID);
         if (ability == null || ability instanceof HeldAbility) return false;
         Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
-
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {
             abilityConsumer.accept(player);
             if (!player.getWorld().isClient) {
+                float percentCost = ability.getPercentCost();
+
                 long cooldown = ability.getCooldown();
                 if (cooldown > 0 && !AbilityUtils.isOnCooldown(player, abilityID)) {
-                    setAbilityCooldown(player, abilityID, cooldown);
+                    if (MeterUtils.getRemainingMeter(player) >= percentCost) {
+                        setAbilityCooldown(player, abilityID, cooldown);
+                        MeterUtils.consumeMeter(player, percentCost);
+                    }
                 }
             }
             return true;

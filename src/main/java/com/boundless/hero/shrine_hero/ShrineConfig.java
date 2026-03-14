@@ -15,6 +15,7 @@ public class ShrineConfig extends ConfigSection {
     public ShrineConfig.AbilityDamageConfig ABILITY_DAMAGE_CONFIG = new ShrineConfig.AbilityDamageConfig();
     public ShrineConfig.AbilityCooldownConfig ABILITY_COOLDOWN_CONFIG = new ShrineConfig.AbilityCooldownConfig();
     public ShrineConfig.DomainConfig DOMAIN_CONFIG = new ShrineConfig.DomainConfig();
+    public ShrineConfig.AbilityCostConfig ABILITY_COST_CONFIG = new ShrineConfig.AbilityCostConfig();
 
     public static class AbilityCooldownConfig extends ConfigSection {
         public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
@@ -54,5 +55,12 @@ public class ShrineConfig extends ConfigSection {
 
         public ValidatedFloat weakestFurnaceArrowDamage = new ValidatedFloat(800.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedFloat strongestFurnaceArrowDamage = new ValidatedFloat(1000.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+    }
+
+    public static class AbilityCostConfig extends ConfigSection {
+        public ValidatedFloat dismantlePercentageCost = new ValidatedFloat(0.04f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat cleavePercentageCost = new ValidatedFloat(0.2f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat openPercentage = new ValidatedFloat(0.3f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedFloat domainExpansionCost = new ValidatedFloat(0.5f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
     }
 }

@@ -38,6 +38,7 @@ public class ShrineHero extends Hero {
     public static ShrineConfig.AbilityDamageConfig DAMAGE = CONFIG.ABILITY_DAMAGE_CONFIG;
     public static ShrineConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.ABILITY_COOLDOWN_CONFIG;
     public static ShrineConfig.DomainConfig DOMAIN = CONFIG.DOMAIN_CONFIG;
+    public static ShrineConfig.AbilityCostConfig ABILITY_COST = CONFIG.ABILITY_COST_CONFIG;
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 40f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
