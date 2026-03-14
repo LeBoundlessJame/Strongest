@@ -30,8 +30,7 @@ import java.util.List;
 import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
 
 public class ShrineHero extends Hero {
-    public static List<Combo> COMBOS = List.of(new Combo("🗡🗡🗡🗡🗡", ShrineHeroMelee::knockbackAttack, "Heavy Hit"));
-    public static String LIGHT_INDICATOR = "🗡";
+    public static List<Combo> COMBOS = List.of(new Combo("lllll", ShrineHeroMelee::knockbackAttack, "Heavy Hit"));
 
     public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerInt("finger_count");
 

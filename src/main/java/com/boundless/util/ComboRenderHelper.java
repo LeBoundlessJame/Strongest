@@ -30,6 +30,8 @@ public class ComboRenderHelper {
     }
 
     public static String formattedCombo(String combo) {
+        // Todo: Just make the combo system list based later on instead of this.
+        combo = combo.replace("l", "🗡");
         return combo.replaceAll("(.)", "$1 > ").replaceAll(" > $", "");
     }
 }
