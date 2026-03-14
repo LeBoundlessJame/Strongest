@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
+import com.boundless.util.MeterUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -47,10 +48,12 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
+        float percentageRemaining = MeterUtils.getRemainingMeter(player);
+
         int x = context.getScaledWindowWidth() / 2 + 11;
         int y = context.getScaledWindowHeight() - 39;
         int maxWidth = 80;
-        int healthProgress = (int) Math.lerp(0, maxWidth, player.getHealth() / player.getMaxHealth());
+        int healthProgress = (int) Math.lerp(0, maxWidth, percentageRemaining);
 
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("1bc7b6");
         RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
@@ -60,9 +63,9 @@ public class StatOverlays {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String healthPercentage = Math.round(player.getHealth() / player.getMaxHealth() * 100) + "%";
-        int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(healthPercentage));
-        context.drawText(client.textRenderer, healthPercentage, j, y - 8, 0x1bc7b6, true);
+        String meterPercentage = Math.round(percentageRemaining * 100) + "%";
+        int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(meterPercentage));
+        context.drawText(client.textRenderer, meterPercentage, j, y - 8, 0x1bc7b6, true);
     }
 
     public static void renderCombatModeIndicator(MinecraftClient client, DrawContext context) {
