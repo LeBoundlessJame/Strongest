@@ -98,6 +98,8 @@ public class ShrineHero extends Hero {
             MeterUtils.regenMeterBasedOnHealth(player, ShrineHero.METER_CONFIG.minMeterRegen.get(), ShrineHero.METER_CONFIG.maxMeterRegen.get());
         }
 
-        player.heal(player.getMaxHealth() / 500);
+        if (player.age % ShrineHero.CONFIG.healingTickDelay.get() == 0 && !player.getWorld().isClient) {
+            player.heal(ShrineHero.CONFIG.passiveHealingAmount.get());
+        }
     }
 }
