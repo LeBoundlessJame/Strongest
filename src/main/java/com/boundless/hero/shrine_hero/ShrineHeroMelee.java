@@ -56,8 +56,8 @@ public class ShrineHeroMelee {
         boolean comboTriggered = false;
 
         for (Combo combo: ShrineHero.COMBOS) {
-            if (!comboTriggered && combo.matchesTargetCombo(player, "l")) comboTriggered = true;
-            combo.updateAndEvaluateCombo(player, "l");
+            if (!comboTriggered && combo.matchesTargetCombo(player, ShrineHero.LIGHT_INDICATOR)) comboTriggered = true;
+            combo.updateAndEvaluateCombo(player, ShrineHero.LIGHT_INDICATOR);
         }
 
         if (comboTriggered) return;
