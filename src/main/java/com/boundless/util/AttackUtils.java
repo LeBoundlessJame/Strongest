@@ -57,6 +57,8 @@ public class AttackUtils {
     }
 
     public static void toggleCombatMode(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(DataComponentRegistry.COMBAT_MODE_ENABLED, !HeroUtils.combatModeEnabled(player));
     }
