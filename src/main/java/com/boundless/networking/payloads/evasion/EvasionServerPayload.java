@@ -5,7 +5,6 @@ import com.boundless.ability.MeleeAbilities;
 import com.boundless.combat.CombatSystem;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.util.AnimationUtils;
-import com.boundless.util.MeleeUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,6 +46,7 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
     }
 
     public static void sideDodge(PlayerEntity player, String direction, float distance) {
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("side_flip"), 2.5f, false, true, 9999);
         Vec3d side = player.getRotationVector().crossProduct(new Vec3d(0, 1, 0))
                 .normalize().multiply(distance);
 
@@ -54,7 +54,7 @@ public record EvasionServerPayload(String direction) implements CustomPayload {
             side = side.multiply(-1);
         }
 
-        player.addVelocity(side.x, 0, side.z);
+        player.addVelocity(side.x, 0.25, side.z);
     }
 
     public static void dodgeRoll(PlayerEntity player, String direction, float distance) {
