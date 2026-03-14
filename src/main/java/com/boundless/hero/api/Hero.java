@@ -4,6 +4,8 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.HeldAbility;
+import com.boundless.combat.Combo;
+import com.boundless.hero.shrine_hero.ShrineHeroMelee;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
@@ -17,9 +19,12 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Hero {
+    public static List<Combo> COMBOS;
+
     @Getter
     ArrayList<Item> armorSet;
     @Getter

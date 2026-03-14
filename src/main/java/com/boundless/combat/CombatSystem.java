@@ -1,11 +1,12 @@
 package com.boundless.combat;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.MeleeAbilities;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.shrine_hero.ShrineHeroMelee;
-import com.boundless.util.*;
+import com.boundless.util.ActionUtils;
+import com.boundless.util.AnimationUtils;
+import com.boundless.util.AttackUtils;
+import com.boundless.util.RaycastUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;

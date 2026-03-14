@@ -2,6 +2,7 @@ package com.boundless.hero.api;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.combat.Combo;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import lombok.Builder;
@@ -58,4 +59,7 @@ public class HeroData {
     private final List<String> heldKeybinds;
 
     private final Function<ItemStack, List<Text>> customTooltips;
+
+    @Singular
+    private final List<Combo> combos;
 }

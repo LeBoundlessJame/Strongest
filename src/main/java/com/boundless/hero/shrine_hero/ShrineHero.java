@@ -73,6 +73,7 @@ public class ShrineHero extends Hero {
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
                 .customTooltips(ShrineHero::customTooltip)
+                .combos(COMBOS)
                 .build();
         this.registerHero();
     }
