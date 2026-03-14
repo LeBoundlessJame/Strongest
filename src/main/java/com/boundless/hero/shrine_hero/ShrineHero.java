@@ -13,6 +13,7 @@ import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.util.MeterUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -20,6 +21,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -38,7 +40,7 @@ public class ShrineHero extends Hero {
     public static ShrineConfig.AbilityDamageConfig DAMAGE = CONFIG.ABILITY_DAMAGE_CONFIG;
     public static ShrineConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.ABILITY_COOLDOWN_CONFIG;
     public static ShrineConfig.DomainConfig DOMAIN = CONFIG.DOMAIN_CONFIG;
-    public static ShrineConfig.AbilityCostConfig ABILITY_COST = CONFIG.ABILITY_COST_CONFIG;
+    public static ShrineConfig.MeterConfig METER_CONFIG = CONFIG.METER_CONFIG;
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 40f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
@@ -70,7 +72,7 @@ public class ShrineHero extends Hero {
                 .attributes(ATTRIBUTES)
                 .hudRenderer(BrawlerHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
-                .tickHandler(Hero::regenTick)
+                .tickHandler(ShrineHero::regenTick)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
                 .customTooltips(ShrineHero::customTooltip)
@@ -88,5 +90,14 @@ public class ShrineHero extends Hero {
     // Todo: Make it so that yuji can also eat the finger
     public static boolean canEatFinger(LivingEntity livingEntity) {
         return livingEntity.getEquippedStack(EquipmentSlot.CHEST).getItem().equals(HeroRegistry.SHRINE_HERO.getArmorSet().get(1));
+    }
+
+    // Todo: make this figure configurable
+    public static void regenTick(PlayerEntity player) {
+        if (player.age % ShrineHero.METER_CONFIG.regenTickDelay.get() == 0 && !player.getWorld().isClient) {
+            MeterUtils.regenMeterBasedOnHealth(player, ShrineHero.METER_CONFIG.minMeterRegen.get(), ShrineHero.METER_CONFIG.maxMeterRegen.get());
+        }
+
+        player.heal(player.getMaxHealth() / 500);
     }
 }

@@ -73,15 +73,6 @@ public abstract class Hero {
         }
     }
 
-    // Todo: make this figure configurable
-    public static void regenTick(PlayerEntity player) {
-        if (player.age % 20 == 0 && !player.getWorld().isClient) {
-            MeterUtils.regenMeter(player, 2);
-        }
-
-        player.heal(player.getMaxHealth() / 500);
-    }
-
     // Todo: rework held abilities
     public static void onHeroTick(PlayerEntity player) {
         /*

@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ShrineHeroDestruction {
-    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open", ShrineHero.ABILITY_COST.openPercentageCost.get());
-    public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine", ShrineHero.ABILITY_COST.domainExpansionCost.get());
+    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open", ShrineHero.METER_CONFIG.openPercentageCost.get());
+    public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine", ShrineHero.METER_CONFIG.domainExpansionCost.get());
 
     public static void open(PlayerEntity player) {
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));

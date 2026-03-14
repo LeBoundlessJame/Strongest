@@ -15,7 +15,7 @@ public class ShrineConfig extends ConfigSection {
     public ShrineConfig.AbilityDamageConfig ABILITY_DAMAGE_CONFIG = new ShrineConfig.AbilityDamageConfig();
     public ShrineConfig.AbilityCooldownConfig ABILITY_COOLDOWN_CONFIG = new ShrineConfig.AbilityCooldownConfig();
     public ShrineConfig.DomainConfig DOMAIN_CONFIG = new ShrineConfig.DomainConfig();
-    public ShrineConfig.AbilityCostConfig ABILITY_COST_CONFIG = new ShrineConfig.AbilityCostConfig();
+    public ShrineConfig.MeterConfig METER_CONFIG = new ShrineConfig.MeterConfig();
 
     public static class AbilityCooldownConfig extends ConfigSection {
         public ValidatedInt lightAttack = new ValidatedInt(5, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
@@ -57,10 +57,13 @@ public class ShrineConfig extends ConfigSection {
         public ValidatedFloat strongestFurnaceArrowDamage = new ValidatedFloat(1000.0f, 99999f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
     }
 
-    public static class AbilityCostConfig extends ConfigSection {
+    public static class MeterConfig extends ConfigSection {
         public ValidatedInt dismantlePercentageCost = new ValidatedInt(4, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt cleavePercentageCost = new ValidatedInt(20, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt openPercentageCost = new ValidatedInt(30, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt domainExpansionCost = new ValidatedInt(50, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt minMeterRegen = new ValidatedInt(1, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt maxMeterRegen = new ValidatedInt(1, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt regenTickDelay = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     }
 }

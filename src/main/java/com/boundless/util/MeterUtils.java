@@ -10,15 +10,23 @@ public class MeterUtils {
     }
 
     public static void consumeMeter(PlayerEntity player, int amount) {
+        if (player.getWorld().isClient) return;
+
         int meter = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.METER, 100);
         meter = MathHelper.clamp(meter - amount, 0, 100);
         HeroUtils.getHeroStack(player).set(DataComponentRegistry.METER, meter);
     }
 
     public static void regenMeter(PlayerEntity player, int amount) {
+        if (player.getWorld().isClient) return;
+
         int meter = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.METER, 100);
         meter = MathHelper.clamp(meter + amount, 0, 100);
         HeroUtils.getHeroStack(player).set(DataComponentRegistry.METER, meter);
     }
 
+    public static void regenMeterBasedOnHealth(PlayerEntity player, int min, int max) {
+        int amount = MathHelper.lerp(player.getHealth() / player.getMaxHealth(), min, max);
+        regenMeter(player, amount);
+    }
 }
