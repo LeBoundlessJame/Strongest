@@ -9,6 +9,7 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;
+import com.boundless.util.MeterUtils;
 import com.boundless.util.RegistryUtils;
 import lombok.Getter;
 import net.minecraft.entity.player.PlayerEntity;
@@ -74,7 +75,11 @@ public abstract class Hero {
 
     // Todo: make this figure configurable
     public static void regenTick(PlayerEntity player) {
-        player.heal(player.getMaxHealth() / 50);
+        if (player.age % 20 == 0) {
+            MeterUtils.regenMeter(player, 0.05f);
+        }
+
+        player.heal(player.getMaxHealth() / 500);
     }
 
     // Todo: rework held abilities

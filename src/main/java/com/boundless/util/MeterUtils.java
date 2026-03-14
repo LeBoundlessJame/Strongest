@@ -8,12 +8,17 @@ public class MeterUtils {
         return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.METER, 1.0f);
     }
 
-    public static void consumeMeter(PlayerEntity player, float percentage) {
+    public static void consumeMeter(PlayerEntity player, float amount) {
         float meterRemaining = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.METER, 1.0f);
-        if (meterRemaining - percentage >= 0.0){
-            float updatedMeterValue = meterRemaining - percentage;
-            updatedMeterValue = Math.round(updatedMeterValue * 100f) / 100f;
-            HeroUtils.getHeroStack(player).set(DataComponentRegistry.METER, updatedMeterValue);
-        }
+        meterRemaining = Math.round(meterRemaining * 100f) / 100f;
+        float updatedMeterValue = Math.clamp(meterRemaining - amount, 0.0f, 1.0f);
+        HeroUtils.getHeroStack(player).set(DataComponentRegistry.METER, updatedMeterValue);
+    }
+
+    public static void regenMeter(PlayerEntity player, float amount) {
+        float meterRemaining = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.METER, 1.0f);
+        meterRemaining = Math.round(meterRemaining * 100f) / 100f;
+        float updatedMeterValue = Math.clamp(meterRemaining + amount, 0.0f, 1.0f);
+        HeroUtils.getHeroStack(player).set(DataComponentRegistry.METER, updatedMeterValue);
     }
 }
