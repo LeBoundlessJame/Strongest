@@ -29,8 +29,11 @@ public abstract class Hero {
     public HeroData heroData;
     @Getter
     public LinkedHashMap<String, AbilityLoadout> ABILITY_LOADOUTS = new LinkedHashMap<>();
+    /* Todo: rework
     @Getter
     public static ArrayList<HeldAbility> HELD_ABILITIES = new ArrayList<>();
+
+     */
 
     public void registerHero() {
         this.armorSet = RegistryUtils.registerHero(this);
@@ -45,11 +48,14 @@ public abstract class Hero {
                     AbilityRegistry.ABILITIES.putIfAbsent(ability.getAbilityID(), abilityEntry.getValue());
                 }
 
+                /* Todo: rework
                 for (Ability ability: loadout.getAbilities().values()) {
                     if (ability instanceof HeldAbility heldAbility) {
                         HELD_ABILITIES.add(heldAbility);
                     }
                 }
+
+                 */
             }
         }
 
