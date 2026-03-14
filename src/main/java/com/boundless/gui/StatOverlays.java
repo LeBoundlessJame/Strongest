@@ -63,7 +63,7 @@ public class StatOverlays {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String meterPercentage = Math.round(percentageRemaining * 100) + "%";
+        String meterPercentage = Math.roundHalfDown(percentageRemaining * 100) + "%";
         int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(meterPercentage));
         context.drawText(client.textRenderer, meterPercentage, j, y - 8, 0x1bc7b6, true);
     }

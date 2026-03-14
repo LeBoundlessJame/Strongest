@@ -84,19 +84,22 @@ public class AbilityUtils {
         if (!HeroUtils.isHero(player)) return false;
 
         Ability ability = AbilityRegistry.getAbilityFromID(abilityID);
-        if (ability == null || ability instanceof HeldAbility) return false;
+        if (ability == null) return false;
         Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {
-            abilityConsumer.accept(player);
-            if (!player.getWorld().isClient) {
-                float percentCost = ability.getPercentCost();
+            float percentCost = ability.getPercentCost();
+            boolean abilityUsed = false;
 
+            if (MeterUtils.getRemainingMeter(player) >= percentCost) {
+                MeterUtils.consumeMeter(player, percentCost);
+                abilityConsumer.accept(player);
+                abilityUsed = true;
+            }
+
+            if (!player.getWorld().isClient) {
                 long cooldown = ability.getCooldown();
-                if (cooldown > 0 && !AbilityUtils.isOnCooldown(player, abilityID)) {
-                    if (MeterUtils.getRemainingMeter(player) >= percentCost) {
-                        setAbilityCooldown(player, abilityID, cooldown);
-                        MeterUtils.consumeMeter(player, percentCost);
-                    }
+                if (cooldown > 0 && !AbilityUtils.isOnCooldown(player, abilityID) && abilityUsed) {
+                    setAbilityCooldown(player, abilityID, cooldown);
                 }
             }
             return true;
