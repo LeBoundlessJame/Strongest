@@ -3,7 +3,6 @@ package com.boundless.hero.api;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.HeldAbility;
 import com.boundless.combat.Combo;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
@@ -12,7 +11,6 @@ import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.RegistryUtils;
 import lombok.Getter;
-import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -73,9 +71,12 @@ public abstract class Hero {
         player.heal(player.getMaxHealth() / 50);
     }
 
+    // Todo: rework held abilities
     public static void onHeroTick(PlayerEntity player) {
+        /*
         for (HeldAbility heldAbility: HELD_ABILITIES) {
             heldAbility.holdTickLogic(player);
         }
+         */
     }
 }

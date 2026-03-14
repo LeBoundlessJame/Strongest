@@ -4,7 +4,6 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
-import com.boundless.ability.HeldAbility;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
@@ -43,8 +42,6 @@ public class BrawlerHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
 
-    public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one", "Dash (Hold To Leap)");
-
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_END_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_end_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -65,7 +62,6 @@ public class BrawlerHero extends Hero {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BrawlerHero.LIGHT_ATTACK)
                 .ability("key.use", BrawlerHero.MEDIUM_ATTACK)
-                .ability("key.boundless.ability_one", BrawlerHero.DASH)
                 .ability("key.boundless.ability_two", BrawlerHero.SPIN_KICK)
                 .ability("key.boundless.ability_three", BrawlerHero.BLACK_FLASH)
                 .ability("key.boundless.ability_four", BrawlerHero.DIVERGENT_FIST)
