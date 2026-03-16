@@ -37,11 +37,16 @@ public class MeleeUtils {
 
     /** Put all players abilities on cooldown temporarily **/
     public static void disorient(PlayerEntity player, int cooldownDuration) {
+        disorientWithExemption(player, cooldownDuration, null);
+    }
+
+    /** When you want to disorient all abilities except one **/
+    public static void disorientWithExemption(PlayerEntity player, int cooldownDuration, Identifier exemptAbility) {
         Map<String, Identifier> abilities = HeroUtils.getHeroStack(player).get(DataComponentRegistry.ABILITY_LOADOUT);
         if (abilities == null || abilities.isEmpty()) return;
         for (Identifier abilityID: abilities.values()) {
             Long remainingCooldown = AbilityUtils.getRemainingCooldown(player, abilityID);
-            if (remainingCooldown != null) {
+            if (remainingCooldown != null && !abilityID.equals(exemptAbility)) {
                 if (remainingCooldown < cooldownDuration) {
                     AbilityUtils.setAbilityCooldown(player, abilityID, cooldownDuration);
                 }

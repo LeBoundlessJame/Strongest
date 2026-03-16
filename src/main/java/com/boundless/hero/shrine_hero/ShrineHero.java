@@ -76,7 +76,7 @@ public class ShrineHero extends Hero {
                 .tickHandler(ShrineHero::regenTick)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
-                .tickHandler(ShrineHero::blockTick)
+                .tickHandler(BlockLogic::tick)
                 .customTooltips(ShrineHero::customTooltip)
                 .combos(COMBOS)
                 .heldKeybind("key.use")
@@ -104,9 +104,5 @@ public class ShrineHero extends Hero {
         if (player.age % ShrineHero.CONFIG.healingTickDelay.get() == 0 && !player.getWorld().isClient) {
             player.heal(ShrineHero.CONFIG.passiveHealingAmount.get());
         }
-    }
-
-    public static void blockTick(PlayerEntity player) {
-        BlockLogic.tick(player);
     }
 }
