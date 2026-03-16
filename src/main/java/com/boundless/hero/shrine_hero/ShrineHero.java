@@ -58,6 +58,7 @@ public class ShrineHero extends Hero {
                 .ability("key.boundless.ability_one", ShrineHeroSlashes.DISMANTLE)
                 .ability("key.boundless.ability_two", ShrineHeroSlashes.CLEAVE)
                 .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
+                .ability("key.boundless.ability_four", MeleeAbilities.BLOCK)
                 .ability("key.boundless.ability_five", ShrineHeroDestruction.SHRINE)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .ability("key.boundless.evasive", MeleeAbilities.DODGE)

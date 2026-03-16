@@ -18,6 +18,7 @@ import net.minecraft.sound.SoundEvents;
 
 public class MeleeAbilities {
     public static Ability DODGE = AbilityUtils.ability(MeleeAbilities::dash, 20, BoundlessAPI.identifier("dodge"), "Dodge");
+    public static Ability BLOCK = AbilityUtils.ability(MeleeAbilities::block, 20, BoundlessAPI.identifier("block"), "Block");
 
     public static void dash(PlayerEntity player) {
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
@@ -33,6 +34,10 @@ public class MeleeAbilities {
         CombatSystem.moveToEntity(player, 32, 20, 2, 1f);
         EffekUtils.playVisual(player, BoundlessAPI.identifier("flight_boost"));
         AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("offensive_dash"));
+    }
+
+    public static void block(PlayerEntity player) {
+        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("block"));
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {
