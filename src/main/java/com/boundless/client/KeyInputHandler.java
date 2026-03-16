@@ -31,10 +31,6 @@ public class KeyInputHandler {
 
             HeroData heroData = HeroUtils.getHeroData(client.player);
             if (heroData == null) return;
-            /* Todo: reintegrate some other stage
-            for (Consumer<MinecraftClient> clientConsumer: heroData.getClientTickEvents()) {
-                clientConsumer.accept(client);
-            } */
             KeyInputHandler.keybindHoldLogic(client, client.options.forwardKey.getTranslationKey());
             KeyInputHandler.keybindHoldLogic(client, client.options.backKey.getTranslationKey());
 

@@ -23,4 +23,8 @@ public class KeybindingUtils {
     public static void endKeybindHold(PlayerEntity player, String key) {
         DataComponentUtils.updateMap(HeroUtils.getHeroStack(player), DataComponentRegistry.HELD_KEYBIND, key, new KeybindHoldData(false, 0L, 0L));
     }
+
+    public static boolean isHoldingKey(PlayerEntity player, String key) {
+        return getHoldData(player, key).held();
+    }
 }

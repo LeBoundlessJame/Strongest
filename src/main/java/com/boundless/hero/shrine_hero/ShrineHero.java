@@ -13,6 +13,7 @@ import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -76,8 +77,10 @@ public class ShrineHero extends Hero {
                 .tickHandler(ShrineHero::regenTick)
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
+                .tickHandler(ShrineHero::blockTick)
                 .customTooltips(ShrineHero::customTooltip)
                 .combos(COMBOS)
+                .heldKeybind("key.use")
                 .build();
         this.registerHero();
     }
@@ -101,6 +104,14 @@ public class ShrineHero extends Hero {
 
         if (player.age % ShrineHero.CONFIG.healingTickDelay.get() == 0 && !player.getWorld().isClient) {
             player.heal(ShrineHero.CONFIG.passiveHealingAmount.get());
+        }
+    }
+
+    public static void blockTick(PlayerEntity player) {
+        if (KeybindingUtils.isHoldingKey(player, "key.use")) {
+            player.sendMessage(Text.of("YIPPEEEEEEEEEEEEEEEEE"), true);
+        } else {
+            player.sendMessage(Text.of("Nahhhh ;("), true);
         }
     }
 }
