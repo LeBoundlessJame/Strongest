@@ -14,6 +14,7 @@ import java.util.function.UnaryOperator;
 // Todo: Clean this up!!
 public class DataComponentRegistry {
     public static ComponentType<Integer> METER = DataComponentRegistry.registerInt("meter");
+    public static ComponentType<Identifier> LAST_TRIGGERED_ANIMATION = DataComponentRegistry.registerComponent("last_triggered_animation", builder -> builder.codec(Identifier.CODEC));
 
     public static final ComponentType<Map<String, Identifier>> ABILITY_LOADOUT = registerComponent("ability_loadout", builder -> ComponentType.<Map<String, Identifier>>builder().codec(Codec.unboundedMap(Codec.STRING, Identifier.CODEC)));
     public static final ComponentType<Map<Identifier, Long>> COOLDOWN_DATA = registerComponent("cooldown_data", builder -> ComponentType.<Map<Identifier, Long>>builder().codec(Codec.unboundedMap(Identifier.CODEC, Codec.LONG)));

@@ -37,7 +37,6 @@ public class MeleeAbilities {
     }
 
     public static void block(PlayerEntity player) {
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("block"));
     }
 
     public static void basicPerEnemyLogic(PlayerEntity player, Entity target, int slowDuration, int slowStr, int disorientDuration) {

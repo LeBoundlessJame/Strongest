@@ -3,6 +3,7 @@ package com.boundless.util;
 import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.AnimationPlayPayload;
 import com.boundless.networking.payloads.AnimationStopPayload;
+import com.boundless.registry.DataComponentRegistry;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
@@ -33,6 +34,7 @@ public class AnimationUtils {
     public static void playSyncedAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
         if (user.getWorld().isClient) return;
 
+        setLastServerTriggeredAnimation(user, animation);
         for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
             ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, repeatIfPlaying, priority));
         }
@@ -98,5 +100,13 @@ public class AnimationUtils {
 
     public static Identifier getLastTriggeredAnimation(PlayerEntity user) {
         return ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
+    }
+
+    public static Identifier getLastServerTriggeredAnimation(PlayerEntity player) {
+        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.LAST_TRIGGERED_ANIMATION, BoundlessAPI.identifier("idle"));
+    }
+
+    public static void setLastServerTriggeredAnimation(PlayerEntity player, Identifier animation) {
+        HeroUtils.getHeroStack(player).set(DataComponentRegistry.LAST_TRIGGERED_ANIMATION, animation);
     }
 }

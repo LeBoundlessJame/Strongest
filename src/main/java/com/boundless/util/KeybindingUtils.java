@@ -27,4 +27,11 @@ public class KeybindingUtils {
     public static boolean isHoldingKey(PlayerEntity player, String key) {
         return getHoldData(player, key).held();
     }
+
+    public static long getHeldTime(PlayerEntity player, String key) {
+        if (!isHoldingKey(player, key)) return 0L;
+        long endTime = getHoldData(player, key).endTimestamp();
+        if (endTime == 0L) endTime = player.getWorld().getTime();
+        return endTime - getHoldData(player, key).startTimestamp();
+    }
 }
