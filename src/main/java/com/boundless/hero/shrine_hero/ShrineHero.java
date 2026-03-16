@@ -3,16 +3,14 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
+import com.boundless.ability.BlockLogic;
 import com.boundless.ability.MeleeAbilities;
 import com.boundless.combat.Combo;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
-import com.boundless.registry.AttributeRegistry;
-import com.boundless.registry.ConfigRegistry;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.HeroRegistry;
+import com.boundless.registry.*;
 import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
 import net.minecraft.component.ComponentType;
@@ -22,6 +20,8 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
@@ -55,11 +55,10 @@ public class ShrineHero extends Hero {
     public ShrineHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", LIGHT_ATTACK)
-                .ability("key.use", ShrineHeroMelee.MEDIUM_ATTACK)
+                .ability("key.use", MeleeAbilities.BLOCK)
                 .ability("key.boundless.ability_one", ShrineHeroSlashes.DISMANTLE)
                 .ability("key.boundless.ability_two", ShrineHeroSlashes.CLEAVE)
                 .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
-                .ability("key.boundless.ability_four", MeleeAbilities.BLOCK)
                 .ability("key.boundless.ability_five", ShrineHeroDestruction.SHRINE)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .ability("key.boundless.evasive", MeleeAbilities.DODGE)
@@ -108,10 +107,6 @@ public class ShrineHero extends Hero {
     }
 
     public static void blockTick(PlayerEntity player) {
-        if (KeybindingUtils.isHoldingKey(player, "key.use")) {
-            player.sendMessage(Text.of("YIPPEEEEEEEEEEEEEEEEE"), true);
-        } else {
-            player.sendMessage(Text.of("Nahhhh ;("), true);
-        }
+        BlockLogic.tick(player);
     }
 }
