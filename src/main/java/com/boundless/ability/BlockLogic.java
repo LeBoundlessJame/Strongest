@@ -15,11 +15,12 @@ public class BlockLogic {
         if (!isBlocking(player)) return;
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2, 1, false, false));
         MeleeUtils.disorient(player, 2);
+        player.setSprinting(false);
     }
 
     public static void blockAnimation(PlayerEntity player) {
         if (AnimationUtils.getLastServerTriggeredAnimation(player).equals(BoundlessAPI.identifier("block")) && !isBlocking(player)) {
-            AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("idle"));
+            AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("idle"), 1.0f, false, false, 9999);
         } else if (isBlocking(player) && KeybindingUtils.getHeldTime(player, "key.use") == 1L) {
             AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("block"), 2.0f, false, true, 9998);
         }
