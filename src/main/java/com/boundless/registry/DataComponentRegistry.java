@@ -15,6 +15,7 @@ import java.util.function.UnaryOperator;
 public class DataComponentRegistry {
     public static ComponentType<Integer> METER = DataComponentRegistry.registerInt("meter");
     public static ComponentType<Integer> BLOCK_TICKS = DataComponentRegistry.registerInt("block_ticks");
+    public static ComponentType<Float> BLOCK_HP = DataComponentRegistry.registerFloat("block_hp");
 
     public static ComponentType<Identifier> LAST_TRIGGERED_ANIMATION = DataComponentRegistry.registerComponent("last_triggered_animation", builder -> builder.codec(Identifier.CODEC));
 

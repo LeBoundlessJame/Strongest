@@ -3,9 +3,13 @@ package com.boundless.ability;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.util.math.Vec3d;
 
 public class BlockLogic {
     public static void tick(PlayerEntity player) {
@@ -33,5 +37,22 @@ public class BlockLogic {
 
     public static boolean isBlocking(PlayerEntity player) {
         return KeybindingUtils.isHoldingKey(player, "key.use");
+    }
+
+    public static boolean shouldBlockDamage(DamageSource source, PlayerEntity player) {
+        boolean bl = source.getSource() instanceof PersistentProjectileEntity persistentProjectileEntity && persistentProjectileEntity.getPierceLevel() > 0;
+
+        // Todo: add conditional to check if ability is blockable
+        if (isBlocking(player) && !bl) {
+            Vec3d vec3d = source.getPosition();
+            if (vec3d != null) {
+                Vec3d vec3d2 = player.getRotationVector(0.0F, player.getHeadYaw());
+                Vec3d vec3d3 = vec3d.relativize(player.getPos());
+                vec3d3 = new Vec3d(vec3d3.x, 0.0, vec3d3.z).normalize();
+                return vec3d3.dotProduct(vec3d2) < 0.0;
+            }
+        }
+
+        return false;
     }
 }
