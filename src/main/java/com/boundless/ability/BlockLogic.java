@@ -1,9 +1,8 @@
 package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.util.AnimationUtils;
-import com.boundless.util.KeybindingUtils;
-import com.boundless.util.MeleeUtils;
+import com.boundless.registry.DataComponentRegistry;
+import com.boundless.util.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +10,12 @@ import net.minecraft.entity.player.PlayerEntity;
 public class BlockLogic {
     public static void tick(PlayerEntity player) {
         blockAnimation(player);
+
+        if (isBlocking(player)) {
+            DataComponentUtils.incrementInt(DataComponentRegistry.BLOCK_TICKS, player, 1);
+        } else {
+            HeroUtils.getHeroStack(player).set(DataComponentRegistry.BLOCK_TICKS, 0);
+        }
 
         if (!isBlocking(player)) return;
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 1, 1, false, false));

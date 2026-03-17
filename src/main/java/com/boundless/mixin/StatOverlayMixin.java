@@ -26,5 +26,6 @@ public class StatOverlayMixin {
         StatOverlays.renderHealthOverlay(client, context);
         StatOverlays.renderCursedEnergyOverlay(client, context);
         StatOverlays.renderCombatModeIndicator(client, context);
+        StatOverlays.renderBlockIndicator(client, context);
     }
 }

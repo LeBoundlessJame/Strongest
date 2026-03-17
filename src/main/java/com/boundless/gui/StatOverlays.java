@@ -8,10 +8,10 @@ import com.boundless.util.MeterUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 import org.joml.Math;
 
 import java.util.ArrayList;
@@ -76,8 +76,20 @@ public class StatOverlays {
         int x = context.getScaledWindowWidth() / 2 - 10;
         int y = context.getScaledWindowHeight() - 50;
 
-        if (stack.getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, false)) {
+        if (stack.getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, false) && stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) <= 0) {
             context.drawTexture(SWORD, x, y, 0, 0, 0, 22, 22, 22, 22);
+        }
+    }
+
+    public static void renderBlockIndicator(MinecraftClient client, DrawContext context) {
+        if (client.player == null) return;
+        ItemStack stack = HeroUtils.getHeroStack(client.player);
+
+        int x = context.getScaledWindowWidth() / 2 - 11;
+        int y = context.getScaledWindowHeight() - 51;
+
+        if (stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) > 0) {
+            context.drawTexture(SHIELD, x, y, 0, 0, 0, 22, 22, 22, 22);
         }
     }
 }
