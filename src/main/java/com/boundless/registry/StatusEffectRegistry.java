@@ -19,6 +19,7 @@ public class StatusEffectRegistry {
     public static final RegistryEntry<StatusEffect> SHRINE_EFFECT = registerStatusEffect("shrine_effect", new ImpactFrameEffect(StatusEffectCategory.BENEFICIAL, 0x5d8385));
     public static final RegistryEntry<StatusEffect> GRAYSCALE = registerStatusEffect("grayscale_effect", new ImpactFrameEffect(StatusEffectCategory.NEUTRAL, 0xffffff));
     public static final RegistryEntry<StatusEffect> LIMITED_SPEED = registerStatusEffect("limited_speed", new LimitedSpeedEffect(StatusEffectCategory.NEUTRAL, 0xffffff));
+    public static final RegistryEntry<StatusEffect> GUARD_BREAK = registerStatusEffect("guard_break", new ImpactFrameEffect(StatusEffectCategory.HARMFUL, 0xffffff));
 
     private static RegistryEntry<StatusEffect> registerStatusEffect(String name, StatusEffect statusEffect) {
         return Registry.registerReference(Registries.STATUS_EFFECT, BoundlessAPI.identifier(name), statusEffect);

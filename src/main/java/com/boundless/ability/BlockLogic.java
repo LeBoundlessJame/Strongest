@@ -2,6 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,6 +19,10 @@ public class BlockLogic {
             DataComponentUtils.incrementInt(DataComponentRegistry.BLOCK_TICKS, player, 1);
         } else {
             HeroUtils.getHeroStack(player).set(DataComponentRegistry.BLOCK_TICKS, 0);
+
+            if (!player.hasStatusEffect(StatusEffectRegistry.GUARD_BREAK)) {
+                DataComponentUtils.incrementFloat(DataComponentRegistry.BLOCK_HP, player, 2f, 150f);
+            }
         }
 
         if (!isBlocking(player)) return;
