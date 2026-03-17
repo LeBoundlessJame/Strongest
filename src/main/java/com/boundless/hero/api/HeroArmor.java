@@ -41,6 +41,7 @@ public class HeroArmor extends ArmorItem {
 
         return new Settings()
                 .component(DataComponentRegistry.ABILITY_LOADOUT, loadout)
+                .component(DataComponentRegistry.BLOCK_HP, 150f)
                 .maxCount(1);
     }
 

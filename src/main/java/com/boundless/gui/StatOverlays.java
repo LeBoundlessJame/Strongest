@@ -89,7 +89,8 @@ public class StatOverlays {
         int x = context.getScaledWindowWidth() / 2 - 11;
         int y = context.getScaledWindowHeight() - 51;
 
-        String blockHP = String.valueOf((int) Math.floor(stack.getOrDefault(DataComponentRegistry.BLOCK_HP, 100f)));
+        if (stack.get(DataComponentRegistry.BLOCK_HP) == null) return;
+        String blockHP = String.valueOf((int) Math.floor(stack.get(DataComponentRegistry.BLOCK_HP)));
         int padX = 0;
 
         if (stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) > 0) {
