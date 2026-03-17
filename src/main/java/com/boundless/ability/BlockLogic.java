@@ -13,16 +13,18 @@ import net.minecraft.util.math.Vec3d;
 
 public class BlockLogic {
     public static void tick(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+
         blockAnimation(player);
+
+        if (!player.hasStatusEffect(StatusEffectRegistry.GUARD_BREAK) && player.age % 20 == 0) {
+            DataComponentUtils.incrementFloat(DataComponentRegistry.BLOCK_HP, player, 2f, 150f);
+        }
 
         if (isBlocking(player)) {
             DataComponentUtils.incrementInt(DataComponentRegistry.BLOCK_TICKS, player, 1);
         } else {
             HeroUtils.getHeroStack(player).set(DataComponentRegistry.BLOCK_TICKS, 0);
-
-            if (!player.hasStatusEffect(StatusEffectRegistry.GUARD_BREAK)) {
-                DataComponentUtils.incrementFloat(DataComponentRegistry.BLOCK_HP, player, 2f, 150f);
-            }
         }
 
         if (!isBlocking(player)) return;
