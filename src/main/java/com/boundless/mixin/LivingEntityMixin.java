@@ -60,15 +60,15 @@ public abstract class LivingEntityMixin {
         cir.getReturnValue().add(AttributeRegistry.TIME_UNTIL_MAX_SPEED);
     }
 
-    @Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
-    public void boundless$applyDamage(DamageSource source, float amount, CallbackInfo ci) {
+    @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+    public void boundless$damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (isBlockingDamage) return;
         if (!(livingEntity instanceof PlayerEntity player)) return;
 
         float postBlockDamage = getPostBlockDamage(source, player, amount);
 
         if (postBlockDamage <= 0.0) {
-            ci.cancel();
+            cir.setReturnValue(false);
             return;
         }
 
@@ -77,7 +77,7 @@ public abstract class LivingEntityMixin {
             isBlockingDamage = true;
             ((LivingEntity)(Object)this).damage(source, postBlockDamage);
             isBlockingDamage = false;
-            ci.cancel();
+            cir.setReturnValue(false);
         }
     }
 

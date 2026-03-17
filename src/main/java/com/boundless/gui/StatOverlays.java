@@ -11,6 +11,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.joml.Math;
 
@@ -88,8 +89,12 @@ public class StatOverlays {
         int x = context.getScaledWindowWidth() / 2 - 11;
         int y = context.getScaledWindowHeight() - 51;
 
+        if (stack.get(DataComponentRegistry.BLOCK_HP) == null) return;
+        int blockHP = (int) Math.floor(stack.get(DataComponentRegistry.BLOCK_HP));
+
         if (stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) > 0) {
             context.drawTexture(SHIELD, x, y, 0, 0, 0, 22, 22, 22, 22);
+            context.drawText(client.textRenderer, Text.of(String.valueOf(blockHP)), x + 2, y + 6, 0xffffff, true);
         }
     }
 }
