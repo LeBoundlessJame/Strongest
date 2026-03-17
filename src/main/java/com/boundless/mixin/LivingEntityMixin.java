@@ -1,10 +1,13 @@
 package com.boundless.mixin;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.ability.BlockLogic;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.util.CombatUtils;
+import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -15,6 +18,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -69,6 +73,7 @@ public abstract class LivingEntityMixin {
 
         if (postBlockDamage <= 0.0) {
             cir.setReturnValue(false);
+            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"), 0.5f);
             return;
         }
 

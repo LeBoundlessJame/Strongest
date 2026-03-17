@@ -97,6 +97,13 @@ public class CombatUtils {
         EffekUtils.playRotatedEffect(impactVisual, player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
     }
 
+
+    public static void playImpactVisual(PlayerEntity player, LivingEntity target, Identifier impactVisual, float scaleMultiplier) {
+        Vec3d effectScale = new Vec3d(target.getScale() * 0.5f * scaleMultiplier, target.getScale() * 0.5f * scaleMultiplier, target.getScale() * 0.5f * scaleMultiplier);
+        Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
+        EffekUtils.playRotatedEffect(impactVisual, player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
+    }
+
     public static boolean isRolling(PlayerEntity player) {
         return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ROLLING_END, 0L);
     }
