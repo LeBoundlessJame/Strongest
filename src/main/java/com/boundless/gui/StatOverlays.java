@@ -93,7 +93,8 @@ public class StatOverlays {
         int padX = 0;
 
         if (stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) > 0) {
-            if (blockHP.length() == 3) padX = 6;
+            // Todo: I also hate this, I will one day come back and make it not hard coded
+            if (blockHP.length() == 3) padX = 2;
             else if (blockHP.length() == 2) padX = 5;
             else if (blockHP.length() == 1) padX = 8;
 
