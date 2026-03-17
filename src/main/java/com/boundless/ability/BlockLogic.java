@@ -24,10 +24,10 @@ public class BlockLogic {
     }
 
     public static void blockAnimation(PlayerEntity player) {
-        if (AnimationUtils.getLastServerTriggeredAnimation(player).equals(BoundlessAPI.identifier("block")) && !isBlocking(player)) {
+        if (AnimationUtils.getLastServerTriggeredAnimation(player).equals(BoundlessAPI.identifier("block_2")) && !isBlocking(player)) {
             AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("null"), 1.0f, false, false, 9999);
         } else if (isBlocking(player) && KeybindingUtils.getHeldTime(player, "key.use") == 1L) {
-            AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("block"), 2.0f, false, true, 9999);
+            AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("block_2"), 2.0f, false, true, 9999);
         }
     }
 
