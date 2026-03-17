@@ -89,12 +89,16 @@ public class StatOverlays {
         int x = context.getScaledWindowWidth() / 2 - 11;
         int y = context.getScaledWindowHeight() - 51;
 
-        if (stack.get(DataComponentRegistry.BLOCK_HP) == null) return;
-        int blockHP = (int) Math.floor(stack.get(DataComponentRegistry.BLOCK_HP));
+        String blockHP = String.valueOf((int) Math.floor(stack.getOrDefault(DataComponentRegistry.BLOCK_HP, 100f)));
+        int padX = 0;
 
         if (stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) > 0) {
+            if (blockHP.length() == 3) padX = 6;
+            else if (blockHP.length() == 2) padX = 5;
+            else if (blockHP.length() == 1) padX = 8;
+
             context.drawTexture(SHIELD, x, y, 0, 0, 0, 22, 22, 22, 22);
-            context.drawText(client.textRenderer, Text.of(String.valueOf(blockHP)), x + 2, y + 6, 0xffffff, true);
+            context.drawText(client.textRenderer, Text.of(String.valueOf(blockHP)), x + padX, y + 6, 0xffffff, true);
         }
     }
 }
