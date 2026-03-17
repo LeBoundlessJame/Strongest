@@ -40,7 +40,7 @@ public class BlockLogic {
     }
 
     public static boolean isBlocking(PlayerEntity player) {
-        return KeybindingUtils.isHoldingKey(player, "key.use");
+        return KeybindingUtils.isHoldingKey(player, "key.use") && !player.hasStatusEffect(StatusEffectRegistry.GUARD_BREAK);
     }
 
     public static boolean shouldBlockDamage(DamageSource source, PlayerEntity player) {
