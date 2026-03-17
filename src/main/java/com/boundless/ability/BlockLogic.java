@@ -3,7 +3,6 @@ package com.boundless.ability;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;

@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
@@ -28,22 +29,17 @@ import java.util.Objects;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
     @Shadow public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
-
-    @Shadow
-    public abstract @Nullable StatusEffectInstance getStatusEffect(RegistryEntry<StatusEffect> effect);
-
-    @Shadow
-    public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
+    @Shadow public abstract @Nullable StatusEffectInstance getStatusEffect(RegistryEntry<StatusEffect> effect);
+    @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
+    @Unique LivingEntity livingEntity = (LivingEntity) (Object)this;
+    @Unique boolean isBlockingDamage = false;
 
     @Inject(method = "modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
     protected void boundless$modifyAppliedDamage(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
-        if (source.isOf(DamageTypeRegistry.BYPASS_DEFENCE) || (!((LivingEntity)(Object)this instanceof PlayerEntity player))) {
+        if (source.isOf(DamageTypeRegistry.BYPASS_DEFENCE) || !(livingEntity instanceof PlayerEntity player)) {
             cir.setReturnValue(amount);
             return;
         }
-
-        float postBlockDamage = getPostBlockDamage(source, player, amount);
-        if (postBlockDamage <= 0.0f) cir.setReturnValue(0.0f);
 
         float damageResistance = (float) (this.getAttributeValue(AttributeRegistry.DAMAGE_RESISTANCE) - 1);
         float resistanceReduction = 0.0f;
@@ -53,7 +49,8 @@ public abstract class LivingEntityMixin {
             resistanceReduction = Math.clamp(resistanceReduction, 0.0f, damageResistance);
         }
 
-        cir.setReturnValue (amount - (amount * (damageResistance - resistanceReduction)));
+        float finalDamage = amount - (amount * (damageResistance - resistanceReduction));
+        cir.setReturnValue(finalDamage);
     }
 
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
@@ -63,27 +60,42 @@ public abstract class LivingEntityMixin {
         cir.getReturnValue().add(AttributeRegistry.TIME_UNTIL_MAX_SPEED);
     }
 
+    @Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
+    public void boundless$applyDamage(DamageSource source, float amount, CallbackInfo ci) {
+        if (isBlockingDamage) return;
+        if (!(livingEntity instanceof PlayerEntity player)) return;
+
+        float postBlockDamage = getPostBlockDamage(source, player, amount);
+
+        if (postBlockDamage <= 0.0) {
+            ci.cancel();
+            return;
+        }
+
+        // todo: I hate this but it will do for now lol
+        if (postBlockDamage < amount) {
+            isBlockingDamage = true;
+            ((LivingEntity)(Object)this).damage(source, postBlockDamage);
+            isBlockingDamage = false;
+            ci.cancel();
+        }
+    }
+
     @Unique
     private float getPostBlockDamage(DamageSource source, PlayerEntity player, float initialAmount) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         float blockHP = stack.getOrDefault(DataComponentRegistry.BLOCK_HP, 100f);
 
         if (blockHP > 0.0 && BlockLogic.isBlocking(player) && BlockLogic.shouldBlockDamage(source, player)) {
-            float blockedDamage = 0.0f;
-            float excessDamage = initialAmount;
-
             if (blockHP > initialAmount) {
                 stack.set(DataComponentRegistry.BLOCK_HP, blockHP - initialAmount);
-                blockedDamage = initialAmount;
+                return 0.0f;
             } else {
-                blockedDamage = blockHP;
+                float excessDamage = initialAmount - blockHP;
                 stack.set(DataComponentRegistry.BLOCK_HP, Math.max(0.0f, blockHP - initialAmount));
+                return excessDamage;
             }
-
-            excessDamage = initialAmount - blockedDamage;
-            return excessDamage;
         }
-
         return initialAmount;
     }
 }
