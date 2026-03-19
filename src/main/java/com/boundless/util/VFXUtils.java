@@ -9,7 +9,7 @@ import java.util.Optional;
 public class VFXUtils {
     /**
      * @param effectName the name of the effek file
-     * @param id the
+     * @param id can be an entity ID for example; something unique to identify "this" version of the particle
     */
     public void destroyEffectInstance(String effectName, int id) {
         var effect = EffectRegistry.get(BoundlessAPI.identifier(effectName));
