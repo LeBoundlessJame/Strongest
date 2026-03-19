@@ -11,22 +11,24 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Optional;
 
 public class VFXUtils {
+    public static void createAndSpawnEffectInstance(Entity user, String effectName, Vec3d pos, Float scale, boolean bindToEntity) {
+        ParticleEmitterInfo emitter = VFXUtils.createEffectInstance(user, effectName, pos, scale, bindToEntity);
+        VFXUtils.spawnEffectInstance(user, emitter);
+    }
+
+    public static void spawnEffectInstance(Entity user, ParticleEmitterInfo particleEmitter) {
+        AAALevel.addParticle(user.getWorld(), true, particleEmitter);
+    }
+
     /** Creates a particle emitter instance with a unique ID
      * @param user the effect uses this entity's ID to generate a unique ID for the emitter
      */
-    public ParticleEmitterInfo createEffectInstance(Entity user, String effectName, Vec3d pos, Float scale, boolean bindToEntity) {
+    public static ParticleEmitterInfo createEffectInstance(Entity user, String effectName, Vec3d pos, Float scale, boolean bindToEntity) {
         ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(user.getWorld(), BoundlessAPI.identifier(effectName), BoundlessAPI.identifier(effectName + user.getId()));
         if (bindToEntity) particleEmitter.bindOnEntity(user);
         if (pos != null) particleEmitter.position(pos);
         if (scale != null) particleEmitter.scale(scale);
         return particleEmitter;
-    }
-
-    /**
-     * @param particleEmitter the specific particle emitter instance (including id)
-     */
-    public void spawnEffectInstance(Entity user, ParticleEmitterInfo particleEmitter) {
-        AAALevel.addParticle(user.getWorld(), true, particleEmitter);
     }
 
     /**
