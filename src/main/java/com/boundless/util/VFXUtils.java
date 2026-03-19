@@ -6,6 +6,7 @@ import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import mod.chloeprime.aaaparticles.client.registry.EffectRegistry;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Optional;
 
@@ -13,10 +14,11 @@ public class VFXUtils {
     /** Creates a particle emitter instance with a unique ID
      * @param user the effect uses this entity's ID to generate a unique ID for the emitter
      */
-    public ParticleEmitterInfo createEffectInstance(Entity user, String effectName) {
+    public ParticleEmitterInfo createEffectInstance(Entity user, String effectName, Vec3d pos, Float scale, boolean bindToEntity) {
         ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(user.getWorld(), BoundlessAPI.identifier(effectName), BoundlessAPI.identifier(effectName + user.getId()));
-        particleEmitter.position(pos);
-        particleEmitter.scale(scale);
+        if (bindToEntity) particleEmitter.bindOnEntity(user);
+        if (pos != null) particleEmitter.position(pos);
+        if (scale != null) particleEmitter.scale(scale);
         return particleEmitter;
     }
 
