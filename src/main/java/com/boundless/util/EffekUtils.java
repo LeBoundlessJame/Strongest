@@ -9,6 +9,9 @@ import net.minecraft.util.math.Vec3d;
 
 public class EffekUtils {
 
+
+    //            EffekUtils.playRotatedEffect(BoundlessAPI.identifier("stun"), player, player.getPos().add(0, player.getHeight(), 0), new Vec3d(0.5f, 0.5f, 0.5f), Vec3d.ZERO);
+
     public static ParticleEmitterInfo playEffect(Identifier identifier, Entity user, Vec3d pos, Vec3d scale) {
         ParticleEmitterInfo instance = new ParticleEmitterInfo(identifier)
                 .clone()
