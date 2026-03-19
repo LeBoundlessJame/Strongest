@@ -10,16 +10,20 @@ import net.minecraft.entity.Entity;
 import java.util.Optional;
 
 public class VFXUtils {
-    /** Creates (and spawns) an effect instance
-     * @param effectName the name of the effek file
-     * @param id can be an entity ID for example; something unique to identify "this" version of the particle
+    /** Creates a particle emitter instance with a unique ID
+     * @param user the effect uses this entity's ID to generate a unique ID for the emitter
      */
-    public void createEffectInstance(Entity user, String effectName, int id) {
-        ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(user.getWorld(), BoundlessAPI.identifier(effectName), BoundlessAPI.identifier(effectName + id));
-        /*
+    public ParticleEmitterInfo createEffectInstance(Entity user, String effectName) {
+        ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(user.getWorld(), BoundlessAPI.identifier(effectName), BoundlessAPI.identifier(effectName + user.getId()));
         particleEmitter.position(pos);
         particleEmitter.scale(scale);
-         */
+        return particleEmitter;
+    }
+
+    /**
+     * @param particleEmitter the specific particle emitter instance (including id)
+     */
+    public void spawnEffectInstance(Entity user, ParticleEmitterInfo particleEmitter) {
         AAALevel.addParticle(user.getWorld(), true, particleEmitter);
     }
 
