@@ -7,8 +7,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+@Deprecated
+// Todo: This class will soon be deprecated / outdated, and replaced with a better version.
 public class EffekUtils {
-
 
     //            EffekUtils.playRotatedEffect(BoundlessAPI.identifier("stun"), player, player.getPos().add(0, player.getHeight(), 0), new Vec3d(0.5f, 0.5f, 0.5f), Vec3d.ZERO);
 
