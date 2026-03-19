@@ -15,7 +15,8 @@
     "LivingEntityMixin",
     "ReviveMixin",
     "SpeedMixin",
-    "StatOverlayMixin"
+    "StatOverlayMixin",
+    "StunRemovalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

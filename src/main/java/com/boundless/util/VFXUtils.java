@@ -26,7 +26,8 @@ public class VFXUtils {
     public static ParticleEmitterInfo createEffectInstance(Entity user, String effectName, Vec3d pos, Float scale, boolean bindToEntity) {
         ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(user.getWorld(), BoundlessAPI.identifier(effectName), BoundlessAPI.identifier(effectName + user.getId()));
         if (bindToEntity) particleEmitter.bindOnEntity(user);
-        if (pos != null) particleEmitter.position(pos);
+        if (bindToEntity && pos != null) particleEmitter.entitySpaceRelativePosition(pos);
+        if (!bindToEntity && pos != null) particleEmitter.position(pos);
         if (scale != null) particleEmitter.scale(scale);
         return particleEmitter;
     }
@@ -35,7 +36,7 @@ public class VFXUtils {
      * @param effectName the name of the effek file
      * @param id can be an entity ID for example; something unique to identify "this" version of the particle
     */
-    public void destroyEffectInstance(String effectName, int id) {
+    public static void destroyEffectInstance(String effectName, int id) {
         var effect = EffectRegistry.get(BoundlessAPI.identifier(effectName));
         if (effect == null) return;
         Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier(effectName + id));
