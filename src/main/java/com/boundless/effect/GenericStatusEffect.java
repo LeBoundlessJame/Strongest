@@ -3,8 +3,8 @@ package com.boundless.effect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class InvulnerabilityEffect extends StatusEffect {
-    public InvulnerabilityEffect(StatusEffectCategory category, int color) {
+public class GenericStatusEffect extends StatusEffect {
+    public GenericStatusEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
 }
