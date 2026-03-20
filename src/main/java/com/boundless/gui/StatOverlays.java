@@ -41,7 +41,7 @@ public class StatOverlays {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String healthPercentage = String.format("%.1f / %.1f", player.getHealth(), player.getMaxHealth());
+        String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
         int textWidth = client.textRenderer.getWidth(healthPercentage);
         int textPos = x + (maxWidth / 2) - (textWidth / 2);
         context.drawText(client.textRenderer, healthPercentage, textPos, y - 8, 0xf23d3d, true);
