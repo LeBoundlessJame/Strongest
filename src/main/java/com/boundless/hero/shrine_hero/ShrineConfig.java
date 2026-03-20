@@ -11,7 +11,6 @@ public class ShrineConfig extends ConfigSection {
         super();
     }
 
-    public ValidatedFloat damageReduction = new ValidatedFloat(0.8f, 1.0f, 0.0f, ValidatedNumber.WidgetType.TEXTBOX);
     public ValidatedInt passiveHealingAmount = new ValidatedInt(1, 99999, 0, ValidatedNumber.WidgetType.TEXTBOX);
     public ValidatedInt healingTickDelay = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);
 
