@@ -26,7 +26,6 @@ public class BoundlessAPI implements ModInitializer {
 		EntityRegistry.initialize();
 		SoundRegistry.initialize();
 		StatusEffectRegistry.initialize();
-		ParticleRegistry.initialize();
 		ItemGroupRegistry.initialize();
 		AttributeRegistry.initialize();
 		AbilityRegistry.initialize();
