@@ -11,26 +11,14 @@ import net.minecraft.entity.player.PlayerEntity;
 public class SimpleDomain {
     public static void simpleDomainTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        if (!isSimpleDomainActive(player)) {
-            setSimpleDomainTicks(player, 0);
-            return;
-        }
+        if (!isSimpleDomainActive(player)) return;
 
         MeleeUtils.disorientWithExemption(player, 2, BoundlessAPI.identifier("simple_domain"));
         DataComponentUtils.incrementInt(StrongestComponents.SIMPLE_DOMAIN_HEALTH, player, -1, 0, 150);
-        setSimpleDomainTicks(player,getSimpleDomainTicks(player) + 1);
     }
 
     public static boolean isSimpleDomainActive(PlayerEntity player) {
         return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.SIMPLE_DOMAIN_ACTIVE, false);
-    }
-
-    public static void setSimpleDomainTicks(PlayerEntity player, int value) {
-        HeroUtils.getHeroStack(player).set(StrongestComponents.SIMPLE_DOMAIN_TICKS, value);
-    }
-
-    public static int getSimpleDomainTicks(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.SIMPLE_DOMAIN_TICKS, 0);
     }
 
     public static void toggleSimpleDomain(PlayerEntity player) {
