@@ -1,5 +1,6 @@
 package com.boundless.ability;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.HeroUtils;
@@ -10,7 +11,10 @@ import net.minecraft.entity.player.PlayerEntity;
 public class SimpleDomain {
     public static void simpleDomainTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        if (!isSimpleDomainActive(player)) return;
+        if (!isSimpleDomainActive(player)) {
+            setSimpleDomainTicks(player, 0);
+            return;
+        }
 
         int simpleDomainTicks = getSimpleDomainTicks(player);
 
@@ -20,8 +24,9 @@ public class SimpleDomain {
             VFXUtils.destroyEffectInstance("simple_domain", player.getId());
         }
 
-        MeleeUtils.disorient(player, 2);
+        MeleeUtils.disorientWithExemption(player, 2, BoundlessAPI.identifier("simple_domain"));
         reduceSimpleDomainHealth(player, 20);
+        setSimpleDomainTicks(player,getSimpleDomainTicks(player) + 1);
     }
 
     public static void reduceSimpleDomainHealth(PlayerEntity player, int amount) {
@@ -34,6 +39,10 @@ public class SimpleDomain {
 
     public static boolean isSimpleDomainActive(PlayerEntity player) {
         return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.SIMPLE_DOMAIN_ACTIVE, false);
+    }
+
+    public static void setSimpleDomainTicks(PlayerEntity player, int value) {
+        HeroUtils.getHeroStack(player).set(StrongestComponents.SIMPLE_DOMAIN_TICKS, value);
     }
 
     public static int getSimpleDomainTicks(PlayerEntity player) {

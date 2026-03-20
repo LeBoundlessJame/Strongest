@@ -19,7 +19,6 @@ public class AbilityUtils {
                 .abilityLogic(abilityLogic)
                 .cooldown(cooldown)
                 .abilityID(abilityID)
-                .abilityIcon(abilityIcon)
                 .displayString(displayString)
                 .build();
     }
