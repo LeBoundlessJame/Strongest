@@ -19,5 +19,5 @@ public class Ability {
     private final String displayString;
     private final boolean hide;
     @Builder.Default
-    private final int percentCost = 0;
+    private final int cost = 0;
 }

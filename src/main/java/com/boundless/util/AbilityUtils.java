@@ -13,33 +13,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class AbilityUtils {
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon, String displayString) {
-        return Ability
-                .builder()
-                .abilityLogic(abilityLogic)
-                .cooldown(cooldown)
-                .abilityID(abilityID)
-                .displayString(displayString)
-                .build();
-    }
-
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString) {
-        return ability(abilityLogic, cooldown, abilityID, null, displayString);
-    }
-
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, int percentageCost) {
-        return Ability
-                .builder()
-                .abilityLogic(abilityLogic)
-                .cooldown(cooldown)
-                .abilityID(abilityID)
-                .displayString(displayString)
-                .percentCost(percentageCost)
-                .build();
-    }
-
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon) {
-        return ability(abilityLogic, cooldown, abilityID, abilityIcon, null);
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, int cost) {
+        return Ability.builder().abilityLogic(abilityLogic).cooldown(cooldown).abilityID(abilityID).displayString(displayString).cost(cost).build();
     }
 
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
@@ -86,7 +61,7 @@ public class AbilityUtils {
         if (ability == null) return false;
         Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {
-            int percentCost = ability.getPercentCost();
+            int percentCost = ability.getCost();
             boolean abilityUsed = false;
 
             if (MeterUtils.getRemainingMeter(player, 10000) >= percentCost) {

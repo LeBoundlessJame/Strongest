@@ -3,7 +3,6 @@ package com.boundless.ability;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.DataComponentUtils;
-import com.boundless.util.HeroUtils;
 import com.boundless.util.MeleeUtils;
 import com.boundless.util.VFXUtils;
 import net.minecraft.entity.player.PlayerEntity;
