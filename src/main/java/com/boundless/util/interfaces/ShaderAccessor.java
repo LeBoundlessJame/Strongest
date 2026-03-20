@@ -1,4 +1,4 @@
-package com.boundless.util;
+package com.boundless.util.interfaces;
 
 import net.minecraft.util.Identifier;
 

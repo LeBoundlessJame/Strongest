@@ -1,7 +1,7 @@
 package com.boundless.mixin;
 
 import com.boundless.client.CameraShake;
-import com.boundless.util.CameraShakeAccessor;
+import com.boundless.util.interfaces.CameraShakeAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;

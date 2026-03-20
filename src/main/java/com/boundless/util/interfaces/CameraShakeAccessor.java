@@ -1,4 +1,4 @@
-package com.boundless.util;
+package com.boundless.util.interfaces;
 
 import com.boundless.client.CameraShake;
 

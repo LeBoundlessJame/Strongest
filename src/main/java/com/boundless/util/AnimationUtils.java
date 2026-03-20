@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.networking.payloads.AnimationPlayPayload;
 import com.boundless.networking.payloads.AnimationStopPayload;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.util.interfaces.IAnimatedHero;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;

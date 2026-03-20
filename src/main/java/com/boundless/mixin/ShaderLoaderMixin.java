@@ -1,6 +1,6 @@
 package com.boundless.mixin;
 
-import com.boundless.util.ShaderAccessor;
+import com.boundless.util.interfaces.ShaderAccessor;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,7 +1,7 @@
 package com.boundless.mixin;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.util.IAnimatedHero;
+import com.boundless.util.interfaces.IAnimatedHero;
 import com.mojang.authlib.GameProfile;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;

@@ -8,7 +8,7 @@ import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.ComboRenderHelper;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
-import com.boundless.util.ShaderAccessor;
+import com.boundless.util.interfaces.ShaderAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
