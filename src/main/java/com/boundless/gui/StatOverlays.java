@@ -70,8 +70,9 @@ public class StatOverlays {
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         String meterPercentage = cursedEnergy + " / " + maxCursedEnergy;
-        int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(meterPercentage));
-        context.drawText(client.textRenderer, meterPercentage, j, y - 8, 0x1bc7b6, true);
+        int textWidth = client.textRenderer.getWidth(meterPercentage);
+        int textPos = x + (maxWidth / 2) - (textWidth / 2);
+        context.drawText(client.textRenderer, meterPercentage, textPos, y - 8, 0x1bc7b6, true);
     }
 
     public static void renderCombatModeIndicator(MinecraftClient client, DrawContext context) {
