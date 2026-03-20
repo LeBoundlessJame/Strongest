@@ -17,16 +17,8 @@ public class SimpleDomain {
         }
 
         MeleeUtils.disorientWithExemption(player, 2, BoundlessAPI.identifier("simple_domain"));
-        reduceSimpleDomainHealth(player, 20);
+        DataComponentUtils.incrementInt(StrongestComponents.SIMPLE_DOMAIN_HEALTH, player, -1, 0, 150);
         setSimpleDomainTicks(player,getSimpleDomainTicks(player) + 1);
-    }
-
-    public static void reduceSimpleDomainHealth(PlayerEntity player, int amount) {
-        HeroUtils.getHeroStack(player).set(StrongestComponents.SIMPLE_DOMAIN_HEALTH, Math.clamp(getSimpleDomainHealth(player) - amount, 0, 150));
-    }
-
-    public static int getSimpleDomainHealth(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.SIMPLE_DOMAIN_HEALTH, 150);
     }
 
     public static boolean isSimpleDomainActive(PlayerEntity player) {
@@ -44,11 +36,11 @@ public class SimpleDomain {
     public static void toggleSimpleDomain(PlayerEntity player) {
         if (player.getWorld().isClient) return;
 
-        DataComponentUtils.toggleBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE);
-        if (!isSimpleDomainActive(player)) {
-            VFXUtils.destroyEffectInstance("simple_domain", player.getId());
-        } else {
+        if (DataComponentUtils.toggleBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE)) {
             VFXUtils.createAndSpawnEffectInstance(player, "simple_domain", null, null, true);
+            return;
         }
+
+        VFXUtils.destroyEffectInstance("simple_domain", player.getId());
     }
 }

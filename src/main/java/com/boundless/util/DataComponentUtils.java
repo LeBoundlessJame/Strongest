@@ -24,14 +24,20 @@ public class DataComponentUtils {
         heroStack.set(mapComponent, map);
     }
 
-    public static void toggleBoolean(PlayerEntity player, ComponentType<Boolean> component) {
+    public static boolean toggleBoolean(PlayerEntity player, ComponentType<Boolean> component) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, !stack.getOrDefault(component, false));
+        return stack.getOrDefault(component, false);
     }
 
     public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, stack.getOrDefault(component, 0) + amount);
+    }
+
+    public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount, int min, int max) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        stack.set(component, Math.clamp(stack.getOrDefault(component, 0) + amount, min, max));
     }
 
     public static void incrementFloat(ComponentType<Float> component, PlayerEntity player, float amount, float max) {
