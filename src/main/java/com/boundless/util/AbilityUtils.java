@@ -90,8 +90,8 @@ public class AbilityUtils {
             int percentCost = ability.getPercentCost();
             boolean abilityUsed = false;
 
-            if (MeterUtils.getRemainingMeter(player) >= percentCost) {
-                MeterUtils.consumeMeter(player, percentCost);
+            if (MeterUtils.getRemainingMeter(player, 10000) >= percentCost) {
+                MeterUtils.consumeMeter(player, percentCost, 10000);
                 abilityConsumer.accept(player);
                 abilityUsed = true;
             }

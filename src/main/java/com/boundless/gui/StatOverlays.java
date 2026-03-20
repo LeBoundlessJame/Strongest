@@ -51,7 +51,7 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        int percentageRemaining = MeterUtils.getRemainingMeter(player);
+        int percentageRemaining = MeterUtils.getRemainingMeter(player, 10000);
 
         int x = context.getScaledWindowWidth() / 2 + 11;
         int y = context.getScaledWindowHeight() - 39;

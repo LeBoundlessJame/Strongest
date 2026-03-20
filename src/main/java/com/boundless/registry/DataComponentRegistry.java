@@ -13,7 +13,6 @@ import java.util.function.UnaryOperator;
 
 // Todo: Clean this up!!
 public class DataComponentRegistry {
-    public static ComponentType<Integer> METER = DataComponentRegistry.registerInt("meter");
     public static ComponentType<Integer> BLOCK_TICKS = DataComponentRegistry.registerInt("block_ticks");
     public static ComponentType<Float> BLOCK_HP = DataComponentRegistry.registerFloat("block_hp");
 
