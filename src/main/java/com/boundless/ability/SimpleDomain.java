@@ -18,7 +18,7 @@ public class SimpleDomain {
     }
 
     public static boolean isSimpleDomainActive(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.SIMPLE_DOMAIN_ACTIVE, false);
+        return DataComponentUtils.getBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE);
     }
 
     public static void toggleSimpleDomain(PlayerEntity player) {

@@ -30,6 +30,10 @@ public class DataComponentUtils {
         return stack.getOrDefault(component, false);
     }
 
+    public static boolean getBoolean(PlayerEntity player, ComponentType<Boolean> component) {
+        return HeroUtils.getHeroStack(player).getOrDefault(component, false);
+    }
+
     public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, stack.getOrDefault(component, 0) + amount);
