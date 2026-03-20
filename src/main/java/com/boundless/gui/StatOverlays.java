@@ -58,7 +58,7 @@ public class StatOverlays {
         int x = context.getScaledWindowWidth() / 2 + 11;
         int y = context.getScaledWindowHeight() - 39;
         int maxWidth = 80;
-        int healthProgress = maxWidth * cursedEnergy / 100;
+        int healthProgress = maxWidth * cursedEnergy / maxCursedEnergy;
 
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("1bc7b6");
         RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
