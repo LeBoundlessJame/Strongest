@@ -1,8 +1,8 @@
 package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.api.Hero;
 import com.boundless.registry.StrongestComponents;
+import com.boundless.util.DataComponentUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.MeleeUtils;
 import com.boundless.util.VFXUtils;
@@ -14,14 +14,6 @@ public class SimpleDomain {
         if (!isSimpleDomainActive(player)) {
             setSimpleDomainTicks(player, 0);
             return;
-        }
-
-        int simpleDomainTicks = getSimpleDomainTicks(player);
-
-        if (simpleDomainTicks == 1) {
-            VFXUtils.createAndSpawnEffectInstance(player, "simple_domain", null, null, true);
-        } else if (simpleDomainTicks <= 0) {
-            VFXUtils.destroyEffectInstance("simple_domain", player.getId());
         }
 
         MeleeUtils.disorientWithExemption(player, 2, BoundlessAPI.identifier("simple_domain"));
@@ -50,6 +42,13 @@ public class SimpleDomain {
     }
 
     public static void toggleSimpleDomain(PlayerEntity player) {
-        HeroUtils.getHeroStack(player).set(StrongestComponents.SIMPLE_DOMAIN_ACTIVE, !HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.SIMPLE_DOMAIN_ACTIVE, false));
+        if (player.getWorld().isClient) return;
+
+        DataComponentUtils.toggleBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE);
+        if (!isSimpleDomainActive(player)) {
+            VFXUtils.destroyEffectInstance("simple_domain", player.getId());
+        } else {
+            VFXUtils.createAndSpawnEffectInstance(player, "simple_domain", null, null, true);
+        }
     }
 }
