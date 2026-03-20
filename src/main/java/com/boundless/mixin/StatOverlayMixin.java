@@ -16,8 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class StatOverlayMixin {
 
-    @Shadow
-    @Final
+    @Shadow @Final
     private MinecraftClient client;
 
     @Inject(method = "renderStatusBars", at = @At("HEAD"), cancellable = true)
@@ -30,10 +29,12 @@ public class StatOverlayMixin {
         StatOverlays.renderBlockIndicator(client, context);
     }
 
+    /*
     @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
     public void boundless$cancelHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (!HeroUtils.isHero(client.player) || client.player == null) return;
         if (HeroUtils.combatModeEnabled(client.player) && !client.player.isInCreativeMode()) ci.cancel();
+        StatOverlays.renderHotbar(context);
     }
 
     @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
@@ -41,4 +42,6 @@ public class StatOverlayMixin {
         if (!HeroUtils.isHero(client.player) || client.player == null) return;
         if (HeroUtils.combatModeEnabled(client.player) && !client.player.isInCreativeMode()) ci.cancel();
     }
+
+     */
 }
