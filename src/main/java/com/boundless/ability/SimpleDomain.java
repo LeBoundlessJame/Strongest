@@ -2,6 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.StrongestComponents;
+import com.boundless.util.AnimationUtils;
 import com.boundless.util.DataComponentUtils;
 import com.boundless.util.MeleeUtils;
 import com.boundless.util.VFXUtils;
@@ -24,6 +25,7 @@ public class SimpleDomain {
         if (player.getWorld().isClient) return;
 
         if (DataComponentUtils.toggleBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE)) {
+            AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("simple_domain"));
             VFXUtils.createAndSpawnEffectInstance(player, "simple_domain", null, null, true);
             return;
         }
