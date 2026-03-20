@@ -41,9 +41,10 @@ public class StatOverlays {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String healthPercentage = Math.round(player.getHealth() / player.getMaxHealth() * 100) + "%";
-        int j = ((context.getScaledWindowWidth() / 2) - 40 - client.textRenderer.getWidth(healthPercentage));
-        context.drawText(client.textRenderer, healthPercentage, j, y - 8, 0xf23d3d, true);
+        String healthPercentage = String.format("%.1f / %.1f", player.getHealth(), player.getMaxHealth());
+        int textWidth = client.textRenderer.getWidth(healthPercentage);
+        int textPos = x + (maxWidth / 2) - (textWidth / 2);
+        context.drawText(client.textRenderer, healthPercentage, textPos, y - 8, 0xf23d3d, true);
     }
 
     public static void renderCursedEnergyOverlay(MinecraftClient client, DrawContext context) {
