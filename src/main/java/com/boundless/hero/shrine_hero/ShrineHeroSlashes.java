@@ -24,8 +24,8 @@ import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
 public class ShrineHeroSlashes {
-    public static Ability DISMANTLE = AbilityUtils.ability(ShrineHeroSlashes::dismantle, ShrineHero.COOLDOWNS.dismantle.get(), BoundlessAPI.identifier("dismantle"), "Dismantle", ShrineHero.METER_CONFIG.dismantlePercentageCost.get());
-    public static Ability CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::cleave, ShrineHero.COOLDOWNS.cleave.get(), BoundlessAPI.identifier("cleave"), "Cleave", ShrineHero.METER_CONFIG.cleavePercentageCost.get());
+    public static Ability DISMANTLE = AbilityUtils.ability(ShrineHeroSlashes::dismantle, ShrineHero.COOLDOWNS.dismantle.get(), BoundlessAPI.identifier("dismantle"), "Dismantle", ShrineHero.METER_CONFIG.dismantleCost.get());
+    public static Ability CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::cleave, ShrineHero.COOLDOWNS.cleave.get(), BoundlessAPI.identifier("cleave"), "Cleave", ShrineHero.METER_CONFIG.cleaveCost.get());
     /*
     public static Ability SPIDERWEB_CLEAVE = AbilityUtils.ability(ShrineHeroSlashes::spiderwebCleave, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("spiderweb_cleave"), "Spider-Web Cleave");
     public static Ability DISMANTLE_BARRAGE = AbilityUtils.ability(ShrineHeroSlashes::dismantleBarrage, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("dismantle_barrage"), "Dismantle Barrage");

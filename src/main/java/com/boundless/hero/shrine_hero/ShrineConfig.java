@@ -1,5 +1,6 @@
 package com.boundless.hero.shrine_hero;
 
+import com.boundless.util.ConfigUtils;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
@@ -60,10 +61,10 @@ public class ShrineConfig extends ConfigSection {
     }
 
     public static class MeterConfig extends ConfigSection {
-        public ValidatedInt dismantlePercentageCost = new ValidatedInt(4, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt cleavePercentageCost = new ValidatedInt(20, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt openPercentageCost = new ValidatedInt(30, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
-        public ValidatedInt domainExpansionCost = new ValidatedInt(50, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
+        public ValidatedInt dismantleCost = ConfigUtils.vInt(100);
+        public ValidatedInt cleaveCost = ConfigUtils.vInt(1000);
+        public ValidatedInt openCost = ConfigUtils.vInt(5000);
+        public ValidatedInt domainExpansionCost = ConfigUtils.vInt(5000);
         public ValidatedInt minMeterRegen = new ValidatedInt(1, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt maxMeterRegen = new ValidatedInt(1, 100, 0, ValidatedNumber.WidgetType.TEXTBOX);
         public ValidatedInt regenTickDelay = new ValidatedInt(20, 999999, 0, ValidatedNumber.WidgetType.TEXTBOX);

@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ShrineHeroDestruction {
-    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open", ShrineHero.METER_CONFIG.openPercentageCost.get());
+    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open", ShrineHero.METER_CONFIG.openCost.get());
     public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine", ShrineHero.METER_CONFIG.domainExpansionCost.get());
 
     public static void open(PlayerEntity player) {
