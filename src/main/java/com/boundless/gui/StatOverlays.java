@@ -51,12 +51,14 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        int percentageRemaining = MeterUtils.getRemainingMeter(player, 10000);
+        int cursedEnergy = MeterUtils.getRemainingMeter(player, 10000);
+        // Todo: only hard coding this for now, but revisit it later
+        int maxCursedEnergy = 10000;
 
         int x = context.getScaledWindowWidth() / 2 + 11;
         int y = context.getScaledWindowHeight() - 39;
         int maxWidth = 80;
-        int healthProgress = maxWidth * percentageRemaining / 100;
+        int healthProgress = maxWidth * cursedEnergy / 100;
 
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("1bc7b6");
         RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
@@ -66,7 +68,7 @@ public class StatOverlays {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String meterPercentage = percentageRemaining + "%";
+        String meterPercentage = cursedEnergy + " / " + maxCursedEnergy;
         int j = ((context.getScaledWindowWidth() / 2) + 64 - client.textRenderer.getWidth(meterPercentage));
         context.drawText(client.textRenderer, meterPercentage, j, y - 8, 0x1bc7b6, true);
     }
