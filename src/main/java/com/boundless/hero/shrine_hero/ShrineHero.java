@@ -1,10 +1,7 @@
 package com.boundless.hero.shrine_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.BasicAbilities;
-import com.boundless.ability.BlockLogic;
-import com.boundless.ability.MeleeAbilities;
+import com.boundless.ability.*;
 import com.boundless.combat.Combo;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
@@ -58,6 +55,7 @@ public class ShrineHero extends Hero {
                 .ability("key.boundless.ability_one", ShrineHeroSlashes.DISMANTLE)
                 .ability("key.boundless.ability_two", ShrineHeroSlashes.CLEAVE)
                 .ability("key.boundless.ability_three", ShrineHeroDestruction.OPEN)
+                .ability("key.boundless.ability_four", AntiDomainTechniques.SIMPLE_DOMAIN)
                 .ability("key.boundless.ability_five", ShrineHeroDestruction.SHRINE)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .ability("key.boundless.evasive", MeleeAbilities.DODGE)
@@ -76,6 +74,7 @@ public class ShrineHero extends Hero {
                 .armorRenderer(HeroArmorRenderer::new)
                 .tickHandler(Hero::onHeroTick)
                 .tickHandler(BlockLogic::tick)
+                .tickHandler(SimpleDomain::simpleDomainTick)
                 .customTooltips(ShrineHero::customTooltip)
                 .combos(COMBOS)
                 .heldKeybind("key.use")

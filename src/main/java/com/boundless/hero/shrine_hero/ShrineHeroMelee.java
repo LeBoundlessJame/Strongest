@@ -79,6 +79,7 @@ public class ShrineHeroMelee {
                     CameraUtils.playCameraShake(user);
                     if (target instanceof LivingEntity livingEntity) {
                         livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 4, 5, false, false, false));
+                        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.STUN, 30, 0, false, false, false));
                         MeleeUtils.knockback(user, livingEntity, new Vec3d(2.5f, 0.4f, 2.5f));
                     }
                     SoundUtils.playSound(user, SoundRegistry.ENERGY_IMPACT_HEAVY);

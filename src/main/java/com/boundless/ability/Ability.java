@@ -14,16 +14,10 @@ public class Ability {
     private final Consumer<PlayerEntity> abilityLogic;
     private final Predicate<PlayerEntity> abilityConditional;
     private final int cooldown;
-    @Builder.Default
-    private final int iconHeight = 22;
-    @Builder.Default
-    private final int iconWidth = 22;
-    private final Identifier abilityIcon;
     private final Identifier abilityID;
     @Builder.Default
     private final String displayString;
     private final boolean hide;
-
     @Builder.Default
     private final int percentCost = 0;
 }
