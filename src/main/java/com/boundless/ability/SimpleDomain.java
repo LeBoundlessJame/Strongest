@@ -2,10 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.StrongestComponents;
-import com.boundless.util.AnimationUtils;
-import com.boundless.util.DataComponentUtils;
-import com.boundless.util.MeleeUtils;
-import com.boundless.util.VFXUtils;
+import com.boundless.util.*;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class SimpleDomain {

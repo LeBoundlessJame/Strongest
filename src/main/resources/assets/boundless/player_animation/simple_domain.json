@@ -2,9 +2,9 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"simple_domain": {
-			"animation_length": 0.5,
+			"animation_length": 1.5,
 			"bones": {
-				"Head": {
+				"head": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -24,7 +24,7 @@
 						}
 					}
 				},
-				"Body": {
+				"torso": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -44,7 +44,7 @@
 						}
 					}
 				},
-				"LeftArm": {
+				"leftArm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -64,7 +64,7 @@
 						}
 					}
 				},
-				"LeftLeg": {
+				"leftLeg": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -84,7 +84,7 @@
 						}
 					}
 				},
-				"RightLeg": {
+				"rightLeg": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -104,7 +104,7 @@
 						}
 					}
 				},
-				"RightArm": {
+				"rightArm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
