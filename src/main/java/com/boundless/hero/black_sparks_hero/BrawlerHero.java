@@ -34,13 +34,13 @@ public class BrawlerHero extends Hero {
     public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
     public static BrawlerHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
-    public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
-    public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
-    public static Ability MANJI_KICK = AbilityUtils.ability(BrawlerMelee::manjiKick, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("manji_kick"), "Manji Kick");
+    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), "Medium attack", 0);
+    public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick", 0);
+    public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash", 200);
+    public static Ability MANJI_KICK = AbilityUtils.ability(BrawlerMelee::manjiKick, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("manji_kick"), "Manji Kick", 0);
 
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
+    public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), "Light attack", 0);
+    public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), "Divergent fist", 100);
 
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));

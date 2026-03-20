@@ -17,8 +17,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 
 public class MeleeAbilities {
-    public static Ability DODGE = AbilityUtils.ability(MeleeAbilities::dash, 20, BoundlessAPI.identifier("dodge"), "Dodge");
-    public static Ability BLOCK = AbilityUtils.ability(MeleeAbilities::block, 20, BoundlessAPI.identifier("block"), "Block");
+    public static Ability DODGE = AbilityUtils.ability(MeleeAbilities::dash, 20, BoundlessAPI.identifier("dodge"), "Dodge", 0);
+    public static Ability BLOCK = AbilityUtils.ability(MeleeAbilities::block, 20, BoundlessAPI.identifier("block"), "Block", 0);
 
     public static void dash(PlayerEntity player) {
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
