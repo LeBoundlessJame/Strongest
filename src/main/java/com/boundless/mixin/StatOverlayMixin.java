@@ -44,4 +44,10 @@ public class StatOverlayMixin {
     }
 
      */
+    @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
+    public void boundless$cancelHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        if (!HeroUtils.isHero(client.player) || client.player == null) return;
+        if (HeroUtils.combatModeEnabled(client.player) && !client.player.isInCreativeMode()) ci.cancel();
+        StatOverlays.renderHotbar(context);
+    }
 }

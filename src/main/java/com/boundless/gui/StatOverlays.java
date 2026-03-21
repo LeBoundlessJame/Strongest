@@ -23,7 +23,7 @@ public class StatOverlays {
     public static final Identifier SWORD = BoundlessAPI.hudPNG("sword");
     public static final Identifier VANILLA_MODE = BoundlessAPI.hudPNG("vanilla_mode");
     public static final Identifier SHIELD = BoundlessAPI.hudPNG("shield");
-    public static final Identifier SKILL_HOTBAR = BoundlessAPI.hudPNG("skill_hotbar");
+    public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar");
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
@@ -110,7 +110,7 @@ public class StatOverlays {
     }
 
     public static void renderHotbar(DrawContext context) {
-        int i = context.getScaledWindowWidth() / 2;
-        context.drawTexture(SKILL_HOTBAR, i - 91, context.getScaledWindowHeight() - 22, 0, 0, 82, 22, 82, 22);
+        int x = (context.getScaledWindowWidth() - 260) / 2;
+        context.drawTexture(HOTBAR, x, context.getScaledWindowHeight() - 40, 0, 0, 260, 40, 260, 40);
     }
 }
