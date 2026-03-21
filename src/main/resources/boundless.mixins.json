@@ -26,6 +26,7 @@
     "ArmorInvisibilityMixin",
     "CameraMixin",
     "CameraVisibilityMixin",
+    "CursedEnergyFireMixin",
     "ShaderLoaderMixin",
     "SkinLayerMixin"
   ]
