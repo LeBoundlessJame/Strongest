@@ -1,6 +1,7 @@
 package com.boundless.client;
 
 import com.boundless.BoundlessAPI;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -14,8 +15,12 @@ import org.joml.Vector4f;
 public class CursedFireRendering {
 
     public static void renderAllCursedFire(MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, Entity entity, Quaternionf rotation) {
-        renderCursedFire(matrixStack, vertexConsumers, entity, rotation, new Vector4f(0.35f, 0.81f, 0.87f, 0.4f), 2.0f, 0);
-        renderCursedFire(matrixStack, vertexConsumers, entity, rotation, new Vector4f(0.6f, 0.95f, 1.0f, 0.4f), 1.5f, 0.32f);
+        // Todo: this is messy. Could do with a cleanup at some stage, and make it scale based on reserves
+        float scale = 2.5f + (float)Math.sin((entity.age + MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true)) * 0.05) * 0.25f;
+        renderCursedFire(matrixStack, vertexConsumers, entity, rotation, new Vector4f(0.35f, 0.81f, 0.87f, 0.4f), scale, 0);
+
+        scale = 2.0f + (float)Math.sin((entity.age + MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true)) * 0.05) * 0.25f;
+        renderCursedFire(matrixStack, vertexConsumers, entity, rotation, new Vector4f(0.6f, 0.95f, 1.0f, 0.4f), scale, 0.32f);
     }
 
     // This took WAY too long lmao
