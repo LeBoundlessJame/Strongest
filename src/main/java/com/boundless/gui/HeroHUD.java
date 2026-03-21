@@ -74,7 +74,7 @@ public class HeroHUD {
         int offset = 1;
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
-            if (ability == null || ability.isHide() || ability.getDisplayString() == null) continue;
+            if (ability == null || ability.isHide() || ability.getDisplayString() == null || ability.getSkillSlot() != null) continue;
             String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
 
             long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);

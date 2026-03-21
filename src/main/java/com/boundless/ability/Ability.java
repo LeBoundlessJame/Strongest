@@ -20,4 +20,5 @@ public class Ability {
     private final boolean hide;
     @Builder.Default
     private final int cost = 0;
+    Integer skillSlot;
 }

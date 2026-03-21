@@ -17,6 +17,10 @@ public class AbilityUtils {
         return Ability.builder().abilityLogic(abilityLogic).cooldown(cooldown).abilityID(abilityID).displayString(displayString).cost(cost).build();
     }
 
+    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, int cost, int skillSlot) {
+        return Ability.builder().abilityLogic(abilityLogic).cooldown(cooldown).abilityID(abilityID).displayString(displayString).cost(cost).skillSlot(skillSlot).build();
+    }
+
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> updatedCooldownData = DataComponentUtils.updatedCooldownMap(heroStack, abilityID, player.getWorld().getTime() + cooldownTime);
