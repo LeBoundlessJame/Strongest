@@ -34,14 +34,14 @@ public class HeroHUD {
             ShaderRegistry.GRAYSCALE.render(renderTickCounter.getTickDelta(true));
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.SHRINE_EFFECT)) {
             ShaderRegistry.SHRINE_OVERLAY.render(renderTickCounter.getTickDelta(true));
-        }
-        else {
+        } else {
             if (client.gameRenderer.getPostProcessor() != null) {
                 ((ShaderAccessor) client.gameRenderer).boundless$disablePostProcessor();
             }
         }
 
         renderKeybindAbilities(client, context);
+        //renderSkillSlots(client, context);
         ComboRenderHelper.renderPlayerCombos(client, context);
     }
 
@@ -74,7 +74,8 @@ public class HeroHUD {
         int offset = 1;
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
-            if (ability == null || ability.isHide() || ability.getDisplayString() == null || ability.getSkillSlot() != null) continue;
+            if (ability == null || ability.isHide() || ability.getDisplayString() == null || ability.getSkillSlot() != null)
+                continue;
             String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
 
             long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);

@@ -21,4 +21,5 @@ public class Ability {
     @Builder.Default
     private final int cost = 0;
     Integer skillSlot;
+    Identifier skillSlotTexture;
 }

@@ -1,6 +1,8 @@
 package com.boundless.gui;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.ability.Ability;
+import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
@@ -16,6 +18,8 @@ import net.minecraft.util.Identifier;
 import org.joml.Math;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class StatOverlays {
     public static final Identifier HEALTH_BAR_BACKGROUND = BoundlessAPI.hudPNG("health_bar_background");
@@ -112,5 +116,22 @@ public class StatOverlays {
     public static void renderHotbar(DrawContext context) {
         int x = (context.getScaledWindowWidth() - 260) / 2;
         context.drawTexture(HOTBAR, x, context.getScaledWindowHeight() - 40, 0, 0, 260, 40, 260, 40);
+        renderSkillSlots(MinecraftClient.getInstance(), context);
+    }
+
+    public static void renderSkillSlots(MinecraftClient client, DrawContext context) {
+        if (client.player == null) return;
+        LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
+
+        int offset = 1;
+        for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
+            Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
+            if (ability == null || ability.getSkillSlot() == null || ability.getSkillSlotTexture() == null) continue;
+            //String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
+
+            int x = (context.getScaledWindowWidth() - 244) / 2;
+            context.drawTexture(ability.getSkillSlotTexture(), x + (offset * 16), context.getScaledWindowHeight() - 20, 0, 0, 16, 16, 16, 16);
+            offset += 1;
+        }
     }
 }
