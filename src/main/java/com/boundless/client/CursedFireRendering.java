@@ -9,11 +9,17 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
+import org.joml.Vector4f;
 
 public class CursedFireRendering {
 
+    public static void renderAllCursedFire(MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, Entity entity, Quaternionf rotation) {
+        renderCursedFire(matrixStack, vertexConsumers, entity, rotation, new Vector4f(0.35f, 0.81f, 0.87f, 0.4f), 2.0f, 0);
+        renderCursedFire(matrixStack, vertexConsumers, entity, rotation, new Vector4f(0.6f, 0.95f, 1.0f, 0.4f), 1.5f, 0.32f);
+    }
+
     // This took WAY too long lmao
-    public static void renderCursedFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, Quaternionf rotation) {
+    public static void renderCursedFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, Quaternionf rotation, Vector4f color, float scale, float zOffset) {
         Identifier fire0 = BoundlessAPI.identifier("textures/block/cursed_fire_0.png");
         Identifier fire1 = BoundlessAPI.identifier("textures/block/cursed_fire_1.png");
 
@@ -24,13 +30,13 @@ public class CursedFireRendering {
         float vMax = vMin + vStep;
 
         matrices.push();
-        float f = entity.getWidth() * 2f;
+        float f = entity.getWidth() * scale;
         matrices.scale(f, f, f);
         float g = 0.5F;
         float j = 0.0F;
         float i = entity.getHeight() / f;
         matrices.multiply(rotation);
-        matrices.translate(0.0F, 0.0F, 0.3F - (int) i * 0.02F);
+        matrices.translate(0.0F, 0.0F, 0.3F - (int) i * 0.02F + zOffset);
         float k = 0.0F;
         int l = 0;
 
@@ -47,15 +53,10 @@ public class CursedFireRendering {
                 uMin = temp;
             }
 
-            float red = 0.2f;
-            float green = 0.6f;
-            float blue = 1.0f;
-            float alpha = 0.4f;
-
-            drawCursedFireVertex(entry, vertexConsumer, -g, -j, k, uMax, vMax, red, green, blue, alpha);
-            drawCursedFireVertex(entry, vertexConsumer, g, -j, k, uMin, vMax, red, green, blue, alpha);
-            drawCursedFireVertex(entry, vertexConsumer, g, 1.4F - j, k, uMin, vMin, red, green, blue, alpha);
-            drawCursedFireVertex(entry, vertexConsumer, -g, 1.4F - j, k, uMax, vMin, red, green, blue, alpha);
+            drawCursedFireVertex(entry, vertexConsumer, -g, -j, k, uMax, vMax, color.x, color.y, color.z, color.w);
+            drawCursedFireVertex(entry, vertexConsumer, g, -j, k, uMin, vMax, color.x, color.y, color.z, color.w);
+            drawCursedFireVertex(entry, vertexConsumer, g, 1.4F - j, k, uMin, vMin, color.x, color.y, color.z, color.w);
+            drawCursedFireVertex(entry, vertexConsumer, -g, 1.4F - j, k, uMax, vMin, color.x, color.y, color.z, color.w);
 
             i -= 0.45F;
             j -= 0.45F;

@@ -16,7 +16,7 @@ public class CursedEnergyFireMixin {
 
     @Inject(method = "renderFire", at = @At("HEAD"), cancellable = true)
     private void boundless$renderFire(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, Quaternionf rotation, CallbackInfo ci) {
-        CursedFireRendering.renderCursedFire(matrices, vertexConsumers, entity, rotation);
+        CursedFireRendering.renderAllCursedFire(matrices, vertexConsumers, entity, rotation);
         ci.cancel();
     }
 }
