@@ -19,10 +19,13 @@ public class CursedEnergyFireMixin {
     @Shadow
     private Quaternionf rotation;
 
+    /* Todo: Come back to this
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V", shift = At.Shift.BEFORE))
     private void boundless$renderCursedFire(Entity entity, double x, double y, double z, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (entity instanceof PlayerEntity player && player.isSneaking()) {
             CursedFireRendering.renderAllCursedFire(matrices, vertexConsumers, entity, MathHelper.rotateAround(MathHelper.Y_AXIS, this.rotation, new Quaternionf()));
         }
     }
+
+     */
 }
