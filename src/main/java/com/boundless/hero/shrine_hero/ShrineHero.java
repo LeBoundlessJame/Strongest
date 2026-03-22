@@ -98,9 +98,7 @@ public class ShrineHero extends Hero {
         if (player.getWorld().isClient) return;
         if (player.age % 20 != 0) return;
 
-        System.out.println(player.age - player.getLastAttackTime());
-
-        if (player.age - player.getLastAttackTime() > 1200) {
+        if (player.age - player.getLastAttackedTime() > 1200) {
             player.heal(player.getMaxHealth() / 30);
         }
     }
