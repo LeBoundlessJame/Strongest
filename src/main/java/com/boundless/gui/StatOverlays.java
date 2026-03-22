@@ -27,11 +27,11 @@ public class StatOverlays {
     public static final Identifier HEALTH_BAR_BACKGROUND = BoundlessAPI.hudPNG("health_bar_background");
     public static final Identifier HEALTH_BAR_PROGRESS = BoundlessAPI.hudPNG("health_bar_progress");
     public static final Identifier SWORD = BoundlessAPI.hudPNG("sword");
-    public static final Identifier VANILLA_MODE = BoundlessAPI.hudPNG("vanilla_mode");
     public static final Identifier SHIELD = BoundlessAPI.hudPNG("shield");
+
     public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar");
     public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
-
+    public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
@@ -42,12 +42,7 @@ public class StatOverlays {
         int maxWidth = 66;
         int healthProgress = (int) Math.lerp(0, maxWidth, player.getHealth() / player.getMaxHealth());
 
-        ArrayList<Float> colors = GUIUtils.hexToUnitColor("f23d3d");
-        RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
-
         context.drawTexture(HEALTH, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
-
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
         int textWidth = client.textRenderer.getWidth(healthPercentage);
@@ -63,22 +58,16 @@ public class StatOverlays {
         // Todo: only hard coding this for now, but revisit it later
         int maxCursedEnergy = 10000;
 
-        int x = context.getScaledWindowWidth() / 2 + 11;
-        int y = context.getScaledWindowHeight() - 39;
-        int maxWidth = 80;
+        int x = context.getScaledWindowWidth() / 2 + 35;
+        int y = context.getScaledWindowHeight() - 34;
+        int maxWidth = 66;
         int healthProgress = maxWidth * cursedEnergy / maxCursedEnergy;
 
-        ArrayList<Float> colors = GUIUtils.hexToUnitColor("1bc7b6");
-        RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
-
-        context.drawTexture(HEALTH_BAR_BACKGROUND, x, y, 0, 0, 0, 80, 9, 80, 9);
-        context.drawTexture(HEALTH_BAR_PROGRESS, x, y, 0, 0, 0, healthProgress, 9, 80, 9);
-
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        context.drawTexture(CURSED_ENERGY, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
 
         String meterPercentage = cursedEnergy + " / " + maxCursedEnergy;
         int textWidth = client.textRenderer.getWidth(meterPercentage);
-        int textPos = x + (maxWidth / 2) - (textWidth / 2);
+        int textPos = x + (maxWidth / 2) - (textWidth / 2) - 12;
         context.drawText(client.textRenderer, meterPercentage, textPos, y - 8, 0x1bc7b6, true);
     }
 
