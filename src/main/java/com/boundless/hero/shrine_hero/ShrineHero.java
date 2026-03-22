@@ -95,12 +95,13 @@ public class ShrineHero extends Hero {
 
     // Todo: make this figure configurable
     public static void regenTick(PlayerEntity player) {
-        if (player.age % ShrineHero.METER_CONFIG.regenTickDelay.get() == 0 && !player.getWorld().isClient) {
-            MeterUtils.regenMeterBasedOnHealth(player, ShrineHero.METER_CONFIG.minMeterRegen.get(), ShrineHero.METER_CONFIG.maxMeterRegen.get());
-        }
+        if (player.getWorld().isClient) return;
+        if (player.age % 20 != 0) return;
 
-        if (player.age % ShrineHero.CONFIG.healingTickDelay.get() == 0 && !player.getWorld().isClient) {
-            player.heal(ShrineHero.CONFIG.passiveHealingAmount.get());
+        System.out.println(player.age - player.getLastAttackTime());
+
+        if (player.age - player.getLastAttackTime() > 1200) {
+            player.heal(player.getMaxHealth() / 30);
         }
     }
 }

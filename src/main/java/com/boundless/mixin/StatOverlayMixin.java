@@ -26,8 +26,8 @@ public class StatOverlayMixin {
     public void boundless$renderStatusBars(DrawContext context, CallbackInfo ci) {
         if (!HeroUtils.isHero(client.player)) return;
         ci.cancel();
-        //StatOverlays.renderHealthOverlay(client, context);
-        //StatOverlays.renderCursedEnergyOverlay(client, context);
+        StatOverlays.renderHealthOverlay(client, context);
+        StatOverlays.renderCursedEnergyOverlay(client, context);
         //StatOverlays.renderCombatModeIndicator(client, context);
         StatOverlays.renderBlockIndicator(client, context);
     }

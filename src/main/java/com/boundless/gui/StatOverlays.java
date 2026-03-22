@@ -30,21 +30,22 @@ public class StatOverlays {
     public static final Identifier VANILLA_MODE = BoundlessAPI.hudPNG("vanilla_mode");
     public static final Identifier SHIELD = BoundlessAPI.hudPNG("shield");
     public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar");
+    public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
+
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        int x = context.getScaledWindowWidth() / 2 - 91;
-        int y = context.getScaledWindowHeight() - 39;
-        int maxWidth = 80;
+        int x = context.getScaledWindowWidth() / 2 - 113;
+        int y = context.getScaledWindowHeight() - 34;
+        int maxWidth = 66;
         int healthProgress = (int) Math.lerp(0, maxWidth, player.getHealth() / player.getMaxHealth());
 
         ArrayList<Float> colors = GUIUtils.hexToUnitColor("f23d3d");
         RenderSystem.setShaderColor(colors.get(0), colors.get(1), colors.get(2), 1.0f);
 
-        context.drawTexture(HEALTH_BAR_BACKGROUND, x, y, 0, 0, 0, 80, 9, 80, 9);
-        context.drawTexture(HEALTH_BAR_PROGRESS, x, y, 0, 0, 0, healthProgress, 9, 80, 9);
+        context.drawTexture(HEALTH, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
