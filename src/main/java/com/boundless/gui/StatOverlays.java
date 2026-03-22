@@ -6,9 +6,11 @@ import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
+import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -127,10 +129,12 @@ public class StatOverlays {
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
             if (ability == null || ability.getSkillSlot() == null || ability.getSkillSlotTexture() == null) continue;
-            //String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
+            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
 
             int x = (context.getScaledWindowWidth() - 244) / 2;
             context.drawTexture(ability.getSkillSlotTexture(), x + (offset * 16), context.getScaledWindowHeight() - 20, 0, 0, 16, 16, 16, 16);
+
+            //context.drawText(client.textRenderer, boundKey, x + (offset * 16) + 5, context.getScaledWindowHeight() - 24, 0xffffff, true);
             offset += 1;
         }
     }
