@@ -54,4 +54,11 @@ public class StatOverlayMixin {
         if (!HeroUtils.combatModeEnabled(client.player)) return;
         ci.cancel();
     }
+
+    @Inject(method = "renderExperienceLevel", at = @At("HEAD"), cancellable = true)
+    public void boundless$cancelExperienceLevel(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        if (!HeroUtils.isHero(client.player) || client.player == null) return;
+        if (!HeroUtils.combatModeEnabled(client.player)) return;
+        ci.cancel();
+    }
 }
