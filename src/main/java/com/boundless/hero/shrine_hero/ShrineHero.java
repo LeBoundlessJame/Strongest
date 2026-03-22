@@ -98,8 +98,10 @@ public class ShrineHero extends Hero {
         if (player.getWorld().isClient) return;
         if (player.age % 20 != 0) return;
 
-        if (player.age - player.getLastAttackedTime() > 1200) {
+        if (player.getLastAttacker() == null || player.age - player.getLastAttackedTime() > 1200) {
             player.heal(player.getMaxHealth() / 30);
+            // Todo: make this not hard coded, it should get based on the player's reserves
+            MeterUtils.regenMeter(player, 10000 / 120);
         }
     }
 }
