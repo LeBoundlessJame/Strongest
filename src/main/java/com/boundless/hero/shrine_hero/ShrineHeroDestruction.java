@@ -2,12 +2,14 @@ package com.boundless.hero.shrine_hero;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
+import com.boundless.ability.SimpleDomain;
 import com.boundless.action.Action;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
 import com.boundless.registry.GameRulesRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -78,6 +80,7 @@ public class ShrineHeroDestruction {
         }
     }
 
+    // Todo: Find a nicer way to incorporate simple domain later.
     public static void performFurnaceNukeIfPossible(PlayerEntity player) {
         List<MalevolentShrineEntity> entries = player.getWorld().getEntitiesByClass(MalevolentShrineEntity.class, player.getBoundingBox().expand(200, 200, 200), entity -> entity.getOwner() == player);
         if (entries.isEmpty()) return;
@@ -91,6 +94,12 @@ public class ShrineHeroDestruction {
             if (!shrine.getWorld().isClient && shrine.getWorld().getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {
                 player.getWorld().createExplosion(shrine, entity.getX(), entity.getY(), entity.getZ(), 10f, true, World.ExplosionSourceType.BLOCK);
             }
+
+            if (SimpleDomain.isSimpleDomainActive(player)) {
+                DataComponentUtils.incrementFloat(StrongestComponents.SIMPLE_DOMAIN_HEALTH, player, ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestFurnaceArrowDamage.get(), ShrineHero.DAMAGE.strongestFurnaceArrowDamage.get()), 0, 150);
+                return;
+            }
+
             entity.timeUntilRegen = 0;
             entity.damage(entity.getDamageSources().generic(), ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestFurnaceArrowDamage.get(), ShrineHero.DAMAGE.strongestFurnaceArrowDamage.get()));
         });

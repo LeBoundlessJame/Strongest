@@ -1,12 +1,16 @@
 package com.boundless.entity.malevolent_shrine;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.ability.SimpleDomain;
 import com.boundless.hero.shrine_hero.ShrineHelper;
 import com.boundless.hero.shrine_hero.ShrineHero;
 import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.registry.StrongestComponents;
+import com.boundless.util.DataComponentUtils;
 import com.boundless.util.EffekUtils;
+import com.boundless.util.HeroUtils;
 import lombok.Getter;
 import lombok.Setter;
 import mod.chloeprime.aaaparticles.api.client.effekseer.ParticleEmitter;
@@ -122,6 +126,12 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         if (this.age > delay && !this.getWorld().isClient) {
             entitiesInRange.forEach(entity -> {
                 if (entity.age % ShrineHero.DOMAIN.timeBetweenSlashes.get() == 0) {
+                    if (entity instanceof PlayerEntity player) {
+                        if (SimpleDomain.isSimpleDomainActive(player)) {
+                            DataComponentUtils.incrementFloat(StrongestComponents.SIMPLE_DOMAIN_HEALTH, player, getDamagePerSlash(), 0, 150);
+                            return;
+                        }
+                    }
                     entity.timeUntilRegen = 0;
                     entity.damage(DamageTypeRegistry.getDamageSource(entity, DamageTypeRegistry.SHRINE_SLASHES), getDamagePerSlash());
                 }

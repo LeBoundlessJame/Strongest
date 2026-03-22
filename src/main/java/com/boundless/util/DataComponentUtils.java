@@ -44,8 +44,8 @@ public class DataComponentUtils {
         stack.set(component, Math.clamp(stack.getOrDefault(component, 0) + amount, min, max));
     }
 
-    public static void incrementFloat(ComponentType<Float> component, PlayerEntity player, float amount, float max) {
+    public static void incrementFloat(ComponentType<Float> component, PlayerEntity player, float amount, float min, float max) {
         ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, Math.clamp(stack.getOrDefault(component, 0f) + amount, 0, max));
+        stack.set(component, Math.clamp(stack.getOrDefault(component, 0f) + amount, min, max));
     }
 }

@@ -18,7 +18,7 @@ public class BlockLogic {
         blockAnimation(player);
 
         if (!player.hasStatusEffect(StatusEffectRegistry.GUARD_BREAK) && player.age % 20 == 0) {
-            DataComponentUtils.incrementFloat(DataComponentRegistry.BLOCK_HP, player, 2f, 150f);
+            DataComponentUtils.incrementFloat(DataComponentRegistry.BLOCK_HP, player, 2f, 0, 150f);
         }
 
         if (isBlocking(player)) {
