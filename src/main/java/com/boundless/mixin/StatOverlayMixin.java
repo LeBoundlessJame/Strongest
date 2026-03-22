@@ -25,10 +25,10 @@ public class StatOverlayMixin {
     @Inject(method = "renderStatusBars", at = @At("HEAD"), cancellable = true)
     public void boundless$renderStatusBars(DrawContext context, CallbackInfo ci) {
         if (!HeroUtils.isHero(client.player)) return;
+        if (!HeroUtils.combatModeEnabled(client.player)) return;
         ci.cancel();
         StatOverlays.renderHealthOverlay(client, context);
         StatOverlays.renderCursedEnergyOverlay(client, context);
-        //StatOverlays.renderCombatModeIndicator(client, context);
         StatOverlays.renderBlockIndicator(client, context);
     }
 
