@@ -20,6 +20,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -83,9 +84,12 @@ public class ShrineHero extends Hero {
     }
 
     public static List<Text> customTooltip(ItemStack stack) {
-        int fingersConsumed = stack.getOrDefault(ShrineHero.FINGER_COUNT, 0);
-        MutableText mutableText = Text.literal("Fingers Consumed: " + fingersConsumed).formatted(Formatting.RED, Formatting.BOLD);
-        return List.of(mutableText);
+        if (stack.getItem() instanceof ArmorItem armorItem && armorItem.getType() == ArmorItem.Type.CHESTPLATE) {
+            int fingersConsumed = stack.getOrDefault(ShrineHero.FINGER_COUNT, 1);
+            MutableText mutableText = Text.literal("Fingers Consumed: " + fingersConsumed).formatted(Formatting.RED, Formatting.BOLD);
+            return List.of(mutableText);
+        }
+        return List.of();
     }
 
     // Todo: Make it so that yuji can also eat the finger
