@@ -24,11 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StatOverlays {
-    public static final Identifier HEALTH_BAR_BACKGROUND = BoundlessAPI.hudPNG("health_bar_background");
-    public static final Identifier HEALTH_BAR_PROGRESS = BoundlessAPI.hudPNG("health_bar_progress");
-    public static final Identifier SWORD = BoundlessAPI.hudPNG("sword");
     public static final Identifier SHIELD = BoundlessAPI.hudPNG("shield");
-
     public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar");
     public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
     public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
@@ -68,18 +64,6 @@ public class StatOverlays {
         int textWidth = client.textRenderer.getWidth(meterPercentage);
         int textPos = x + (maxWidth / 2) - (textWidth / 2) - 12;
         context.drawText(client.textRenderer, meterPercentage, textPos, y - 8, 0x1bc7b6, true);
-    }
-
-    public static void renderCombatModeIndicator(MinecraftClient client, DrawContext context) {
-        if (client.player == null) return;
-        ItemStack stack = HeroUtils.getHeroStack(client.player);
-
-        int x = context.getScaledWindowWidth() / 2 - 10;
-        int y = context.getScaledWindowHeight() - 50;
-
-        if (stack.getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, false) && stack.getOrDefault(DataComponentRegistry.BLOCK_TICKS, 0) <= 0) {
-            context.drawTexture(SWORD, x, y, 0, 0, 0, 22, 22, 22, 22);
-        }
     }
 
     public static void renderBlockIndicator(MinecraftClient client, DrawContext context) {
@@ -139,5 +123,21 @@ public class StatOverlays {
         int textWidth = client.textRenderer.getWidth(healthPercentage);
         int textPos = x - (textWidth / 2) + 56;
         context.drawText(client.textRenderer, healthPercentage, textPos, y - 8, 0xf23d3d, true);
+    }
+
+    public static void renderCEText(MinecraftClient client, DrawContext context) {
+        PlayerEntity player = client.player;
+        if (player == null) return;
+
+        int cursedEnergy = MeterUtils.getRemainingMeter(player);
+        int maxCursedEnergy = MeterUtils.getMaxCE(player);
+
+        int x = context.getScaledWindowWidth() / 2 + 52;
+        int y = context.getScaledWindowHeight() - 42;
+
+        String meterPercentage = cursedEnergy + " / " + maxCursedEnergy;
+        int textWidth = client.textRenderer.getWidth(meterPercentage);
+        int textPos = x - (textWidth / 2);
+        context.drawText(client.textRenderer, meterPercentage, textPos, y - 8, 0x1bc7b6, true);
     }
 }

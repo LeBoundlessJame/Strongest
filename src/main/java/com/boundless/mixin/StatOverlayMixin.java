@@ -39,6 +39,7 @@ public abstract class StatOverlayMixin {
             StatOverlays.renderBlockIndicator(client, context);
         } else {
             StatOverlays.renderHealthText(client, context);
+            StatOverlays.renderCEText(client, context);
             renderExperienceBar(context, context.getScaledWindowWidth() / 2 - 91);
             int m = context.getScaledWindowWidth() / 2 + 91;
             int n = context.getScaledWindowHeight() - 39;
