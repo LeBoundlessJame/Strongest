@@ -30,7 +30,7 @@ public class DemonicFingerItem extends Item {
                 ComponentUtils.incrementInt(StrongestComponents.CURSED_ENERGY_RESERVES, player, 1000);
                 HeroUtils.getHeroStack(player).set(StrongestComponents.CURSED_ENERGY, ComponentUtils.getInt(StrongestComponents.CURSED_ENERGY_RESERVES, player, 1000));
             } else {
-                player.sendMessage(Text.of("You cannot consume any more fingers... for now."), true);
+                player.sendMessage(Text.of("§4§lYou cannot consume any more fingers... for now."), true);
             }
         } else {
             user.kill();
