@@ -3,7 +3,7 @@ package com.boundless.networking.payloads;
 import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.DataComponentUtils;
+import com.boundless.util.ComponentUtils;
 import com.boundless.util.HeroUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
@@ -30,7 +30,7 @@ public record UpdateHoldStatePayload(String key, boolean held) implements Custom
         KeybindHoldData keybindHoldData = keybindDataMap.getOrDefault(payload.key, new KeybindHoldData(payload.held, context.player().getWorld().getTime(), 0L));
 
         keybindHoldData = new KeybindHoldData(payload.held, payload.held ? worldTime : keybindHoldData.startTimestamp(), payload.held ? 0L : worldTime);
-        DataComponentUtils.updateMap(heroStack, DataComponentRegistry.HELD_KEYBIND, payload.key, keybindHoldData);
+        ComponentUtils.updateMap(heroStack, DataComponentRegistry.HELD_KEYBIND, payload.key, keybindHoldData);
     }
 
     @Override

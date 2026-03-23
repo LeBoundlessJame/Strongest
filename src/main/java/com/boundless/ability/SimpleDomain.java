@@ -18,13 +18,13 @@ public class SimpleDomain {
     }
 
     public static boolean isSimpleDomainActive(PlayerEntity player) {
-        return DataComponentUtils.getBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE);
+        return ComponentUtils.getBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE);
     }
 
     public static void toggleSimpleDomain(PlayerEntity player) {
         if (player.getWorld().isClient) return;
 
-        if (DataComponentUtils.toggleBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE)) {
+        if (ComponentUtils.toggleBoolean(player, StrongestComponents.SIMPLE_DOMAIN_ACTIVE)) {
             AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("simple_domain"));
             VFXUtils.createAndSpawnEffectInstance(player, "simple_domain", null, null, true);
             HeroUtils.getHeroStack(player).set(StrongestComponents.SIMPLE_DOMAIN_HEALTH, 150f);

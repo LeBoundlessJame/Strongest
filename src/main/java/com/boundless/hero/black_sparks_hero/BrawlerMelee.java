@@ -15,7 +15,7 @@ import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 
 public class BrawlerMelee {
     public static void lightAttack(PlayerEntity player) {
-        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
         if (!AttackUtils.canAttack(player)) return;

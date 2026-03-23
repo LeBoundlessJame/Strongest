@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Todo: this whole class could do with an expansion / elaboration
-public class DataComponentUtils {
+public class ComponentUtils {
     public static Map<Identifier, Long> updatedCooldownMap(ItemStack heroStack, Identifier abilityID, long value) {
         Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
         Map<Identifier, Long> updatedCooldownData = new HashMap<>(cooldownData);
@@ -42,6 +42,10 @@ public class DataComponentUtils {
     public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount, int min, int max) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, Math.clamp(stack.getOrDefault(component, 0) + amount, min, max));
+    }
+
+    public static int getInt(ComponentType<Integer> component, PlayerEntity player, int fallback) {
+        return HeroUtils.getHeroStack(player).getOrDefault(component, fallback);
     }
 
     public static void incrementFloat(ComponentType<Float> component, PlayerEntity player, float amount, float min, float max) {

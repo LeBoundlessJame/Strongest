@@ -32,7 +32,7 @@ public class AttackUtils {
         int impactTick = singleAttack.getImpactTick();
         BiConsumer<PlayerEntity, Entity> perEntityLogic = singleAttack.getPerEntityLogic();
 
-        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
@@ -64,7 +64,7 @@ public class AttackUtils {
     }
 
     public static int incrementedAttackCount(PlayerEntity player) {
-        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
     }
 }

@@ -96,7 +96,7 @@ public class ShrineHeroDestruction {
             }
 
             if (SimpleDomain.isSimpleDomainActive(player)) {
-                DataComponentUtils.incrementFloat(StrongestComponents.SIMPLE_DOMAIN_HEALTH, player, ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestFurnaceArrowDamage.get(), ShrineHero.DAMAGE.strongestFurnaceArrowDamage.get()), 0, 150);
+                ComponentUtils.incrementFloat(StrongestComponents.SIMPLE_DOMAIN_HEALTH, player, ShrineHelper.getScaledDamage(player, ShrineHero.DAMAGE.weakestFurnaceArrowDamage.get(), ShrineHero.DAMAGE.strongestFurnaceArrowDamage.get()), 0, 150);
                 return;
             }
 

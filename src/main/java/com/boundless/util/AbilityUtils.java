@@ -23,7 +23,7 @@ public class AbilityUtils {
 
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
-        Map<Identifier, Long> updatedCooldownData = DataComponentUtils.updatedCooldownMap(heroStack, abilityID, player.getWorld().getTime() + cooldownTime);
+        Map<Identifier, Long> updatedCooldownData = ComponentUtils.updatedCooldownMap(heroStack, abilityID, player.getWorld().getTime() + cooldownTime);
         heroStack.set(DataComponentRegistry.COOLDOWN_DATA, updatedCooldownData);
     }
 
