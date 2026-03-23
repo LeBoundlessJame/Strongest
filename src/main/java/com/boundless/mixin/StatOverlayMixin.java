@@ -16,20 +16,34 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public class StatOverlayMixin {
+public abstract class StatOverlayMixin {
 
     @Shadow
     @Final
     private MinecraftClient client;
 
+    @Shadow
+    protected abstract void renderExperienceBar(DrawContext context, int x);
+
+    @Shadow
+    protected abstract void renderFood(DrawContext context, PlayerEntity player, int top, int right);
+
     @Inject(method = "renderStatusBars", at = @At("HEAD"), cancellable = true)
     public void boundless$renderStatusBars(DrawContext context, CallbackInfo ci) {
         if (!HeroUtils.isHero(client.player)) return;
-        if (!HeroUtils.combatModeEnabled(client.player)) return;
         ci.cancel();
-        StatOverlays.renderHealthOverlay(client, context);
-        StatOverlays.renderCursedEnergyOverlay(client, context);
-        StatOverlays.renderBlockIndicator(client, context);
+
+        if (HeroUtils.combatModeEnabled(client.player)) {
+            StatOverlays.renderHealthOverlay(client, context);
+            StatOverlays.renderCursedEnergyOverlay(client, context);
+            StatOverlays.renderBlockIndicator(client, context);
+        } else {
+            StatOverlays.renderHealthText(client, context);
+            renderExperienceBar(context, context.getScaledWindowWidth() / 2 - 91);
+            int m = context.getScaledWindowWidth() / 2 + 91;
+            int n = context.getScaledWindowHeight() - 39;
+            renderFood(context, client.player, n, m);
+        }
     }
 
     // Todo: prevent hotbar item rendering too, and rework health / ce visuals etc.

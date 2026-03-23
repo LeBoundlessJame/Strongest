@@ -127,4 +127,17 @@ public class StatOverlays {
             offset += 1;
         }
     }
+
+    public static void renderHealthText(MinecraftClient client, DrawContext context) {
+        PlayerEntity player = client.player;
+        if (player == null) return;
+
+        int x = context.getScaledWindowWidth() / 2 - 113;
+        int y = context.getScaledWindowHeight() - 34;
+
+        String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
+        int textWidth = client.textRenderer.getWidth(healthPercentage);
+        int textPos = x - (textWidth / 2) + 12;
+        context.drawText(client.textRenderer, healthPercentage, textPos, y - 8, 0xf23d3d, true);
+    }
 }
