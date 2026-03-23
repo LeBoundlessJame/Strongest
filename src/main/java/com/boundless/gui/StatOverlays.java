@@ -54,7 +54,7 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        int cursedEnergy = MeterUtils.getRemainingMeter(player, 10000);
+        int cursedEnergy = MeterUtils.getRemainingMeter(player);
         // Todo: only hard coding this for now, but revisit it later
         int maxCursedEnergy = 10000;
 

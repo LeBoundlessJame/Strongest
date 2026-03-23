@@ -65,11 +65,11 @@ public class AbilityUtils {
         if (ability == null) return false;
         Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
         if (abilityConsumer != null && canUseAbility(player, abilityID)) {
-            int percentCost = ability.getCost();
+            int energyCost = ability.getCost();
             boolean abilityUsed = false;
 
-            if (MeterUtils.getRemainingMeter(player, 10000) >= percentCost) {
-                MeterUtils.consumeMeter(player, percentCost, 10000);
+            if (MeterUtils.getRemainingMeter(player) >= energyCost) {
+                MeterUtils.consumeMeter(player, energyCost);
                 abilityConsumer.accept(player);
                 abilityUsed = true;
             }

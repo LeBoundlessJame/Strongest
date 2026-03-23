@@ -3,6 +3,7 @@ package com.boundless.hero.api;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.StrongestComponents;
 import lombok.Getter;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
@@ -29,7 +30,7 @@ public class HeroArmor extends ArmorItem {
     @Getter
     public HeroData heroData;
 
-    public static Settings getSettings(AbilityLoadout abilityLoadout) {
+    public static Settings getSettings(AbilityLoadout abilityLoadout, HeroData heroData) {
         HashMap<String, Identifier> loadout = new HashMap<>();
 
         if (abilityLoadout != null) {
@@ -42,11 +43,12 @@ public class HeroArmor extends ArmorItem {
         return new Settings()
                 .component(DataComponentRegistry.ABILITY_LOADOUT, loadout)
                 .component(DataComponentRegistry.BLOCK_HP, 150f)
+                .component(StrongestComponents.CURSED_ENERGY, heroData.cursedEnergy)
                 .maxCount(1);
     }
 
     public HeroArmor(RegistryEntry<ArmorMaterial> material, Type type, Settings settings, HeroData heroData) {
-        super(material, type, getSettings(heroData.getDefaultAbilityLoadout()));
+        super(material, type, getSettings(heroData.getDefaultAbilityLoadout(), heroData));
         this.heroData = heroData;
     }
 
