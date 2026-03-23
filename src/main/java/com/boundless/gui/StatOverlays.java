@@ -55,8 +55,7 @@ public class StatOverlays {
         if (player == null) return;
 
         int cursedEnergy = MeterUtils.getRemainingMeter(player);
-        // Todo: only hard coding this for now, but revisit it later
-        int maxCursedEnergy = 10000;
+        int maxCursedEnergy = MeterUtils.getMaxCE(player);
 
         int x = context.getScaledWindowWidth() / 2 + 35;
         int y = context.getScaledWindowHeight() - 34;

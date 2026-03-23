@@ -40,6 +40,7 @@ public class HeroArmor extends ArmorItem {
             }
         }
 
+        // Todo: include blockHp in the herodata soon
         return new Settings()
                 .component(DataComponentRegistry.ABILITY_LOADOUT, loadout)
                 .component(DataComponentRegistry.BLOCK_HP, 150f)
