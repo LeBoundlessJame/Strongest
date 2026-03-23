@@ -62,4 +62,6 @@ public class HeroData {
 
     @Singular
     private final List<Combo> combos;
+    @Builder.Default
+    private final int cursedEnergyReserves = 1000;
 }
