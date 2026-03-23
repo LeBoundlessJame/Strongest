@@ -24,7 +24,7 @@ public class DemonicFingerItem extends Item {
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, false));
 
         if (ShrineHero.canEatFinger(user) && ComponentUtils.getInt(ShrineHero.FINGER_COUNT, player, 1) < 15) {
-            ComponentUtils.incrementInt(ShrineHero.FINGER_COUNT, player, 1000);
+            ComponentUtils.incrementInt(ShrineHero.FINGER_COUNT, player, 1);
             ComponentUtils.incrementInt(StrongestComponents.CURSED_ENERGY_RESERVES, player, 1000);
             HeroUtils.getHeroStack(player).set(StrongestComponents.CURSED_ENERGY, ComponentUtils.getInt(StrongestComponents.CURSED_ENERGY_RESERVES, player, 1000));
         } else {
