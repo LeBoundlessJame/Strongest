@@ -1,7 +1,6 @@
 package com.boundless.hero.shrine_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.action.Action;
 import com.boundless.action.SingleAttack;
 import com.boundless.entity.hero_action.HeroActionEntity;

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class TestAbility extends AbilityExperimental {
+public class TestAbility extends Ability {
     public TestAbility(Identifier abilityID) {
         super(abilityID);
     }

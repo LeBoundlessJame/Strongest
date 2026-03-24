@@ -9,7 +9,6 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;
-import com.boundless.util.MeterUtils;
 import com.boundless.util.RegistryUtils;
 import lombok.Getter;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,11 +29,6 @@ public abstract class Hero {
     public HeroData heroData;
     @Getter
     public LinkedHashMap<String, AbilityLoadout> ABILITY_LOADOUTS = new LinkedHashMap<>();
-    /* Todo: rework
-    @Getter
-    public static ArrayList<HeldAbility> HELD_ABILITIES = new ArrayList<>();
-
-     */
 
     public void registerHero() {
         this.armorSet = RegistryUtils.registerHero(this);
@@ -48,15 +42,6 @@ public abstract class Hero {
                     }
                     AbilityRegistry.ABILITIES.putIfAbsent(ability.getAbilityID(), abilityEntry.getValue());
                 }
-
-                /* Todo: rework
-                for (Ability ability: loadout.getAbilities().values()) {
-                    if (ability instanceof HeldAbility heldAbility) {
-                        HELD_ABILITIES.add(heldAbility);
-                    }
-                }
-
-                 */
             }
         }
 
@@ -71,14 +56,5 @@ public abstract class Hero {
         } else {
             heroStack.set(DataComponentRegistry.SPRINT_TICKS, 0);
         }
-    }
-
-    // Todo: rework held abilities
-    public static void onHeroTick(PlayerEntity player) {
-        /*
-        for (HeldAbility heldAbility: HELD_ABILITIES) {
-            heldAbility.holdTickLogic(player);
-        }
-         */
     }
 }

@@ -73,7 +73,6 @@ public class ShrineHero extends Hero {
                 .tickHandler(Hero::heroSprintHandler)
                 .tickHandler(ShrineHero::regenTick)
                 .armorRenderer(HeroArmorRenderer::new)
-                .tickHandler(Hero::onHeroTick)
                 .tickHandler(BlockLogic::tick)
                 .tickHandler(SimpleDomain::simpleDomainTick)
                 .customTooltips(ShrineHero::customTooltip)

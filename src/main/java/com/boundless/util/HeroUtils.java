@@ -1,6 +1,5 @@
 package com.boundless.util;
 
-import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.HeroArmor;
 import com.boundless.hero.api.HeroData;

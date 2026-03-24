@@ -1,6 +1,5 @@
 package com.boundless.hero.api;
 
-import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.StrongestComponents;

@@ -1,7 +1,6 @@
 package com.boundless.hero.switcher_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;

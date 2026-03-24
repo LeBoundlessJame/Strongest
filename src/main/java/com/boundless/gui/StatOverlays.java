@@ -1,25 +1,19 @@
 package com.boundless.gui;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.joml.Math;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

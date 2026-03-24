@@ -1,7 +1,6 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
 import com.boundless.action.Action;
@@ -77,7 +76,6 @@ public class BrawlerHero extends Hero {
                 .tickHandler(Hero::heroSprintHandler)
                 .modelIdentifier(BoundlessAPI.modelID("brawler"))
                 .textureIdentifier(BoundlessAPI.textureID("brawler"))
-                .tickHandler(Hero::onHeroTick)
                 .heldKeybind("key.boundless.ability_one")
                 .heldKeybind("key.attack")
                 .build();

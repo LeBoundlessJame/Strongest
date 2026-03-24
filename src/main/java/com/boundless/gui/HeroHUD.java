@@ -1,6 +1,5 @@
 package com.boundless.gui;
 
-import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.ShaderRegistry;

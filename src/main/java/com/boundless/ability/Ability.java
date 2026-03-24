@@ -1,26 +1,58 @@
 package com.boundless.ability;
 
-import lombok.Builder;
+import com.boundless.registry.DataComponentRegistry;
+import com.boundless.util.AbilityUtils;
+import com.boundless.util.ComponentUtils;
+import com.boundless.util.MeterUtils;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import java.util.Map;
 
-@Builder @Getter @Setter
+@Getter @Setter
 public class Ability {
-    private final Consumer<PlayerEntity> abilityLogic;
-    private final Predicate<PlayerEntity> abilityConditional;
-    private final int cooldown;
-    private final Identifier abilityID;
-    @Builder.Default
-    private final String displayString;
-    private final boolean hide;
-    @Builder.Default
-    private final int cost = 0;
-    Integer skillSlot;
-    Identifier skillSlotTexture;
-    private final Integer duration;
+    public Identifier abilityID;
+
+    public int cooldown = 0;
+    public int energyCost = 0;
+
+    /** If all 3 are null, then it will hide the icon **/
+    public Identifier abilityIcon;
+    public String displayString;
+    public Integer skillSlot;
+
+    public Ability(Identifier abilityID) {
+        this.abilityID = abilityID;
+    }
+
+    public boolean canUseAbility(PlayerEntity player) {
+        return !player.getWorld().isClient && MeterUtils.getRemainingMeter(player) >= energyCost && !this.isOnCooldown(player);
+    }
+
+    public void executeAbility(PlayerEntity player) {}
+
+    public void use(PlayerEntity player) {
+        if (player.getWorld().isClient || !canUseAbility(player)) return;
+        executeAbility(player);
+        putOnCooldown(player, this.cooldown);
+        MeterUtils.consumeMeter(player, this.energyCost);
+    }
+
+    /** I leave this with a parameter instead of using this.cooldown
+     * in case someone wants to do some custom cooldown stuff **/
+    public void putOnCooldown(PlayerEntity player, int cooldown) {
+        if (player.getWorld().isClient) return;
+
+        ItemStack stack = player.getEquippedStack(EquipmentSlot.CHEST);
+        Map<Identifier, Long> updatedCooldownData = ComponentUtils.updatedCooldownMap(stack, this.abilityID, player.getWorld().getTime() + cooldown);
+        stack.set(DataComponentRegistry.COOLDOWN_DATA, updatedCooldownData);
+    }
+
+    public boolean isOnCooldown(PlayerEntity player) {
+        return AbilityUtils.isOnCooldown(player, this.getAbilityID());
+    }
 }
