@@ -74,7 +74,7 @@ public class AbilityUtils {
                 MeterUtils.consumeMeter(player, energyCost);
                 abilityConsumer.accept(player);
                 abilityUsed = true;
-                setNextAbilityUseTime(player, ability.getDuration() == null ? 20 : ability.getDuration());
+                setNextAbilityUseTime(player, ability.getDuration() == null ? 0 : ability.getDuration());
             }
 
             if (!player.getWorld().isClient) {
