@@ -10,18 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class AbilityUtils {
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, int cost) {
-        return Ability.builder().abilityLogic(abilityLogic).cooldown(cooldown).abilityID(abilityID).displayString(displayString).cost(cost).build();
-    }
-
-    public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, String displayString, int cost, int skillSlot, Identifier skillSlotTexture) {
-        return Ability.builder().abilityLogic(abilityLogic).cooldown(cooldown).abilityID(abilityID).displayString(displayString).cost(cost).skillSlot(skillSlot).skillSlotTexture(skillSlotTexture).build();
-    }
-
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> updatedCooldownData = ComponentUtils.updatedCooldownMap(heroStack, abilityID, player.getWorld().getTime() + cooldownTime);
