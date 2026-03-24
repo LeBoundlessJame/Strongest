@@ -2,6 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.ComponentUtils;
+import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +12,7 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@Setter
+@Getter @Setter
 public class AbilityExperimental {
     public Consumer<PlayerEntity> logic;
     public Identifier abilityID;
@@ -19,18 +20,23 @@ public class AbilityExperimental {
     public int cooldown;
     public int energyCost;
 
+    /** If all 3 are null, then it will hide the icon **/
+    public Identifier abilityIcon;
+    public String displayString;
+    public Integer skillSlot;
+
     public AbilityExperimental(Consumer<PlayerEntity> logic, Identifier abilityID) {
         this.logic = logic;
         this.abilityID = abilityID;
     }
 
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUseAbility(PlayerEntity player) {
         return true;
     }
 
     public void use(PlayerEntity player) {
-        if (player.getWorld().isClient || !canUse(player)) return;
-        logic.accept(player);
+        if (player.getWorld().isClient || !canUseAbility(player)) return;
+        this.getLogic().accept(player);
         putOnCooldown(player, this.cooldown);
     }
 
