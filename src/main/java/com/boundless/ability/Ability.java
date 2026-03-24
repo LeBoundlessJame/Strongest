@@ -21,6 +21,7 @@ public class Ability {
 
     public int cooldown = 0;
     public int energyCost = 0;
+    public int abilityDuration = 0;
 
     /** If all 3 are null, then it will hide the icon **/
     public Identifier icon;
@@ -46,6 +47,7 @@ public class Ability {
         executeAbility(player);
         putOnCooldown(player, this.cooldown);
         MeterUtils.consumeMeter(player, this.energyCost);
+        AbilityUtils.setNextAbilityUseTime(player, this.abilityDuration);
     }
 
     /** I leave this with a parameter instead of using this.cooldown
