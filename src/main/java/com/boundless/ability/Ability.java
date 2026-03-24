@@ -15,18 +15,18 @@ import java.util.Map;
 
 @Getter @Setter
 public class Ability {
-    public Identifier abilityID;
+    public Identifier id;
 
     public int cooldown = 0;
     public int energyCost = 0;
 
     /** If all 3 are null, then it will hide the icon **/
-    public Identifier abilityIcon;
-    public String displayString;
+    public Identifier icon;
+    public String displayText;
     public Integer skillSlot;
 
-    public Ability(Identifier abilityID) {
-        this.abilityID = abilityID;
+    public Ability(Identifier id) {
+        this.id = id;
     }
 
     public boolean canUseAbility(PlayerEntity player) {
@@ -48,11 +48,11 @@ public class Ability {
         if (player.getWorld().isClient) return;
 
         ItemStack stack = player.getEquippedStack(EquipmentSlot.CHEST);
-        Map<Identifier, Long> updatedCooldownData = ComponentUtils.updatedCooldownMap(stack, this.abilityID, player.getWorld().getTime() + cooldown);
+        Map<Identifier, Long> updatedCooldownData = ComponentUtils.updatedCooldownMap(stack, this.getId(), player.getWorld().getTime() + cooldown);
         stack.set(DataComponentRegistry.COOLDOWN_DATA, updatedCooldownData);
     }
 
     public boolean isOnCooldown(PlayerEntity player) {
-        return AbilityUtils.isOnCooldown(player, this.getAbilityID());
+        return AbilityUtils.isOnCooldown(player, this.getId());
     }
 }
