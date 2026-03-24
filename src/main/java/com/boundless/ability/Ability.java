@@ -1,8 +1,10 @@
 package com.boundless.ability;
 
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.StrongestComponents;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.ComponentUtils;
+import com.boundless.util.HeroUtils;
 import com.boundless.util.MeterUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +32,11 @@ public class Ability {
     }
 
     public boolean canUseAbility(PlayerEntity player) {
-        return !player.getWorld().isClient && MeterUtils.getRemainingMeter(player) >= energyCost && !this.isOnCooldown(player);
+        boolean canUse = !player.getWorld().isClient;
+        canUse &= AbilityUtils.nextAbilityUsable(player);
+        canUse &= MeterUtils.getRemainingMeter(player) >= energyCost;
+        canUse &= !this.isOnCooldown(player);
+        return canUse;
     }
 
     public void executeAbility(PlayerEntity player) {}

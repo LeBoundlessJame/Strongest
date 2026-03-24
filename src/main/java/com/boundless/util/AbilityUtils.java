@@ -65,4 +65,8 @@ public class AbilityUtils {
     public static void setNextAbilityUseTime(PlayerEntity player, long duration) {
         HeroUtils.getHeroStack(player).set(StrongestComponents.NEXT_ABILITY_USE, player.getWorld().getTime() + duration);
     }
+
+    public static boolean nextAbilityUsable(PlayerEntity player) {
+        return player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.NEXT_ABILITY_USE, player.getWorld().getTime());
+    }
 }
