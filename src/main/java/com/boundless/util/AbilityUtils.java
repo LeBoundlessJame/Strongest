@@ -41,18 +41,6 @@ public class AbilityUtils {
         return remaining > 0;
     }
 
-    public static boolean canUseAbility(PlayerEntity player, Identifier abilityID) {
-        ItemStack stack = player.getEquippedStack(EquipmentSlot.CHEST);
-        Map<Identifier, Long> cooldownData = stack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-
-        boolean abilityUsable = player.getWorld().getTime() > cooldownData.getOrDefault(abilityID, 0L);
-        Predicate<PlayerEntity> abilityPredicate = AbilityRegistry.getAbilityFromID(abilityID).getAbilityConditional();
-        abilityUsable &= abilityPredicate == null || abilityPredicate.test(player);
-        abilityUsable &= player.getWorld().getTime() >= stack.getOrDefault(StrongestComponents.NEXT_ABILITY_USE, player.getWorld().getTime());
-
-        return abilityUsable;
-    }
-
     public static Identifier abilityIDFromKeybind(PlayerEntity player, String keybindTranslation) {
         if (!HeroUtils.isHero(player)) return null;
         ItemStack stack = HeroUtils.getHeroStack(player);
