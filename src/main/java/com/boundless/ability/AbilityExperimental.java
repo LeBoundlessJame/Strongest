@@ -1,7 +1,9 @@
 package com.boundless.ability;
 
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.util.AbilityUtils;
 import com.boundless.util.ComponentUtils;
+import com.boundless.util.MeterUtils;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.EquipmentSlot;
@@ -15,8 +17,8 @@ import java.util.Map;
 public class AbilityExperimental {
     public Identifier abilityID;
 
-    public int cooldown;
-    public int energyCost;
+    public int cooldown = 0;
+    public int energyCost = 0;
 
     /** If all 3 are null, then it will hide the icon **/
     public Identifier abilityIcon;
@@ -28,7 +30,7 @@ public class AbilityExperimental {
     }
 
     public boolean canUseAbility(PlayerEntity player) {
-        return true;
+        return !player.getWorld().isClient && MeterUtils.getRemainingMeter(player) >= energyCost && !this.isOnCooldown(player);
     }
 
     public void executeAbility(PlayerEntity player) {}
@@ -37,6 +39,7 @@ public class AbilityExperimental {
         if (player.getWorld().isClient || !canUseAbility(player)) return;
         executeAbility(player);
         putOnCooldown(player, this.cooldown);
+        MeterUtils.consumeMeter(player, this.energyCost);
     }
 
     /** I leave this with a parameter instead of using this.cooldown
@@ -47,5 +50,9 @@ public class AbilityExperimental {
         ItemStack stack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> updatedCooldownData = ComponentUtils.updatedCooldownMap(stack, this.abilityID, player.getWorld().getTime() + cooldown);
         stack.set(DataComponentRegistry.COOLDOWN_DATA, updatedCooldownData);
+    }
+
+    public boolean isOnCooldown(PlayerEntity player) {
+        return AbilityUtils.isOnCooldown(player, this.getAbilityID());
     }
 }
