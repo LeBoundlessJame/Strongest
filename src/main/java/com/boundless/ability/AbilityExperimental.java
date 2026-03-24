@@ -10,11 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 @Getter @Setter
 public class AbilityExperimental {
-    public Consumer<PlayerEntity> logic;
     public Identifier abilityID;
 
     public int cooldown;
@@ -25,8 +23,7 @@ public class AbilityExperimental {
     public String displayString;
     public Integer skillSlot;
 
-    public AbilityExperimental(Consumer<PlayerEntity> logic, Identifier abilityID) {
-        this.logic = logic;
+    public AbilityExperimental(Identifier abilityID) {
         this.abilityID = abilityID;
     }
 
@@ -34,9 +31,11 @@ public class AbilityExperimental {
         return true;
     }
 
+    public void executeAbility(PlayerEntity player) {}
+
     public void use(PlayerEntity player) {
         if (player.getWorld().isClient || !canUseAbility(player)) return;
-        this.getLogic().accept(player);
+        executeAbility(player);
         putOnCooldown(player, this.cooldown);
     }
 
