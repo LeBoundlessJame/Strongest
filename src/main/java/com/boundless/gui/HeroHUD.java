@@ -1,5 +1,6 @@
 package com.boundless.gui;
 
+import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.ShaderRegistry;
@@ -73,14 +74,14 @@ public class HeroHUD {
         int offset = 1;
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
-            if (ability == null || ability.isHide() || ability.getDisplayString() == null || ability.getSkillSlot() != null)
+            if (ability == null || ability.getDisplayText() == null || ability.getSkillSlot() != null)
                 continue;
             String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
 
-            long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);
+            long endTick = abilityCooldowns.getOrDefault(ability.getId(), 0L);
             int cooldown = Math.toIntExact(endTick - client.player.getWorld().getTime());
 
-            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString(), cooldown);
+            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayText(), cooldown);
             offset += 1;
         }
     }
