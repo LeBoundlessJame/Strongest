@@ -37,10 +37,10 @@ public abstract class Hero {
             for (AbilityLoadout loadout : ABILITY_LOADOUTS.values()) {
                 for (Map.Entry<String, Ability> abilityEntry : loadout.getAbilities().entrySet()) {
                     Ability ability = abilityEntry.getValue();
-                    if (!AbilityRegistry.ABILITIES.containsKey(ability.getAbilityID())) {
-                        BoundlessAPI.LOGGER.info("Registered " + ability.getAbilityID() + " ability");
+                    if (!AbilityRegistry.ABILITIES.containsKey(ability.getId())) {
+                        BoundlessAPI.LOGGER.info("Registered " + ability.getId() + " ability");
                     }
-                    AbilityRegistry.ABILITIES.putIfAbsent(ability.getAbilityID(), abilityEntry.getValue());
+                    AbilityRegistry.ABILITIES.putIfAbsent(ability.getId(), abilityEntry.getValue());
                 }
             }
         }
