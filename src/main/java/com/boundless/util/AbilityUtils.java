@@ -3,6 +3,7 @@ package com.boundless.util;
 import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.StrongestComponents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,12 +42,13 @@ public class AbilityUtils {
     }
 
     public static boolean canUseAbility(PlayerEntity player, Identifier abilityID) {
-        ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
-        Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
+        ItemStack stack = player.getEquippedStack(EquipmentSlot.CHEST);
+        Map<Identifier, Long> cooldownData = stack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
 
         boolean abilityUsable = player.getWorld().getTime() > cooldownData.getOrDefault(abilityID, 0L);
         Predicate<PlayerEntity> abilityPredicate = AbilityRegistry.getAbilityFromID(abilityID).getAbilityConditional();
         abilityUsable &= abilityPredicate == null || abilityPredicate.test(player);
+        abilityUsable &= player.getWorld().getTime() >= stack.getOrDefault(StrongestComponents.NEXT_ABILITY_USE, player.getWorld().getTime());
 
         return abilityUsable;
     }
@@ -72,6 +74,7 @@ public class AbilityUtils {
                 MeterUtils.consumeMeter(player, energyCost);
                 abilityConsumer.accept(player);
                 abilityUsed = true;
+                setNextAbilityUseTime(player, ability.getDuration() == null ? 20 : ability.getDuration());
             }
 
             if (!player.getWorld().isClient) {
@@ -83,5 +86,9 @@ public class AbilityUtils {
             return true;
         }
         return false;
+    }
+
+    public static void setNextAbilityUseTime(PlayerEntity player, long duration) {
+        HeroUtils.getHeroStack(player).set(StrongestComponents.NEXT_ABILITY_USE, player.getWorld().getTime() + duration);
     }
 }

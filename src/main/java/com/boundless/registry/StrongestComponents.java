@@ -9,5 +9,7 @@ public class StrongestComponents {
     public static ComponentType<Integer> CURSED_ENERGY = DataComponentRegistry.registerComponent("cursed_energy", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Boolean> SIMPLE_DOMAIN_ACTIVE = DataComponentRegistry.registerComponent("simple_domain_active", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
     public static ComponentType<Float> SIMPLE_DOMAIN_HEALTH = DataComponentRegistry.registerComponent("simple_domain_health", builder -> ComponentType.<Float>builder().codec(Codec.FLOAT));
+    // I wanna prevent multiple abilities being used at once, Todo: allow certain abilities to bypass ability cooldown
+    public static ComponentType<Long> NEXT_ABILITY_USE = DataComponentRegistry.registerComponent("next_ability_use", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static void initialize() {}
 }

@@ -22,4 +22,5 @@ public class Ability {
     private final int cost = 0;
     Integer skillSlot;
     Identifier skillSlotTexture;
+    private final Integer duration;
 }
