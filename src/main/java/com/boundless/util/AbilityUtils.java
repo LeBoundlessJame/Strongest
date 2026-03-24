@@ -65,26 +65,12 @@ public class AbilityUtils {
 
         Ability ability = AbilityRegistry.getAbilityFromID(abilityID);
         if (ability == null) return false;
-        Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
-        if (abilityConsumer != null && canUseAbility(player, abilityID)) {
-            int energyCost = ability.getCost();
-            boolean abilityUsed = false;
 
-            if (MeterUtils.getRemainingMeter(player) >= energyCost) {
-                MeterUtils.consumeMeter(player, energyCost);
-                abilityConsumer.accept(player);
-                abilityUsed = true;
-                setNextAbilityUseTime(player, ability.getDuration() == null ? 0 : ability.getDuration());
-            }
-
-            if (!player.getWorld().isClient) {
-                long cooldown = ability.getCooldown();
-                if (cooldown > 0 && !AbilityUtils.isOnCooldown(player, abilityID) && abilityUsed) {
-                    setAbilityCooldown(player, abilityID, cooldown);
-                }
-            }
+        if (ability.canUseAbility(player)) {
+            ability.use(player);
             return true;
         }
+
         return false;
     }
 
