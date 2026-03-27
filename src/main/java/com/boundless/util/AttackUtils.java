@@ -62,9 +62,4 @@ public class AttackUtils {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(DataComponentRegistry.COMBAT_MODE_ENABLED, !HeroUtils.combatModeEnabled(player));
     }
-
-    public static int incrementedAttackCount(PlayerEntity player) {
-        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-    }
 }
