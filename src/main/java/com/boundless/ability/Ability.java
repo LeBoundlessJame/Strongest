@@ -1,10 +1,8 @@
 package com.boundless.ability;
 
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.StrongestComponents;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.ComponentUtils;
-import com.boundless.util.HeroUtils;
 import com.boundless.util.MeterUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +14,7 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 
 @Getter @Setter
-public class Ability {
+public abstract class Ability {
     public Identifier id;
 
     public int cooldown = 0;
@@ -40,7 +38,7 @@ public class Ability {
         return canUse;
     }
 
-    public void executeAbility(PlayerEntity player) {}
+    public abstract void executeAbility(PlayerEntity player);
 
     public void use(PlayerEntity player) {
         if (player.getWorld().isClient || !canUseAbility(player)) return;
