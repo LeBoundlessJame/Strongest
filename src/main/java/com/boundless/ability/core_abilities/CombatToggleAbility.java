@@ -10,8 +10,8 @@ public class CombatToggleAbility extends Ability {
     public CombatToggleAbility() {
         super(BoundlessAPI.identifier("combat_toggle"));
         this.setCooldown(5);
-        this.setSkillSlot(2);
-        this.setIcon(BoundlessAPI.hudPNG("open"));
+        this.setSkillSlot(1);
+        this.setIcon(BoundlessAPI.hudPNG("combat_mode"));
     }
 
     @Override
