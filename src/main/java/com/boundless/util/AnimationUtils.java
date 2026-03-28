@@ -42,7 +42,7 @@ public class AnimationUtils {
         }
     }
 
-    public static void playAlternatingSyncedAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
+    public static void playAlternatingSyncedAnimation(PlayerEntity user, Identifier animation, float speed, boolean repeatIfPlaying, int priority) {
         int attackCount = HeroUtils.getHeroStack(user).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         playSyncedAnimation(user, animation, speed, attackCount % 2 == 0, repeatIfPlaying, priority);
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, user, 1);

@@ -9,6 +9,7 @@ import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -120,11 +121,10 @@ public class StatOverlays {
                 context.fill(pos, y + 16 - displayProgress, pos + 16, y + 16, 0x64FFFFFF);
             }
 
-
             /*
             String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
-            context.drawText(client.textRenderer, boundKey, pos, context.getScaledWindowHeight() - 8, 0xffffff, true);
-            */
+            context.drawText(client.textRenderer, boundKey, pos - 4, y - 4, 0xffffff, true);
+             */
         }
     }
 

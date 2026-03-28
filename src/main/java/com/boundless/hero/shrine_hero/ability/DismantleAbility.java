@@ -32,7 +32,7 @@ public class DismantleAbility extends Ability {
 
     @Override
     public void executeAbility(PlayerEntity player) {
-        AnimationUtils.playAlternatingSyncedAnimation(player, BoundlessAPI.identifier("dismantle_1"), 1.5f, true, true, 3000);
+        AnimationUtils.playAlternatingSyncedAnimation(player, BoundlessAPI.identifier("dismantle_1"), 1.5f, true, 3000);
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 13, 16);
 
         EntityHitResult result = RaycastUtils.raycast(player, DISMANTLE_RANGE);
