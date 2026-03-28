@@ -86,10 +86,9 @@ public class StatOverlays {
     public static void renderHotbar(DrawContext context) {
         int x = (context.getScaledWindowWidth() - 260) / 2;
         context.drawTexture(HOTBAR, x, context.getScaledWindowHeight() - 40, 0, 0, 260, 40, 260, 40);
-        // Todo: reinstate renderSkillSlots(MinecraftClient.getInstance(), context);
+        renderSkillSlots(MinecraftClient.getInstance(), context);
     }
 
-    /*
     public static void renderSkillSlots(MinecraftClient client, DrawContext context) {
         if (client.player == null) return;
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
@@ -97,18 +96,16 @@ public class StatOverlays {
         int offset = 1;
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
-            if (ability == null || ability.getSkillSlot() == null || ability.getSkillSlotTexture() == null) continue;
+            if (ability == null || ability.getSkillSlot() == null || ability.getIcon() == null) continue;
             String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
 
             int x = (context.getScaledWindowWidth() - 244) / 2;
-            context.drawTexture(ability.getSkillSlotTexture(), x + (offset * 16), context.getScaledWindowHeight() - 20, 0, 0, 16, 16, 16, 16);
+            context.drawTexture(ability.getIcon(), x + (offset * 16), context.getScaledWindowHeight() - 20, 0, 0, 16, 16, 16, 16);
 
             //context.drawText(client.textRenderer, boundKey, x + (offset * 16) + 5, context.getScaledWindowHeight() - 24, 0xffffff, true);
             offset += 1;
         }
     }
-
-     */
 
     public static void renderHealthText(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
