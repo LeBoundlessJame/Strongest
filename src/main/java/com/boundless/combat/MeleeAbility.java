@@ -13,7 +13,7 @@ public class MeleeAbility extends Ability {
 
     @Override
     public void executeAbility(PlayerEntity player) {
-        System.out.println("Melee ability triggered!");
+
     }
 
     @Override

@@ -31,8 +31,7 @@ public abstract class Ability {
     }
 
     public boolean canUseAbility(PlayerEntity player) {
-        boolean canUse = !player.getWorld().isClient;
-        canUse &= AbilityUtils.nextAbilityUsable(player);
+        boolean canUse = AbilityUtils.nextAbilityUsable(player);
         canUse &= MeterUtils.getRemainingMeter(player) >= energyCost;
         canUse &= !this.isOnCooldown(player);
         return canUse;

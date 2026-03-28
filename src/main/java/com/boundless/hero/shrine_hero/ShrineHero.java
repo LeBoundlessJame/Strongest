@@ -66,7 +66,8 @@ public class ShrineHero extends Hero {
 
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", new MeleeAbility(BoundlessAPI.identifier("melee_ability")))
-                        .build();
+                .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
+                .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
         this.heroData = HeroData.builder()
