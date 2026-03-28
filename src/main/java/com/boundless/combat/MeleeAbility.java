@@ -8,11 +8,12 @@ import net.minecraft.util.Identifier;
 public class MeleeAbility extends Ability {
     public MeleeAbility(Identifier id) {
         super(id);
+        this.setCooldown(20);
     }
 
     @Override
     public void executeAbility(PlayerEntity player) {
-
+        System.out.println("Melee ability triggered!");
     }
 
     @Override

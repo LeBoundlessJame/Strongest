@@ -3,6 +3,7 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.*;
 import com.boundless.combat.Combo;
+import com.boundless.combat.MeleeAbility;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
@@ -28,8 +29,6 @@ import net.minecraft.util.Formatting;
 
 import java.util.List;
 
-import static com.boundless.hero.shrine_hero.ShrineHeroMelee.LIGHT_ATTACK;
-
 public class ShrineHero extends Hero {
     public static List<Combo> COMBOS = List.of(new Combo("lllll", ShrineHeroMelee::knockbackAttack, "Heavy Hit"));
 
@@ -50,6 +49,7 @@ public class ShrineHero extends Hero {
             .build();
 
     public ShrineHero() {
+        /*
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", LIGHT_ATTACK)
                 .ability("key.use", MeleeAbilities.BLOCK)
@@ -61,6 +61,12 @@ public class ShrineHero extends Hero {
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .ability("key.boundless.evasive", MeleeAbilities.DODGE)
                 .build();
+
+         */
+
+        AbilityLoadout loadout = AbilityLoadout.builder()
+                .ability("key.attack", new MeleeAbility(BoundlessAPI.identifier("melee_ability")))
+                        .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
         this.heroData = HeroData.builder()

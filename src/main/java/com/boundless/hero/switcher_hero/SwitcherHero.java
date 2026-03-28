@@ -20,6 +20,7 @@ public class SwitcherHero extends Hero {
     public static SwitcherConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
     public static SwitcherConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
+    /*
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(SwitcherLightLogic::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("switcher_light_attack"), "Light attack", 0);
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(SwitcherMediumLogic::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("todo_medium"), "Medium attack", 0);
 
@@ -32,6 +33,8 @@ public class SwitcherHero extends Hero {
     public static Ability SWAP_WITH_PRIMARY = AbilityUtils.ability(BoogieLogic::swapWithPrimary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_primary"), "Swap -> Primary", 50);
     public static Ability SWAP_WITH_SECONDARY = AbilityUtils.ability(BoogieLogic::swapWithSecondary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_secondary"), "Swap -> Secondary", 50);
 
+
+     */
     public static ComponentType<Long> LAST_REVIVE_TIMESTAMP = DataComponentRegistry.registerComponent("last_revive_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TIME_UNTIL_NEXT_REVIVE = DataComponentRegistry.registerComponent("time_until_next_revive", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TARGET_SELECT_TIME = DataComponentRegistry.registerComponent("target_select_time", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
