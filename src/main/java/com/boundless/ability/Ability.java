@@ -39,6 +39,7 @@ public abstract class Ability {
 
     public abstract void executeAbility(PlayerEntity player);
 
+    // Todo: if duration is null, make it set it to the cooldown time
     public void use(PlayerEntity player) {
         if (player.getWorld().isClient || !canUseAbility(player)) return;
         executeAbility(player);
