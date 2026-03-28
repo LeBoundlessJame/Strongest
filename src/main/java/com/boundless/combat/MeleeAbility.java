@@ -24,7 +24,7 @@ public class MeleeAbility extends Ability {
         super(id);
         this.setCooldown(20);
         this.setSkillSlot(3);
-        this.setIcon(BoundlessAPI.hudPNG("open"));
+        this.setIcon(BoundlessAPI.hudPNG("punch"));
     }
 
     @Override
