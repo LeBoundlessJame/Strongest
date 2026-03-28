@@ -67,7 +67,7 @@ public class HeroHUD {
      */
 
     public static void renderKeybindAbilities(MinecraftClient client, DrawContext context) {
-        if (client.player == null) return;
+        if (client.player == null || client.options.hudHidden) return;
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
         LinkedHashMap<Identifier, Long> abilityCooldowns = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, new LinkedHashMap<>()));
 
