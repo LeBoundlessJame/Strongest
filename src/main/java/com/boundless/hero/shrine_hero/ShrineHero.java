@@ -8,6 +8,7 @@ import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
+import com.boundless.hero.shrine_hero.ability.DismantleAbility;
 import com.boundless.registry.*;
 import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
@@ -66,6 +67,7 @@ public class ShrineHero extends Hero {
 
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", new MeleeAbility(BoundlessAPI.identifier("melee_ability")))
+                .ability("key.boundless.ability_one", new DismantleAbility(BoundlessAPI.identifier("dismantle")))
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .build();
 
