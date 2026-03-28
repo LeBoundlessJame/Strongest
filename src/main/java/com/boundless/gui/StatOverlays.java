@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import org.joml.Math;
 
 import java.util.LinkedHashMap;
@@ -93,17 +94,37 @@ public class StatOverlays {
     public static void renderSkillSlots(MinecraftClient client, DrawContext context) {
         if (client.player == null) return;
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
+        LinkedHashMap<Identifier, Long> abilityCooldowns = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, new LinkedHashMap<>()));
 
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
             if (ability == null || ability.getSkillSlot() == null || ability.getIcon() == null) continue;
-            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
             int x = (context.getScaledWindowWidth() - 244) / 2;
+            int y = context.getScaledWindowHeight() - 20;
             int pos = x + (ability.getSkillSlot() * 16);
             if (ability.getSkillSlot() > 1) pos += (7 * (ability.getSkillSlot() - 1));
 
-            context.drawTexture(ability.getIcon(), pos, context.getScaledWindowHeight() - 20, 0, 0, 16, 16, 16, 16);
+            context.drawTexture(ability.getIcon(), pos, y, 0, 0, 16, 16, 16, 16);
+
+            long endTick = abilityCooldowns.getOrDefault(ability.getId(), 0L);
+            long currentTick = client.player.getWorld().getTime();
+            int abilityCooldown = ability.getCooldown();
+
+            float f = (float) (endTick - currentTick);
+            float g = (float) abilityCooldown;
+
+            if (g > 0) {
+                float cooldownProgress = MathHelper.clamp(f / g, 0, 1);
+                int displayProgress = (int) Math.lerp(0, 16, cooldownProgress);
+
+                context.fill(pos, y + 16 - displayProgress, pos + 16, y + 16, 0x64FFFFFF);
+            }
+
+
+            /*
+            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
             context.drawText(client.textRenderer, boundKey, pos, context.getScaledWindowHeight() - 8, 0xffffff, true);
+            */
         }
     }
 
