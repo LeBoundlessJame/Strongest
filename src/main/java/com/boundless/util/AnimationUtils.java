@@ -19,6 +19,7 @@ import dev.kosmx.playerAnim.minecraftApi.layers.LeftHandedHelperModifier;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -39,6 +40,12 @@ public class AnimationUtils {
         for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
             ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, repeatIfPlaying, priority));
         }
+    }
+
+    public static void playAlternatingSyncedAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
+        int attackCount = HeroUtils.getHeroStack(user).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+        playSyncedAnimation(user, animation, speed, attackCount % 2 == 0, repeatIfPlaying, priority);
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, user, 1);
     }
 
     public static void stopSyncedAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
