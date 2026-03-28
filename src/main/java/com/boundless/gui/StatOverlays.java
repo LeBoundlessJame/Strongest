@@ -93,19 +93,16 @@ public class StatOverlays {
         if (client.player == null) return;
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
 
-        int offset = 1;
         for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
             Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
             if (ability == null || ability.getSkillSlot() == null || ability.getIcon() == null) continue;
             //String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
             int x = (context.getScaledWindowWidth() - 244) / 2;
-            int pos = x + (offset * 16);
-            if (offset > 1) pos += 7;
+            int pos = x + (ability.getSkillSlot() * 16);
+            if (ability.getSkillSlot() > 1) pos += (7 * (ability.getSkillSlot() - 1));
 
             context.drawTexture(ability.getIcon(), pos, context.getScaledWindowHeight() - 20, 0, 0, 16, 16, 16, 16);
-
             //context.drawText(client.textRenderer, boundKey, x + (offset * 16) + 5, context.getScaledWindowHeight() - 24, 0xffffff, true);
-            offset += 1;
         }
     }
 
