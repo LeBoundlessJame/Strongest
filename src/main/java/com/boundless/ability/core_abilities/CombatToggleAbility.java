@@ -9,6 +9,9 @@ import net.minecraft.entity.player.PlayerEntity;
 public class CombatToggleAbility extends Ability {
     public CombatToggleAbility() {
         super(BoundlessAPI.identifier("combat_toggle"));
+        this.setCooldown(5);
+        this.setSkillSlot(2);
+        this.setIcon(BoundlessAPI.hudPNG("open"));
     }
 
     @Override
