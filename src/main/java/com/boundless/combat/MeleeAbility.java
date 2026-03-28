@@ -14,10 +14,10 @@ import java.util.function.BiConsumer;
 
 @Getter @Setter
 public class MeleeAbility extends Ability {
-    public Identifier animation;
-    public float damage;
-    public float animationSpeed;
-    public int impactTick;
+    public Identifier animation = BoundlessAPI.identifier("hook");
+    public float damage = 1f;
+    public float animationSpeed = 1f;
+    public int impactTick = 4;
     public BiConsumer<PlayerEntity, HeroActionEntity> attackLogic;
 
     public MeleeAbility(Identifier id) {
@@ -32,7 +32,11 @@ public class MeleeAbility extends Ability {
         AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 2000);
         Action attack = Action.builder().scheduledTask(this.getImpactTick(),
                 (user, action) -> {
-                MeleeUtils.basicHit(user, action, damage);
+                if (attackLogic == null) {
+                    MeleeUtils.basicHit(user, action, damage);
+                } else {
+                    attackLogic.accept(user, action);
+                }
         }).build();
         AttackUtils.startAttackTimer(player, this.getAbilityDuration());
         ActionUtils.performAction(player, attack);
