@@ -10,6 +10,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 
 public class SwitcherStats {
+    /*
     public static AbilityLoadout LOADOUT_1 = AbilityLoadout.builder()
             .ability("key.attack", SwitcherHero.LIGHT_ATTACK)
             .ability("key.use", SwitcherHero.MEDIUM_ATTACK)
@@ -29,6 +30,8 @@ public class SwitcherStats {
             .ability("key.boundless.ability_four", SwitcherHero.SWAP_TWO)
             .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
             .build();
+
+     */
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)

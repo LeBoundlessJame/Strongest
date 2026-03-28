@@ -42,13 +42,17 @@ public class SwitcherHero extends Hero {
     public static ComponentType<Integer> SECONDARY_TARGET_ID = DataComponentRegistry.registerComponent("secondary_target_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
 
     public SwitcherHero() {
+        /*
         ABILITY_LOADOUTS.put("LOADOUT_1", SwitcherStats.LOADOUT_1);
         ABILITY_LOADOUTS.put("LOADOUT_2", SwitcherStats.LOADOUT_2);
+
+         */
+
+        //                .defaultAbilityLoadout(SwitcherStats.LOADOUT_1)
 
         this.heroData = HeroData.builder()
                 .name("switcher_hero")
                 .textureIdentifier(BoundlessAPI.textureID("switcher"))
-                .defaultAbilityLoadout(SwitcherStats.LOADOUT_1)
                 .attributes(SwitcherStats.ATTRIBUTES)
                 .hudRenderer(SwitcherHUD::render)
                 .tickHandler(Hero::heroSprintHandler)

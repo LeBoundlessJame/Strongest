@@ -1,5 +1,6 @@
 package com.boundless.hero.api;
 
+import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.StrongestComponents;
@@ -35,7 +36,7 @@ public class HeroArmor extends ArmorItem {
         if (abilityLoadout != null) {
             Map<String, Ability> abilities = abilityLoadout.getAbilities();
             for (Map.Entry<String, Ability> abilityEntry : new ArrayList<>(abilities.entrySet())) {
-                loadout.put(abilityEntry.getKey(), abilityEntry.getValue().getAbilityID());
+                loadout.put(abilityEntry.getKey(), abilityEntry.getValue().getId());
             }
         }
 

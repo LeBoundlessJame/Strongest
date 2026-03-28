@@ -1,6 +1,7 @@
 package com.boundless.gui;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.HeroUtils;
@@ -85,9 +86,10 @@ public class StatOverlays {
     public static void renderHotbar(DrawContext context) {
         int x = (context.getScaledWindowWidth() - 260) / 2;
         context.drawTexture(HOTBAR, x, context.getScaledWindowHeight() - 40, 0, 0, 260, 40, 260, 40);
-        renderSkillSlots(MinecraftClient.getInstance(), context);
+        // Todo: reinstate renderSkillSlots(MinecraftClient.getInstance(), context);
     }
 
+    /*
     public static void renderSkillSlots(MinecraftClient client, DrawContext context) {
         if (client.player == null) return;
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
@@ -105,6 +107,8 @@ public class StatOverlays {
             offset += 1;
         }
     }
+
+     */
 
     public static void renderHealthText(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;

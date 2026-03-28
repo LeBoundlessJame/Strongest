@@ -1,5 +1,6 @@
 package com.boundless.util;
 
+import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.HeroArmor;
 import com.boundless.hero.api.HeroData;
@@ -32,7 +33,7 @@ public class HeroUtils {
         HashMap<String, Identifier> loadoutMap = new HashMap<>();
         Map<String, Ability> abilities = loadout.getAbilities();
         for (Map.Entry<String, Ability> abilityEntry : new ArrayList<>(abilities.entrySet())) {
-            loadoutMap.put(abilityEntry.getKey(), abilityEntry.getValue().getAbilityID());
+            loadoutMap.put(abilityEntry.getKey(), abilityEntry.getValue().getId());
         }
         HeroUtils.getHeroStack(player).set(DataComponentRegistry.ABILITY_LOADOUT, loadoutMap);
     }

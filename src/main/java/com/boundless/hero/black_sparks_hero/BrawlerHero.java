@@ -34,6 +34,7 @@ public class BrawlerHero extends Hero {
     public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
     public static BrawlerHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
+    /*
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), "Medium attack", 0);
     public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick", 0);
     public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash", 200);
@@ -42,6 +43,8 @@ public class BrawlerHero extends Hero {
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), "Light attack", 0);
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), "Divergent fist", 100);
 
+
+     */
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_END_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_end_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -59,6 +62,7 @@ public class BrawlerHero extends Hero {
             .build();
 
     public BrawlerHero() {
+        /*
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.attack", BrawlerHero.LIGHT_ATTACK)
                 .ability("key.use", BrawlerHero.MEDIUM_ATTACK)
@@ -67,6 +71,10 @@ public class BrawlerHero extends Hero {
                 .ability("key.boundless.ability_four", BrawlerHero.DIVERGENT_FIST)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .build();
+
+         */
+
+        AbilityLoadout loadout = AbilityLoadout.builder().build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
         this.heroData = HeroData.builder()
