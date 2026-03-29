@@ -64,7 +64,7 @@ public class MeleeAbility extends Ability {
             if (!(entity instanceof LivingEntity livingEntity)) return;
 
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
-            SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            SoundUtils.playSound(player, player.age % 2 == 0 ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2);
             MeleeUtils.knockback(user, livingEntity, new Vec3d(0.5f, 0.3, 0.5f));
         });
     }

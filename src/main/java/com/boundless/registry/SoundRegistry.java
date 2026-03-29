@@ -23,6 +23,9 @@ public class SoundRegistry {
     public static SoundEvent SLASH_1 = registerSoundEvent(BoundlessAPI.identifier("slash_1"));
     public static SoundEvent SLASH_2 = registerSoundEvent(BoundlessAPI.identifier("slash_2"));
 
+    public static SoundEvent PUNCH_1 = registerSoundEvent(BoundlessAPI.identifier("punch_1"));
+    public static SoundEvent PUNCH_2 = registerSoundEvent(BoundlessAPI.identifier("punch_2"));
+
     public static SoundEvent registerSoundEvent(Identifier identifier) {
         Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
         return SoundEvent.of(identifier);

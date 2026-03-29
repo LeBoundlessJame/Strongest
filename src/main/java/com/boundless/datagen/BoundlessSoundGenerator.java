@@ -27,5 +27,7 @@ public class BoundlessSoundGenerator extends SoundEventProvider {
         add("heavy_cut_3", consumer);
         add("slash_1", consumer);
         add("slash_2", consumer);
+        add("punch_1", consumer);
+        add("punch_2", consumer);
     }
 }
