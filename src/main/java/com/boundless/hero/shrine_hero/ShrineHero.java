@@ -85,7 +85,7 @@ public class ShrineHero extends Hero {
                 .tickHandler(BlockLogic::tick)
                 .tickHandler(SimpleDomain::simpleDomainTick)
                 .customTooltips(ShrineHero::customTooltip)
-                .blackFlashChance(0.5f)
+                .baseBlackFlashChance(0.5f)
                 .combos(COMBOS)
                 .heldKeybind("key.use")
                 .build();

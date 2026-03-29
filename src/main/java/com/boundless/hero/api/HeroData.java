@@ -65,5 +65,5 @@ public class HeroData {
     @Builder.Default
     private final int cursedEnergyReserves = 1000;
     @Builder.Default
-    private final float blackFlashChance = 0.05f;
+    private final float baseBlackFlashChance = 0.05f;
 }
