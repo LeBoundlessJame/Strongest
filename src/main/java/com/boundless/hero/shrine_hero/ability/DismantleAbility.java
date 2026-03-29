@@ -27,7 +27,7 @@ public class DismantleAbility extends Ability {
         super(id);
         this.setCooldown(20);
         this.setSkillSlot(2);
-        this.setAbilityDuration(10);
+        this.setAbilityDuration(20);
         this.setIcon(BoundlessAPI.hudPNG("dismantle"));
     }
 
