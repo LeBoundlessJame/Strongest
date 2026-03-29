@@ -15,9 +15,12 @@ import java.util.List;
 
 public class BlackFlashUtils {
     public static void blackFlash(PlayerEntity player, float damage, Vec3d knockbackMultiplier, HeroActionEntity action) {
+        if (MeleeUtils.getTargets(player, action).isEmpty()) return;
+
         SoundUtils.playSound(player, player.age % 2 == 0 ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
         SoundUtils.playSounds(player, List.of(SoundRegistry.EARTH_IMPACT, SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_3, SoundRegistry.ENERGY_IMPACT_HEAVY));
 
+        playBlackFlashVisuals(player, 5);
         CameraUtils.playCameraShake(player);
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
@@ -34,8 +37,6 @@ public class BlackFlashUtils {
                 MeleeUtils.knockback(user, livingEntity, knockbackMultiplier);
             }
         });
-
-        resetBlackFlashChance(player);
     }
 
     public static void resetBlackFlashChance(PlayerEntity player) {
@@ -47,7 +48,7 @@ public class BlackFlashUtils {
     }
 
     public static boolean isBlackFlashHit(PlayerEntity player) {
-        return player.getRandom().nextBetween(0, 1) / 100f >= 1 - BlackFlashAbility.getBlackFlashChance(player);
+        return player.getRandom().nextFloat() < BlackFlashAbility.getBlackFlashChance(player);
     }
 
     public static void playBlackFlashVisuals(LivingEntity entity, int duration) {

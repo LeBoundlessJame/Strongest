@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -22,6 +23,10 @@ public class MeleeUtils {
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
         });
+    }
+
+    public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action) {
+        return action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> entity != player);
     }
 
     public static void forEach(PlayerEntity player, HeroActionEntity action, BiConsumer<PlayerEntity, Entity> logic) {
