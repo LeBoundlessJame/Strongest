@@ -13,7 +13,6 @@ import lombok.Setter;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -22,11 +21,12 @@ import java.util.function.BiConsumer;
 
 @Getter @Setter
 public class MeleeAbility extends Ability {
+    public BiConsumer<PlayerEntity, HeroActionEntity> attackLogic = this::basicHit;
+
     public Identifier animation = BoundlessAPI.identifier("hook");
     public float damage = 1f;
     public float animationSpeed = 1f;
     public int impactTick = 4;
-    public BiConsumer<PlayerEntity, HeroActionEntity> attackLogic;
 
     public MeleeAbility(Identifier id) {
         super(id);
@@ -42,14 +42,7 @@ public class MeleeAbility extends Ability {
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
 
         AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
-        Action attack = Action.builder().scheduledTask(this.getImpactTick(),
-                (user, action) -> {
-                if (attackLogic == null) {
-                    basicHit(player, action);
-                } else {
-                    attackLogic.accept(user, action);
-                }
-        }).build();
+        Action attack = Action.builder().scheduledTask(this.getImpactTick(), this.getAttackLogic()).build();
         AttackUtils.startAttackTimer(player, this.getAbilityDuration());
         ActionUtils.performAction(player, attack);
     }
