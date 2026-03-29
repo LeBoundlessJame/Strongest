@@ -38,7 +38,7 @@ public class MeleeAbility extends Ability {
     public void executeAbility(PlayerEntity player) {
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
 
-        AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 2000);
+        AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
         Action attack = Action.builder().scheduledTask(this.getImpactTick(),
                 (user, action) -> {
                 if (attackLogic == null) {
