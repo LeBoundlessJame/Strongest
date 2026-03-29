@@ -26,7 +26,7 @@ public class BrawlerMelee {
         Action hook = Action.builder()
                 .scheduledTask(4, (user, action) -> {
                     MeleeUtils.forEach(player, action, (attacker, entity) -> {
-                        if (BlackFlashAbility.calculateBlackFlash(attacker)) {
+                        if (BlackFlashAbility.isBlackFlashHit(attacker)) {
                             // Todo: make it so that upwards knockback is optional
                             BlackFlashAbility.blackFlash(attacker, 80, new Vec3d(0.2f, 0.0f, 0.2f), action);
                             return;
@@ -60,7 +60,7 @@ public class BrawlerMelee {
         CameraUtils.playCameraShake(player);
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
-            if (BlackFlashAbility.calculateBlackFlash(player)) {
+            if (BlackFlashAbility.isBlackFlashHit(player)) {
                 CombatUtils.playImpactVisual(player, (LivingEntity) entity, BoundlessAPI.identifier("divergent_fist_impact"));
                 BlackFlashAbility.blackFlash(player, 200, new Vec3d(10f, 1.0f, 10f), action);
                 return;

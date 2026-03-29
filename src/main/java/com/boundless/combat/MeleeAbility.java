@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
@@ -27,6 +28,7 @@ public class MeleeAbility extends Ability {
     public float damage = 1f;
     public float animationSpeed = 1f;
     public int impactTick = 4;
+    public boolean allowsBlackFlash = true;
 
     public MeleeAbility(Identifier id) {
         super(id);
@@ -38,11 +40,19 @@ public class MeleeAbility extends Ability {
 
     @Override
     public void executeAbility(PlayerEntity player) {
-        SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
-
         AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
+
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
+        SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
+
         Action attack = Action.builder().scheduledTask(this.getImpactTick(), this.getAttackLogic()).build();
+
+        if (this.allowsBlackFlash && BlackFlashUtils.isBlackFlashHit(player)) {
+            attack = Action.builder().scheduledTask(this.getImpactTick(), (user, action) -> {
+                BlackFlashUtils.blackFlash(player, this.getDamage() * 1.5f, new Vec3d(4f, 0.5, 4f), action);
+            }).build();
+        }
+
         AttackUtils.startAttackTimer(player, this.getAbilityDuration());
         ActionUtils.performAction(player, attack);
     }

@@ -1,40 +1,40 @@
-package com.boundless.hero.black_sparks_hero;
+package com.boundless.util;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.registry.StrongestComponents;
-import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.Optional;
+import java.util.List;
 
-// Todo: remove
-@Deprecated
-public class BlackFlashAbility {
-    public static void blackFlash(PlayerEntity player, float damage, Vec3d knockbackMultiplier, HeroActionEntity heroAction) {
-        SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-        SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
-        SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_3);
-        SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_HEAVY);
+public class BlackFlashUtils {
+    public static void blackFlash(PlayerEntity player, float damage, Vec3d knockbackMultiplier, HeroActionEntity action) {
+        SoundUtils.playSound(player, player.age % 2 == 0 ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
+        SoundUtils.playSounds(player, List.of(SoundRegistry.EARTH_IMPACT, SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_3, SoundRegistry.ENERGY_IMPACT_HEAVY));
+
         CameraUtils.playCameraShake(player);
 
-        CombatUtils.perEnemyLogic(heroAction, (attacker, livingEntity) -> {
-            playBlackFlashVisuals(attacker, 5);
+        MeleeUtils.forEach(player, action, (user, entity) -> {
+            entity.timeUntilRegen = 0;
+            entity.damage(entity.getDamageSources().generic(), damage);
 
-            livingEntity.timeUntilRegen = 0;
-            MeleeUtils.knockback(player, livingEntity, knockbackMultiplier);
-            CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.identifier("flash")));
-            if (livingEntity instanceof PlayerEntity target) {
-                playBlackFlashVisuals(target, 6);
+            if (entity instanceof PlayerEntity playerEntity) {
+                playBlackFlashVisuals(playerEntity, 5);
+                CameraUtils.playCameraShake(playerEntity);
+            }
+
+            if (entity instanceof LivingEntity livingEntity) {
+                CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("flash"));
+                MeleeUtils.knockback(user, livingEntity, knockbackMultiplier);
             }
         });
 
-        AttackUtils.startAttackTimer(player, 10);
         resetBlackFlashChance(player);
     }
 

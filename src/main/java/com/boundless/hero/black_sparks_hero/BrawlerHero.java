@@ -1,9 +1,7 @@
 package com.boundless.hero.black_sparks_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.BasicAbilities;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
@@ -133,7 +131,7 @@ public class BrawlerHero extends Hero {
         Action kick = Action.builder()
                 .scheduledTask(7, (user, action) ->
                         MeleeUtils.forEach(player, action, (attacker, entity) -> {
-                            if (BlackFlashAbility.calculateBlackFlash(player)) {
+                            if (BlackFlashAbility.isBlackFlashHit(player)) {
                                 BlackFlashAbility.blackFlash(player, 80, new Vec3d(10f, 1.0f, 10f), action);
                                 return;
                             }
