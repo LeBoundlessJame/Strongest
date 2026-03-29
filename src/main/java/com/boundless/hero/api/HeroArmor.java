@@ -46,6 +46,7 @@ public class HeroArmor extends ArmorItem {
                 .component(DataComponentRegistry.BLOCK_HP, 150f)
                 .component(StrongestComponents.CURSED_ENERGY_RESERVES, heroData.getCursedEnergyReserves())
                 .component(StrongestComponents.CURSED_ENERGY, heroData.getCursedEnergyReserves())
+                .component(StrongestComponents.BLACK_FLASH_CHANCE, heroData.getBlackFlashChance())
                 .maxCount(1);
     }
 

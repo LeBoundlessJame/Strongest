@@ -64,4 +64,6 @@ public class HeroData {
     private final List<Combo> combos;
     @Builder.Default
     private final int cursedEnergyReserves = 1000;
+    @Builder.Default
+    private final float blackFlashChance = 0.05f;
 }
