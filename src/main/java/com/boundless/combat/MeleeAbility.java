@@ -28,7 +28,7 @@ public class MeleeAbility extends Ability {
 
     public MeleeAbility(Identifier id) {
         super(id);
-        this.setCooldown(20);
+        this.setCooldown(10);
         this.setSkillSlot(3);
         this.setAbilityDuration(10);
         this.setIcon(BoundlessAPI.hudPNG("punch"));
