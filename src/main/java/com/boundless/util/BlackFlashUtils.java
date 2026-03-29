@@ -20,7 +20,7 @@ public class BlackFlashUtils {
         SoundUtils.playSound(player, player.age % 2 == 0 ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
         SoundUtils.playSounds(player, List.of(SoundRegistry.EARTH_IMPACT, SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_3, SoundRegistry.ENERGY_IMPACT_HEAVY));
 
-        playBlackFlashVisuals(player, 5);
+        playBlackFlashVisuals(player, 4);
         CameraUtils.playCameraShake(player);
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
@@ -28,7 +28,7 @@ public class BlackFlashUtils {
             entity.damage(entity.getDamageSources().generic(), damage);
 
             if (entity instanceof PlayerEntity playerEntity) {
-                playBlackFlashVisuals(playerEntity, 5);
+                playBlackFlashVisuals(playerEntity, 4);
                 CameraUtils.playCameraShake(playerEntity);
             }
 
