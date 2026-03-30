@@ -50,14 +50,12 @@ public class MeleeAbility extends Ability {
 
         Action attack = Action.builder().scheduledTask(this.getImpactTick(), this.getAttackLogic()).build();
 
-        if (this.allowsBlackFlash) {
-            if (BlackFlashUtils.isBlackFlashHit(player)) {
-                attack = Action.builder().scheduledTask(this.getImpactTick(), (user, action) -> {
-                    BlackFlashUtils.blackFlash(player, this.getDamage() * 1.5f, new Vec3d(4f, 0.5, 4f), action);
-                }).build();
-            } else {
-                BlackFlashUtils.removeZoneIfPresent(player);
-            }
+        if (this.allowsBlackFlash && BlackFlashUtils.isBlackFlashHit(player)) {
+            attack = Action.builder().scheduledTask(this.getImpactTick(), (user, action) -> {
+                BlackFlashUtils.blackFlash(player, this.getDamage() * 1.5f, new Vec3d(4f, 0.5, 4f), action);
+            }).build();
+        } else {
+            BlackFlashUtils.removeZoneIfPresent(player);
         }
 
         AttackUtils.startAttackTimer(player, this.getAbilityDuration());
