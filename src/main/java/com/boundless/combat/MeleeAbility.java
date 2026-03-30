@@ -10,9 +10,9 @@ import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.*;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -24,7 +24,9 @@ import java.util.function.BiConsumer;
 public class MeleeAbility extends Ability {
     public BiConsumer<PlayerEntity, HeroActionEntity> attackLogic = this.getAttackLogic();
 
+    public Identifier impactVisuals = BoundlessAPI.identifier("melee_impact");
     public Identifier animation = BoundlessAPI.identifier("hook");
+    public List<SoundEvent> impactSounds = List.of(SoundRegistry.IMPACT_HEAVY_1);
     public float damage = 1f;
     public float animationSpeed = 1f;
     public int impactTick = 4;
@@ -79,7 +81,7 @@ public class MeleeAbility extends Ability {
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
             MeleeUtils.damageAndKnockback(player, entity, this.getDamage(), this.getKnockback());
-            MeleeUtils.playCombatEffects(player, entity, BoundlessAPI.identifier("melee_impact"), List.of(SoundRegistry.IMPACT_HEAVY_1));
+            MeleeUtils.playCombatEffects(player, entity, this.getImpactVisuals(), this.getImpactSounds());
             SoundUtils.playSound(player, player.getRandom().nextBoolean() ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
         });
     }
