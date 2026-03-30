@@ -29,7 +29,7 @@ import net.minecraft.util.Formatting;
 import java.util.List;
 
 public class ShrineHero extends Hero {
-    public static List<Combo> COMBOS = List.of(new KnockbackCombo("lllll"));
+    public static List<Combo> COMBOS = List.of(new KnockbackCombo("lllll", "Knockback attack"));
 
     public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerInt("finger_count");
 

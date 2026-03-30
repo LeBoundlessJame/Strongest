@@ -23,9 +23,8 @@ public class KnockbackCombo extends Combo {
     public float animationSpeed = 1.0f;
     public int impactTick = 4;
 
-    public KnockbackCombo(String sequence) {
-        super(sequence, null, null);
-        this.comboName = "Knockback attack";
+    public KnockbackCombo(String sequence, String comboName) {
+        super(sequence, comboName);
     }
 
     @Override

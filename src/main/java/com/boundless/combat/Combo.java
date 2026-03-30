@@ -6,14 +6,13 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public abstract class Combo {
     public String sequence;
     public String comboName;
     public ComponentType<String> component;
 
-    public Combo(String sequence, Consumer<PlayerEntity> logic, String comboName) {
+    public Combo(String sequence, String comboName) {
         this.sequence = sequence;
         this.comboName = comboName;
         this.component = DataComponentRegistry.registerString(this.sequence);
