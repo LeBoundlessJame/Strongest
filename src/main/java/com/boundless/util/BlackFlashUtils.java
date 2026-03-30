@@ -7,6 +7,7 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.registry.StrongestComponents;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -37,6 +38,8 @@ public class BlackFlashUtils {
                 MeleeUtils.knockback(user, livingEntity, knockbackMultiplier);
             }
         });
+
+        handleZoneIncrement(player);
     }
 
     public static void resetBlackFlashChance(PlayerEntity player) {
@@ -44,11 +47,32 @@ public class BlackFlashUtils {
     }
 
     public static float getBlackFlashChance(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.01f);
+        float blackFlashChance = HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.05f);
+        if (player.hasStatusEffect(StatusEffectRegistry.ZONE)) {
+            blackFlashChance = 0.75f;
+        }
+        return blackFlashChance;
     }
 
     public static boolean isBlackFlashHit(PlayerEntity player) {
-        return player.getRandom().nextFloat() < BlackFlashAbility.getBlackFlashChance(player);
+        return player.getRandom().nextFloat() < getBlackFlashChance(player);
+    }
+
+    public static void handleZoneIncrement(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+
+        if (!player.hasStatusEffect(StatusEffectRegistry.ZONE)) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.ZONE, 1200, 0, false, false, true));
+            return;
+        }
+
+        int amplifier = player.getStatusEffect(StatusEffectRegistry.ZONE).getAmplifier();
+
+        if (amplifier < 4) {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.ZONE, 1200, amplifier + 1, false, false, true));
+        } else {
+            player.removeStatusEffect(StatusEffectRegistry.ZONE);
+        }
     }
 
     public static void playBlackFlashVisuals(LivingEntity entity, int duration) {

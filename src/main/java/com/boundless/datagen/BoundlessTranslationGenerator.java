@@ -19,6 +19,7 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(StatusEffectRegistry.INVULNERABILITY_EFFECT.value(), "Invulnerability");
+        translationBuilder.add(StatusEffectRegistry.ZONE.value(), "The Zone");
 
         translationBuilder.add(AttributeRegistry.TOP_SPEED_MULTIPLIER, "Top-Speed Multiplier");
         translationBuilder.add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, "Max-Speed Buildup Time");
