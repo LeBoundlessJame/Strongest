@@ -2,12 +2,10 @@ package com.boundless.util;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.registry.StrongestComponents;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -58,6 +56,13 @@ public class BlackFlashUtils {
         return player.getRandom().nextFloat() < getBlackFlashChance(player);
     }
 
+    /** Removes zone if the hit isn't black flash **/
+    public static void removeZoneIfPresent(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+
+        if (player.hasStatusEffect(StatusEffectRegistry.ZONE)) player.removeStatusEffect(StatusEffectRegistry.ZONE);
+    }
+
     public static void handleZoneIncrement(PlayerEntity player) {
         if (player.getWorld().isClient) return;
 
@@ -68,10 +73,10 @@ public class BlackFlashUtils {
 
         int amplifier = player.getStatusEffect(StatusEffectRegistry.ZONE).getAmplifier();
 
-        if (amplifier < 4) {
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.ZONE, 1200, amplifier + 1, false, false, true));
-        } else {
+        if (amplifier >= 3) {
             player.removeStatusEffect(StatusEffectRegistry.ZONE);
+        } else {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.ZONE, 1200, amplifier + 1, false, false, true));
         }
     }
 
