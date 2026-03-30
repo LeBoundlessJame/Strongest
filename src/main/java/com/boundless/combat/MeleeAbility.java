@@ -41,7 +41,7 @@ public class MeleeAbility extends Ability {
 
     @Override
     public void executeAbility(PlayerEntity player) {
-        if (this.isComboable() && ComboUtils.evaluateCombos(player, this)) return;
+        if (this.isComboable() && ComboUtils.triggersCombo(player, this)) return;
 
         AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
 

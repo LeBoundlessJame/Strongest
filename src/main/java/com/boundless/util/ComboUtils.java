@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class ComboUtils {
     /** returns if a combo has been triggered or not **/
-    public static boolean evaluateCombos(PlayerEntity player, MeleeAbility ability) {
+    public static boolean triggersCombo(PlayerEntity player, MeleeAbility ability) {
         HeroData heroData = HeroUtils.getHeroData(player);
         if (heroData == null) return false;
         boolean evaluated = false;
