@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
 
 @Getter @Setter
 public class MeleeAbility extends Ability {
-    public BiConsumer<PlayerEntity, HeroActionEntity> attackLogic = this::basicHit;
+    public BiConsumer<PlayerEntity, HeroActionEntity> attackLogic = this.getAttackLogic();
 
     public Identifier animation = BoundlessAPI.identifier("hook");
     public float damage = 1f;
@@ -44,22 +44,10 @@ public class MeleeAbility extends Ability {
         if (this.isComboable() && ComboUtils.triggersCombo(player, this)) return;
 
         AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
-
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
 
-        Action attack = Action.builder().scheduledTask(this.getImpactTick(), this.getAttackLogic()).build();
-
-        if (this.allowsBlackFlash && BlackFlashUtils.isBlackFlashHit(player)) {
-            attack = Action.builder().scheduledTask(this.getImpactTick(), (user, action) -> {
-                BlackFlashUtils.blackFlash(player, this.getDamage() * 1.5f, new Vec3d(4f, 0.5, 4f), action);
-            }).build();
-        } else {
-            BlackFlashUtils.removeZoneIfPresent(player);
-        }
-
-        AttackUtils.startAttackTimer(player, this.getAbilityDuration());
-        ActionUtils.performAction(player, attack);
+        queueAttack(player);
     }
 
     @Override
@@ -67,6 +55,24 @@ public class MeleeAbility extends Ability {
         boolean canUse = super.canUseAbility(player);
         canUse &= HeroUtils.combatModeEnabled(player);
         return canUse;
+    }
+
+    public void queueAttack(PlayerEntity player) {
+        Action attack = Action.builder().scheduledTask(this.getImpactTick(), this.getAttackLogic(player)).build();
+        if (!BlackFlashUtils.isBlackFlashHit(player)) BlackFlashUtils.removeZoneIfPresent(player);
+
+        AttackUtils.startAttackTimer(player, this.getAbilityDuration());
+        ActionUtils.performAction(player, attack);
+    }
+
+    public BiConsumer<PlayerEntity, HeroActionEntity> getAttackLogic(PlayerEntity player) {
+        BiConsumer<PlayerEntity, HeroActionEntity> logic = this::basicHit;
+        if (this.allowsBlackFlash && BlackFlashUtils.isBlackFlashHit(player)) {
+            logic = (user, heroAction) -> {
+                BlackFlashUtils.blackFlash(player, this.getDamage() * 1.5f, new Vec3d(4f, 0.5, 4f), heroAction);
+            };
+        }
+        return logic;
     }
 
     public void basicHit(PlayerEntity player, HeroActionEntity action) {
