@@ -26,6 +26,9 @@ public abstract class Ability {
     public String displayText;
     public Integer skillSlot;
 
+    public boolean comboable = false;
+    public String comboLetter;
+
     public Ability(Identifier id) {
         this.id = id;
     }

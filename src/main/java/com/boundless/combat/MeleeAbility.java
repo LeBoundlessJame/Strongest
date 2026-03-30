@@ -4,7 +4,6 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.Action;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.api.HeroData;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
@@ -30,25 +29,24 @@ public class MeleeAbility extends Ability {
     public int impactTick = 4;
     public boolean allowsBlackFlash = true;
 
-    public boolean comboable = true;
-    public String comboLetter = "l";
-
     public MeleeAbility(Identifier id) {
         super(id);
         this.setCooldown(10);
         this.setSkillSlot(3);
         this.setAbilityDuration(10);
         this.setIcon(BoundlessAPI.hudPNG("punch"));
+        this.setComboable(true);
+        this.setComboLetter("l");
     }
 
     @Override
     public void executeAbility(PlayerEntity player) {
+        if (this.isComboable() && ComboUtils.evaluateCombos(player, this)) return;
+
         AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
-
-        if (evaluateCombos(player)) return;
 
         Action attack = Action.builder().scheduledTask(this.getImpactTick(), this.getAttackLogic()).build();
 
@@ -83,20 +81,5 @@ public class MeleeAbility extends Ability {
             SoundUtils.playSound(player, player.getRandom().nextBoolean() ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
             MeleeUtils.knockback(user, livingEntity, new Vec3d(0.5f, 0.3, 0.5f));
         });
-    }
-
-    /** returns if a combo has been triggered or not **/
-    public boolean evaluateCombos(PlayerEntity player) {
-        HeroData heroData = HeroUtils.getHeroData(player);
-        if (heroData == null) return false;
-        boolean evaluated = false;
-        for (Combo combo: heroData.getCombos()) {
-            if (combo.matchesTargetCombo(player, this.getComboLetter())) {
-                evaluated = true;
-            }
-            combo.updateAndEvaluateCombo(player, this.getComboLetter());
-            if (evaluated) return evaluated;
-        }
-        return false;
     }
 }
