@@ -16,7 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.function.BiConsumer;
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,13 +47,9 @@ public class KnockbackCombo extends Combo {
         CameraUtils.playCameraShake(player);
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
-            if (!(entity instanceof LivingEntity livingEntity)) return;
-
-            entity.damage(entity.getDamageSources().generic(), this.getDamage());
-            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
-            SoundUtils.playSound(player, SoundRegistry.IMPACT_HEAVY_1);
+            MeleeUtils.damageAndKnockback(player, entity, this.getDamage(), this.getKnockback());
+            MeleeUtils.playCombatEffects(player, entity, BoundlessAPI.identifier("melee_impact"), List.of(SoundRegistry.IMPACT_HEAVY_1));
             SoundUtils.playSound(player, player.getRandom().nextBoolean() ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
-            MeleeUtils.knockback(user, livingEntity, this.getKnockback());
         });
     }
 }

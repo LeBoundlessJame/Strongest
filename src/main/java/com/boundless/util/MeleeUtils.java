@@ -7,6 +7,7 @@ import com.boundless.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -25,11 +26,22 @@ public class MeleeUtils {
         });
     }
 
+    public static void damageAndKnockback(PlayerEntity user, LivingEntity target, float damage, Vec3d knockback) {
+        target.damage(target.getDamageSources().generic(), damage);
+        MeleeUtils.knockback(user, target, knockback);
+    }
+
+    /** Plays vfx and sfx **/
+    public static void playCombatEffects(PlayerEntity player, LivingEntity target, Identifier visual, List<SoundEvent> sounds) {
+        CombatUtils.playImpactVisual(player, target, visual);
+        SoundUtils.playSounds(player, sounds);
+    }
+
     public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action) {
         return action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> entity != player);
     }
 
-    public static void forEach(PlayerEntity player, HeroActionEntity action, BiConsumer<PlayerEntity, Entity> logic) {
+    public static void forEach(PlayerEntity player, HeroActionEntity action, BiConsumer<PlayerEntity, LivingEntity> logic) {
         for (LivingEntity target : action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> true)) {
             if (target != player) logic.accept(player, target);
         }
