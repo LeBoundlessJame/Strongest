@@ -17,6 +17,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 
 @Getter @Setter
@@ -28,6 +29,7 @@ public class MeleeAbility extends Ability {
     public float animationSpeed = 1f;
     public int impactTick = 4;
     public boolean allowsBlackFlash = true;
+    public Vec3d knockback = new Vec3d(0.5f, 0.3f, 0.5f);
 
     public MeleeAbility(Identifier id) {
         super(id);
@@ -76,13 +78,9 @@ public class MeleeAbility extends Ability {
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
-            entity.damage(entity.getDamageSources().generic(), this.getDamage());
-            if (!(entity instanceof LivingEntity livingEntity)) return;
-
-            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
-            SoundUtils.playSound(player, SoundRegistry.IMPACT_HEAVY_1);
+            MeleeUtils.damageAndKnockback(player, entity, this.getDamage(), this.getKnockback());
+            MeleeUtils.playCombatEffects(player, entity, BoundlessAPI.identifier("melee_impact"), List.of(SoundRegistry.IMPACT_HEAVY_1));
             SoundUtils.playSound(player, player.getRandom().nextBoolean() ? SoundRegistry.PUNCH_1 : SoundRegistry.PUNCH_2, 9, 11);
-            MeleeUtils.knockback(user, livingEntity, new Vec3d(0.5f, 0.3, 0.5f));
         });
     }
 }
