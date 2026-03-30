@@ -1,4 +1,4 @@
-package com.boundless.hero.armor;
+package com.boundless.client;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.black_sparks_hero.BrawlerHero;

@@ -1,4 +1,4 @@
-package com.boundless.hero.armor;
+package com.boundless.client;
 
 import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;

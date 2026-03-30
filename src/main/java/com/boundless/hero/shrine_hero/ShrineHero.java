@@ -3,14 +3,14 @@ package com.boundless.hero.shrine_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.*;
 import com.boundless.combat.Combo;
+import com.boundless.combat.KnockbackCombo;
 import com.boundless.combat.MeleeAbility;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.armor.HeroArmorRenderer;
+import com.boundless.client.HeroArmorRenderer;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
 import com.boundless.hero.shrine_hero.ability.DismantleAbility;
 import com.boundless.registry.*;
-import com.boundless.util.KeybindingUtils;
 import com.boundless.util.MeterUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -19,8 +19,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
@@ -31,7 +29,7 @@ import net.minecraft.util.Formatting;
 import java.util.List;
 
 public class ShrineHero extends Hero {
-    public static List<Combo> COMBOS = List.of(new Combo("lllll", ShrineHeroMelee::knockbackAttack, "Heavy Hit"));
+    public static List<Combo> COMBOS = List.of(new KnockbackCombo("lllll"));
 
     public static ComponentType<Integer> FINGER_COUNT = DataComponentRegistry.registerInt("finger_count");
 

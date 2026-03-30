@@ -8,15 +8,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class Combo {
+public abstract class Combo {
     public String sequence;
     public String comboName;
-    public Consumer<PlayerEntity> logic;
     public ComponentType<String> component;
 
     public Combo(String sequence, Consumer<PlayerEntity> logic, String comboName) {
         this.sequence = sequence;
-        this.logic = logic;
         this.comboName = comboName;
         this.component = DataComponentRegistry.registerString(this.sequence);
     }
@@ -25,7 +23,7 @@ public class Combo {
         if (this.getProgress(player).length() > this.sequence.length()) resetProgress(player);
 
         if (matchesTargetCombo(player, attack)) {
-            logic.accept(player);
+            this.executeCombo(player);
             resetProgress(player);
         } else if (Objects.equals(attack, requiredAttack(player))) {
             updateProgress(player, attack);
@@ -54,4 +52,6 @@ public class Combo {
     public String requiredAttack(PlayerEntity player) {
         return String.valueOf(this.sequence.charAt(getProgress(player).length()));
     }
+
+    public abstract void executeCombo(PlayerEntity player);
 }

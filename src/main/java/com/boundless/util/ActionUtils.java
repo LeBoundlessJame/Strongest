@@ -51,7 +51,7 @@ public class ActionUtils {
         int lifetime = keys.getLast();
 
         HeroActionEntity heroAction = ActionUtils.createHeroAction(player, action, lifetime);
-        ActionUtils.summonHeroAction(player, heroAction);
+        player.getWorld().spawnEntity(heroAction);
     }
 
     public static HeroActionEntity createHeroAction(PlayerEntity user, Action action, int lifetime) {
@@ -62,9 +62,5 @@ public class ActionUtils {
         heroAction.setNoGravity(true);
         heroAction.setPos(user.getX(), user.getY(), user.getZ());
         return heroAction;
-    }
-
-    private static void summonHeroAction(PlayerEntity user, HeroActionEntity heroAction) {
-        user.getWorld().spawnEntity(heroAction);
     }
 }

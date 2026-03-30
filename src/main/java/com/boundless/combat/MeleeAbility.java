@@ -42,11 +42,6 @@ public class MeleeAbility extends Ability {
     @Override
     public void executeAbility(PlayerEntity player) {
         if (this.isComboable() && ComboUtils.triggersCombo(player, this)) return;
-
-        AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
-        SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
-
         queueAttack(player);
     }
 
@@ -76,6 +71,10 @@ public class MeleeAbility extends Ability {
     }
 
     public void basicHit(PlayerEntity player, HeroActionEntity action) {
+        AnimationUtils.playAlternatingSyncedAnimation(player, this.getAnimation(), this.getAnimationSpeed(), true, 3000);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.LIMITED_SPEED, ConfigRegistry.HERO_CONFIG.COMBAT_CONFIG.sprintSpeedLimitDuration.get(), 0, false, false, false));
+        SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, 8, 12);
+
         MeleeUtils.forEach(player, action, (user, entity) -> {
             entity.damage(entity.getDamageSources().generic(), this.getDamage());
             if (!(entity instanceof LivingEntity livingEntity)) return;

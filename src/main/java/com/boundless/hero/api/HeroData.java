@@ -4,7 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.combat.Combo;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.hero.armor.HeroArmorRenderer;
+import com.boundless.client.HeroArmorRenderer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
