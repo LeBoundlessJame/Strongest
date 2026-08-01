@@ -24,8 +24,6 @@ public class DivineDogKuroEntity extends WolfEntity {
     public void animationTick() {
         if (!this.getWorld().isClient) return;
 
-        System.out.println(this.isInSittingPose());
-
         if (this.isInSittingPose()) {
             this.dispatcher.playLayIdle();
         } else {
