@@ -7,21 +7,17 @@ import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 public class DivineDogKuroDispatcher {
     private final DivineDogKuroEntity entity;
 
-    /* Todo: Come back to this soon
-    private static final AzCommand ANIMATION_NAME_BEGIN = AzCommand.create(
+    private static final AzCommand LAY_BEGIN = AzCommand.create(
             "base_controller",
-            "domain_begin",
-            AzPlayBehaviors.HOLD_ON_LAST_FRAME
+            "lay_idle",
+            AzPlayBehaviors.LOOP
     );
-     */
 
     public DivineDogKuroDispatcher(DivineDogKuroEntity animatable) {
         this.entity = animatable;
     }
 
-    /*
-    public void animationNameBegin() {
-        ANIMATION_NAME.sendForEntity(entity);
+    public void layBegin() {
+        LAY_BEGIN.sendForEntity(entity);
     }
-     */
 }

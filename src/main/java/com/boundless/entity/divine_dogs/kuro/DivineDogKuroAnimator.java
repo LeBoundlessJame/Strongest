@@ -24,6 +24,8 @@ public class DivineDogKuroAnimator extends AzEntityAnimator<DivineDogKuroEntity>
     public void setCustomAnimations(DivineDogKuroEntity animatable, float partialTicks) {
         super.setCustomAnimations(animatable, partialTicks);
 
+        if (animatable.isInSittingPose()) return;
+
         var model = this.context().boneCache().getBakedModel();
 
         //var tail = model.getBone("tail");

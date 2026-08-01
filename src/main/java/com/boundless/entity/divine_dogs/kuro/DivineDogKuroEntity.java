@@ -7,15 +7,28 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.world.World;
 
+import java.util.logging.Logger;
+
 public class DivineDogKuroEntity extends WolfEntity {
+    public final DivineDogKuroDispatcher dispatcher;
+
     public DivineDogKuroEntity(EntityType<? extends WolfEntity> entityType, World world) {
         super(entityType, world);
+        this.dispatcher = new DivineDogKuroDispatcher(this);
     }
 
     @Override
     public void tick() {
         super.tick();
+        this.animationTick();
     }
+
+    public void animationTick() {
+        if (this.isInSittingPose()) {
+            this.dispatcher.layBegin();
+        }
+    }
+
 
     public static DefaultAttributeContainer.Builder createWolfAttributes() {
         return MobEntity.createMobAttributes()
