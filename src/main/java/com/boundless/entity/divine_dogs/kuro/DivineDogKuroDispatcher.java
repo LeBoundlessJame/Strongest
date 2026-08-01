@@ -27,6 +27,6 @@ public class DivineDogKuroDispatcher {
     }
 
     public void playIdle() {
-        LAY_IDLE.sendForEntity(entity);
+        IDLE.sendForEntity(entity);
     }
 }

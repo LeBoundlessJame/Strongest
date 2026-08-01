@@ -20,7 +20,6 @@ public class DivineDogKuroAnimator extends AzEntityAnimator<DivineDogKuroEntity>
         return BoundlessAPI.identifier("animations/entity/divine_dog.animation.json");
     }
 
-    /*
     @Override
     public void setCustomAnimations(DivineDogKuroEntity animatable, float partialTicks) {
         super.setCustomAnimations(animatable, partialTicks);
@@ -49,6 +48,4 @@ public class DivineDogKuroAnimator extends AzEntityAnimator<DivineDogKuroEntity>
         left_back.ifPresent(bone -> bone.setRotX(left));
         right_back.ifPresent(bone -> bone.setRotX(right));
     }
-
-     */
 }
