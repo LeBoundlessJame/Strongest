@@ -17,4 +17,5 @@ public class DivineDogEntityRenderer extends AzEntityRenderer<DivineDogKuroEntit
     public DivineDogEntityRenderer(EntityRendererFactory.Context context) {
         super(AzEntityRendererConfig.<DivineDogKuroEntity>builder(GEO, TEX).setAnimatorProvider(DivineDogKuroAnimator::new).build(), context);
     }
+
 }
