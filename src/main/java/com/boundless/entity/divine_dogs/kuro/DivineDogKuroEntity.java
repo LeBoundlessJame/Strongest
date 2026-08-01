@@ -7,8 +7,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.world.World;
 
-import java.util.logging.Logger;
-
 public class DivineDogKuroEntity extends WolfEntity {
     public final DivineDogKuroDispatcher dispatcher;
 
@@ -24,15 +22,21 @@ public class DivineDogKuroEntity extends WolfEntity {
     }
 
     public void animationTick() {
-        if (this.isInSittingPose()) {
-            this.dispatcher.layBegin();
+        if (!this.getWorld().isClient) return;
+
+        System.out.println(this.isSitting());
+
+        if (this.isSitting()) {
+            this.dispatcher.playLayIdle();
+        } else {
+            this.dispatcher.playIdle();
         }
     }
 
 
     public static DefaultAttributeContainer.Builder createWolfAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.6F)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45F)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0);
     }
