@@ -12,10 +12,15 @@ public class DivineDogKuroEntity extends WolfEntity {
         super(entityType, world);
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+    }
+
     public static DefaultAttributeContainer.Builder createWolfAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.6F)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0);
     }
 }
