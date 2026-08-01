@@ -6,6 +6,7 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
 import com.boundless.entity.rock.RockEntity;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -27,5 +28,11 @@ public class EntityRegistry {
         return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.identifier(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).eyeHeight(eyeHeight).build(name));
     }
 
-    public static void initialize() {}
+    public static void registerAttributes() {
+        FabricDefaultAttributeRegistry.register(DIVINE_DOG_KURO, DivineDogKuroEntity.createWolfAttributes());
+    }
+
+    public static void initialize() {
+        registerAttributes();
+    }
 }
