@@ -25,9 +25,9 @@ public class DivineDogKuroEntity extends WolfEntity {
         if (!this.getWorld().isClient) return;
 
         if (this.isInSittingPose()) {
-            this.dispatcher.playLayIdle();
+            this.dispatcher.layIdle();
         } else {
-            this.dispatcher.playIdle();
+            this.dispatcher.idle();
         }
     }
 

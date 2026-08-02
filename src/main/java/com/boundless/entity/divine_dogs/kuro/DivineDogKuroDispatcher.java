@@ -18,15 +18,35 @@ public class DivineDogKuroDispatcher {
             AzPlayBehaviors.LOOP
     );
 
+    private static final AzCommand WALK = AzCommand.create(
+            "base_controller",
+            "walk",
+            AzPlayBehaviors.LOOP
+    );
+
+    private static final AzCommand RUN = AzCommand.create(
+            "base_controller",
+            "run",
+            AzPlayBehaviors.LOOP
+    );
+
     public DivineDogKuroDispatcher(DivineDogKuroEntity animatable) {
         this.entity = animatable;
     }
 
-    public void playLayIdle() {
+    public void layIdle() {
         LAY_IDLE.sendForEntity(entity);
     }
 
-    public void playIdle() {
+    public void idle() {
         IDLE.sendForEntity(entity);
+    }
+
+    public void walk() {
+        WALK.sendForEntity(entity);
+    }
+
+    public void run() {
+        RUN.sendForEntity(entity);
     }
 }

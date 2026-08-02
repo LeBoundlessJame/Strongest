@@ -12,13 +12,18 @@
 			},
 			"bones": [
 				{
-					"name": "all",
+					"name": "DAWG",
+					"pivot": [0, 10, 1]
+				},
+				{
+					"name": "Body",
+					"parent": "DAWG",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "head",
-					"parent": "all",
-					"pivot": [-1, 10.5, -7],
+					"parent": "Body",
+					"pivot": [0, 13.154, -5.98],
 					"cubes": [
 						{"origin": [-3, 7.5, -9], "size": [6, 6, 4], "uv": [31, 0]},
 						{"origin": [0.85, 12.25, -6.9], "size": [3, 4, 0], "pivot": [2.35, 14.25, -6.9], "rotation": [-8.0634, -21.07593, 21.50238], "uv": [32, 22]},
@@ -29,7 +34,7 @@
 				},
 				{
 					"name": "mane",
-					"parent": "all",
+					"parent": "Body",
 					"pivot": [-1, 10, -3],
 					"rotation": [90, 0, 0],
 					"cubes": [
@@ -38,8 +43,8 @@
 					]
 				},
 				{
-					"name": "body",
-					"parent": "all",
+					"name": "torso",
+					"parent": "Body",
 					"pivot": [0, 10, 2],
 					"rotation": [90, 0, 0],
 					"cubes": [
@@ -48,8 +53,13 @@
 					]
 				},
 				{
+					"name": "BackLegs",
+					"parent": "DAWG",
+					"pivot": [0, 7, 7]
+				},
+				{
 					"name": "leg1",
-					"parent": "all",
+					"parent": "BackLegs",
 					"pivot": [-2.5, 8, 7],
 					"cubes": [
 						{"origin": [-2.5, 0, 6], "size": [2, 8, 2], "uv": [50, 22]},
@@ -58,7 +68,7 @@
 				},
 				{
 					"name": "leg2",
-					"parent": "all",
+					"parent": "BackLegs",
 					"pivot": [0.5, 8, 7],
 					"cubes": [
 						{"origin": [0.5, 0, 6], "size": [2, 8, 2], "inflate": 0.25, "uv": [15, 44]},
@@ -66,8 +76,13 @@
 					]
 				},
 				{
+					"name": "FrontLegs",
+					"parent": "DAWG",
+					"pivot": [0, 7, -4]
+				},
+				{
 					"name": "leg3",
-					"parent": "all",
+					"parent": "FrontLegs",
 					"pivot": [-2.5, 8, -4],
 					"cubes": [
 						{"origin": [-2.5, 0, -5], "size": [2, 8, 2], "uv": [33, 44], "mirror": true}
@@ -75,7 +90,7 @@
 				},
 				{
 					"name": "leg4",
-					"parent": "all",
+					"parent": "FrontLegs",
 					"pivot": [0.5, 8, -4],
 					"cubes": [
 						{"origin": [0.5, 0, -5], "size": [2, 8, 2], "uv": [33, 44]}
@@ -83,10 +98,10 @@
 				},
 				{
 					"name": "tail",
-					"parent": "all",
-					"pivot": [-1, 12, 10],
+					"parent": "DAWG",
+					"pivot": [0, 11.57589, 10.00236],
 					"cubes": [
-						{"origin": [-1, 4, 9], "size": [2, 8, 2], "uv": [42, 44]}
+						{"origin": [-1, 4.24486, 8.90007], "size": [2, 8, 2], "uv": [42, 44]}
 					]
 				}
 			]
