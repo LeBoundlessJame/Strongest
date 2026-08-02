@@ -29,7 +29,7 @@ public class DivineDogKuroEntity extends WolfEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(1, new TameableEntity.TameableEscapeDangerGoal(1.5, DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES));
         this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(4, new KuroPounceAtTargetGoal(this, 1f));
+        //this.goalSelector.add(4, new KuroPounceAtTargetGoal(this, 1f));
         this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
         this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F));
         this.goalSelector.add(7, new AnimalMateGoal(this, 1.0));
