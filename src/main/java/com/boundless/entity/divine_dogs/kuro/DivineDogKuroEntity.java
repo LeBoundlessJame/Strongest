@@ -28,21 +28,8 @@ public class DivineDogKuroEntity extends WolfEntity {
     public void animationTick() {
         if (!this.getWorld().isClient) return;
 
-        boolean isMovingOnGround = this.moveAnalysis.isMovingHorizontally() && this.isOnGround();
-
-        this.dispatcher.run();
-
-        /*
-        if (isMovingOnGround) {
-            if (this.hasAngerTime()) {
-                this.dispatcher.run();
-            }
-        }
-
-         */
-
-        /*
         if (!this.isInSittingPose()) {
+            boolean isMovingOnGround = this.moveAnalysis.isMovingHorizontally() && this.isOnGround();
 
             if (isMovingOnGround) {
                 if (this.hasAngerTime()) {
@@ -53,13 +40,11 @@ public class DivineDogKuroEntity extends WolfEntity {
                     this.dispatcher.walk();
                 }
             } else {
-                //this.dispatcher.idle();
+                this.dispatcher.idle();
             }
         } else {
             this.dispatcher.layIdle();
         }
-
-         */
     }
 
 
