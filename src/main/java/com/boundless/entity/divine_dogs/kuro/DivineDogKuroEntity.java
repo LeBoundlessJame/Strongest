@@ -1,6 +1,10 @@
 package com.boundless.entity.divine_dogs.kuro;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.entity.divine_dogs.goals.KuroPounceAtTargetGoal;
+import com.boundless.registry.EntityRegistry;
+import com.boundless.util.EffekUtils;
+import dev.kosmx.playerAnim.core.util.Vec3f;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +16,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class DivineDogKuroEntity extends WolfEntity {
@@ -22,6 +27,13 @@ public class DivineDogKuroEntity extends WolfEntity {
         super(entityType, world);
         this.dispatcher = new DivineDogKuroDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
+    }
+
+    public DivineDogKuroEntity(World world, PlayerEntity owner) {
+        super(EntityRegistry.DIVINE_DOG_KURO, world);
+        this.dispatcher = new DivineDogKuroDispatcher(this);
+        this.moveAnalysis = new MoveAnalysis(this);
+        this.setOwner(owner);
     }
 
     @Override
