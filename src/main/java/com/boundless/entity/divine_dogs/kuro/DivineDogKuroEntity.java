@@ -31,7 +31,7 @@ public class DivineDogKuroEntity extends WolfEntity {
         this.goalSelector.add(2, new SitGoal(this));
         //this.goalSelector.add(4, new KuroPounceAtTargetGoal(this, 1f));
         this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
-        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F));
+        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0f));
         this.goalSelector.add(7, new AnimalMateGoal(this, 1.0));
         this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(9, new WolfBegGoal(this, 8.0F));
@@ -52,6 +52,12 @@ public class DivineDogKuroEntity extends WolfEntity {
     @Override
     public boolean shouldAngerAt(LivingEntity entity) {
         return super.shouldAngerAt(entity);
+    }
+
+    @Override
+    public boolean shouldTryTeleportToOwner() {
+        LivingEntity livingEntity = this.getOwner();
+        return livingEntity != null && this.squaredDistanceTo(this.getOwner()) >= (2048);
     }
 
     @Override
