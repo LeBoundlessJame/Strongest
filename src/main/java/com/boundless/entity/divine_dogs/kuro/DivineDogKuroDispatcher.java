@@ -6,29 +6,10 @@ import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 public class DivineDogKuroDispatcher {
     private final DivineDogKuroEntity entity;
 
-    private static final AzCommand IDLE = AzCommand.create(
-            "base_controller",
-            "idle",
-            AzPlayBehaviors.LOOP
-    );
-
-    private static final AzCommand LAY_IDLE = AzCommand.create(
-            "base_controller",
-            "lay_idle",
-            AzPlayBehaviors.LOOP
-    );
-
-    private static final AzCommand WALK = AzCommand.create(
-            "base_controller",
-            "walk",
-            AzPlayBehaviors.LOOP
-    );
-
-    private static final AzCommand RUN = AzCommand.create(
-            "base_controller",
-            "run",
-            AzPlayBehaviors.LOOP
-    );
+    private static final AzCommand IDLE = azLoopedAnim("idle");
+    private static final AzCommand LAY_IDLE = azLoopedAnim("lay_idle");
+    private static final AzCommand WALK = azLoopedAnim("walk");
+    private static final AzCommand RUN = azLoopedAnim("run");
 
     public DivineDogKuroDispatcher(DivineDogKuroEntity animatable) {
         this.entity = animatable;
@@ -48,5 +29,13 @@ public class DivineDogKuroDispatcher {
 
     public void run() {
         RUN.sendForEntity(entity);
+    }
+
+    public static AzCommand azLoopedAnim(String animation) {
+        return AzCommand.create(
+                "base_controller",
+                animation,
+                AzPlayBehaviors.LOOP
+        );
     }
 }
