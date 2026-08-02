@@ -6,9 +6,9 @@ import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 public class DivineDogKuroDispatcher {
     private final DivineDogKuroEntity entity;
 
-    private static final AzCommand IDLE = azLoopedAnim("idle");
-    private static final AzCommand LAY_IDLE = azLoopedAnim("lay_idle");
-    private static final AzCommand WALK = azLoopedAnim("walk");
+    private static final AzCommand IDLE = azLoopedAnim("dog_idle");
+    private static final AzCommand LAY_IDLE = azLoopedAnim("dog_laying_idle");
+    private static final AzCommand WALK = azLoopedAnim("dog_walking");
     private static final AzCommand RUN = azLoopedAnim("run");
 
     public DivineDogKuroDispatcher(DivineDogKuroEntity animatable) {
