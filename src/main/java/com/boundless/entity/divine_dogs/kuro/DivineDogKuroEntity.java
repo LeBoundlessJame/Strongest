@@ -34,9 +34,7 @@ public class DivineDogKuroEntity extends WolfEntity {
             if (isMovingOnGround) {
                 if (this.hasAngerTime()) {
                     this.dispatcher.run();
-                    System.out.println("Angry boi");
                 } else {
-                    System.out.println("Calm boi");
                     this.dispatcher.walk();
                 }
             } else {
@@ -49,6 +47,6 @@ public class DivineDogKuroEntity extends WolfEntity {
 
 
     public static DefaultAttributeContainer.Builder createWolfAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45F).add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45F).add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0).add(EntityAttributes.GENERIC_SCALE, 1.5);
     }
 }
