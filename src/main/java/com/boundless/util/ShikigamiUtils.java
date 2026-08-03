@@ -9,17 +9,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShikigamiUtils {
-    public static <T extends TameableEntity & Shikigami> void summonShikigami(PlayerEntity player, T shikigami) {
+    public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, T shikigami) {
         if (player.getWorld().isClient) return;
 
         Map<String, NbtCompound> map = HeroUtils.getHeroStack(player).getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
+        HashMap<String, NbtCompound> clone = new HashMap<>(map);
         NbtCompound nbt = (map.get(shikigami.getType().toString()));
-        System.out.println(nbt);
 
+        if (!nbt.getBoolean("summoned")) {
+            summonShikigami(player, shikigami);
+        }
+
+        nbt.putBoolean("summoned", !nbt.getBoolean("summoned"));
+
+        clone.put(shikigami.getType().toString(), nbt);
+        HeroUtils.getHeroStack(player).set(ShadowHero.SHIKIGAMI, clone);
+    }
+
+    public static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity player, T shikigami) {
         shikigami.setPos(player.getPos().getX(), player.getPos().getY(), player.getPos().getZ());
         shikigami.setOwner(player);
-
         player.getWorld().spawnEntity(shikigami);
+        return shikigami;
     }
 
     /*

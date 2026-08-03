@@ -36,7 +36,7 @@ public class ShadowHero extends Hero {
             .build();
 
     public static Ability SUMMON_KURO = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.summonShikigami(player, new DivineDogKuroEntity(player.getWorld(), player));
+        ShikigamiUtils.toggleShikigami(player, new DivineDogKuroEntity(player.getWorld(), player));
         //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
     }, 1, BoundlessAPI.identifier("summon_kuro"), "Summon Kuro");
 
