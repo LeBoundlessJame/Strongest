@@ -4,38 +4,28 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
-import com.boundless.ability.HeldAbility;
-import com.boundless.action.Action;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.black_sparks_hero.*;
+import com.boundless.hero.black_sparks_hero.BrawlerHUD;
 import com.boundless.registry.AttributeRegistry;
-import com.boundless.registry.ConfigRegistry;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.SoundRegistry;
-import com.boundless.util.*;
+import com.boundless.util.AbilityUtils;
+import com.boundless.util.SummonUtils;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Blocks;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.nbt.NbtCompound;
 
-import java.util.LinkedHashMap;
-import java.util.Optional;
-import java.util.function.BiConsumer;
+import java.util.Map;
+
+import static com.boundless.registry.DataComponentRegistry.registerComponent;
 
 public class ShadowHero extends Hero {
+    public static final ComponentType<Map<String, NbtCompound>> SHIKIGAMI = registerComponent("shikigami", builder -> ComponentType.<Map<String, NbtCompound>>builder().codec(Codec.unboundedMap(Codec.STRING, NbtCompound.CODEC)));
+
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), 0.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
@@ -46,25 +36,9 @@ public class ShadowHero extends Hero {
             .build();
 
     public static Ability SUMMON_KURO = AbilityUtils.ability((player) -> {
-        if (player.getWorld().isClient) return;
-        BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 16);
-        if (blockHitResult == null) return;
 
-        BlockPos pos = blockHitResult.getBlockPos();
-
-        for (int i = 0; i < 64; i++) {
-            if (player.getWorld().getBlockState(pos.up(i)) == Blocks.AIR.getDefaultState()) {
-                pos = pos.up();
-                break;
-            }
-        }
-
-        DivineDogKuroEntity kuroEntity = new DivineDogKuroEntity(player.getWorld(), player);
-        kuroEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
-        kuroEntity.setOwner(player);
-        player.getWorld().spawnEntity(kuroEntity);
-
-        EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
+        SummonUtils.summonDivineDogKuro(player, new DivineDogKuroEntity(player.getWorld(), player));
+        //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
     }, 1, BoundlessAPI.identifier("summon_kuro"), "Summon Kuro");
 
     public ShadowHero() {
@@ -80,8 +54,8 @@ public class ShadowHero extends Hero {
                 .attributes(ATTRIBUTES)
                 .hudRenderer(BrawlerHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
-                .modelIdentifier(BoundlessAPI.modelID("brawler"))
-                .textureIdentifier(BoundlessAPI.textureID("brawler"))
+                .modelIdentifier(BoundlessAPI.modelID("shadow_hero"))
+                .textureIdentifier(BoundlessAPI.textureID("shadow_hero"))
                 .tickHandler(Hero::onHeroTick)
                 .build();
         this.registerHero();
