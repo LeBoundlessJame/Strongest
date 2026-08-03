@@ -1,23 +1,43 @@
 package com.boundless.util;
 
 import com.boundless.hero.shadow_hero.ShadowHero;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ShikigamiUtils {
     public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, T shikigami) {
-        if (player.getWorld().isClient) return;
+        if (player.getWorld().isClient || !(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
         Map<String, NbtCompound> map = HeroUtils.getHeroStack(player).getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
         HashMap<String, NbtCompound> clone = new HashMap<>(map);
-        NbtCompound nbt = (map.get(shikigami.getType().toString()));
+        NbtCompound nbt = map.getOrDefault(shikigami.getType().toString(), new NbtCompound().putBoolean("summoned", false));
 
         if (!nbt.getBoolean("summoned")) {
-            summonShikigami(player, shikigami);
+            Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
+
+            if (entityOptional.isPresent()) {
+                summonShikigami(player, (T) entityOptional.get());
+            } else {
+                T newEntity = summonShikigami(player, shikigami);
+                newEntity.writeNbt(nbt);
+                System.out.println("Writing nbt");
+            }
+        } else {
+            Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
+            if (entityOptional.isPresent()) {
+                Entity entity = entityOptional.get();
+                entity.writeNbt(nbt);
+                entity.discard();
+                System.out.println("Aw hell naw mf just got discarded");
+            }
         }
 
         nbt.putBoolean("summoned", !nbt.getBoolean("summoned"));
