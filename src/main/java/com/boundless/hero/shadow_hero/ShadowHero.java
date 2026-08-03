@@ -10,7 +10,7 @@ import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.util.AbilityUtils;
-import com.boundless.util.SummonUtils;
+import com.boundless.util.ShikigamiUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -36,8 +36,7 @@ public class ShadowHero extends Hero {
             .build();
 
     public static Ability SUMMON_KURO = AbilityUtils.ability((player) -> {
-
-        SummonUtils.summonDivineDogKuro(player, new DivineDogKuroEntity(player.getWorld(), player));
+        ShikigamiUtils.summonShikigami(player, new DivineDogKuroEntity(player.getWorld(), player));
         //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
     }, 1, BoundlessAPI.identifier("summon_kuro"), "Summon Kuro");
 

@@ -1,18 +1,28 @@
 package com.boundless.util;
 
-import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.hero.shadow_hero.ShadowHero;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SummonUtils {
+public class ShikigamiUtils {
+    public static <T extends TameableEntity & Shikigami> void summonShikigami(PlayerEntity player, T shikigami) {
+        if (player.getWorld().isClient) return;
 
+        Map<String, NbtCompound> map = HeroUtils.getHeroStack(player).getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
+        NbtCompound nbt = (map.get(shikigami.getType().toString()));
+        System.out.println(nbt);
+
+        shikigami.setPos(player.getPos().getX(), player.getPos().getY(), player.getPos().getZ());
+        shikigami.setOwner(player);
+
+        player.getWorld().spawnEntity(shikigami);
+    }
+
+    /*
     // Todo: extracting this out to a generic summon method soon
     public static void summonDivineDogKuro(PlayerEntity player, DivineDogKuroEntity shikigami) {
         if (player.getWorld().isClient) return;
@@ -53,4 +63,6 @@ public class SummonUtils {
         player.getWorld().spawnEntity(shikigami);
         return shikigami;
     }
+
+     */
 }

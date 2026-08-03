@@ -1,10 +1,7 @@
 package com.boundless.entity.divine_dogs.kuro;
 
-import com.boundless.BoundlessAPI;
-import com.boundless.entity.divine_dogs.goals.KuroPounceAtTargetGoal;
 import com.boundless.registry.EntityRegistry;
-import com.boundless.util.EffekUtils;
-import dev.kosmx.playerAnim.core.util.Vec3f;
+import com.boundless.util.Shikigami;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,13 +10,15 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.TurtleEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class DivineDogKuroEntity extends WolfEntity {
+public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
     public final DivineDogKuroDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
 
