@@ -1,6 +1,7 @@
 package com.boundless.util;
 
 import com.boundless.hero.shadow_hero.ShadowHero;
+import kotlin.uuid.Uuid;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
@@ -11,6 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ShikigamiUtils {
     public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, T shikigami) {
@@ -18,7 +20,8 @@ public class ShikigamiUtils {
 
         Map<String, NbtCompound> map = HeroUtils.getHeroStack(player).getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
         HashMap<String, NbtCompound> clone = new HashMap<>(map);
-        NbtCompound nbt = map.getOrDefault(shikigami.getType().toString(), new NbtCompound().putBoolean("summoned", false));
+
+        NbtCompound nbt = map.getOrDefault(shikigami.getType().toString(), new NbtCompound());
 
         if (!nbt.getBoolean("summoned")) {
             Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
@@ -28,15 +31,15 @@ public class ShikigamiUtils {
             } else {
                 T newEntity = summonShikigami(player, shikigami);
                 newEntity.writeNbt(nbt);
-                System.out.println("Writing nbt");
             }
         } else {
-            Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
-            if (entityOptional.isPresent()) {
-                Entity entity = entityOptional.get();
-                entity.writeNbt(nbt);
-                entity.discard();
-                System.out.println("Aw hell naw mf just got discarded");
+            UUID uuid = nbt.getUuid("UUID");
+            if (serverWorld.getEntity(uuid) != null) {
+                Entity entity = serverWorld.getEntity(uuid);
+                if (entity != null) {
+                    entity.writeNbt(nbt);
+                    entity.discard();
+                }
             }
         }
 
