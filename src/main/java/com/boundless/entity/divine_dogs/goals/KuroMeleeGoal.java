@@ -14,6 +14,11 @@ public class KuroMeleeGoal extends MeleeAttackGoal {
     }
 
     @Override
+    protected int getTickCount(int ticks) {
+        return ticks / 2;
+    }
+
+    @Override
     public void start() {
         super.start();
     }
