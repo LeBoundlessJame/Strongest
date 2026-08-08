@@ -1,5 +1,6 @@
 package com.boundless.util;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.hero.shadow_hero.ShadowHero;
 import net.minecraft.entity.Entity;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +46,10 @@ public class ShikigamiUtils {
         } else {
             UUID uuid = nbt.getUuid("UUID");
             Entity entity = serverWorld.getEntity(uuid);
+
             if (entity != null) {
+                EffekUtils.playEffect(BoundlessAPI.identifier("divine_dog_summon"), entity, entity.getPos().add(0, 1, 0), new Vec3d(0.15, 0.15, 0.15));
+
                 entity.saveNbt(nbt);
                 entity.discard();
             }
@@ -70,6 +75,7 @@ public class ShikigamiUtils {
         shikigami.setPos(pos.getX(), pos.getY(), pos.getZ());
         shikigami.setOwner(player);
         player.getWorld().spawnEntity(shikigami);
+        EffekUtils.playEffect(BoundlessAPI.identifier("divine_dog_summon"), shikigami, shikigami.getPos(), new Vec3d(0.15, 0.15, 0.15));
 
         return shikigami;
     }
