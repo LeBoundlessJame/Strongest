@@ -1,5 +1,6 @@
 package com.boundless.util;
 
+import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.hero.shadow_hero.ShadowHero;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -8,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class ShikigamiUtils {
+    // Todo: i'm going to come back later and change this to take the raw entity type rather than an instance
     public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, T shikigami) {
         if (player.getWorld().isClient || !(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
@@ -54,6 +58,27 @@ public class ShikigamiUtils {
         shikigami.setPos(player.getX(), player.getY(), player.getZ());
         shikigami.setOwner(player);
         player.getWorld().spawnEntity(shikigami);
+        return shikigami;
+    }
+
+    public <T extends TameableEntity & Shikigami> T summonOnTopBlock(PlayerEntity player, T shikigami) {
+        BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 16);
+        if (blockHitResult == null) return null;
+
+        BlockPos pos = blockHitResult.getBlockPos();
+
+        for (int i = 0; i < 64; i++) {
+            if (player.getWorld().getBlockState(pos.up(i)).isAir()) {
+                pos = pos.up();
+                break;
+            }
+        }
+
+        shikigami.setPos(pos.getX(), pos.getY(), pos.getZ());
+        shikigami.setPos(player.getX(), player.getY(), player.getZ());
+        shikigami.setOwner(player);
+        player.getWorld().spawnEntity(shikigami);
+
         return shikigami;
     }
 }
