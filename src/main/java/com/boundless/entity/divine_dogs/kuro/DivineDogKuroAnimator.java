@@ -11,7 +11,6 @@ public class DivineDogKuroAnimator extends AzEntityAnimator<DivineDogKuroEntity>
     @Override
     public void registerControllers(AzAnimationControllerContainer animationControllerContainer) {
         animationControllerContainer.add(AzAnimationController.builder(this, "base_controller").build());
-        animationControllerContainer.add(AzAnimationController.builder(this, "attack_controller").build());
     }
 
 

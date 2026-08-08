@@ -37,7 +37,7 @@ public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new SitGoal(this));
         this.goalSelector.add(5, new KuroMeleeGoal(this, 1.0, true));
-        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0f));
+        this.goalSelector.add(9, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0f));
         this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(10, new LookAroundGoal(this));
@@ -67,6 +67,11 @@ public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
 
     public void animationTick() {
         if (!this.getWorld().isClient) return;
+
+        if (this.isAttacking()) {
+            this.dispatcher.slash();
+            return;
+        }
 
         if (!this.isInSittingPose()) {
             boolean isMovingOnGround = this.moveAnalysis.isMovingHorizontally() && this.isOnGround();

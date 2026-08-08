@@ -9,23 +9,18 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
 public class KuroMeleeGoal extends MeleeAttackGoal {
-    private final DivineDogKuroEntity kuro;
-
     public KuroMeleeGoal(DivineDogKuroEntity kuro, double speed, boolean pauseWhenMobIdle) {
         super(kuro, speed, pauseWhenMobIdle);
-        this.kuro = kuro;
     }
 
     @Override
     public void start() {
         super.start();
-        kuro.dispatcher.slash();
     }
 
     @Override
     public void stop() {
         super.stop();
-        kuro.dispatcher.idle();
     }
 
     protected void attack(LivingEntity target) {

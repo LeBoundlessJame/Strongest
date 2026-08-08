@@ -10,7 +10,7 @@ public class DivineDogKuroDispatcher {
     private static final AzCommand LAY_IDLE = azLoopedAnim("dog_laying_idle");
     private static final AzCommand WALK = azLoopedAnim("dog_walking");
     private static final AzCommand RUN = azLoopedAnim("dog_running");
-    private static final AzCommand SLASH = AzCommand.create("attack_controller", "dog_slash", AzPlayBehaviors.LOOP);
+    private static final AzCommand SLASH = AzCommand.create("base_controller", "dog_slash", AzPlayBehaviors.PLAY_ONCE);
 
     public DivineDogKuroDispatcher(DivineDogKuroEntity animatable) {
         this.entity = animatable;
