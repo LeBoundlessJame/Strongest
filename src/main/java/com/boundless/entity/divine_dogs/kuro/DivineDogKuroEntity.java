@@ -1,5 +1,6 @@
 package com.boundless.entity.divine_dogs.kuro;
 
+import com.boundless.entity.divine_dogs.goals.KuroMeleeGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
 import mod.azure.azurelib.common.util.MoveAnalysis;
@@ -8,14 +9,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.world.World;
 
 public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
@@ -39,7 +36,7 @@ public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
+        this.goalSelector.add(5, new KuroMeleeGoal(this, 1.0, true));
         this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0f));
         this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
