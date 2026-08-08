@@ -68,7 +68,6 @@ public class ShikigamiUtils {
         }
 
         shikigami.setPos(pos.getX(), pos.getY(), pos.getZ());
-        shikigami.setPos(player.getX(), player.getY(), player.getZ());
         shikigami.setOwner(player);
         player.getWorld().spawnEntity(shikigami);
 
