@@ -33,7 +33,7 @@ public class KuroMeleeGoal extends MeleeAttackGoal {
             this.resetCooldown();
             this.mob.swingHand(Hand.MAIN_HAND);
             this.mob.tryAttack(target);
-            EffekUtils.playEffect(BoundlessAPI.identifier("claw_slashes"), target, target.getPos().add(0, 2, 0), new Vec3d(target.getHeight() * 0.3, target.getHeight() * 0.3, target.getHeight() * 0.3));
+            EffekUtils.playEffect(BoundlessAPI.identifier("claw_slashes"), target, target.getPos().add(0, 1, 0), new Vec3d(target.getHeight() * 0.3, target.getHeight() * 0.3, target.getHeight() * 0.3));
         }
     }
 }
