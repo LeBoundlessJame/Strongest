@@ -1,23 +1,36 @@
 package com.boundless.entity.divine_dogs.kuro;
 
-import com.boundless.entity.divine_dogs.goals.DivineDogMeleeGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
 import mod.azure.azurelib.common.util.MoveAnalysis;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.InventoryOwner;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.ai.brain.MemoryModuleType;
+import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
-public class DivineDogShiroEntity extends WolfEntity implements Shikigami {
+import java.util.Objects;
+
+public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikigami, InventoryOwner {
     public final DivineDogDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
+    private final SimpleInventory inventory = new SimpleInventory(1);
 
     public DivineDogShiroEntity(EntityType<? extends WolfEntity> entityType, World world) {
         super(entityType, world);
@@ -34,28 +47,34 @@ public class DivineDogShiroEntity extends WolfEntity implements Shikigami {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(5, new DivineDogMeleeGoal<>(this, 1.0, true));
-        this.goalSelector.add(9, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0f));
-        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
-        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(10, new LookAroundGoal(this));
-        this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
-        this.targetSelector.add(2, new AttackWithOwnerGoal(this));
-        this.targetSelector.add(3, new RevengeGoal(this).setGroupRevenge());
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+        super.initGoals();
     }
 
     @Override
-    public boolean shouldAngerAt(LivingEntity entity) {
-        return super.shouldAngerAt(entity);
-    }
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack playerStack = player.getStackInHand(hand);
+        ItemStack shiroHeldStack = this.getStackInHand(Hand.MAIN_HAND);
 
-    @Override
-    public boolean shouldTryTeleportToOwner() {
-        LivingEntity livingEntity = this.getOwner();
-        return livingEntity != null && this.squaredDistanceTo(this.getOwner()) >= (2048);
+        if (shiroHeldStack.isEmpty() && !playerStack.isEmpty()) {
+            ItemStack stack = playerStack.copyWithCount(1);
+            this.setStackInHand(Hand.MAIN_HAND, stack);
+            this.decrementStackUnlessInCreative(player, playerStack);
+            this.getWorld().playSoundFromEntity(player, this, SoundEvents.ENTITY_ALLAY_ITEM_GIVEN, SoundCategory.NEUTRAL, 2.0F, 1.0F);
+            return ActionResult.SUCCESS;
+        } else if (!shiroHeldStack.isEmpty() && hand == Hand.MAIN_HAND && playerStack.isEmpty()) {
+            this.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            this.getWorld().playSoundFromEntity(player, this, SoundEvents.ENTITY_ALLAY_ITEM_TAKEN, SoundCategory.NEUTRAL, 2.0F, 1.0F);
+            this.swingHand(Hand.MAIN_HAND);
+
+            for (ItemStack itemStack4 : this.getInventory().clearToList()) {
+                LookTargetUtil.give(this, itemStack4, this.getPos());
+            }
+
+            player.giveItemStack(shiroHeldStack);
+            return ActionResult.SUCCESS;
+        }
+
+        return super.interactMob(player, hand);
     }
 
     @Override
@@ -65,41 +84,54 @@ public class DivineDogShiroEntity extends WolfEntity implements Shikigami {
         this.animationTick();
     }
 
+    @Override
     public void animationTick() {
-        if (!this.getWorld().isClient) return;
-
-        if (this.isAttacking()) {
-            this.dispatcher.slash();
-            return;
-        }
-
-        if (!this.isInSittingPose()) {
-            boolean isMovingOnGround = this.moveAnalysis.isMovingHorizontally() && this.isOnGround();
-
-            if (isMovingOnGround) {
-                if (this.hasAngerTime()) {
-                    this.dispatcher.run();
-                } else {
-                    this.dispatcher.walk();
-                }
-            } else {
-                this.dispatcher.idle();
-            }
-        } else {
-            this.dispatcher.layIdle();
-        }
+        super.animationTick();
     }
 
-    // Taming overrides health value, so I prevent that here (you start with the dog)
     @Override
-    protected void updateAttributesForTamed() {}
+    public boolean canPickUpLoot() {
+        return this.isHoldingItem();
+    }
 
-    @Override
-    public boolean canBreedWith(AnimalEntity other) {
-        return false;
+    public boolean isHoldingItem() {
+        return !this.getStackInHand(Hand.MAIN_HAND).isEmpty();
     }
 
     public static DefaultAttributeContainer.Builder createWolfAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5).add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0).add(EntityAttributes.GENERIC_SCALE, 1.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64).add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 64);
+    }
+
+    @Override
+    public SimpleInventory getInventory() {
+        return this.inventory;
+    }
+
+    @Override
+    protected void loot(ItemEntity item) {
+        InventoryOwner.pickUpItem(this, this, item);
+    }
+
+    @Override
+    public boolean canGather(ItemStack stack) {
+        ItemStack itemStack = this.getStackInHand(Hand.MAIN_HAND);
+        return !itemStack.isEmpty()
+                && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)
+                && this.inventory.canInsert(stack)
+                && this.areItemsEqual(itemStack, stack);
+    }
+
+    private boolean areItemsEqual(ItemStack stack, ItemStack stack2) {
+        return ItemStack.areItemsEqual(stack, stack2) && !this.areDifferentPotions(stack, stack2);
+    }
+
+    private boolean areDifferentPotions(ItemStack stack, ItemStack stack2) {
+        PotionContentsComponent potionContentsComponent = stack.get(DataComponentTypes.POTION_CONTENTS);
+        PotionContentsComponent potionContentsComponent2 = stack2.get(DataComponentTypes.POTION_CONTENTS);
+        return !Objects.equals(potionContentsComponent, potionContentsComponent2);
+    }
+
+    private void decrementStackUnlessInCreative(PlayerEntity player, ItemStack stack) {
+        stack.decrementUnlessCreative(1, player);
     }
 }
