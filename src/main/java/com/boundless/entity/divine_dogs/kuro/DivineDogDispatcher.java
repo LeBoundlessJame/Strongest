@@ -2,9 +2,10 @@ package com.boundless.entity.divine_dogs.kuro;
 
 import mod.azure.azurelib.common.animation.dispatch.command.AzCommand;
 import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
+import net.minecraft.entity.LivingEntity;
 
 public class DivineDogDispatcher {
-    private final DivineDogKuroEntity entity;
+    private final LivingEntity entity;
 
     private static final AzCommand IDLE = azLoopedAnim("dog_idle");
     private static final AzCommand LAY_IDLE = azLoopedAnim("dog_lay_idle");
@@ -12,7 +13,7 @@ public class DivineDogDispatcher {
     private static final AzCommand RUN = azLoopedAnim("dog_run");
     private static final AzCommand SLASH = AzCommand.create("base_controller", "dog_slash", AzPlayBehaviors.LOOP);
 
-    public DivineDogDispatcher(DivineDogKuroEntity animatable) {
+    public DivineDogDispatcher(LivingEntity animatable) {
         this.entity = animatable;
     }
 

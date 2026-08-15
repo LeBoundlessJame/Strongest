@@ -1,16 +1,14 @@
 package com.boundless.entity.divine_dogs.goals;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
-import com.boundless.util.EffekUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
 
-public class KuroMeleeGoal extends MeleeAttackGoal {
-    public KuroMeleeGoal(DivineDogKuroEntity kuro, double speed, boolean pauseWhenMobIdle) {
-        super(kuro, speed, pauseWhenMobIdle);
+public class DivineDogMeleeGoal<T extends WolfEntity> extends MeleeAttackGoal {
+    public DivineDogMeleeGoal(T divineDog, double speed, boolean pauseWhenMobIdle) {
+        super(divineDog, speed, pauseWhenMobIdle);
     }
 
     @Override

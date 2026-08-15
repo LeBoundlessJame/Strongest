@@ -11,10 +11,9 @@ import net.minecraft.util.Identifier;
 
 public class DivineDogEntityRenderer<T extends WolfEntity> extends AzEntityRenderer<T> {
     private static final Identifier GEO = BoundlessAPI.identifier("geo/entity/divine_dog.geo.json");
-    private static final Identifier TEX = BoundlessAPI.identifier("textures/entity/divine_dog_black.png");
 
-    public DivineDogEntityRenderer(EntityRendererFactory.Context context) {
-        super(AzEntityRendererConfig.<T>builder(GEO, TEX).setAnimatorProvider(DivineDogAnimator::new).build(), context);
+    public DivineDogEntityRenderer(EntityRendererFactory.Context context, Identifier texture) {
+        super(AzEntityRendererConfig.<T>builder(GEO, texture).setAnimatorProvider(DivineDogAnimator::new).build(), context);
     }
 
 }

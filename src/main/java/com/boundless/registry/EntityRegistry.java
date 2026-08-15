@@ -2,6 +2,7 @@ package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
+import com.boundless.entity.divine_dogs.kuro.DivineDogShiroEntity;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
@@ -19,6 +20,7 @@ public class EntityRegistry {
     public static final EntityType<OpenEntity> OPEN_ENTITY = registerEntityType("open", OpenEntity::new, 1, 1);
     public static final EntityType<MalevolentShrineEntity> MALEVOLENT_SHRINE = registerEntityType("malevolent_shrine", MalevolentShrineEntity::new, 8, 8);
     public static final EntityType<DivineDogKuroEntity> DIVINE_DOG_KURO = registerEntityType("divine_dog_kuro", DivineDogKuroEntity::new, 0.6F, 0.85F, 0.68F);
+    public static final EntityType<DivineDogShiroEntity> DIVINE_DOG_SHIRO = registerEntityType("divine_dog_shiro", DivineDogShiroEntity::new, 0.6F, 0.85F, 0.68F);
 
     public static <T extends Entity> EntityType<T> registerEntityType(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.identifier(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));
@@ -30,6 +32,7 @@ public class EntityRegistry {
 
     public static void registerAttributes() {
         FabricDefaultAttributeRegistry.register(DIVINE_DOG_KURO, DivineDogKuroEntity.createWolfAttributes());
+        FabricDefaultAttributeRegistry.register(DIVINE_DOG_SHIRO, DivineDogShiroEntity.createWolfAttributes());
     }
 
     public static void initialize() {

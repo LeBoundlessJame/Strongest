@@ -15,18 +15,18 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
-public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
+public class DivineDogShiroEntity extends WolfEntity implements Shikigami {
     public final DivineDogDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
 
-    public DivineDogKuroEntity(EntityType<? extends WolfEntity> entityType, World world) {
+    public DivineDogShiroEntity(EntityType<? extends WolfEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new DivineDogDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
     }
 
-    public DivineDogKuroEntity(World world, PlayerEntity owner) {
-        super(EntityRegistry.DIVINE_DOG_KURO, world);
+    public DivineDogShiroEntity(World world, PlayerEntity owner) {
+        super(EntityRegistry.DIVINE_DOG_SHIRO, world);
         this.dispatcher = new DivineDogDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
         this.setOwner(owner);
@@ -36,7 +36,7 @@ public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(5, new DivineDogMeleeGoal(this, 1.0, true));
+        this.goalSelector.add(5, new DivineDogMeleeGoal<>(this, 1.0, true));
         this.goalSelector.add(9, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0f));
         this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
@@ -100,6 +100,6 @@ public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
     }
 
     public static DefaultAttributeContainer.Builder createWolfAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.6).add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0).add(EntityAttributes.GENERIC_SCALE, 1.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64).add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 64);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5).add(EntityAttributes.GENERIC_MAX_HEALTH, 100.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0).add(EntityAttributes.GENERIC_SCALE, 1.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64).add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 64);
     }
 }
