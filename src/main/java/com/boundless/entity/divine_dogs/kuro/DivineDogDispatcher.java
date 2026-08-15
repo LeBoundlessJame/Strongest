@@ -3,7 +3,7 @@ package com.boundless.entity.divine_dogs.kuro;
 import mod.azure.azurelib.common.animation.dispatch.command.AzCommand;
 import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 
-public class DivineDogKuroDispatcher {
+public class DivineDogDispatcher {
     private final DivineDogKuroEntity entity;
 
     private static final AzCommand IDLE = azLoopedAnim("dog_idle");
@@ -12,7 +12,7 @@ public class DivineDogKuroDispatcher {
     private static final AzCommand RUN = azLoopedAnim("dog_run");
     private static final AzCommand SLASH = AzCommand.create("base_controller", "dog_slash", AzPlayBehaviors.LOOP);
 
-    public DivineDogKuroDispatcher(DivineDogKuroEntity animatable) {
+    public DivineDogDispatcher(DivineDogKuroEntity animatable) {
         this.entity = animatable;
     }
 

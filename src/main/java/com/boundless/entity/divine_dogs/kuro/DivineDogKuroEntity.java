@@ -13,22 +13,21 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
 public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
-    public final DivineDogKuroDispatcher dispatcher;
+    public final DivineDogDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
 
     public DivineDogKuroEntity(EntityType<? extends WolfEntity> entityType, World world) {
         super(entityType, world);
-        this.dispatcher = new DivineDogKuroDispatcher(this);
+        this.dispatcher = new DivineDogDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
     }
 
     public DivineDogKuroEntity(World world, PlayerEntity owner) {
         super(EntityRegistry.DIVINE_DOG_KURO, world);
-        this.dispatcher = new DivineDogKuroDispatcher(this);
+        this.dispatcher = new DivineDogDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
         this.setOwner(owner);
     }
