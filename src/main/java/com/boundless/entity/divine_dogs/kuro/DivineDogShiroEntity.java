@@ -1,8 +1,11 @@
 package com.boundless.entity.divine_dogs.kuro;
 
+import com.boundless.entity.divine_dogs.goals.ReturnFoundItemGoal;
 import com.boundless.entity.divine_dogs.goals.SearchForItemGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import lombok.Getter;
+import lombok.Setter;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
@@ -31,6 +34,8 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
     public final DivineDogDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
     private final SimpleInventory inventory = new SimpleInventory(1);
+    @Setter @Getter
+    public boolean hasItemToReturn = false;
 
     public DivineDogShiroEntity(EntityType<? extends WolfEntity> entityType, World world) {
         super(entityType, world);
@@ -48,7 +53,8 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(6, new SearchForItemGoal(this));
+        this.goalSelector.add(6, new ReturnFoundItemGoal(this));
+        this.goalSelector.add(7, new SearchForItemGoal(this));
     }
 
     @Override
@@ -111,6 +117,10 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
     @Override
     protected void loot(ItemEntity item) {
         InventoryOwner.pickUpItem(this, this, item);
+
+        if (!this.getInventory().isEmpty()) {
+            this.setHasItemToReturn(true);
+        }
     }
 
     @Override
