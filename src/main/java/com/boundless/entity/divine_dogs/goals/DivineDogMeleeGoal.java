@@ -13,7 +13,7 @@ public class DivineDogMeleeGoal<T extends WolfEntity> extends MeleeAttackGoal {
 
     @Override
     protected int getTickCount(int ticks) {
-        return ticks / 2;
+        return ticks;
     }
 
     @Override
