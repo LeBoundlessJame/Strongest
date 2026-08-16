@@ -21,6 +21,7 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -99,6 +100,19 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
     @Override
     public boolean canPickUpLoot() {
         return this.isHoldingItem();
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        this.writeInventory(nbt, this.getRegistryManager());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.readInventory(nbt, this.getRegistryManager());
+        this.hasItemToReturn = !this.getInventory().isEmpty();
     }
 
     public boolean isHoldingItem() {
