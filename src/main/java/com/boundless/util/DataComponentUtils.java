@@ -24,11 +24,6 @@ public class DataComponentUtils {
         heroStack.set(mapComponent, map);
     }
 
-    public static void toggleBoolean(PlayerEntity player, ComponentType<Boolean> component) {
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        stack.set(component, !stack.getOrDefault(component, false));
-    }
-
     public static void incrementInt(ComponentType<Integer> component, PlayerEntity player, int amount) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, stack.getOrDefault(component, 0) + amount);

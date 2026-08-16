@@ -51,7 +51,7 @@ public class HeroArmor extends ArmorItem {
 
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-        if (entity instanceof PlayerEntity player && player.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof HeroArmor heroArmor) {
+        if (entity instanceof PlayerEntity player && player.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof HeroArmor) {
             if (slot == 2 && !heroData.getTickHandlers().isEmpty()) {
                 for (Consumer<PlayerEntity> tickHandler : heroData.getTickHandlers()) {
                     tickHandler.accept(player);

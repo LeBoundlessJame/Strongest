@@ -38,7 +38,6 @@ public class BrawlerHero extends Hero {
     public static Ability MEDIUM_ATTACK = AbilityUtils.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
     public static Ability SPIN_KICK = AbilityUtils.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
     public static Ability BLACK_FLASH = AbilityUtils.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
-    public static Ability MANJI_KICK = AbilityUtils.ability(BrawlerMelee::manjiKick, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("manji_kick"), "Manji Kick");
 
     public static Ability LIGHT_ATTACK = AbilityUtils.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
     public static Ability DIVERGENT_FIST = AbilityUtils.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
@@ -46,7 +45,6 @@ public class BrawlerHero extends Hero {
     public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one", "Dash (Hold To Leap)");
 
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
-    public static ComponentType<Long> MINIGAME_START_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_start_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_END_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_end_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<String> TARGET_MINIGAME_COMBO = DataComponentRegistry.registerComponent("target_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));
     public static ComponentType<String> CURRENT_MINIGAME_COMBO = DataComponentRegistry.registerComponent("current_minigame_combo", builder -> ComponentType.<String>builder().codec(Codec.STRING));

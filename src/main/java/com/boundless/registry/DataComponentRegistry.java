@@ -30,25 +30,5 @@ public class DataComponentRegistry {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), builder.apply(ComponentType.builder()).build());
     }
 
-    public static <T> ComponentType<Boolean> registerBoolean(String name) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<Boolean>builder().codec(Codec.BOOL).build());
-    }
-
-    public static <T> ComponentType<Long> registerLong(String name) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<Long>builder().codec(Codec.LONG).build());
-    }
-
-    public static <T> ComponentType<Integer> registerInt(String name) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<Integer>builder().codec(Codec.INT).build());
-    }
-
-    public static <T> ComponentType<String> registerString(String name) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<String>builder().codec(Codec.STRING).build());
-    }
-
-    public static <T> ComponentType<Float> registerFloat(String name) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), ComponentType.<Float>builder().codec(Codec.FLOAT).build());
-    }
-
     public static void initialize() {}
 }

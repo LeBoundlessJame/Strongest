@@ -33,10 +33,6 @@ public class AbilityUtils {
         return ability(abilityLogic, cooldown, abilityID, abilityIcon, null);
     }
 
-    public static HeldAbility heldAbility(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon, int requiredHoldTime, String keybind, String displayString) {
-        return new HeldAbility(abilityLogic, null, cooldown, 22, 22, abilityIcon, abilityID, false, requiredHoldTime, keybind, displayString);
-    }
-
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> updatedCooldownData = DataComponentUtils.updatedCooldownMap(heroStack, abilityID, player.getWorld().getTime() + cooldownTime);

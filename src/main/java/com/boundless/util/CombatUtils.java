@@ -60,26 +60,6 @@ public class CombatUtils {
         }
     }
 
-    public static void knockbackAttack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
-        heroAction.repositionBox();
-        if (heroAction.getOwner() == null) return;
-        PlayerEntity player = (PlayerEntity) heroAction.getOwner();
-
-        for (LivingEntity target : heroAction.getWorld().getEntitiesByClass(LivingEntity.class, heroAction.getBoundingBox(), entity -> true)) {
-            if (target != player) {
-                impactVisual.ifPresent((identifier) -> playImpactVisual(player, target, impactVisual.get()));
-                target.damage(target.getDamageSources().generic(), damage);
-                CombatUtils.uppercutKnockback(player, target);
-            }
-        }
-    }
-
-    public static void knockback(PlayerEntity attacker, LivingEntity target, float strength) {
-        Vec3d attackerRotation = attacker.getRotationVector();
-        target.takeKnockback(strength, attackerRotation.x * -1, attackerRotation.z * -1);
-        target.velocityModified = true;
-    }
-
     // Bypasses knockback reduction
     public static void strongKnockback(PlayerEntity player, LivingEntity target, float strength) {
         target.setVelocity(player.getRotationVector().x * strength, 1, player.getRotationVector().z * strength);

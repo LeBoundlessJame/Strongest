@@ -11,27 +11,6 @@ import java.util.function.BiConsumer;
 
 public class ActionUtils {
 
-    public static Action action(LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks) {
-        return Action.builder().scheduledTasks(scheduledTasks).build();
-    }
-
-    public static void performDelayedAction(PlayerEntity player, BiConsumer<PlayerEntity, HeroActionEntity> task, int ticksFromNow) {
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-        tasks.put(ticksFromNow, task);
-        Action action = Action.builder().scheduledTasks(tasks).build();
-        performAction(player, action);
-    }
-
-    public static LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> repeatTask(BiConsumer<PlayerEntity, HeroActionEntity> task, int startTick, int endTick) {
-        LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> taskMap = new LinkedHashMap<>();
-
-        for (int i = startTick; i < endTick; i++) {
-            taskMap.put(i, task);
-        }
-
-        return taskMap;
-    }
-
     public static Action singleAction(int taskTick, BiConsumer<PlayerEntity, HeroActionEntity> taskLogic) {
         return singleAction(taskTick, taskLogic, 4, 2, 2);
     }
@@ -40,10 +19,6 @@ public class ActionUtils {
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks = new LinkedHashMap<>();
         scheduledTasks.put(taskTick, taskLogic);
         return Action.builder().scheduledTasks(scheduledTasks).hitboxWidthX(widthX).hitboxHeight(height).hitboxWidthZ(widthZ).build();
-    }
-
-    public static Action multiAction(LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> scheduledTasks) {
-        return Action.builder().scheduledTasks(scheduledTasks).build();
     }
 
     public static void performAction(PlayerEntity player, Action action) {

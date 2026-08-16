@@ -42,13 +42,13 @@ public class HeroHUD {
         }
 
         if (client.player.hasStatusEffect(StatusEffectRegistry.CINEMATIC_BARS)) {
-            drawCinematicBars(client, context);
+            drawCinematicBars(context);
         } else {
             renderKeybindAbilities(client, context);
         }
     }
 
-    public static void drawCinematicBars(MinecraftClient client, DrawContext context) {
+    public static void drawCinematicBars(DrawContext context) {
         MatrixStack matrices = context.getMatrices();
         matrices.push();
         matrices.translate(0, 0, 10000);
