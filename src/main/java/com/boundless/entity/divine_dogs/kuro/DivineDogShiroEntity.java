@@ -1,5 +1,6 @@
 package com.boundless.entity.divine_dogs.kuro;
 
+import com.boundless.entity.divine_dogs.goals.SearchForItemGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
 import mod.azure.azurelib.common.util.MoveAnalysis;
@@ -9,7 +10,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.InventoryOwner;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -48,6 +48,7 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
     @Override
     protected void initGoals() {
         super.initGoals();
+        this.goalSelector.add(6, new SearchForItemGoal(this));
     }
 
     @Override
