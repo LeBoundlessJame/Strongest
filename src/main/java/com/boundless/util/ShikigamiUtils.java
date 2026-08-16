@@ -72,7 +72,7 @@ public class ShikigamiUtils {
             }
         }
 
-        shikigami.setPos(pos.getX(), pos.getY(), pos.getZ());
+        shikigami.setPosition(pos.toCenterPos());
         shikigami.setOwner(player);
         player.getWorld().spawnEntity(shikigami);
         EffekUtils.playEffect(BoundlessAPI.identifier("divine_dog_summon"), shikigami, shikigami.getPos(), new Vec3d(0.15, 0.15, 0.15));
