@@ -24,7 +24,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,6 +53,52 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
         this.dispatcher = new GamaDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
         this.setOwnerUuid(owner.getUuid());
+    }
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        if (this.getWorld().isClient) return ActionResult.SUCCESS;
+        if (this.hasPassengers() || this.getOwner() != player) return ActionResult.PASS;
+
+        player.startRiding(this);
+        return ActionResult.SUCCESS;
+    }
+
+    @Override
+    protected void tickControlled(PlayerEntity controllingPlayer, Vec3d movementInput) {
+        super.tickControlled(controllingPlayer, movementInput);
+
+        Vec2f rotation = this.getControlledRotation(controllingPlayer);
+        this.setRotation(rotation.y, rotation.x);
+        this.prevYaw = this.bodyYaw = this.headYaw = this.getYaw();
+    }
+
+    private Vec2f getControlledRotation(LivingEntity controllingPassenger) {
+        return new Vec2f(controllingPassenger.getPitch() * 0.5F, controllingPassenger.getYaw());
+    }
+
+    @Override
+    protected Vec3d getControlledMovementInput(PlayerEntity controllingPlayer, Vec3d movementInput) {
+        float sideways = controllingPlayer.sidewaysSpeed * 0.5F;
+        float forward = controllingPlayer.forwardSpeed;
+
+        if (forward <= 0.0F) {
+            forward *= 0.25F;
+        }
+
+        return new Vec3d(sideways, 0.0, forward);
+    }
+
+    @Override
+    protected float getSaddledSpeed(PlayerEntity controllingPlayer) {
+        return (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+    }
+
+    @Nullable
+    @Override
+    public LivingEntity getControllingPassenger() {
+        if (this.getFirstPassenger() instanceof PlayerEntity playerEntity) return playerEntity;
+        return null;
     }
 
     @Override
@@ -155,12 +206,6 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
     }
 
     public static DefaultAttributeContainer.Builder createFrogAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0)
-                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
-                .add(EntityAttributes.GENERIC_SCALE, 2.0)
-                .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 15f);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f).add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0).add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0).add(EntityAttributes.GENERIC_SCALE, 2.0).add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 15f);
     }
 }
