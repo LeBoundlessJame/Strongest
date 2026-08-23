@@ -1,16 +1,26 @@
 package com.boundless.entity.gama;
 
-import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
 import com.boundless.util.Shikigami;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Tameable;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.FrogEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class GamaEntity extends FrogEntity implements Shikigami {
+import java.util.Optional;
+import java.util.UUID;
+
+public class GamaEntity extends FrogEntity implements Shikigami, Tameable {
+    private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+
     public final GamaDispatcher dispatcher;
 
     public GamaEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -24,10 +34,42 @@ public class GamaEntity extends FrogEntity implements Shikigami {
         this.animationTick();
     }
 
-    public void animationTick() {
+    private void animationTick() {
         if (!this.getWorld().isClient) return;
-
         this.dispatcher.idle();
+    }
+
+    @Nullable
+    @Override
+    public UUID getOwnerUuid() {
+        return this.dataTracker.get(OWNER_UUID).orElse(null);
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(OWNER_UUID, Optional.empty());
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        UUID owner = this.getOwnerUuid();
+        if (owner != null) {
+            nbt.putUuid("Owner", owner);
+        }
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        if (nbt.containsUuid("Owner")) {
+            this.setOwnerUuid(nbt.getUuid("Owner"));
+        }
+    }
+
+    public void setOwnerUuid(@Nullable UUID uuid) {
+        this.dataTracker.set(OWNER_UUID, Optional.ofNullable(uuid));
     }
 
     public static DefaultAttributeContainer.Builder createFrogAttributes() {
