@@ -6,6 +6,7 @@ import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
+import com.boundless.entity.gama.GamaEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
@@ -46,10 +47,16 @@ public class ShadowHero extends Hero {
         //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
     }, 1, BoundlessAPI.identifier("summon_shiro"), "Summon Shiro");
 
+    public static Ability SUMMON_GAMA = AbilityUtils.ability((player) -> {
+        ShikigamiUtils.toggleShikigami(player, new GamaEntity(player.getWorld(), player));
+    }, 1, BoundlessAPI.identifier("summon_gama"), "Summon Gama");
+
+
     public ShadowHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.boundless.ability_one", ShadowHero.SUMMON_KURO)
                 .ability("key.boundless.ability_two", ShadowHero.SUMMON_SHIRO)
+                .ability("key.boundless.ability_three", ShadowHero.SUMMON_GAMA)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .build();
 

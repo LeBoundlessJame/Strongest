@@ -1,6 +1,9 @@
 package com.boundless.entity.gama;
 
+import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
+import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Tameable;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -11,21 +14,32 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.FrogEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class GamaEntity extends FrogEntity implements Shikigami, Tameable {
+public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
     public final GamaDispatcher dispatcher;
 
-    public GamaEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public GamaEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new GamaDispatcher(this);
+    }
+
+    public GamaEntity(World world, PlayerEntity owner) {
+        super(EntityRegistry.GAMA, world);
+        this.dispatcher = new GamaDispatcher(this);
+        this.setOwnerUuid(owner.getUuid());
     }
 
     @Override
@@ -66,6 +80,16 @@ public class GamaEntity extends FrogEntity implements Shikigami, Tameable {
         if (nbt.containsUuid("Owner")) {
             this.setOwnerUuid(nbt.getUuid("Owner"));
         }
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return false;
+    }
+
+    @Override
+    public @Nullable PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return null;
     }
 
     public void setOwnerUuid(@Nullable UUID uuid) {
