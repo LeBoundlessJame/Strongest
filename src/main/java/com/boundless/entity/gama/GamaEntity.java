@@ -68,7 +68,10 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
 
     private void animationTick() {
         if (!this.getWorld().isClient) return;
-        this.dispatcher.idle();
+
+        if (this.isOnGround()) {
+            this.dispatcher.idle();
+        }
     }
 
     @Nullable

@@ -26,12 +26,12 @@ public class ToadLeapGoal extends Goal {
 
     @Override
     public void start() {
-        Vec3d direction = toad.getRotationVector();
+        toad.dispatcher.hop();
 
+        Vec3d direction = toad.getRotationVector();
         toad.setVelocity(direction.x * 0.8, 0.6, direction.z * 0.8);
 
         toad.velocityModified = true;
         cooldown = 15;
-
     }
 }
