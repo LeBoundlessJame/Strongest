@@ -281,7 +281,7 @@
 				}
 			}
 		},
-		"gama_idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
@@ -313,7 +313,7 @@
 							"vector": [1, 1, 1]
 						},
 						"1.5": {
-							"vector": [1.015, 1.015, 1.015],
+							"vector": [1.025, 1.025, 1.025],
 							"easing": "linear"
 						},
 						"3.0": {

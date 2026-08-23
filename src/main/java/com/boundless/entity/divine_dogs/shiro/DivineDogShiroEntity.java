@@ -121,10 +121,6 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
         return !this.getStackInHand(Hand.MAIN_HAND).isEmpty();
     }
 
-    public static DefaultAttributeContainer.Builder createWolfAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5).add(EntityAttributes.GENERIC_MAX_HEALTH, 435.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0).add(EntityAttributes.GENERIC_SCALE, 1.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64).add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 64);
-    }
-
     @Override
     public SimpleInventory getInventory() {
         return this.inventory;
@@ -160,5 +156,15 @@ public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikiga
 
     private void decrementStackUnlessInCreative(PlayerEntity player, ItemStack stack) {
         stack.decrementUnlessCreative(1, player);
+    }
+
+    public static DefaultAttributeContainer.Builder createWolfAttributes() {
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 435.0)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0)
+                .add(EntityAttributes.GENERIC_SCALE, 1.5)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64)
+                .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 64);
     }
 }
