@@ -35,6 +35,7 @@ public class GamaEntity extends FrogEntity implements Shikigami {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.0)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0)
-                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0);
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
+                .add(EntityAttributes.GENERIC_SCALE, 2.0);
     }
 }
