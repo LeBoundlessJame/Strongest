@@ -8,6 +8,8 @@ public class GamaDispatcher {
     private final LivingEntity entity;
 
     private static final AzCommand IDLE = azLoopedAnim("idle");
+    private static final AzCommand HOP = AzCommand.create("base_controller",
+            "hop", AzPlayBehaviors.PLAY_ONCE);
 
     public GamaDispatcher(LivingEntity animatable) {
         this.entity = animatable;
@@ -16,6 +18,11 @@ public class GamaDispatcher {
     public void idle() {
         IDLE.sendForEntity(entity);
     }
+
+    public void hop() {
+        HOP.sendForEntity(entity);
+    }
+
 
     public static AzCommand azLoopedAnim(String animation) {
         return AzCommand.create("base_controller", animation, AzPlayBehaviors.LOOP);
