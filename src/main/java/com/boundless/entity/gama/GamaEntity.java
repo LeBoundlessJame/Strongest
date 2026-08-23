@@ -5,9 +5,7 @@ import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Tameable;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -92,6 +90,11 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
     @Override
     protected float getSaddledSpeed(PlayerEntity controllingPlayer) {
         return (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+    }
+
+    @Override
+    protected Vec3d getPassengerAttachmentPos(Entity passenger, EntityDimensions dimensions, float scaleFactor) {
+        return getPassengerAttachmentPos(this, passenger, dimensions.attachments()).add(new Vec3d(0.0f, -0.4f * scaleFactor, -0.3f * scaleFactor).rotateY(-this.getYaw() * MathHelper.RADIANS_PER_DEGREE));
     }
 
     @Nullable

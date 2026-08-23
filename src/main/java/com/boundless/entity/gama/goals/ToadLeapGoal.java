@@ -14,7 +14,7 @@ public class ToadLeapGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        return toad.isOnGround() && toad.getRandom().nextInt(20) == 0;
+        return toad.isOnGround() && !toad.hasPassengers() && toad.getRandom().nextInt(20) == 0;
     }
 
     @Override
