@@ -14,12 +14,14 @@ public class ToadLeapGoal extends Goal {
 
     @Override
     public boolean canStart() {
+        return toad.isOnGround() && toad.getRandom().nextInt(20) == 0;
+    }
+
+    @Override
+    public void tick() {
         if (cooldown > 0) {
             cooldown--;
-            return false;
         }
-
-        return toad.isOnGround() && toad.getRandom().nextInt(20) == 0;
     }
 
     @Override
@@ -30,5 +32,6 @@ public class ToadLeapGoal extends Goal {
 
         toad.velocityModified = true;
         cooldown = 15;
+
     }
 }
