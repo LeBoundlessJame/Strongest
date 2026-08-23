@@ -7,6 +7,7 @@ import com.boundless.ability.BasicAbilities;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
 import com.boundless.entity.gama.GamaEntity;
+import com.boundless.entity.gama.abilities.GamaGrapple;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
@@ -53,6 +54,9 @@ public class ShadowHero extends Hero {
         ShikigamiUtils.toggleShikigami(player, new GamaEntity(player.getWorld(), player));
     }, 1, BoundlessAPI.identifier("summon_gama"), "Summon Gama");
 
+    public static Ability GRAPPLE = AbilityUtils.ability((player) -> {
+        GamaGrapple.grappleLogic(player);
+    }, 2, BoundlessAPI.identifier("grapple"), "Grapple");
 
     public ShadowHero() {
         AbilityLoadout loadout = AbilityLoadout.builder()
@@ -60,6 +64,7 @@ public class ShadowHero extends Hero {
                 .ability("key.boundless.ability_two", ShadowHero.SUMMON_SHIRO)
                 .ability("key.boundless.ability_three", ShadowHero.SUMMON_GAMA)
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
+                .ability("key.attack", GRAPPLE)
                 .build();
 
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
