@@ -1,7 +1,9 @@
-package com.boundless.entity.divine_dogs.kuro;
+package com.boundless.entity.divine_dogs.shiro;
 
 import com.boundless.entity.divine_dogs.goals.ReturnFoundItemGoal;
 import com.boundless.entity.divine_dogs.goals.SearchForItemGoal;
+import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
+import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
 import lombok.Getter;

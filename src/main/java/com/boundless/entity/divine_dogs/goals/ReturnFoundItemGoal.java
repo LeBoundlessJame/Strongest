@@ -1,6 +1,6 @@
 package com.boundless.entity.divine_dogs.goals;
 
-import com.boundless.entity.divine_dogs.kuro.DivineDogShiroEntity;
+import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

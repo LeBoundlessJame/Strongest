@@ -5,7 +5,7 @@ import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.BasicAbilities;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
-import com.boundless.entity.divine_dogs.kuro.DivineDogShiroEntity;
+import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
