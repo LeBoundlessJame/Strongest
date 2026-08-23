@@ -3,6 +3,7 @@ package com.boundless.entity.gama;
 import com.boundless.entity.gama.goals.ToadLeapGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -34,15 +35,18 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
     public final GamaDispatcher dispatcher;
+    public final MoveAnalysis moveAnalysis;
 
     public GamaEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new GamaDispatcher(this);
+        this.moveAnalysis = new MoveAnalysis(this);
     }
 
     public GamaEntity(World world, PlayerEntity owner) {
         super(EntityRegistry.GAMA, world);
         this.dispatcher = new GamaDispatcher(this);
+        this.moveAnalysis = new MoveAnalysis(this);
         this.setOwnerUuid(owner.getUuid());
     }
 
@@ -68,13 +72,18 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
     @Override
     public void tick() {
         super.tick();
+        moveAnalysis.update();
         this.animationTick();
     }
 
     private void animationTick() {
         if (!this.getWorld().isClient) return;
 
-        if (this.isOnGround()) {
+        boolean isMovingOnGround = this.moveAnalysis.isMovingHorizontally() && this.isOnGround();
+
+        if (isMovingOnGround) {
+            this.dispatcher.walk();
+        } else if (this.isOnGround()) {
             this.dispatcher.idle();
         }
     }
