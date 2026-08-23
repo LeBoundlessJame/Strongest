@@ -18,6 +18,7 @@ public class PayloadRegistry {
     public static final Identifier EVASION_SERVER = BoundlessAPI.identifier("evasion_server");
     public static final Identifier UPDATE_HOLD_STATE = BoundlessAPI.identifier("update_hold_state");
     public static final Identifier CAMERA_SHAKE = BoundlessAPI.identifier("camera_shake");
+    public static final Identifier UPDATE_DRAG = BoundlessAPI.identifier("update_drag");
 
     public static void registerPayloads() {
         PayloadTypeRegistry.playC2S().register(AbilityUsePayload.ID, AbilityUsePayload.CODEC);
@@ -28,6 +29,7 @@ public class PayloadRegistry {
         PayloadTypeRegistry.playS2C().register(AnimationPlayPayload.ID, AnimationPlayPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(AnimationStopPayload.ID, AnimationStopPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(EvasionClientPayload.ID, EvasionClientPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(UpdateDragPayload.ID, UpdateDragPayload.CODEC);
     }
 
     public static void registerC2SPackets() {
@@ -41,5 +43,6 @@ public class PayloadRegistry {
         ClientPlayNetworking.registerGlobalReceiver(AnimationPlayPayload.ID, AnimationPlayPayload::receive);
         ClientPlayNetworking.registerGlobalReceiver(AnimationStopPayload.ID, AnimationStopPayload::receive);
         ClientPlayNetworking.registerGlobalReceiver(EvasionClientPayload.ID, EvasionClientPayload::receive);
+        ClientPlayNetworking.registerGlobalReceiver(UpdateDragPayload.ID, UpdateDragPayload::receive);
     }
 }
