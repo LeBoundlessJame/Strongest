@@ -1,19 +1,18 @@
 package com.boundless.entity.gama;
 
-import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
+import com.boundless.entity.gama.goals.ToadLeapGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
-import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Tameable;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.FrogEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,6 +39,25 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
         super(EntityRegistry.GAMA, world);
         this.dispatcher = new GamaDispatcher(this);
         this.setOwnerUuid(owner.getUuid());
+    }
+
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new ToadLeapGoal(this));
+        this.goalSelector.add(2, new SwimGoal(this));
+        this.goalSelector.add(9, new FollowOwnerGoal(this, 1.0, 10.0F, 32.0f));
+        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
+        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(10, new LookAroundGoal(this));
+        this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
+        this.targetSelector.add(2, new AttackWithOwnerGoal(this));
+        this.targetSelector.add(3, new RevengeGoal(this).setGroupRevenge());
+    }
+
+    @Override
+    public boolean shouldTryTeleportToOwner() {
+        LivingEntity livingEntity = this.getOwner();
+        return livingEntity != null && this.squaredDistanceTo(this.getOwner()) >= (2048);
     }
 
     @Override
@@ -98,10 +116,11 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
 
     public static DefaultAttributeContainer.Builder createFrogAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0)
                 .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
-                .add(EntityAttributes.GENERIC_SCALE, 2.0);
+                .add(EntityAttributes.GENERIC_SCALE, 2.0)
+                .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, 15f);
     }
 }
