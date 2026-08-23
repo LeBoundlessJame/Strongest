@@ -28,7 +28,7 @@ public class RockThrowLogic {
 
         HeroUtils.getHeroStack(player).set(SwitcherHero.SECONDARY_TARGET_ID, rock.getId());
 
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("aura"), 2.0f, false, false, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("aura"), 2.0f, false, false, 3000);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
@@ -55,7 +55,7 @@ public class RockThrowLogic {
             BlackFlashAbility.blackFlash(player, 200, new Vec3d(10f, 1.0f, 10f), heroAction);
             EnergyUtils.changeEnergyPercentage(player, 20f);
         });
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         AttackUtils.startAttackTimer(player, 10);

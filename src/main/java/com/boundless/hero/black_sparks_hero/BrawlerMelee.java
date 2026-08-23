@@ -20,7 +20,7 @@ public class BrawlerMelee {
 
         if (!AttackUtils.canAttack(player)) return;
 
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         Action hook = Action.builder()
@@ -44,7 +44,7 @@ public class BrawlerMelee {
         if (!AttackUtils.canAttack(player)) return;
 
         // Todo: attackCount % 2 == 0
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         Action divergentFist = Action.builder()
@@ -78,8 +78,8 @@ public class BrawlerMelee {
 // Todo: Find a fix for manji kick animation. (I made A VERY sus as fuck fix, but like it works :sob:)
     public static void manjiKick(PlayerEntity player) {
         Action manjiKick = Action.builder()
-                .scheduledTask(4, (user, action) -> AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("manji_kick_parry"), 1.5f, false, true, 3001))
-                .scheduledTask(20, (user, action) -> AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("idle"), 1f, false, true, 3002))
+                .scheduledTask(4, (user, action) -> PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("manji_kick_parry"), 1.5f, false, true, 3001))
+                .scheduledTask(20, (user, action) -> PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("idle"), 1f, false, true, 3002))
                 .build();
         ActionUtils.performAction(player, manjiKick);
     }

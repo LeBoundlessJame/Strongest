@@ -30,7 +30,7 @@ public class ShrineHeroDestruction {
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
 
         for (int i = 0; i < 20; i++) {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
@@ -60,7 +60,7 @@ public class ShrineHeroDestruction {
         if (player.getWorld().isClient) return;
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, ShrineHero.DOMAIN.initialDelay.get(), 2, false, false, false));
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
         MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());

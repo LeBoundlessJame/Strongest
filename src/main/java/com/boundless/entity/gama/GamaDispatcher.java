@@ -1,5 +1,7 @@
 package com.boundless.entity.gama;
 
+import com.boundless.util.EntityAnimationUtils;
+import com.boundless.util.PlayerAnimationUtils;
 import mod.azure.azurelib.common.animation.dispatch.command.AzCommand;
 import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 import net.minecraft.entity.LivingEntity;
@@ -30,6 +32,6 @@ public class GamaDispatcher {
 
 
     public static AzCommand azLoopedAnim(String animation) {
-        return AzCommand.create("base_controller", animation, AzPlayBehaviors.LOOP);
+        return EntityAnimationUtils.create("base_controller", animation, AzPlayBehaviors.LOOP, 3.0f);
     }
 }

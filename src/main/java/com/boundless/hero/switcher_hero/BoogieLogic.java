@@ -79,7 +79,7 @@ public class BoogieLogic {
     public static void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
         TargetSelectMenu.closeMenu(user);
-        AnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
         SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);
         EnergyUtils.changeEnergyPercentage(user, -5f);
     }

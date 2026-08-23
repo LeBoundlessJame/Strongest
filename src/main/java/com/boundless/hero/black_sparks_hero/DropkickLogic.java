@@ -50,7 +50,7 @@ public class DropkickLogic {
             });
         }
 
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dropkick"), 2f, false, true, 5000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dropkick"), 2f, false, true, 5000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, 15);
     }

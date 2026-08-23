@@ -1,7 +1,7 @@
 package com.boundless.networking.payloads;
 
 import com.boundless.networking.PayloadRegistry;
-import com.boundless.util.AnimationUtils;
+import com.boundless.util.PlayerAnimationUtils;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.RegistryByteBuf;
@@ -28,7 +28,7 @@ public record AnimationStopPayload(UUID user, Map<Identifier, Integer> animation
         if (user == null || context.client() == null) return;
 
         context.client().execute(() -> {
-            AnimationUtils.stopAnimationIfPresent(user, (HashMap<Identifier, Integer>) payload.animations);
+            PlayerAnimationUtils.stopAnimationIfPresent(user, (HashMap<Identifier, Integer>) payload.animations);
         });
     }
 

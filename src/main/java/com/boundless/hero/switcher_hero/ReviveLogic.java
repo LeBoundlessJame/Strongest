@@ -3,7 +3,7 @@ package com.boundless.hero.switcher_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.AnimationUtils;
+import com.boundless.util.PlayerAnimationUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -19,7 +19,7 @@ public class ReviveLogic {
         EffekUtils.playEffect(BoundlessAPI.identifier("healing_burst"), player, player.getPos(), new Vec3d(1, 1, 1));
         HeroUtils.getHeroStack(player).set(SwitcherHero.TIME_UNTIL_NEXT_REVIVE, player.getWorld().getTime() + SwitcherHero.CONFIG.timeBetweenRevives.get());
         HeroUtils.getHeroStack(player).set(SwitcherHero.LAST_REVIVE_TIMESTAMP, player.getWorld().getTime());
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("revive"));
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("revive"));
 
         player.setHealth(1.0F);
         player.clearStatusEffects();

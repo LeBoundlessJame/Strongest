@@ -111,7 +111,7 @@ public class BrawlerHero extends Hero {
         };
         tasks.put(4, kick);
         tasks.put(8, kick);
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, attackCount % 2 == 0, true, 2000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, attackCount % 2 == 0, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, 8);
     }
@@ -119,7 +119,7 @@ public class BrawlerHero extends Hero {
     public static void spinKick(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
 

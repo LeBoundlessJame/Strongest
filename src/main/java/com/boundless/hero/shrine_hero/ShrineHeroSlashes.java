@@ -103,7 +103,7 @@ public class ShrineHeroSlashes {
         }).build();
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 255, false, false, false));
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spiderweb_cleave"), 2f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spiderweb_cleave"), 2f, false, true, 3000);
         EffekUtils.playEffect(BoundlessAPI.identifier("spiderweb_cleave"), player, player.getPos().add(0, 0.05f, 0), new Vec3d(2, 1, 2));
         AttackUtils.performAttack(cleave);
     }
@@ -112,7 +112,7 @@ public class ShrineHeroSlashes {
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
         SoundUtils.playSound(player, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 13, 16);
 
         // Todo: Maybe make dismantle range configurable in the future?

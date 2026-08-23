@@ -42,7 +42,7 @@ public class AttackUtils {
             CombatUtils.attack(heroAction, damage, Optional.of(attackVFX), perEntityLogic);
         };
         tasks.put(impactTick, hit);
-        AnimationUtils.playSyncedAnimation(player, animation, animationSpeed, attackCount % 2 == 0, true, priority);
+        PlayerAnimationUtils.playSyncedAnimation(player, animation, animationSpeed, attackCount % 2 == 0, true, priority);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, attackDuration);
     }

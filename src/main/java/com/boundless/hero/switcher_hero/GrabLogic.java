@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 public class GrabLogic {
 
     public static void suplex(PlayerEntity player) {
-        AnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("suplex"), 1.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("suplex"), 1.0f, false, true, 3000);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
