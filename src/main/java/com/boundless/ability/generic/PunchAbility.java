@@ -3,21 +3,19 @@ package com.boundless.ability.generic;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.action.Action;
-import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
+import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import lombok.Builder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
 @Builder
@@ -26,7 +24,8 @@ public class PunchAbility extends TechniqueAbility {
 
     @Builder.Default
     private int impactTick = 2;
-    private int attackDuration;
+    @Builder.Default
+    private int attackDuration = 10;
     private float damage;
 
     @Builder.Default
@@ -35,16 +34,19 @@ public class PunchAbility extends TechniqueAbility {
     private float animationSpeed = 1.0f;
 
     @Builder.Default
-    private SoundEvent whiffSound = SoundRegistry.MISS_HIT;
+    private SoundEvent whiffSound = SoundEvents.INTENTIONALLY_EMPTY;
     @Builder.Default
-    private SoundEvent impactSound = SoundRegistry.IMPACT_HEAVY_1;
+    private SoundEvent impactSound = SoundEvents.INTENTIONALLY_EMPTY;
 
     @Builder.Default
-    private Consumer<PlayerEntity> preHitEvent = (player) -> {};
+    private Consumer<PlayerEntity> preAttackEvent = (player) -> {
+    };
     @Builder.Default
-    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {};
+    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {
+    };
     @Builder.Default
-    private Consumer<PlayerEntity> postHitEvent = (player) -> {};
+    private Consumer<PlayerEntity> postAttackEvent = (player) -> {
+    };
 
     @Override
     public void activate(PlayerEntity player) {
@@ -53,24 +55,24 @@ public class PunchAbility extends TechniqueAbility {
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
+        preAttackEvent.accept(player);
+        PlayerAnimationUtils.playSyncedAnimation(player, this.animation, this.animationSpeed, attackCount % 2 == 0, true, 3000);
+        SoundUtils.playSound(player, this.whiffSound);
 
-        SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
-        Action hook = Action.builder()
-                .scheduledTask(4, (user, action) -> {
-                    MeleeUtils.forEach(player, action, (attacker, entity) -> {
-                        if (BlackFlashAbility.calculateBlackFlash(attacker)) {
-                            // Todo: make it so that upwards knockback is optional
-                            BlackFlashAbility.blackFlash(attacker, 80, new Vec3d(0.2f, 0.0f, 0.2f), action);
-                            return;
-                        }
-                        MeleeUtils.basicHit(user, action, DAMAGE.lightAttack.get());
-                    });
-                })
-                .build();
+        Action action = Action.builder().scheduledTask(impactTick, this::impact).build();
+        AttackUtils.startAttackTimer(player, this.attackDuration);
+        ActionUtils.performAction(player, action);
+    }
 
-        AttackUtils.startAttackTimer(player, 4);
-        ActionUtils.performAction(player, hook);
+    private void impact(PlayerEntity player, HeroActionEntity action) {
+        MeleeUtils.forEach(player, action, (attacker, entity) -> {
+            if (!(entity instanceof LivingEntity target)) return;
+                MeleeUtils.basicHit(attacker, action, this.damage);
+                SoundUtils.playSound(attacker, this.impactSound);
+                onHitEvent.accept(attacker, target);
+        });
+
+        postAttackEvent.accept(player);
     }
 
     @Override
