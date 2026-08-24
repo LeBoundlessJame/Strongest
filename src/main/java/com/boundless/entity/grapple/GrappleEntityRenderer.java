@@ -74,9 +74,9 @@ public class GrappleEntityRenderer extends EntityRenderer<PersistentProjectileEn
         int lerpSkyLight = (int)MathHelper.lerp(piecePosPercent, (float)entitySkyLight, (float)holderSkyLight);
         int packedLight = LightmapTextureManager.pack(lerpBlockLight, lerpSkyLight);
         float knotColourMod = segment % 2 == (isLeashKnot ? 1 : 0) ? 0.7F : 1.0F;
-        float red = 0.5F * knotColourMod;
-        float green = 0.4F * knotColourMod;
-        float blue = 0.3F * knotColourMod;
+        float red = 0.64f * knotColourMod;
+        float green = 0.39f * knotColourMod;
+        float blue = 0.60f * knotColourMod;
         float x = xDif * piecePosPercent;
         float y = yDif > 0.0F ? yDif * piecePosPercent * piecePosPercent : yDif - yDif * (1.0F - piecePosPercent) * (1.0F - piecePosPercent);
         float z = zDif * piecePosPercent;
