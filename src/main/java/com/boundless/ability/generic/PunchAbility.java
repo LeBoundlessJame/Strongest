@@ -7,14 +7,32 @@ import com.boundless.hero.black_sparks_hero.BlackFlashAbility;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
+import lombok.Builder;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static com.boundless.hero.black_sparks_hero.BrawlerHero.DAMAGE;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
+@Builder
 public class PunchAbility extends TechniqueAbility {
+    private Identifier abilityId;
+    private float damage;
+    private int impactTick;
+    private int attackDuration;
+    private Identifier animation;
+    private SoundEvent whiffSound;
+    private SoundEvent impactSound;
+    private Consumer<PlayerEntity> preHitEvent;
+    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent;
+    private Consumer<PlayerEntity> postHitEvent;
+
     @Override
     public void activate(PlayerEntity player) {
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
@@ -44,7 +62,7 @@ public class PunchAbility extends TechniqueAbility {
 
     @Override
     public Identifier getAbilityId() {
-        return BoundlessAPI.identifier("punch");
+        return abilityId;
     }
 
     public boolean canBlackFlash() {
