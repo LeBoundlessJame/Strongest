@@ -1,7 +1,6 @@
 package com.boundless.util;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.hero.shadow_hero.ShadowHero;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,15 +19,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class ShikigamiUtils {
-    // Todo: i'm going to come back later and change this to take the raw entity type rather than an instance
-    public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, T shikigami) {
+    public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
         if (player.getWorld().isClient || !(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
         ItemStack heroStack = HeroUtils.getHeroStack(player);
         Map<String, NbtCompound> map = heroStack.getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
         HashMap<String, NbtCompound> clone = new HashMap<>(map);
 
-        String shikigamiKey = shikigami.getType().toString();
+        String shikigamiKey = shikigamiType.toString();
         NbtCompound nbt = map.getOrDefault(shikigamiKey, new NbtCompound());
 
         boolean nowSummoned = !nbt.getBoolean("summoned");
@@ -38,7 +36,9 @@ public class ShikigamiUtils {
             nbt.remove("UUID");
 
             Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
-            T newEntity = entityOptional.isPresent() ? summonOnTopBlock(player, (T) entityOptional.get()) : summonOnTopBlock(player, shikigami);
+            T newEntity = entityOptional.isPresent() ? summonOnTopBlock(player, (T) entityOptional.get()) : summonOnTopBlock(player, shikigamiType.create(serverWorld));
+
+            if (newEntity == null) return;
 
             newEntity.setPersistent();
             newEntity.setTamed(true, false);

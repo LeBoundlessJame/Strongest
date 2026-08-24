@@ -15,6 +15,7 @@ import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.AttributeRegistry;
+import com.boundless.registry.EntityRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.ShikigamiUtils;
 import com.mojang.serialization.Codec;
@@ -42,17 +43,17 @@ public class ShadowHero extends Hero {
             .build();
 
     public static Ability SUMMON_KURO = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.toggleShikigami(player, new DivineDogKuroEntity(player.getWorld(), player));
+        ShikigamiUtils.toggleShikigami(player, EntityRegistry.DIVINE_DOG_KURO);
         //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
     }, 1, BoundlessAPI.identifier("summon_kuro"), "Summon Kuro");
 
     public static Ability SUMMON_SHIRO = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.toggleShikigami(player, new DivineDogShiroEntity(player.getWorld(), player));
+        ShikigamiUtils.toggleShikigami(player, EntityRegistry.DIVINE_DOG_SHIRO);
         //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
     }, 1, BoundlessAPI.identifier("summon_shiro"), "Summon Shiro");
 
     public static Ability SUMMON_GAMA = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.toggleShikigami(player, new GamaEntity(player.getWorld(), player));
+        ShikigamiUtils.toggleShikigami(player, EntityRegistry.GAMA);
     }, 1, BoundlessAPI.identifier("summon_gama"), "Summon Gama");
 
     public static Ability GRAPPLE = AbilityUtils.ability((player) -> {
@@ -72,6 +73,9 @@ public class ShadowHero extends Hero {
          */
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
+                .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
+                .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
+                .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
                 .build();
 
         this.heroData = HeroData.builder()
