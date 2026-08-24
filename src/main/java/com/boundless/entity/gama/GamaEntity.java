@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
+public class GamaEntity extends TameableEntity implements Shikigami, Tameable, JumpingMount {
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
     public final GamaDispatcher dispatcher;
@@ -215,5 +215,34 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable {
 
     public static DefaultAttributeContainer.Builder createFrogAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f).add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0).add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0).add(EntityAttributes.GENERIC_SCALE, 2.0);
+    }
+
+    @Override
+    public void setJumpStrength(int strength) {
+        this.leap(strength);
+    }
+
+    @Override
+    public boolean canJump() {
+        return this.isOnGround();
+    }
+
+    @Override
+    public void startJumping(int height) {}
+
+    @Override
+    public void stopJumping() {}
+
+    public void leap(float strength) {
+        if (!this.isOnGround()) return;
+
+        Vec3d velocity = this.getVelocity();
+        float minJumpVelocity = 0.8f;
+        float maxJumpVelocity = 1.6f;
+        float verticalVelocity = MathHelper.clampedLerp(minJumpVelocity, maxJumpVelocity, strength / 100);
+        float horizontalMultiplier = MathHelper.clampedLerp(1.0f, 3.2f, strength / 100);
+
+        this.setVelocity(velocity.x * horizontalMultiplier, verticalVelocity, velocity.z * horizontalMultiplier);
+        this.velocityDirty = true;
     }
 }
