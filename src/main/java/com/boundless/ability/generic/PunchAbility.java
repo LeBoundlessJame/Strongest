@@ -23,22 +23,35 @@ import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 @Builder
 public class PunchAbility extends TechniqueAbility {
     private Identifier abilityId;
-    private float damage;
-    private int impactTick;
+
+    @Builder.Default
+    private int impactTick = 2;
     private int attackDuration;
-    private Identifier animation;
-    private SoundEvent whiffSound;
-    private SoundEvent impactSound;
-    private Consumer<PlayerEntity> preHitEvent;
-    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent;
-    private Consumer<PlayerEntity> postHitEvent;
+    private float damage;
+
+    @Builder.Default
+    private Identifier animation = BoundlessAPI.identifier("hook");
+    @Builder.Default
+    private float animationSpeed = 1.0f;
+
+    @Builder.Default
+    private SoundEvent whiffSound = SoundRegistry.MISS_HIT;
+    @Builder.Default
+    private SoundEvent impactSound = SoundRegistry.IMPACT_HEAVY_1;
+
+    @Builder.Default
+    private Consumer<PlayerEntity> preHitEvent = (player) -> {};
+    @Builder.Default
+    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {};
+    @Builder.Default
+    private Consumer<PlayerEntity> postHitEvent = (player) -> {};
 
     @Override
     public void activate(PlayerEntity player) {
+        if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
+
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-
-        if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
 
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
 
@@ -63,9 +76,5 @@ public class PunchAbility extends TechniqueAbility {
     @Override
     public Identifier getAbilityId() {
         return abilityId;
-    }
-
-    public boolean canBlackFlash() {
-        return true;
     }
 }
