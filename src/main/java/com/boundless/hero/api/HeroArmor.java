@@ -2,6 +2,7 @@ package com.boundless.hero.api;
 
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.DataComponentRegistry;
 import lombok.Getter;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -29,23 +30,32 @@ public class HeroArmor extends ArmorItem {
     @Getter
     public HeroData heroData;
 
-    public static Settings getSettings(AbilityLoadout abilityLoadout) {
-        HashMap<String, Identifier> loadout = new HashMap<>();
+    // Todo: Need to remove AbilityLoadout later after I convert everything over to this new system
+    public static Settings getSettings(HeroData heroData) {
+        Settings settings = new Settings().maxCount(1);
 
-        if (abilityLoadout != null) {
-            Map<String, Ability> abilities = abilityLoadout.getAbilities();
+        if (heroData.getDefaultAbilityLoadout() != null) {
+            HashMap<String, Identifier> loadout = new HashMap<>();
+
+            Map<String, Ability> abilities = heroData.getDefaultAbilityLoadout().getAbilities();
             for (Map.Entry<String, Ability> abilityEntry : new ArrayList<>(abilities.entrySet())) {
                 loadout.put(abilityEntry.getKey(), abilityEntry.getValue().getAbilityID());
             }
+
+            settings.component(DataComponentRegistry.ABILITY_LOADOUT, loadout);
         }
 
-        return new Settings()
-                .component(DataComponentRegistry.ABILITY_LOADOUT, loadout)
-                .maxCount(1);
+        TechniqueLoadout techniqueLoadout = heroData.getDefaultTechniqueLoadout();
+
+        if (techniqueLoadout != null) {
+            settings.component(DataComponentRegistry.TECHNIQUE_LOADOUT, techniqueLoadout.asComponent());
+        }
+
+        return settings;
     }
 
     public HeroArmor(RegistryEntry<ArmorMaterial> material, Type type, Settings settings, HeroData heroData) {
-        super(material, type, getSettings(heroData.getDefaultAbilityLoadout()));
+        super(material, type, getSettings(heroData));
         this.heroData = heroData;
     }
 

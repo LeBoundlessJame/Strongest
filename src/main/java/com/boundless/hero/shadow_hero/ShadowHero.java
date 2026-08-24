@@ -11,6 +11,9 @@ import com.boundless.entity.gama.abilities.GamaGrapple;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
+import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
+import com.boundless.loadouts.AbilityKey;
+import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.AttributeRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.ShikigamiUtils;
@@ -57,6 +60,7 @@ public class ShadowHero extends Hero {
     }, 2, BoundlessAPI.identifier("grapple"), "Grapple");
 
     public ShadowHero() {
+        /*
         AbilityLoadout loadout = AbilityLoadout.builder()
                 .ability("key.boundless.ability_one", ShadowHero.SUMMON_KURO)
                 .ability("key.boundless.ability_two", ShadowHero.SUMMON_SHIRO)
@@ -64,11 +68,15 @@ public class ShadowHero extends Hero {
                 .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
                 .ability("key.attack", GRAPPLE)
                 .build();
-
         ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
+         */
+        TechniqueLoadout loadout = TechniqueLoadout.builder()
+                .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
+                .build();
+
         this.heroData = HeroData.builder()
                 .name("shadow_hero")
-                .defaultAbilityLoadout(loadout)
+                .defaultTechniqueLoadout(loadout)
                 .attributes(ATTRIBUTES)
                 .hudRenderer(BrawlerHUD::render)
                 .tickHandler(Hero::heroSprintHandler)

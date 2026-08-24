@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.HeldAbility;
+import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;

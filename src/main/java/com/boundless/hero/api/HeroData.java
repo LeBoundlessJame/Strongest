@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.armor.HeroArmorRenderer;
+import com.boundless.loadouts.TechniqueLoadout;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
@@ -58,4 +59,6 @@ public class HeroData {
     private final List<String> heldKeybinds;
 
     private final Function<ItemStack, List<Text>> customTooltips;
+
+    private TechniqueLoadout defaultTechniqueLoadout;
 }
