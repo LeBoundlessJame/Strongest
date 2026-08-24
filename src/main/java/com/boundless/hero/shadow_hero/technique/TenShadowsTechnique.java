@@ -1,6 +1,7 @@
 package com.boundless.hero.shadow_hero.technique;
 
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.ability.generic.PunchAbility;
 import com.boundless.ability.generic.SummonShikigamiAbility;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
