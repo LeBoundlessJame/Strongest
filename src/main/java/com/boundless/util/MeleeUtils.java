@@ -5,6 +5,8 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Ownable;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
@@ -23,7 +25,9 @@ public class MeleeUtils {
 
     public static void forEach(PlayerEntity player, HeroActionEntity action, BiConsumer<PlayerEntity, Entity> logic) {
         for (LivingEntity target : action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> true)) {
-            if (target != player) logic.accept(player, target);
+            if (target == player) continue;
+            if (target instanceof TameableEntity tameableEntity && tameableEntity.getOwner() == player) continue;
+            logic.accept(player, target);
         }
     }
 
