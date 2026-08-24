@@ -31,6 +31,8 @@ public class GrappleEntityRenderer extends EntityRenderer<PersistentProjectileEn
     }
 
     public static <T extends Entity, E extends Entity, M extends Entity> void renderRope(M mob, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, E leashHolder) {
+        float thickness = 0.075f;
+
         double lerpBodyAngle = (double)(MathHelper.lerp(partialTick, mob.prevYaw, mob.prevYaw) * 0.017453292F + 1.5707964F);
         Vec3d leashOffset = mob.getLeashOffset(partialTick);
         double xAngleOffset = Math.cos(lerpBodyAngle) * leashOffset.z + Math.sin(lerpBodyAngle) * leashOffset.x;
@@ -42,7 +44,7 @@ public class GrappleEntityRenderer extends EntityRenderer<PersistentProjectileEn
         float xDif = (float)(ropeGripPosition.x - lerpOriginX);
         float yDif = (float)(ropeGripPosition.y - lerpOriginY);
         float zDif = (float)(ropeGripPosition.z - lerpOriginZ);
-        float offsetMod = MathHelper.inverseSqrt(xDif * xDif + zDif * zDif) * 0.025F / 2.0F;
+        float offsetMod = MathHelper.inverseSqrt(xDif * xDif + zDif * zDif) * thickness / 2.0F;
         float xOffset = zDif * offsetMod;
         float zOffset = xDif * offsetMod;
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderLayer.getLeash());
@@ -58,11 +60,11 @@ public class GrappleEntityRenderer extends EntityRenderer<PersistentProjectileEn
 
         int segment;
         for(segment = 0; segment <= 24; ++segment) {
-            renderLeashPiece(vertexConsumer, posMatrix, xDif, yDif, zDif, entityBlockLight, holderBlockLight, entitySkyLight, holderSkyLight, 0.025F, 0.025F, xOffset, zOffset, segment, false);
+            renderLeashPiece(vertexConsumer, posMatrix, xDif, yDif, zDif, entityBlockLight, holderBlockLight, entitySkyLight, holderSkyLight, thickness, thickness, xOffset, zOffset, segment, false);
         }
 
         for(segment = 24; segment >= 0; --segment) {
-            renderLeashPiece(vertexConsumer, posMatrix, xDif, yDif, zDif, entityBlockLight, holderBlockLight, entitySkyLight, holderSkyLight, 0.025F, 0.0F, xOffset, zOffset, segment, true);
+            renderLeashPiece(vertexConsumer, posMatrix, xDif, yDif, zDif, entityBlockLight, holderBlockLight, entitySkyLight, holderSkyLight, thickness, 0.0F, xOffset, zOffset, segment, true);
         }
 
         poseStack.pop();
