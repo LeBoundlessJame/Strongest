@@ -41,7 +41,10 @@ public class KeyInputHandler {
         if (!key.isPressed()) return;
 
         Identifier abilityID = loadout.abilities().get(abilityKey);
-        if (!AbilityUtils.checkAndUseAbility(client.player, abilityID)) return;
+
+        if (!AbilityUtils.checkAndUseTechniqueAbility(client.player, abilityID)) {
+            return;
+        }
 
         ClientPlayNetworking.send(new AbilityUsePayload(abilityID));
     }
