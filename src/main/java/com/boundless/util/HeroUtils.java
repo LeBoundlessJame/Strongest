@@ -39,6 +39,6 @@ public class HeroUtils {
     }
 
     public static boolean combatModeEnabled(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, true);
+        return HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.COMBAT_MODE_ENABLED, false);
     }
 }
