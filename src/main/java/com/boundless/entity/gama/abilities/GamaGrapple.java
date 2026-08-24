@@ -24,62 +24,27 @@ import java.util.function.BiConsumer;
 public class GamaGrapple {
     public static void grappleLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        ItemStack heroStack = HeroUtils.getHeroStack(player);
 
-        GamaEntity vehicle = (GamaEntity) player.getControllingVehicle();
-
-        if (!player.hasVehicle() || vehicle == null || vehicle.getOwner() != player) {
-            heroStack.set(ShadowHero.GRAPPLING, false);
+        if (!(player.getControllingVehicle() instanceof GamaEntity gama) || gama.getOwner() != player) {
             return;
         }
 
-        boolean isGrappling = heroStack.getOrDefault(ShadowHero.GRAPPLING, false);
+        GrappleEntity grapple = gama.getGrapple();
 
-        if (!isGrappling) {
+        if (grapple == null) {
             BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 128);
             if (blockHitResult == null) return;
 
-            GrappleEntity grappleEntity = new GrappleEntity(vehicle, player.getWorld());
-            grappleEntity.setVelocity(0, 0, 0);
-            grappleEntity.setPosition(Vec3d.of(blockHitResult.getBlockPos()));
-            grappleEntity.setNoGravity(true);
-            player.getWorld().spawnEntity(grappleEntity);
+            grapple = new GrappleEntity(gama, player.getWorld());
+            grapple.setVelocity(0, 0, 0);
+            grapple.setPosition(Vec3d.of(blockHitResult.getBlockPos()));
+            grapple.setNoGravity(true);
+            player.getWorld().spawnEntity(grapple);
 
-            heroStack.set(ShadowHero.BOUND_GRAPPLE_HOOK_ID, grappleEntity.getId());
+            gama.setGrapple(grapple);
         } else {
-            int boundHook = heroStack.getOrDefault(ShadowHero.BOUND_GRAPPLE_HOOK_ID, -1);
-            if (boundHook == -1) return;
-
-            GrappleEntity grappleEntity = (GrappleEntity) player.getWorld().getEntityById(boundHook);
-            if (grappleEntity == null) return;
-            grappleEntity.swingBoost(vehicle);
-            grappleEntity.discard();
-
-            // Todo: maybe add a ticklogic that makes the entity persist until the player hits the ground, in which case
-            // Todo: Send the packet for updating drag and discard the entity in the consumer
-            LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
-            int maxLifetime = 10 * 20;
-
-            BiConsumer<PlayerEntity, HeroActionEntity> customTickLogic = (user, heroAction) -> {
-                if (user.getWorld().isClient) return;
-                if (user.isOnGround()) {
-                    ServerPlayNetworking.send((ServerPlayerEntity) user, new UpdateDragPayload(user.getUuid()));
-                    heroAction.discard();
-                }
-            };
-
-            tasks.put(maxLifetime, (user, heroAction) -> {
-                if (user.getWorld().isClient) return;
-                ServerPlayNetworking.send((ServerPlayerEntity) user, new UpdateDragPayload(user.getUuid()));
-                heroAction.discard();
-            });
-
-            Action action = Action.builder().scheduledTasks(tasks).customTickLogic(customTickLogic).hitboxWidthZ(0).hitboxWidthX(0).hitboxHeight(0).build();
-            ActionUtils.performAction(player, action);
-
-            heroStack.set(ShadowHero.BOUND_GRAPPLE_HOOK_ID, -1);
+            grapple.discard();
+            gama.setGrapple(null);
         }
-
-        heroStack.set(ShadowHero.GRAPPLING, !isGrappling);
     }
 }

@@ -27,8 +27,6 @@ import java.util.Map;
 import static com.boundless.registry.DataComponentRegistry.registerComponent;
 
 public class ShadowHero extends Hero {
-    public static final ComponentType<Boolean> GRAPPLING = registerComponent("grappling", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
-    public static final ComponentType<Integer> BOUND_GRAPPLE_HOOK_ID = registerComponent("bound_grapple_hook_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static final ComponentType<Map<String, NbtCompound>> SHIKIGAMI = registerComponent("shikigami", builder -> ComponentType.<Map<String, NbtCompound>>builder().codec(Codec.unboundedMap(Codec.STRING, NbtCompound.CODEC)));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()

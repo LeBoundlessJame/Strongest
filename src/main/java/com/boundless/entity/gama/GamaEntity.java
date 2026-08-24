@@ -1,8 +1,11 @@
 package com.boundless.entity.gama;
 
 import com.boundless.entity.gama.goals.ToadLeapGoal;
+import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import lombok.Getter;
+import lombok.Setter;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -39,6 +42,9 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable, J
 
     public final GamaDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
+
+    @Nullable @Getter @Setter
+    GrappleEntity grapple = null;
 
     public GamaEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
