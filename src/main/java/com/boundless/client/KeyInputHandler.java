@@ -25,49 +25,19 @@ public class KeyInputHandler {
             Map<String, Identifier> abilities = stack.get(DataComponentRegistry.ABILITY_LOADOUT);
             if (abilities == null) return;
 
-            for (String translatableKey: abilities.keySet()) {
+            for (String translatableKey : abilities.keySet()) {
                 inputLogic(client, translatableKey);
-            }
-
-            HeroData heroData = HeroUtils.getHeroData(client.player);
-            if (heroData == null) return;
-            /* Todo: reintegrate some other stage
-            for (Consumer<MinecraftClient> clientConsumer: heroData.getClientTickEvents()) {
-                clientConsumer.accept(client);
-            } */
-            KeyInputHandler.keybindHoldLogic(client, client.options.forwardKey.getTranslationKey());
-            KeyInputHandler.keybindHoldLogic(client, client.options.backKey.getTranslationKey());
-
-            if (heroData.getHeldKeybinds() == null) return;
-
-            for (String keybind: heroData.getHeldKeybinds()) {
-                KeyInputHandler.keybindHoldLogic(client, keybind);
             }
         });
     }
 
-    private static final Map<String, Boolean> heldKeysMap = new HashMap<>();
+    private static void inputLogic(MinecraftClient client, String translatableKey) {
+        KeyBinding key = KeybindingUtils.getKeyBindingFromTranslation(translatableKey);
+        if (!key.isPressed()) return;
 
-    public static void keybindHoldLogic(MinecraftClient client, String translationKey) {
-        if (client.player == null) return;
+        Identifier abilityID = AbilityUtils.abilityIDFromKeybind(client.player, translatableKey);
+        if (!AbilityUtils.checkAndUseAbility(client.player, abilityID)) return;
 
-        KeyBinding key = KeybindingUtils.getKeyBindingFromTranslation(translationKey);
-
-        if (key.isPressed() && !heldKeysMap.getOrDefault(translationKey, false)) {
-            heldKeysMap.put(translationKey, true);
-            ClientPlayNetworking.send(new UpdateHoldStatePayload(translationKey, true));
-        } else if (!key.isPressed() && heldKeysMap.getOrDefault(translationKey, false)) {
-            heldKeysMap.put(translationKey, false);
-            ClientPlayNetworking.send(new UpdateHoldStatePayload(translationKey, false));
-        }
-    }
-
-    public static void inputLogic(MinecraftClient client, String translatableKey) {
-        if (KeybindingUtils.getKeyBindingFromTranslation(translatableKey).isPressed()) {
-            Identifier abilityID = AbilityUtils.abilityIDFromKeybind(client.player, translatableKey);
-            if (AbilityUtils.checkAndUseAbility(client.player, abilityID)) {
-                ClientPlayNetworking.send(new AbilityUsePayload(abilityID));
-            };
-        }
+        ClientPlayNetworking.send(new AbilityUsePayload(abilityID));
     }
 }
