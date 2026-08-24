@@ -218,6 +218,12 @@ public class GamaEntity extends TameableEntity implements Shikigami, Tameable, J
     }
 
     @Override
+    public void onLanding() {
+        super.onLanding();
+        this.setNoDrag(false);
+    }
+
+    @Override
     public void setJumpStrength(int strength) {
         this.leap(strength);
     }
