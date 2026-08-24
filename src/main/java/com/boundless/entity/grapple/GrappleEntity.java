@@ -63,43 +63,32 @@ public class GrappleEntity extends PersistentProjectileEntity {
     }
 
     public void swingLogic(LivingEntity livingEntity) {
-        if (prevPos == null) {
-            prevPos = livingEntity.getPos();
-        }
+        Vec3d anchor = this.getPos();
+        Vec3d currentPos = livingEntity.getPos();
+        Vec3d velocity = livingEntity.getVelocity();
 
-        Vec3d currentPos = prevPos;
-        Vec3d testPos = currentPos.add(livingEntity.getVelocity());
+        Vec3d offset = currentPos.subtract(anchor);
+        double distance = offset.length();
 
-        double distance = testPos.subtract(this.getPos()).length();
+        if (distance > ropeLength) {
+            Vec3d direction = offset.normalize();
 
-        if (distance > ropeLength - 0.2D) {
-            testPos = this.getPos().add(testPos.subtract(this.getPos()).normalize().multiply(ropeLength - 0.2D));
-            Vec3d vel = testPos.subtract(currentPos);
+            double outwardVelocity = velocity.dotProduct(direction);
 
-            if (vel.length() < 500.0D) {
-                livingEntity.setVelocity(vel);
+            if (outwardVelocity > 0.0D) {
+                velocity = velocity.subtract(direction.multiply(outwardVelocity));
             }
+
+            livingEntity.setVelocity(velocity.multiply(AIR_FRICTION));
+        } else {
+            livingEntity.setVelocity(velocity.multiply(AIR_FRICTION));
         }
 
         boolean isColliding = this.getWorld().getBlockCollisions(livingEntity, livingEntity.getBoundingBox().expand(0.1D)).iterator().hasNext();
 
-        if (!isColliding) {
-            livingEntity.setVelocity(livingEntity.getVelocity().multiply(AIR_FRICTION));
-
-            if (!livingEntity.isOnGround()) {
-                livingEntity.setNoDrag(true);
-            }
-
-            prevPos = testPos;
-            livingEntity.setPosition(prevPos.x, prevPos.y, prevPos.z);
-        } else {
+        if (isColliding || livingEntity.isOnGround()) {
             livingEntity.setNoDrag(false);
-            prevPos = livingEntity.getPos();
-        }
-
-        if ((livingEntity instanceof PlayerEntity playerEntity && playerEntity.getAbilities().flying) || isColliding) {
-            livingEntity.setNoDrag(false);
-        } else if (!livingEntity.isOnGround()) {
+        } else if (!(livingEntity instanceof PlayerEntity player && player.getAbilities().flying)) {
             livingEntity.setNoDrag(true);
         }
     }
