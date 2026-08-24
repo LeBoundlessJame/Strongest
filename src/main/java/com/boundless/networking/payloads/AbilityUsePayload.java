@@ -16,7 +16,7 @@ public record AbilityUsePayload(Identifier abilityID) implements CustomPayload {
             AbilityUsePayload::new);
 
     public static void receive(AbilityUsePayload payload, ServerPlayNetworking.Context context) {
-        AbilityUtils.checkAndUseAbility(context.player(), payload.abilityID);
+        AbilityUtils.checkAndUseTechniqueAbility(context.player(), payload.abilityID);
     }
 
     @Override
