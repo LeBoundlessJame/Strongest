@@ -42,37 +42,10 @@ public class ShadowHero extends Hero {
             .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.identifier("ticks_until_max_speed"), 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .build();
 
-    public static Ability SUMMON_KURO = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.toggleShikigami(player, EntityRegistry.DIVINE_DOG_KURO);
-        //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
-    }, 1, BoundlessAPI.identifier("summon_kuro"), "Summon Kuro");
-
-    public static Ability SUMMON_SHIRO = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.toggleShikigami(player, EntityRegistry.DIVINE_DOG_SHIRO);
-        //EffekUtils.playBoundEffect(BoundlessAPI.identifier("divine_dog_summon"), kuroEntity, new Vec3d(0.2f, 0.2f, 0.2f), Vec3d.ZERO);
-    }, 1, BoundlessAPI.identifier("summon_shiro"), "Summon Shiro");
-
-    public static Ability SUMMON_GAMA = AbilityUtils.ability((player) -> {
-        ShikigamiUtils.toggleShikigami(player, EntityRegistry.GAMA);
-    }, 1, BoundlessAPI.identifier("summon_gama"), "Summon Gama");
-
-    public static Ability GRAPPLE = AbilityUtils.ability((player) -> {
-        GamaGrapple.grappleLogic(player);
-    }, 2, BoundlessAPI.identifier("grapple"), "Grapple");
-
     public ShadowHero() {
-        /*
-        AbilityLoadout loadout = AbilityLoadout.builder()
-                .ability("key.boundless.ability_one", ShadowHero.SUMMON_KURO)
-                .ability("key.boundless.ability_two", ShadowHero.SUMMON_SHIRO)
-                .ability("key.boundless.ability_three", ShadowHero.SUMMON_GAMA)
-                .ability("key.boundless.combat_mode_toggle", BasicAbilities.COMBAT_MODE_TOGGLE)
-                .ability("key.attack", GRAPPLE)
-                .build();
-        ABILITY_LOADOUTS.put("LOADOUT_1", loadout);
-         */
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
+                .ability(AbilityKey.USE, TenShadowsTechnique.ROUNDHOUSE_KICK)
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
