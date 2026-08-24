@@ -30,6 +30,7 @@ public class BoundlessAPI implements ModInitializer {
 		ItemGroupRegistry.initialize();
 		AttributeRegistry.initialize();
 		AbilityRegistry.initialize();
+		TechniqueAbilityRegistry.initialize();
         DamageTypeRegistry.initialize();
         StrongestComponents.initialize();
         GameRulesRegistry.initialize();

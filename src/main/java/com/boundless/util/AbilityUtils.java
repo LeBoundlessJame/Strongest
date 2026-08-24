@@ -2,8 +2,10 @@ package com.boundless.util;
 
 import com.boundless.ability.Ability;
 import com.boundless.ability.HeldAbility;
+import com.boundless.ability.TechniqueAbility;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.TechniqueAbilityRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -75,5 +77,12 @@ public class AbilityUtils {
             return true;
         }
         return false;
+    }
+
+    public static boolean checkAndUseTechniqueAbility(PlayerEntity player, Identifier id) {
+        TechniqueAbility ability = TechniqueAbilityRegistry.getAbilityFromID(id);
+        if (ability == null || !ability.canActivate(player)) return false;
+        ability.activate(player);
+        return true;
     }
 }
