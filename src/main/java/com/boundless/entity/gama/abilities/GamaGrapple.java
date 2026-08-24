@@ -1,6 +1,7 @@
 package com.boundless.entity.gama.abilities;
 
 import com.boundless.action.Action;
+import com.boundless.entity.gama.GamaEntity;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.shadow_hero.ShadowHero;
@@ -9,6 +10,7 @@ import com.boundless.util.ActionUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.RaycastUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,15 +24,22 @@ import java.util.function.BiConsumer;
 public class GamaGrapple {
     public static void grappleLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-
         ItemStack heroStack = HeroUtils.getHeroStack(player);
+
+        GamaEntity vehicle = (GamaEntity) player.getControllingVehicle();
+
+        if (!player.hasVehicle() || vehicle == null || vehicle.getOwner() != player) {
+            heroStack.set(ShadowHero.GRAPPLING, false);
+            return;
+        }
+
         boolean isGrappling = heroStack.getOrDefault(ShadowHero.GRAPPLING, false);
 
         if (!isGrappling) {
             BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 128);
             if (blockHitResult == null) return;
 
-            GrappleEntity grappleEntity = new GrappleEntity(player, player.getWorld());
+            GrappleEntity grappleEntity = new GrappleEntity(vehicle, player.getWorld());
             grappleEntity.setVelocity(0, 0, 0);
             grappleEntity.setPosition(Vec3d.of(blockHitResult.getBlockPos()));
             grappleEntity.setNoGravity(true);
@@ -43,7 +52,7 @@ public class GamaGrapple {
 
             GrappleEntity grappleEntity = (GrappleEntity) player.getWorld().getEntityById(boundHook);
             if (grappleEntity == null) return;
-            grappleEntity.swingBoost(player);
+            grappleEntity.swingBoost(vehicle);
             grappleEntity.discard();
 
             // Todo: maybe add a ticklogic that makes the entity persist until the player hits the ground, in which case

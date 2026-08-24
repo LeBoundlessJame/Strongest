@@ -35,18 +35,18 @@ public class GrappleEntity extends PersistentProjectileEntity {
     public void tick() {
         super.tick();
 
-        if (this.getOwner() instanceof PlayerEntity player) {
-            if (player.isOnGround()) {
-                player.setNoDrag(false);
+        if (this.getOwner() instanceof LivingEntity owner) {
+            if (owner.isOnGround()) {
+                owner.setNoDrag(false);
             }
 
             if (attachedToBlock) {
-                swingLogic(player);
+                swingLogic(owner);
             }
 
             if (this.age <= 2) {
                 attachedToBlock = true;
-                ropeLength = (float) (this.getPos().subtract(player.getPos()).length() + 0.2F);
+                ropeLength = (float) (this.getPos().subtract(owner.getPos()).length() + 0.2F);
             }
         } else {
             discard();
@@ -58,17 +58,17 @@ public class GrappleEntity extends PersistentProjectileEntity {
         return new ItemStack(Items.WHITE_WOOL);
     }
 
-    public void swingBoost(PlayerEntity player) {
-        player.setVelocity(player.getVelocity().multiply(BOOST_X_MUL, BOOST_Y_MUL, BOOST_Z_MUL));
+    public void swingBoost(LivingEntity livingEntity) {
+        livingEntity.setVelocity(livingEntity.getVelocity().multiply(BOOST_X_MUL, BOOST_Y_MUL, BOOST_Z_MUL));
     }
 
-    public void swingLogic(PlayerEntity player) {
+    public void swingLogic(LivingEntity livingEntity) {
         if (prevPos == null) {
-            prevPos = player.getPos();
+            prevPos = livingEntity.getPos();
         }
 
         Vec3d currentPos = prevPos;
-        Vec3d testPos = currentPos.add(player.getVelocity());
+        Vec3d testPos = currentPos.add(livingEntity.getVelocity());
 
         double distance = testPos.subtract(this.getPos()).length();
 
@@ -77,30 +77,30 @@ public class GrappleEntity extends PersistentProjectileEntity {
             Vec3d vel = testPos.subtract(currentPos);
 
             if (vel.length() < 500.0D) {
-                player.setVelocity(vel);
+                livingEntity.setVelocity(vel);
             }
         }
 
-        boolean isColliding = this.getWorld().getBlockCollisions(player, player.getBoundingBox().expand(0.1D)).iterator().hasNext();
+        boolean isColliding = this.getWorld().getBlockCollisions(livingEntity, livingEntity.getBoundingBox().expand(0.1D)).iterator().hasNext();
 
         if (!isColliding) {
-            player.setVelocity(player.getVelocity().multiply(AIR_FRICTION));
+            livingEntity.setVelocity(livingEntity.getVelocity().multiply(AIR_FRICTION));
 
-            if (!player.isOnGround()) {
-                player.setNoDrag(true);
+            if (!livingEntity.isOnGround()) {
+                livingEntity.setNoDrag(true);
             }
 
             prevPos = testPos;
-            player.setPosition(prevPos.x, prevPos.y, prevPos.z);
+            livingEntity.setPosition(prevPos.x, prevPos.y, prevPos.z);
         } else {
-            player.setNoDrag(false);
-            prevPos = player.getPos();
+            livingEntity.setNoDrag(false);
+            prevPos = livingEntity.getPos();
         }
 
-        if (player.getAbilities().flying || isColliding) {
-            player.setNoDrag(false);
-        } else if (!player.isOnGround()) {
-            player.setNoDrag(true);
+        if ((livingEntity instanceof PlayerEntity playerEntity && playerEntity.getAbilities().flying) || isColliding) {
+            livingEntity.setNoDrag(false);
+        } else if (!livingEntity.isOnGround()) {
+            livingEntity.setNoDrag(true);
         }
     }
 
