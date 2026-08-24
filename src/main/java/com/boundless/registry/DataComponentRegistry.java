@@ -2,6 +2,7 @@ package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.loadouts.AbilityKey;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
@@ -23,6 +24,8 @@ public class DataComponentRegistry {
     public static ComponentType<Float> ENERGY_METER = DataComponentRegistry.registerComponent("energy_meter", builder -> ComponentType.<Float>builder().codec(Codec.FLOAT));
     public static ComponentType<Integer> BOUND_CAMERA_ID = DataComponentRegistry.registerComponent("bound_camera_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Boolean> COMBAT_MODE_ENABLED = DataComponentRegistry.registerComponent("combat_mode_enabled", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
+
+    public static ComponentType<Map<AbilityKey, Identifier>> TECHNIQUE_LOADOUT = registerComponent("technique_loadout", builder -> ComponentType.<Map<AbilityKey, Identifier>>builder().codec(Codec.unboundedMap(AbilityKey.CODEC, Identifier.CODEC)));
 
     public static final ComponentType<Map<String, KeybindHoldData>> HELD_KEYBIND = registerComponent("held_keybind", builder -> ComponentType.<Map<String, KeybindHoldData>>builder().codec(Codec.unboundedMap(Codec.STRING, CodecRegistry.KEYBIND_HOLD_CODEC)));
 
