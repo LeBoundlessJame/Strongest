@@ -44,13 +44,13 @@ public class ShadowHero extends Hero {
             .build();
 
     public ShadowHero() {
-        //.ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
+        // .ability(AbilityKey.ABILITY_ONE, this::getSneakyAbility, TenShadowsTechnique.SNEAK.getAbilityId(), TenShadowsTechnique.NON_SNEAK.getAbilityId())
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
                 .ability(AbilityKey.USE, TenShadowsTechnique.ROUNDHOUSE_KICK)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
-                .ability(AbilityKey.ABILITY_ONE, this::getSneakyAbility, TenShadowsTechnique.SNEAK.getAbilityId(), TenShadowsTechnique.NON_SNEAK.getAbilityId())
+                .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
                 .build();
 
         this.heroData = HeroData.builder()
@@ -66,8 +66,10 @@ public class ShadowHero extends Hero {
         this.registerHero();
     }
 
+    /*
     private Identifier getSneakyAbility(PlayerEntity playerEntity) {
         if (playerEntity.isSneaking()) return TenShadowsTechnique.SNEAK.getAbilityId();
         return TenShadowsTechnique.NON_SNEAK.getAbilityId();
     }
+     */
 }
