@@ -24,6 +24,7 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(EntityRegistry.GAMA, "Gama");
 
         translationBuilder.add(StatusEffectRegistry.INVULNERABILITY_EFFECT.value(), "Invulnerability");
+        translationBuilder.add(StatusEffectRegistry.BLEED.value(), "Bleed");
 
         translationBuilder.add(AttributeRegistry.TOP_SPEED_MULTIPLIER, "Top-Speed Multiplier");
         translationBuilder.add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, "Max-Speed Buildup Time");
