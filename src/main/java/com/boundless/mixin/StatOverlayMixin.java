@@ -39,7 +39,7 @@ public abstract class StatOverlayMixin {
     @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
     private void boundless$cancelHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (!cancelVanillaRendering(client)) return;
-        StatOverlays.renderHotbar(context);
+        StatOverlays.renderHotbar(client, context);
     }
 
     @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
