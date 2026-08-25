@@ -61,8 +61,12 @@ public class EffekUtils {
     }
 
     public static void playVisual(LivingEntity entity, Identifier impactVisual) {
-        Vec3d effectScale =  new Vec3d(entity.getScale() * 0.5f, entity.getScale() * 0.5f, entity.getScale() * 0.5f);
+        Vec3d effectScale = new Vec3d(entity.getScale() * 0.5f, entity.getScale() * 0.5f, entity.getScale() * 0.5f);
+        playVisual(entity, impactVisual, effectScale);
+    }
+
+    public static void playVisual(LivingEntity entity, Identifier impactVisual, Vec3d scale) {
         Vec3d effectRotation = new Vec3d(entity.getPitch(), entity.getYaw() * -1, 0);
-        EffekUtils.playRotatedEffect(impactVisual, entity, entity.getPos().add(0, entity.getHeight() / 2, 0), effectScale, effectRotation);
+        EffekUtils.playRotatedEffect(impactVisual, entity, entity.getPos().add(0, entity.getHeight() / 2, 0), scale, effectRotation);
     }
 }
