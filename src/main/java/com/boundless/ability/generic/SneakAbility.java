@@ -15,4 +15,9 @@ public class SneakAbility extends TechniqueAbility {
     public Identifier getAbilityId() {
         return BoundlessAPI.identifier("sneak");
     }
+
+    @Override
+    public String getDisplayString() {
+        return "Sneaky ability";
+    }
 }

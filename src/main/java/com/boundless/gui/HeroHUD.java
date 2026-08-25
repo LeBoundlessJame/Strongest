@@ -1,10 +1,10 @@
 package com.boundless.gui;
 
 import com.boundless.ability.Ability;
-import com.boundless.registry.AbilityRegistry;
-import com.boundless.registry.DataComponentRegistry;
-import com.boundless.registry.ShaderRegistry;
-import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.ability.TechniqueAbility;
+import com.boundless.loadouts.AbilityKey;
+import com.boundless.loadouts.TechniqueLoadout;
+import com.boundless.registry.*;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import com.boundless.util.ShaderAccessor;
@@ -59,29 +59,24 @@ public class HeroHUD {
         matrices.pop();
     }
 
-    // Todo: revisit
-    /*
-    public static void handleCamera(MinecraftClient client) {
-        if (client.player == null || client.player.getWorld() == null) return;
-        Integer boundCameraID = HeroUtils.getHeroStack(client.player).get(DataComponentRegistry.BOUND_CAMERA_ID);
-
-        if (boundCameraID != null) {
-            Entity camera = client.player.getWorld().getEntityById(boundCameraID);
-
-            // Todo: rework this into interfaces for setting / removing camera
-            if (camera != null) {
-                client.setCameraEntity(camera);
-                client.options.setPerspective(Perspective.THIRD_PERSON_FRONT);
-            } else {
-                client.setCameraEntity(client.player);
-            }
-        }
-    }
-
-     */
-
     public static void renderKeybindAbilities(MinecraftClient client, DrawContext context) {
         if (client.player == null) return;
+
+        TechniqueLoadout loadout = HeroUtils.getTechniqueLoadout(client.player);
+        int offset = 1;
+
+        for (AbilityKey abilityKey: AbilityKey.values()) {
+            Identifier abilityId = loadout.getAbilityId(abilityKey, client.player);
+            TechniqueAbility ability = TechniqueAbilityRegistry.getAbilityFromID(abilityId);
+
+            if (ability == null || ability.getDisplayString() == null) continue;
+
+            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(abilityKey.getTranslationKey()).getBoundKeyLocalizedText().getString();
+
+            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString(), 0);
+            offset++;
+        }
+        /*
         LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
         LinkedHashMap<Identifier, Long> abilityCooldowns = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, new LinkedHashMap<>()));
 
@@ -97,6 +92,8 @@ public class HeroHUD {
             renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString(), cooldown);
             offset += 1;
         }
+
+         */
     }
 
     public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset, String boundKey, String abilityString, int cooldown) {

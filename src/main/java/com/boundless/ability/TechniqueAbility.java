@@ -6,6 +6,7 @@ import net.minecraft.util.Identifier;
 public abstract class TechniqueAbility {
     public abstract void activate(PlayerEntity playerEntity);
     public abstract Identifier getAbilityId();
+    public String getDisplayString() { return null; }
 
     public int getCost() {
         return 0;
