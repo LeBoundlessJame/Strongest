@@ -1,7 +1,7 @@
 {
-  "name": "Cursed Techniques & Their Applications",
+  "name": "Cursed Techniques",
   "landing_text": "This volume covers a wide array of cursed techniques, and how they can be applied in modern jujutsu.",
   "version": 1,
-  "creative_tab": "minecraft:tools_and_utilities",
+  "creative_tab": "boundless:boundless_group",
   "use_resource_pack": true
 }

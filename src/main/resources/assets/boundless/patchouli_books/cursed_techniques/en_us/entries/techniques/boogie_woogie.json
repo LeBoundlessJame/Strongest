@@ -1,0 +1,15 @@
+{
+  "name": "Boogie Woogie",
+  "icon": "minecraft:writable_book",
+  "category": "boundless:techniques",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Boogie Woogie is a cursed technique that swaps two targets when the user claps, The user can imbue objects with their own cursed energy to swap with that object."
+    },
+    {
+      "type": "patchouli:text",
+      "text": ""
+    }
+  ]
+}
