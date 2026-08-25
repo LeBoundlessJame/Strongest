@@ -42,12 +42,6 @@ public abstract class StatOverlayMixin {
         StatOverlays.renderHotbar(context);
     }
 
-    @Inject(method = "renderHotbarItem", at = @At("HEAD"), cancellable = true)
-    private void boundless$cancelHotbarItem(DrawContext context, int x, int y, RenderTickCounter tickCounter, PlayerEntity player, ItemStack stack, int seed, CallbackInfo ci) {
-        if (!cancelVanillaRendering(client)) return;
-        ci.cancel();
-    }
-
     @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
     private void boundless$cancelHotbar(DrawContext context, int x, CallbackInfo ci) {
         if (!cancelVanillaRendering(client)) return;
