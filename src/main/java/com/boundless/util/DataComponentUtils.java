@@ -11,13 +11,6 @@ import java.util.Map;
 
 // Todo: this whole class could do with an expansion / elaboration
 public class DataComponentUtils {
-    public static Map<Identifier, Long> updatedCooldownMap(ItemStack heroStack, Identifier abilityID, long value) {
-        Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
-        Map<Identifier, Long> updatedCooldownData = new HashMap<>(cooldownData);
-        updatedCooldownData.put(abilityID, value);
-        return updatedCooldownData;
-    }
-
     public static <A, B> void updateMap(ItemStack heroStack, ComponentType<Map<A, B>> mapComponent, A key, B value) {
         HashMap<A, B> map = new HashMap<>(heroStack.getOrDefault(mapComponent, new HashMap<>()));
         map.put(key, value);

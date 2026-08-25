@@ -3,6 +3,7 @@ package com.boundless.util;
 import com.boundless.ability.Ability;
 import com.boundless.ability.HeldAbility;
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
@@ -35,12 +36,6 @@ public class AbilityUtils {
         return ability(abilityLogic, cooldown, abilityID, abilityIcon, null);
     }
 
-    public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
-        ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
-        Map<Identifier, Long> updatedCooldownData = DataComponentUtils.updatedCooldownMap(heroStack, abilityID, player.getWorld().getTime() + cooldownTime);
-        heroStack.set(DataComponentRegistry.COOLDOWN_DATA, updatedCooldownData);
-    }
-
     public static boolean canUseAbility(PlayerEntity player, Identifier abilityID) {
         ItemStack heroStack = player.getEquippedStack(EquipmentSlot.CHEST);
         Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
@@ -71,7 +66,7 @@ public class AbilityUtils {
             if (!player.getWorld().isClient) {
                 long cooldown = ability.getCooldown();
                 if (cooldown > 0) {
-                    setAbilityCooldown(player, abilityID, cooldown);
+                    CooldownManager.setAbilityCooldown(player, abilityID, cooldown);
                 }
             }
             return true;
@@ -82,7 +77,7 @@ public class AbilityUtils {
     public static boolean checkAndUseTechniqueAbility(PlayerEntity player, Identifier id) {
         TechniqueAbility ability = TechniqueAbilityRegistry.getAbilityFromID(id);
         if (ability == null || !ability.canActivate(player)) return false;
-        ability.activate(player);
+        ability.use(player);
         return true;
     }
 }

@@ -13,9 +13,11 @@ import net.minecraft.util.Identifier;
 
 public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extends TechniqueAbility {
     private EntityType<T> shikigamiType;
+    private int cooldown;
 
-    public SummonShikigamiAbility(EntityType<T> shikigamiType) {
+    public SummonShikigamiAbility(EntityType<T> shikigamiType, int cooldown) {
         this.shikigamiType = shikigamiType;
+        this.cooldown = cooldown;
     }
 
     @Override
@@ -31,5 +33,10 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     @Override
     public String getDisplayString() {
         return "Summon " + Text.translatable(shikigamiType.getTranslationKey()).getString();
+    }
+
+    @Override
+    public long getCooldown() {
+        return this.cooldown;
     }
 }

@@ -3,6 +3,7 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.HeldAbility;
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.mechanics.CooldownManager;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
@@ -50,11 +51,11 @@ public class DashAbility extends HeldAbility {
 
                 if (data.startTimestamp() >= cooldownEnd) {
                     this.getAbilityLogic().accept(player);
-                    AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown() * 2L);
+                    CooldownManager.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown() * 2L);
                 }
             } else {
                 DashAbility.dash(player);
-                AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
+                CooldownManager.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
             }
         }
     }

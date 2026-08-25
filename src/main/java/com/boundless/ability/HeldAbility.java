@@ -1,6 +1,7 @@
 package com.boundless.ability;
 
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.AbilityUtils;
 import com.boundless.util.HeroUtils;
@@ -42,7 +43,7 @@ public class HeldAbility extends Ability {
             
             if (data.startTimestamp() >= cooldownEnd) {
                 this.getAbilityLogic().accept(player);
-                AbilityUtils.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
+                CooldownManager.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
             }
         }
     }
