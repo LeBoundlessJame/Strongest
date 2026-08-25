@@ -14,13 +14,17 @@ import java.util.function.BiConsumer;
 
 public class MeleeUtils {
     public static void basicHit(PlayerEntity player, HeroActionEntity action, float damage) {
+        MeleeUtils.basicHit(player, action, damage, new Vec3d(0.6, 0.3, 0.6));
+    }
+
+    public static void basicHit(PlayerEntity player, HeroActionEntity action, float damage, Vec3d knockback) {
         MeleeUtils.forEach(player, action, (user, entity) -> {
             entity.damage(entity.getDamageSources().generic(), damage);
             if (!(entity instanceof LivingEntity livingEntity)) return;
 
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            knockback(user, livingEntity, new Vec3d(0.6, 0.3f, 0.6));
+            knockback(user, livingEntity, knockback);
         });
     }
 

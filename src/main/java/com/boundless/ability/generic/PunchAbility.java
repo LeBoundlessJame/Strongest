@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -48,6 +49,9 @@ public class PunchAbility extends TechniqueAbility {
     private Consumer<PlayerEntity> postAttackEvent = (player) -> {
     };
 
+    @Builder.Default
+    private Vec3d knockback = new Vec3d(0.6, 0.3, 0.6);
+
     @Override
     public void activate(PlayerEntity player) {
         if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
@@ -67,7 +71,7 @@ public class PunchAbility extends TechniqueAbility {
     private void impact(PlayerEntity player, HeroActionEntity action) {
         MeleeUtils.forEach(player, action, (attacker, entity) -> {
             if (!(entity instanceof LivingEntity target)) return;
-                MeleeUtils.basicHit(attacker, action, this.damage);
+                MeleeUtils.basicHit(attacker, action, this.damage, this.knockback);
                 SoundUtils.playSound(attacker, this.impactSound);
                 onHitEvent.accept(attacker, target);
         });
