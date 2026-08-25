@@ -20,6 +20,7 @@ public class MeleeUtils {
 
             CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
+            knockback(user, livingEntity, new Vec3d(0.6, 0.3f, 0.6));
         });
     }
 
