@@ -47,33 +47,6 @@ public class AbilityUtils {
         return abilityUsable;
     }
 
-    public static Identifier abilityIDFromKeybind(PlayerEntity player, String keybindTranslation) {
-        if (!HeroUtils.isHero(player)) return null;
-        ItemStack stack = HeroUtils.getHeroStack(player);
-        Map<String, Identifier> abilities = stack.getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, Map.of());
-        return abilities.get(keybindTranslation);
-    }
-
-    public static boolean checkAndUseAbility(PlayerEntity player, Identifier abilityID) {
-        if (!HeroUtils.isHero(player)) return false;
-
-        Ability ability = AbilityRegistry.getAbilityFromID(abilityID);
-        if (ability == null || ability instanceof HeldAbility) return false;
-        Consumer<PlayerEntity> abilityConsumer = ability.getAbilityLogic();
-
-        if (abilityConsumer != null && canUseAbility(player, abilityID)) {
-            abilityConsumer.accept(player);
-            if (!player.getWorld().isClient) {
-                long cooldown = ability.getCooldown();
-                if (cooldown > 0) {
-                    CooldownManager.setAbilityCooldown(player, abilityID, cooldown);
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
     public static boolean checkAndUseTechniqueAbility(PlayerEntity player, Identifier id) {
         TechniqueAbility ability = TechniqueAbilityRegistry.getAbilityFromID(id);
         if (ability == null || !ability.canActivate(player)) return false;
