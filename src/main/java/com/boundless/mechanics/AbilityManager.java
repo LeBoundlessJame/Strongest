@@ -1,9 +1,7 @@
-package com.boundless.util;
+package com.boundless.mechanics;
 
 import com.boundless.ability.Ability;
-import com.boundless.ability.HeldAbility;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
@@ -16,7 +14,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class AbilityUtils {
+public class AbilityManager {
     public static Ability ability(Consumer<PlayerEntity> abilityLogic, int cooldown, Identifier abilityID, Identifier abilityIcon, String displayString) {
         return Ability
                 .builder()

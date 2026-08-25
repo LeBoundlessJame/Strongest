@@ -3,6 +3,7 @@ package com.boundless.hero.black_sparks_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.HeldAbility;
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.mechanics.AbilityManager;
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.networking.payloads.evasion.EvasionClientPayload;
 import com.boundless.registry.DataComponentRegistry;
@@ -29,7 +30,7 @@ public class DashAbility extends HeldAbility {
     @Override
     public void holdTickLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        if (!AbilityUtils.canUseAbility(player, this.getAbilityID())) return;
+        if (!AbilityManager.canUseAbility(player, this.getAbilityID())) return;
 
         KeybindHoldData data = KeybindingUtils.getHoldData(player, this.getKeybind());
 

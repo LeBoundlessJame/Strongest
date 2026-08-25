@@ -8,7 +8,7 @@ import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.registry.ConfigRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
-import com.boundless.util.AbilityUtils;
+import com.boundless.mechanics.AbilityManager;
 import com.boundless.util.HeroUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
@@ -21,17 +21,17 @@ public class SwitcherHero extends Hero {
     public static SwitcherConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
     public static SwitcherConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(SwitcherLightLogic::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(SwitcherMediumLogic::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("todo_medium"), BoundlessAPI.hudPNG("leg"));
+    public static Ability LIGHT_ATTACK = AbilityManager.ability(SwitcherLightLogic::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("switcher_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability MEDIUM_ATTACK = AbilityManager.ability(SwitcherMediumLogic::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("todo_medium"), BoundlessAPI.hudPNG("leg"));
 
-    public static Ability BOOGIE = AbilityUtils.ability(BoogieLogic::standardSwap, COOLDOWNS.clap.get(), BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"), "Boogie");
-    public static Ability ROCK_THROW = AbilityUtils.ability(RockThrowLogic::rockThrow, COOLDOWNS.rockThrow.get(), BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"), "Rock Throw");
-    public static Ability TARGET_SELECT = AbilityUtils.ability(TargetSelectMenu::openTargetSelectMenu, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"), "Select Target");
-    public static Ability SUPLEX = AbilityUtils.ability(GrabLogic::suplex, COOLDOWNS.suplex.get(), BoundlessAPI.identifier("suplex"), BoundlessAPI.hudPNG("divergent_fist"), "Suplex");
+    public static Ability BOOGIE = AbilityManager.ability(BoogieLogic::standardSwap, COOLDOWNS.clap.get(), BoundlessAPI.identifier("boogie"), BoundlessAPI.hudPNG("clap"), "Boogie");
+    public static Ability ROCK_THROW = AbilityManager.ability(RockThrowLogic::rockThrow, COOLDOWNS.rockThrow.get(), BoundlessAPI.identifier("rock_throw"), BoundlessAPI.hudPNG("rock_throw"), "Rock Throw");
+    public static Ability TARGET_SELECT = AbilityManager.ability(TargetSelectMenu::openTargetSelectMenu, COOLDOWNS.targetSelect.get(), BoundlessAPI.identifier("boogie_menu"), BoundlessAPI.hudPNG("select_target"), "Select Target");
+    public static Ability SUPLEX = AbilityManager.ability(GrabLogic::suplex, COOLDOWNS.suplex.get(), BoundlessAPI.identifier("suplex"), BoundlessAPI.hudPNG("divergent_fist"), "Suplex");
 
-    public static Ability SWAP_TWO = AbilityUtils.ability(BoogieLogic::swapTwo, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_two"), "Swap Two");
-    public static Ability SWAP_WITH_PRIMARY = AbilityUtils.ability(BoogieLogic::swapWithPrimary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_primary"), "Swap -> Primary");
-    public static Ability SWAP_WITH_SECONDARY = AbilityUtils.ability(BoogieLogic::swapWithSecondary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_secondary"), "Swap -> Secondary");
+    public static Ability SWAP_TWO = AbilityManager.ability(BoogieLogic::swapTwo, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_two"), "Swap Two");
+    public static Ability SWAP_WITH_PRIMARY = AbilityManager.ability(BoogieLogic::swapWithPrimary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_primary"), "Swap -> Primary");
+    public static Ability SWAP_WITH_SECONDARY = AbilityManager.ability(BoogieLogic::swapWithSecondary, COOLDOWNS.clap.get(), BoundlessAPI.identifier("swap_with_secondary"), "Swap -> Secondary");
 
     public static ComponentType<Long> LAST_REVIVE_TIMESTAMP = DataComponentRegistry.registerComponent("last_revive_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> TIME_UNTIL_NEXT_REVIVE = DataComponentRegistry.registerComponent("time_until_next_revive", builder -> ComponentType.<Long>builder().codec(Codec.LONG));

@@ -1,13 +1,6 @@
 package com.boundless.hero.shadow_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
-import com.boundless.ability.AbilityLoadout;
-import com.boundless.ability.BasicAbilities;
-import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
-import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
-import com.boundless.entity.gama.GamaEntity;
-import com.boundless.entity.gama.abilities.GamaGrapple;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
@@ -15,18 +8,13 @@ import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.AttributeRegistry;
-import com.boundless.registry.EntityRegistry;
-import com.boundless.util.AbilityUtils;
-import com.boundless.util.ShikigamiUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Identifier;
 
 import java.util.Map;
 

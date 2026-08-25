@@ -5,6 +5,7 @@ import com.boundless.ability.Ability;
 import com.boundless.action.Action;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.entity.open.OpenEntity;
+import com.boundless.mechanics.AbilityManager;
 import com.boundless.registry.GameRulesRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
@@ -21,8 +22,8 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ShrineHeroDestruction {
-    public static Ability OPEN = AbilityUtils.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open");
-    public static Ability SHRINE = AbilityUtils.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
+    public static Ability OPEN = AbilityManager.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open");
+    public static Ability SHRINE = AbilityManager.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
 
     public static void open(PlayerEntity player) {
         EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));

@@ -3,7 +3,7 @@ package com.boundless.ability;
 import com.boundless.ability.components.KeybindHoldData;
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.AbilityUtils;
+import com.boundless.mechanics.AbilityManager;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class HeldAbility extends Ability {
 
     public void holdTickLogic(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        if (!AbilityUtils.canUseAbility(player, this.getAbilityID())) return;
+        if (!AbilityManager.canUseAbility(player, this.getAbilityID())) return;
 
         KeybindHoldData data = KeybindingUtils.getHoldData(player, keybind);
         if (data.startTimestamp() == 0 || data.held()) return;

@@ -5,13 +5,13 @@ import com.boundless.ability.Ability;
 import com.boundless.action.SingleAttack;
 import com.boundless.hero.switcher_hero.SwitcherHero;
 import com.boundless.registry.SoundRegistry;
-import com.boundless.util.AbilityUtils;
+import com.boundless.mechanics.AbilityManager;
 import com.boundless.util.AttackUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class ShrineHeroMelee {
-    public static Ability LIGHT_ATTACK = AbilityUtils.ability(ShrineHeroMelee::lightAttack, ShrineHero.COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability MEDIUM_ATTACK = AbilityUtils.ability(ShrineHeroMelee::mediumAttack, ShrineHero.COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("shrine_medium_attack"), BoundlessAPI.hudPNG("leg"));
+    public static Ability LIGHT_ATTACK = AbilityManager.ability(ShrineHeroMelee::lightAttack, ShrineHero.COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("shrine_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability MEDIUM_ATTACK = AbilityManager.ability(ShrineHeroMelee::mediumAttack, ShrineHero.COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("shrine_medium_attack"), BoundlessAPI.hudPNG("leg"));
 
     public static void mediumAttack(PlayerEntity player) {
         if (!AttackUtils.canAttack(player) || player.isUsingItem()) return;

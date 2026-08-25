@@ -1,7 +1,7 @@
 package com.boundless.networking.payloads;
 
 import com.boundless.networking.PayloadRegistry;
-import com.boundless.util.AbilityUtils;
+import com.boundless.mechanics.AbilityManager;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -16,7 +16,7 @@ public record AbilityUsePayload(Identifier abilityID) implements CustomPayload {
             AbilityUsePayload::new);
 
     public static void receive(AbilityUsePayload payload, ServerPlayNetworking.Context context) {
-        AbilityUtils.checkAndUseTechniqueAbility(context.player(), payload.abilityID);
+        AbilityManager.checkAndUseTechniqueAbility(context.player(), payload.abilityID);
     }
 
     @Override
