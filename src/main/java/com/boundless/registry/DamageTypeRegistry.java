@@ -11,6 +11,7 @@ public class DamageTypeRegistry {
     public static final RegistryKey<DamageType> BYPASS_DEFENCE = registerDamageType("bypass_defence");
     public static final RegistryKey<DamageType> CURSED_ENERGY = registerDamageType("cursed_energy");
     public static final RegistryKey<DamageType> SHRINE_SLASHES = registerDamageType("shrine_slashes");
+    public static final RegistryKey<DamageType> BLEED = registerDamageType("bleed");
 
     public static RegistryKey<DamageType> registerDamageType(String name) {
         return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, BoundlessAPI.identifier(name));
