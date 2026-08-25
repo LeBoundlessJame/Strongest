@@ -13,7 +13,8 @@
     "LeapingMixin",
     "LivingEntityMixin",
     "ReviveMixin",
-    "SpeedMixin"
+    "SpeedMixin",
+    "HungerPreventionMixin"
   ],
   "injectors": {
     "defaultRequire": 1
