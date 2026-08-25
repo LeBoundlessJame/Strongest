@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extends TechniqueAbility {
@@ -29,6 +30,6 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
 
     @Override
     public String getDisplayString() {
-        return "Summon " + shikigamiType.getName();
+        return "Summon " + Text.translatable(shikigamiType.getTranslationKey()).getString();
     }
 }
