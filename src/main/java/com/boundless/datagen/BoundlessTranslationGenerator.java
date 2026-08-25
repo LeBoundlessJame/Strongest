@@ -19,6 +19,10 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
+        translationBuilder.add(EntityRegistry.DIVINE_DOG_KURO, "Kuro");
+        translationBuilder.add(EntityRegistry.DIVINE_DOG_SHIRO, "Shiro");
+        translationBuilder.add(EntityRegistry.GAMA, "Gama");
+
         translationBuilder.add(StatusEffectRegistry.INVULNERABILITY_EFFECT.value(), "Invulnerability");
 
         translationBuilder.add(AttributeRegistry.TOP_SPEED_MULTIPLIER, "Top-Speed Multiplier");
