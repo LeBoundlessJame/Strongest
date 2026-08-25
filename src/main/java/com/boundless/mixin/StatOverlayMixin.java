@@ -61,6 +61,6 @@ public abstract class StatOverlayMixin {
     }
 
     private boolean cancelVanillaRendering(MinecraftClient client) {
-        return HeroUtils.isHero(client.player) && client.player == null;
+        return HeroUtils.isHero(client.player) && client.player != null;
     }
 }
