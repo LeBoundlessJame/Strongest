@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:boundless.ability_one): $(t:Summon one of the two Divine Dogs to fight for you. CEU:200)Summon Kuro$(/t)$(li)$(k:boundless.ability_two): $(t:Summon one of the two Divine Dogs to fight for you. CEU:200)Summon Shiro$(/t)$(li)$(k:boundless.ability_three): $(t:Summon a large Frog you can ride. CEU:200)Summon Gama$(/t)"
+      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:boundless.ability_one): $(t:Kuro specialises in heavy damage and raw attack power. He can pounce and apply bleeding to enemies.)Summon Kuro$(/t)$(li)$(k:boundless.ability_two): $(t:Although not as strong as Kuro, Shiro is excellent for tracking. Hand Shiro an item and it will find you a duplicate within a given range.)Summon Shiro$(/t)$(li)$(k:boundless.ability_three): $(t:Summon a large Frog you can ride.)Summon Gama$(/t)"
     }
   ]
 }
