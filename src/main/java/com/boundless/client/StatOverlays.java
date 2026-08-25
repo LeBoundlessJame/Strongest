@@ -29,8 +29,8 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        int x = context.getScaledWindowWidth() / 2 - 113;
-        int y = context.getScaledWindowHeight() - 32;
+        int x = context.getScaledWindowWidth() / 2 - 107;
+        int y = context.getScaledWindowHeight() - 34;
         int maxWidth = 66;
         int healthProgress = (int) Math.lerp(0, maxWidth, player.getHealth() / player.getMaxHealth());
 
@@ -38,8 +38,9 @@ public class StatOverlays {
     }
 
     public static void renderHotbar(DrawContext context) {
-        int x = (context.getScaledWindowWidth() - 260) / 2;
-        context.drawTexture(HOTBAR, x, context.getScaledWindowHeight() - 38, 0, 0, 260, 40, 260, 40);
+        int x = context.getScaledWindowWidth() / 2 - 130;
+        int y = context.getScaledWindowHeight() - 40;
+        context.drawTexture(HOTBAR, x, y, 0, 0, 260, 40, 260, 40);
     }
 
     public static void renderHealthText(MinecraftClient client, DrawContext context) {
