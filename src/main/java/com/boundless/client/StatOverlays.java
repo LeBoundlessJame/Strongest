@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.util.GUIUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -53,6 +54,6 @@ public class StatOverlays {
         String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
         int textWidth = client.textRenderer.getWidth(healthPercentage);
         int textPos = x - (textWidth / 2) + 56;
-        context.drawText(client.textRenderer, healthPercentage, textPos, y - 8, 0xf23d3d, true);
+        GUIUtils.drawLabelledOutlinedText(context, client, healthPercentage, 0xf23d3d, textPos, y - 8, 0, 0, 0.0f);
     }
 }
