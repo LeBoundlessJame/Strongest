@@ -47,8 +47,8 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        int x = context.getScaledWindowWidth() / 2 - 113;
-        int y = context.getScaledWindowHeight() - 34;
+        int x = context.getScaledWindowWidth() / 2 - 120;
+        int y = context.getScaledWindowHeight() - 36;
 
         String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
         int textWidth = client.textRenderer.getWidth(healthPercentage);
