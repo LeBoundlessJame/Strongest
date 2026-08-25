@@ -31,6 +31,7 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+	maven { url 'https://maven.blamejared.com' }
 }
 
 fabricApi {
@@ -54,7 +55,8 @@ dependencies {
     modImplementation "maven.modrinth:architectury-api:13.0.8+fabric"
     modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
     modImplementation "org.ladysnake:satin:2.0.0"
-    include "org.ladysnake:satin:2.0.0"
+	modImplementation "vazkii.patchouli:Patchouli:1.21.1-93-FABRIC"
+	include "org.ladysnake:satin:2.0.0"
 }
 
 processResources {
