@@ -2,8 +2,7 @@ package com.boundless.hero.shadow_hero.technique;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.ability.generic.PunchAbility;
-import com.boundless.ability.generic.SummonShikigamiAbility;
+import com.boundless.ability.generic.*;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
@@ -27,6 +26,9 @@ public class TenShadowsTechnique {
             .whiffSound(SoundRegistry.MISS_HIT)
             .impactSound(SoundRegistry.IMPACT_HEAVY_1)
             .build());
+
+    public static final TechniqueAbility SNEAK = TechniqueAbilityRegistry.register(new SneakAbility());
+    public static final TechniqueAbility NON_SNEAK = TechniqueAbilityRegistry.register(new NonSneakAbility());
 
     public static final TechniqueAbility KURO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_KURO));
     public static final TechniqueAbility SHIRO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_SHIRO));

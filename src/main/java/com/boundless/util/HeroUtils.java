@@ -4,6 +4,7 @@ import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.hero.api.HeroArmor;
 import com.boundless.hero.api.HeroData;
+import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,6 +28,12 @@ public class HeroUtils {
         if (!isHero(player)) return null;
         HeroArmor heroArmor = (HeroArmor) player.getEquippedStack(EquipmentSlot.CHEST).getItem();
         return heroArmor.getHeroData();
+    }
+
+    public static TechniqueLoadout getTechniqueLoadout(PlayerEntity player) {
+        HeroData heroData = HeroUtils.getHeroData(player);
+        if (heroData == null) return null;
+        return heroData.getDefaultTechniqueLoadout();
     }
 
     public static void setLoadout(PlayerEntity player, AbilityLoadout loadout) {

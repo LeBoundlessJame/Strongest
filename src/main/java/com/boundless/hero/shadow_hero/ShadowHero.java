@@ -24,7 +24,9 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
 
 import java.util.Map;
 
@@ -42,12 +44,13 @@ public class ShadowHero extends Hero {
             .build();
 
     public ShadowHero() {
+        //.ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
                 .ability(AbilityKey.USE, TenShadowsTechnique.ROUNDHOUSE_KICK)
-                .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
+                .ability(AbilityKey.ABILITY_ONE, this::getSneakyAbility, TenShadowsTechnique.SNEAK.getAbilityId(), TenShadowsTechnique.NON_SNEAK.getAbilityId())
                 .build();
 
         this.heroData = HeroData.builder()
@@ -61,5 +64,10 @@ public class ShadowHero extends Hero {
                 .tickHandler(Hero::onHeroTick)
                 .build();
         this.registerHero();
+    }
+
+    private Identifier getSneakyAbility(PlayerEntity playerEntity) {
+        if (playerEntity.isSneaking()) return TenShadowsTechnique.SNEAK.getAbilityId();
+        return TenShadowsTechnique.NON_SNEAK.getAbilityId();
     }
 }
