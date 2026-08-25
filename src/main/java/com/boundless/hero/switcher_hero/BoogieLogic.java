@@ -81,6 +81,5 @@ public class BoogieLogic {
         TargetSelectMenu.closeMenu(user);
         PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
         SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);
-        EnergyUtils.changeEnergyPercentage(user, -5f);
     }
 }
