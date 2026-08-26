@@ -61,4 +61,7 @@ public class HeroData {
     private final Function<ItemStack, List<Text>> customTooltips;
 
     private TechniqueLoadout defaultTechniqueLoadout;
+
+    @Builder.Default
+    private final int maxCursedEnergy = 0;
 }

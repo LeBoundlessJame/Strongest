@@ -49,6 +49,7 @@ public class ShadowHero extends Hero {
                 .modelIdentifier(BoundlessAPI.modelID("shadow_hero"))
                 .textureIdentifier(BoundlessAPI.textureID("shadow_hero"))
                 .tickHandler(Hero::onHeroTick)
+                .maxCursedEnergy(5000)
                 .build();
         this.registerHero();
     }

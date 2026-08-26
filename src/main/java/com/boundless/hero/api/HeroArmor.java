@@ -34,6 +34,8 @@ public class HeroArmor extends ArmorItem {
     public static Settings getSettings(HeroData heroData) {
         Settings settings = new Settings().maxCount(1);
 
+        // Todo: cleanup some of this method soon, I probably don't need ability loadout anymore
+
         if (heroData.getDefaultAbilityLoadout() != null) {
             HashMap<String, Identifier> loadout = new HashMap<>();
 
@@ -50,6 +52,9 @@ public class HeroArmor extends ArmorItem {
         if (techniqueLoadout != null) {
             settings.component(DataComponentRegistry.TECHNIQUE_LOADOUT, techniqueLoadout.asComponent());
         }
+
+        settings.component(DataComponentRegistry.CURSED_ENERGY_MAX, heroData.getMaxCursedEnergy());
+        settings.component(DataComponentRegistry.CURSED_ENERGY, heroData.getMaxCursedEnergy());
 
         return settings;
     }
