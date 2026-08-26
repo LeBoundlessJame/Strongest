@@ -27,4 +27,12 @@ public abstract class TechniqueAbility {
     public boolean canActivate(PlayerEntity player) {
         return !CooldownManager.isOnCooldown(player, this.getAbilityId()) && (this.getCost() == 0 || CursedEnergyManager.getCursedEnergy(player) >= this.getCost());
     }
+
+    public long getCooldown(PlayerEntity player) {
+        return this.getCooldown();
+    }
+
+    public long getCost(PlayerEntity player) {
+        return this.getCost();
+    }
 }
