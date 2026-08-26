@@ -1,6 +1,7 @@
 package com.boundless.client;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.mechanics.CursedEnergyManager;
 import com.boundless.util.GUIUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -73,28 +74,20 @@ public class StatOverlays {
         PlayerEntity player = client.player;
         if (player == null) return;
 
-        float cursedEnergy = player.getHealth();
-        float maxCursedEnergy = player.getMaxHealth();
+        int cursedEnergy = CursedEnergyManager.getCursedEnergy(player);
+        int maxCursedEnergy = CursedEnergyManager.getMaxCursedEnergy(player);
 
         int x = context.getScaledWindowWidth() / 2 + 40;
         int y = context.getScaledWindowHeight() - 34;
         int maxWidth = 66;
-        float healthProgress = maxWidth * cursedEnergy / maxCursedEnergy;
+        int cursedEnergyWidth = maxWidth * cursedEnergy / maxCursedEnergy;
 
-        context.drawTexture(CURSED_ENERGY, x, y, 0, 0, 0, (int) healthProgress, 10, 66, 10);
-        /*
-        String meterPercentage = cursedEnergy + " / " + maxCursedEnergy;
-        int textWidth = client.textRenderer.getWidth(meterPercentage);
-        int textPos = x + (maxWidth / 2) - (textWidth / 2) - 12;
-        context.drawText(client.textRenderer, meterPercentage, textPos, y - 8, 0x1bc7b6, true);
-     */
-        String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
+        context.drawTexture(CURSED_ENERGY, x, y, 0, 0, 0, cursedEnergyWidth, 10, 66, 10);
+        String healthPercentage = cursedEnergy + " / " + maxCursedEnergy;
         int textWidth = client.textRenderer.getWidth(healthPercentage);
         int textPos = x - (textWidth / 2) + 25;
         GUIUtils.drawLabelledOutlinedText(context, client, healthPercentage, 0x1bc7b6, textPos, y - 8, 0, 0, 0.0f);
-
     }
-
 
     public static void renderHotbar(MinecraftClient client, DrawContext context) {
         int x = context.getScaledWindowWidth() / 2 - 130;

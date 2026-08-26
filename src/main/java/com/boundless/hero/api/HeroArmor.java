@@ -59,6 +59,7 @@ public class HeroArmor extends ArmorItem {
         return settings;
     }
 
+    // Todo: should probably make the settings parameter actually do something soon
     public HeroArmor(RegistryEntry<ArmorMaterial> material, Type type, Settings settings, HeroData heroData) {
         super(material, type, getSettings(heroData));
         this.heroData = heroData;
