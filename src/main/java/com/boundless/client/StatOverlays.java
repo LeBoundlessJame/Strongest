@@ -1,42 +1,70 @@
 package com.boundless.client;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
-import com.boundless.registry.AbilityRegistry;
-import com.boundless.registry.DataComponentRegistry;
 import com.boundless.util.GUIUtils;
-import com.boundless.util.HeroUtils;
-import com.boundless.util.KeybindingUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.joml.Math;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class StatOverlays {
     public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar");
     public static final Identifier HOTBAR_LEFT = BoundlessAPI.hudPNG("hotbar_left");
     public static final Identifier HOTBAR_RIGHT = BoundlessAPI.hudPNG("hotbar_right");
     public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
+    public static final Identifier HEALTH_WHITE = BoundlessAPI.hudPNG("health_white");
     public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
+
+    private static final int TRAIL_DELAY_TICKS = 4;
+    private static final int TRAIL_TRANSITION_TICKS = 4;
+
+    private static boolean hasPrevHealth = false;
+    private static float prevHealth;
+    private static float trailingHealth;
+    private static float trailingHealthStart;
+    private static int lastDamageTimestamp;
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
         if (player == null) return;
 
+        float health = player.getHealth();
+
+        if (!hasPrevHealth) {
+            prevHealth = health;
+            trailingHealth = health;
+            hasPrevHealth = true;
+        }
+
+        if (health < prevHealth) {
+            trailingHealth = prevHealth;
+            trailingHealthStart = prevHealth;
+            lastDamageTimestamp = player.age;
+        }
+
+        prevHealth = health;
+
+        if (lastDamageTimestamp >= 0) {
+            int ticksSinceLastDamage = player.age - lastDamageTimestamp;
+
+            if (ticksSinceLastDamage > TRAIL_DELAY_TICKS && trailingHealth > health) {
+                float progress = MathHelper.clamp((ticksSinceLastDamage - TRAIL_DELAY_TICKS) / (float) TRAIL_TRANSITION_TICKS, 0.0f, 1.0f);
+                trailingHealth = MathHelper.lerp(progress, trailingHealthStart, health);
+            }
+        }
+
         int x = context.getScaledWindowWidth() / 2 - 107;
         int y = context.getScaledWindowHeight() - 34;
         int maxWidth = 66;
         int healthProgress = (int) Math.lerp(0, maxWidth, player.getHealth() / player.getMaxHealth());
+        int trailingHealthProgress = (int) Math.lerp(0, maxWidth, trailingHealth / player.getMaxHealth());
+
+        if (trailingHealthProgress > healthProgress) {
+            context.drawTexture(HEALTH_WHITE, x, y, 0, 0, 0, trailingHealthProgress, 10, 66, 10);
+        }
 
         context.drawTexture(HEALTH, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
     }
