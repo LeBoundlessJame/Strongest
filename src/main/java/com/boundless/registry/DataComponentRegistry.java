@@ -22,8 +22,6 @@ public class DataComponentRegistry {
     public static ComponentType<Long> ROLLING_END = registerComponent("rolling_end", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Integer> SPRINT_TICKS = registerComponent("sprint_ticks", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Integer> ATTACK_COUNT = registerComponent("attack_count", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
-    public static ComponentType<Float> ENERGY_METER = DataComponentRegistry.registerComponent("energy_meter", builder -> ComponentType.<Float>builder().codec(Codec.FLOAT));
-    public static ComponentType<Integer> BOUND_CAMERA_ID = DataComponentRegistry.registerComponent("bound_camera_id", builder -> ComponentType.<Integer>builder().codec(Codec.INT));
     public static ComponentType<Boolean> COMBAT_MODE_ENABLED = DataComponentRegistry.registerComponent("combat_mode_enabled", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
 
     public static ComponentType<TechniqueLoadoutComponent> TECHNIQUE_LOADOUT = registerComponent("technique_loadout", builder -> ComponentType.<TechniqueLoadoutComponent>builder().codec(TechniqueLoadoutComponent.CODEC));

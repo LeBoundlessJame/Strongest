@@ -10,12 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CameraUtils {
-
-    public static void bindCameraToPlayer(PlayerEntity player, Entity camera) {
-        if (!HeroUtils.isHero(player)) return;
-        HeroUtils.getHeroStack(player).set(DataComponentRegistry.BOUND_CAMERA_ID, camera.getId());
-    }
-
     public static void playCameraShake(PlayerEntity player) {
         if (!player.getWorld().isClient) {
             ServerPlayNetworking.send((ServerPlayerEntity) player, new CameraShakePayload());
