@@ -12,11 +12,12 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:attack): Punch$(li)$(k:use): Roundhouse$(li)$(k:boundless.ability_one): Summon $(l:techniques/shadow#kuro)$(t:Go to Kuro's Page)Kuro$(/l)$(/t)$(li)$(k:boundless.ability_two): Summon $(l:techniques/shadow#shiro)$(t:Go to Shiro's Page)Shiro$(/l)$(/t)$(li)$(k:boundless.ability_three): $(t:Summon a large Frog you can ride.)Summon Gama$(/t)"
+      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:attack): Punch$(li)$(k:use): Roundhouse$(li)$(k:boundless.ability_one): Summon $(l:techniques/shadow#kuro)$(t:Go to Kuro's Page)Kuro$(/l)$(/t)$(li)$(k:boundless.ability_two): Summon $(l:techniques/shadow#shiro)$(t:Go to Shiro's Page)Shiro$(/l)$(/t)$(li)$(k:boundless.ability_three): Summon $(l:techniques/shadow#gama)$(t:Go to Big Boss's Page)Gama$(/l)$(/t)"
     },
     {
       "type": "patchouli:image",
       "title": "Divine Dog Kuro",
+      "anchor": "kuro",
       "border": true,
       "images": ["boundless:textures/gui/chars/kuro.png"]
     },
@@ -27,6 +28,7 @@
     {
       "type": "patchouli:image",
       "title": "Divine Dog Shiro",
+      "anchor": "shiro",
       "border": true,
       "images": ["boundless:textures/gui/chars/shiro.png"]
     },
@@ -37,6 +39,7 @@
     {
       "type": "patchouli:image",
       "title": "Big Boss Gama",
+      "anchor": "gama",
       "border": true,
       "images": ["boundless:textures/gui/chars/gama.png"]
     },
