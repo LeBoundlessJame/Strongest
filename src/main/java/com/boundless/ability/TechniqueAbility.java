@@ -1,6 +1,7 @@
 package com.boundless.ability;
 
 import com.boundless.mechanics.CooldownManager;
+import com.boundless.mechanics.CursedEnergyManager;
 import lombok.Getter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
@@ -13,7 +14,7 @@ public abstract class TechniqueAbility {
     @Getter
     public long cooldown;
     @Getter
-    public int cost;
+    public int cost = 0;
 
     public final void use(PlayerEntity player) {
         if (!canActivate(player)) return;
@@ -22,6 +23,6 @@ public abstract class TechniqueAbility {
     }
 
     public boolean canActivate(PlayerEntity player) {
-        return !CooldownManager.isOnCooldown(player, this.getAbilityId());
+        return !CooldownManager.isOnCooldown(player, this.getAbilityId()) && (this.getCost() == 0 || CursedEnergyManager.getCursedEnergy(player) >= this.getCost());
     }
 }
