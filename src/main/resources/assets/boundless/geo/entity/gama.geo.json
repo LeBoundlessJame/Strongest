@@ -40,6 +40,14 @@
 					]
 				},
 				{
+					"name": "big_boss2",
+					"parent": "bone",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-3.5, 1, -4], "size": [7, 3, 1], "inflate": 0.1, "uv": [32, 23]}
+					]
+				},
+				{
 					"name": "eyes",
 					"parent": "head",
 					"pivot": [-0.5, 4, 5]
@@ -60,6 +68,15 @@
 					"cubes": [
 						{"origin": [0.60071, 4.6, -3.95372], "size": [2, 2, 3], "pivot": [1.8, 4.6, -1.5], "rotation": [0, -72.5, 0], "uv": [0, 0], "mirror": true},
 						{"origin": [1.2, 5.3, -4.2], "size": [1.2, 0.6, 0], "pivot": [1.8, 4.1, -1.7], "rotation": [0, -72.5, 0], "uv": [8, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "big_boss",
+					"parent": "head",
+					"pivot": [0, 4, 3],
+					"cubes": [
+						{"origin": [-2.80071, 4.6, -3.95372], "size": [2, 2, 2], "inflate": 0.15, "pivot": [-2, 4.6, -1.5], "rotation": [0, 72.5, 0], "uv": [0, 13]},
+						{"origin": [-3.5, 5.6, -3.8], "size": [7, 1, 2], "inflate": 0.1, "pivot": [0, 5.1, -2.8], "rotation": [22.5, 0, 0], "uv": [28, 27]}
 					]
 				},
 				{
