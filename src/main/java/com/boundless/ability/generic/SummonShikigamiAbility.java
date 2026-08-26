@@ -15,9 +15,10 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     private EntityType<T> shikigamiType;
     private int cooldown;
 
-    public SummonShikigamiAbility(EntityType<T> shikigamiType, int cooldown) {
+    public SummonShikigamiAbility(EntityType<T> shikigamiType, int cost, int cooldown) {
         this.shikigamiType = shikigamiType;
         this.cooldown = cooldown;
+        this.cost = cost;
     }
 
     @Override
@@ -38,5 +39,10 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     @Override
     public long getCooldown() {
         return this.cooldown;
+    }
+
+    @Override
+    public int getCost() {
+        return this.cost;
     }
 }
