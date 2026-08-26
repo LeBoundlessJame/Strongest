@@ -31,6 +31,7 @@ public abstract class StatOverlayMixin {
         ci.cancel();
 
         StatOverlays.renderHealthOverlay(client, context);
+        StatOverlays.renderCursedEnergyOverlay(client, context);
         StatOverlays.renderHealthText(client, context);
         renderExperienceBar(context, context.getScaledWindowWidth() / 2 - 91);
     }
