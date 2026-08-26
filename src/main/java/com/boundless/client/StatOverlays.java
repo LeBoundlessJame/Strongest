@@ -11,9 +11,9 @@ import net.minecraft.util.math.MathHelper;
 import org.joml.Math;
 
 public class StatOverlays {
-    public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar");
-    public static final Identifier HOTBAR_LEFT = BoundlessAPI.hudPNG("hotbar_left");
-    public static final Identifier HOTBAR_RIGHT = BoundlessAPI.hudPNG("hotbar_right");
+    public static final Identifier HOTBAR = BoundlessAPI.hudPNG("hotbar_down");
+    public static final Identifier HOTBAR_LEFT = BoundlessAPI.hudPNG("hotbar_left_down");
+    public static final Identifier HOTBAR_RIGHT = BoundlessAPI.hudPNG("hotbar_right_down");
     public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
     public static final Identifier HEALTH_WHITE = BoundlessAPI.hudPNG("health_white");
     public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
@@ -71,7 +71,7 @@ public class StatOverlays {
 
     public static void renderHotbar(MinecraftClient client, DrawContext context) {
         int x = context.getScaledWindowWidth() / 2 - 130;
-        int y = context.getScaledWindowHeight() - 40;
+        int y = context.getScaledWindowHeight() - 60;
 
         Identifier hotbar = HOTBAR;
 
@@ -79,7 +79,7 @@ public class StatOverlays {
             hotbar = client.player.getMainArm() == Arm.LEFT ? HOTBAR_LEFT : HOTBAR_RIGHT;
         }
 
-        context.drawTexture(hotbar, x, y, 0, 0, 260, 40, 260, 40);
+        context.drawTexture(hotbar, x, y, 0, 0, 260, 60, 260, 60);
     }
 
     public static void renderHealthText(MinecraftClient client, DrawContext context) {
