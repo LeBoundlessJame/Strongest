@@ -1,6 +1,6 @@
 {
   "name": "Ten Shadows",
-  "icon": "minecraft:writable_book",
+  "icon": "boundless:textures/gui/chars/megumi.png",
   "category": "boundless:techniques",
   "pages": [
     {
@@ -10,7 +10,29 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:boundless.ability_one): $(t:Kuro specialises in heavy damage and raw attack power. He can pounce and apply bleeding to enemies.)Summon Kuro$(/t)$(li)$(k:boundless.ability_two): $(t:Although not as strong as Kuro, Shiro is excellent for tracking. Hand Shiro an item and it will find you a duplicate within a given range.)Summon Shiro$(/t)$(li)$(k:boundless.ability_three): $(t:Summon a large Frog you can ride.)Summon Gama$(/t)"
+      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:attack): Punch$(li)$(k:use): Roundhouse$(li)$(k:boundless.ability_one): Summon $(l:techniques/shadow#kuro)$(t:Go to Kuro's Page)Kuro$(/l)$(/t)$(li)$(k:boundless.ability_two): Summon $(l:techniques/shadow#shiro)$(t:Go to Shiro's Page)Shiro$(/l)$(/t)$(li)$(k:boundless.ability_three): $(t:Summon a large Frog you can ride.)Summon Gama$(/t)"
+    },
+    {
+      "type": "patchouli:entity",
+      "name": "Kuro",
+      "anchor": "kuro",
+      "entity": "boundless:divine_dog_kuro",
+      "scale": 0.5
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Kuro specialises in heavy damage and raw attack power. He can pounce and apply bleeding to enemies. $(br2)Kuro has the following base stats:$(li)Health: 435$(li)Damage: 15$(li)Cursed Energy Usage: 200"
+    },
+    {
+      "type": "patchouli:entity",
+      "name": "Shiro",
+      "anchor": "shiro",
+      "entity": "boundless:divine_dog_shiro",
+      "scale": 0.5
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Although not as strong as Kuro, Shiro is excellent for tracking. Hand Shiro an item and it will find you a duplicate within a given range. $(br2)Shiro has the following base stats:$(li)Health: 435$(li)Damage: 10$(li)Cursed Energy Usage: 200"
     }
   ]
 }
