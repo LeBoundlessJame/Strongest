@@ -3,7 +3,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"1": "boundless:item/weapons/playful_cloud"
+		"1": "boundless:item/weapons/playful_cloud",
+		"particle": "boundless:item/weapons/playful_cloud"
 	},
 	"elements": [
 		{
