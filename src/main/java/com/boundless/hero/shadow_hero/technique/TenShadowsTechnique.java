@@ -6,6 +6,7 @@ import com.boundless.ability.generic.*;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
+import net.minecraft.util.math.Vec3d;
 
 public class TenShadowsTechnique {
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
@@ -19,12 +20,13 @@ public class TenShadowsTechnique {
     public static final TechniqueAbility ROUNDHOUSE_KICK = TechniqueAbilityRegistry.register(PunchAbility.builder()
             .abilityId(BoundlessAPI.identifier("megumi_roundhouse"))
             .animation(BoundlessAPI.identifier("roundhouse"))
-            .damage(22f)
+            .damage(36)
             .attackDuration(17)
             .impactTick(9)
             .animationSpeed(1.15f)
             .whiffSound(SoundRegistry.MISS_HIT)
             .impactSound(SoundRegistry.IMPACT_HEAVY_1)
+            .knockback(new Vec3d(1.2, 0.6, 1.2))
             .build());
 
     public static final TechniqueAbility KURO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_KURO, 200, 5));
