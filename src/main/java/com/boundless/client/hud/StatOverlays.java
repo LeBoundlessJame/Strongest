@@ -17,6 +17,7 @@ public class StatOverlays {
     public static final Identifier HOTBAR_RIGHT = BoundlessAPI.hudPNG("hotbar_right");
     public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
     public static final Identifier HEALTH_WHITE = BoundlessAPI.hudPNG("health_white");
+    public static final Identifier HEALTH_GOLD = BoundlessAPI.hudPNG("health_gold");
     public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
     public static final Identifier CURSED_ENERGY_WHITE = BoundlessAPI.hudPNG("cursed_energy_white");
 
@@ -40,8 +41,8 @@ public class StatOverlays {
             context.drawTexture(HEALTH_WHITE, x, y, 0, 0, 0, trailingHealthProgress, 10, 66, 10);
         }
 
-        if (player.isCreative()) return;
-        context.drawTexture(HEALTH, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
+        Identifier healthBar = player.isCreative() ? HEALTH_GOLD : HEALTH;
+        context.drawTexture(healthBar, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
     }
 
     public static void renderCursedEnergyOverlay(MinecraftClient client, DrawContext context) {
