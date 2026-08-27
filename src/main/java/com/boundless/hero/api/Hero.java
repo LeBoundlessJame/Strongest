@@ -5,6 +5,7 @@ import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.HeldAbility;
 import com.boundless.mechanics.CursedEnergyManager;
+import com.boundless.mechanics.HealthManager;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
@@ -65,5 +66,6 @@ public abstract class Hero {
 
     public static void onHeroTick(PlayerEntity player) {
         CursedEnergyManager.regenCursedEnergyTick(player);
+        HealthManager.regenCursedEnergyTick(player);
     }
 }
