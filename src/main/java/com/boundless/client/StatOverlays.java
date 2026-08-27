@@ -67,7 +67,8 @@ public class StatOverlays {
             context.drawTexture(HEALTH_WHITE, x, y, 0, 0, 0, trailingHealthProgress, 10, 66, 10);
         }
 
-        context.drawTexture(HEALTH, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
+        Identifier healthBar = player.isCreative() ? HEALTH_WHITE : HEALTH;
+        context.drawTexture(healthBar, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
     }
 
     public static void renderCursedEnergyOverlay(MinecraftClient client, DrawContext context) {
@@ -112,6 +113,8 @@ public class StatOverlays {
         String healthPercentage = String.format("%.1f / %.1f", player.getHealth() + player.getAbsorptionAmount(), player.getMaxHealth());
         int textWidth = client.textRenderer.getWidth(healthPercentage);
         int textPos = x - (textWidth / 2) + 56;
-        GUIUtils.drawLabelledOutlinedText(context, client, healthPercentage, 0xf23d3d, textPos, y - 8, 0, 0, 0.0f);
+
+        int healthTextColor = player.isCreative() ? 0xffffff : 0xf23d3d;
+        GUIUtils.drawLabelledOutlinedText(context, client, healthPercentage, healthTextColor, textPos, y - 8, 0, 0, 0.0f);
     }
 }

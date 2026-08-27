@@ -28,9 +28,6 @@ public abstract class StatOverlayMixin {
         if (!cancelVanillaRendering(client)) return;
         ci.cancel();
 
-        StatOverlays.renderHealthOverlay(client, context);
-        StatOverlays.renderCursedEnergyOverlay(client, context);
-        StatOverlays.renderHealthText(client, context);
         renderExperienceBar(context, context.getScaledWindowWidth() / 2 - 91);
     }
 
@@ -39,10 +36,15 @@ public abstract class StatOverlayMixin {
     private void boundless$cancelHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (!cancelVanillaRendering(client)) return;
         StatOverlays.renderHotbar(client, context);
+        StatOverlays.renderHealthOverlay(client, context);
+        StatOverlays.renderCursedEnergyOverlay(client, context);
+
+        // Todo: I should probably either absorb this into renderHealthOverlay, or go the opposite direction
+        StatOverlays.renderHealthText(client, context);
     }
 
     @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
-    private void boundless$cancelHotbar(DrawContext context, int x, CallbackInfo ci) {
+    private void boundless$cancelExperienceBar(DrawContext context, int x, CallbackInfo ci) {
         if (!cancelVanillaRendering(client)) return;
         ci.cancel();
     }
