@@ -28,7 +28,7 @@ public class ShadowHero extends Hero {
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
-                .ability(AbilityKey.USE, TenShadowsTechnique::getRightClickAbility)
+                .ability(AbilityKey.USE, TenShadowsTechnique::getRightClickAbility, TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId(), TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId())
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
