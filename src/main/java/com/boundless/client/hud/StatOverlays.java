@@ -55,8 +55,12 @@ public class StatOverlays {
         int y = context.getScaledWindowHeight() - 34;
         int maxWidth = 66;
         int cursedEnergyWidth = maxWidth * cursedEnergy / maxCursedEnergy;
+        float trailingCursedEnergy = CURSED_ENERGY_TRAIL.getUpdatedDisplay(cursedEnergy, player);
+        int trailingCursedEnergyWidth = (int) Math.lerp(0, maxWidth, trailingCursedEnergy / maxCursedEnergy);
 
+        context.drawTexture(CURSED_ENERGY_WHITE, x, y, 0, 0, 0, trailingCursedEnergyWidth, 10, 66, 10);
         context.drawTexture(CURSED_ENERGY, x, y, 0, 0, 0, cursedEnergyWidth, 10, 66, 10);
+
         String healthPercentage = cursedEnergy + " / " + maxCursedEnergy;
         int textWidth = client.textRenderer.getWidth(healthPercentage);
         int textPos = x - (textWidth / 2) + 25;
