@@ -36,7 +36,7 @@ public class ShikigamiUtils {
             nbt.remove("UUID");
 
             Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
-            T newEntity = entityOptional.isPresent() ? summonOnTopBlock(player, (T) entityOptional.get()) : summonOnTopBlock(player, shikigamiType.create(serverWorld));
+            T newEntity = entityOptional.isPresent() ? summonAtRaycastBlock(player, (T) entityOptional.get()) : summonAtRaycastBlock(player, shikigamiType.create(serverWorld));
 
             if (newEntity == null) return;
 
@@ -59,18 +59,11 @@ public class ShikigamiUtils {
         heroStack.set(ShadowHero.SHIKIGAMI, clone);
     }
 
-    public static <T extends TameableEntity & Shikigami> T summonOnTopBlock(PlayerEntity player, T shikigami) {
+    public static <T extends TameableEntity & Shikigami> T summonAtRaycastBlock(PlayerEntity player, T shikigami) {
         BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 16);
         if (blockHitResult == null) return null;
 
-        BlockPos pos = blockHitResult.getBlockPos();
-
-        for (int i = 0; i < 64; i++) {
-            if (player.getWorld().getBlockState(pos.up(i)).isAir()) {
-                pos = pos.up();
-                break;
-            }
-        }
+        BlockPos pos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
 
         shikigami.setPosition(pos.toCenterPos());
         shikigami.setOwner(player);
