@@ -28,10 +28,8 @@ public class CursedEnergyManager {
         addCursedEnergy(player, getCursedEnergyRegen(player));
     }
 
-    // Thx foily for the formula! Every 1k max reserves adds 30 seconds to get to max
+    // Todo: un-hardcode this soon, will probably make a system where the more CE you have max, slower it regens
     public static int getCursedEnergyRegen(PlayerEntity player) {
-        int maxCursedEnergy = getMaxCursedEnergy(player);
-        int secondsUntilFull = Math.max(1, maxCursedEnergy / 1000) * 30;
-        return maxCursedEnergy / secondsUntilFull;
+        return 33;
     }
 }
