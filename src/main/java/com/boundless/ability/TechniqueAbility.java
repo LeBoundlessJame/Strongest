@@ -10,29 +10,25 @@ public abstract class TechniqueAbility {
     public abstract void activate(PlayerEntity player);
     public abstract Identifier getAbilityId();
     public String getDisplayString() { return null; }
-
-    @Getter
-    public long cooldown;
-    @Getter
     public int cost = 0;
 
     public final void use(PlayerEntity player) {
         if (!canActivate(player)) return;
         activate(player);
 
-        if (this.getCost() > 0 && !player.isCreative()) CursedEnergyManager.addCursedEnergy(player, -this.getCost());
-        CooldownManager.setAbilityCooldown(player, this.getAbilityId(), this.getCooldown());
+        if (this.getCost(player) > 0 && !player.isCreative()) CursedEnergyManager.addCursedEnergy(player, -this.getCost(player));
+        CooldownManager.setAbilityCooldown(player, this.getAbilityId(), this.getCooldown(player));
     }
 
     public boolean canActivate(PlayerEntity player) {
-        return !CooldownManager.isOnCooldown(player, this.getAbilityId()) && (this.getCost() == 0 || player.isCreative() || CursedEnergyManager.getCursedEnergy(player) >= this.getCost());
+        return !CooldownManager.isOnCooldown(player, this.getAbilityId()) && (this.getCost(player) == 0 || player.isCreative() || CursedEnergyManager.getCursedEnergy(player) >= this.getCost(player));
     }
 
     public long getCooldown(PlayerEntity player) {
-        return this.getCooldown();
+        return 0;
     }
 
-    public long getCost(PlayerEntity player) {
-        return this.getCost();
+    public int getCost(PlayerEntity player) {
+        return 0;
     }
 }

@@ -26,6 +26,6 @@ public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 2;
+        return 5;
     }
 }

@@ -41,7 +41,7 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     }
 
     @Override
-    public int getCost() {
+    public int getCost(PlayerEntity player) {
         return this.cost;
     }
 }

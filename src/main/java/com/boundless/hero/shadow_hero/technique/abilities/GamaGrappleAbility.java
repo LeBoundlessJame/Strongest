@@ -41,7 +41,7 @@ public class GamaGrappleAbility extends TechniqueAbility {
     }
 
     @Override
-    public long getCooldown() {
+    public long getCooldown(PlayerEntity playerEntity) {
         return 2;
     }
 
