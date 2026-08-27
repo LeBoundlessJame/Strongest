@@ -24,63 +24,81 @@ import java.util.UUID;
 
 public class ShikigamiManager {
     public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
-        if (player.getWorld().isClient || !(player.getWorld() instanceof ServerWorld serverWorld)) return;
+        if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
         ItemStack heroStack = HeroUtils.getHeroStack(player);
-        Map<String, NbtCompound> map = heroStack.getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
-        HashMap<String, NbtCompound> clone = new HashMap<>(map);
+        Map<String, NbtCompound> shikigamiMap = heroStack.getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
 
         String shikigamiKey = shikigamiType.toString();
-        NbtCompound nbt = map.getOrDefault(shikigamiKey, new NbtCompound());
+        NbtCompound nbt = shikigamiMap.getOrDefault(shikigamiKey, new NbtCompound());
 
-        boolean nowSummoned = !nbt.getBoolean("summoned");
-        nbt.putBoolean("summoned", nowSummoned);
+        NbtCompound result = nbt.getBoolean("summoned")
+                ? desummonShikigami(serverWorld, nbt)
+                : summonShikigami(player, serverWorld, shikigamiType, nbt);
 
-        if (nowSummoned) {
-            nbt.remove("UUID");
+        if (result == null) return;
 
-            Optional<Entity> entityOptional = EntityType.getEntityFromNbt(nbt, serverWorld);
-            T newEntity = entityOptional.isPresent() ? summonAtRaycastBlock(player, (T) entityOptional.get()) : summonAtRaycastBlock(player, shikigamiType.create(serverWorld));
-
-            if (newEntity == null) return;
-
-            newEntity.setPersistent();
-            newEntity.setTamed(true, false);
-            newEntity.saveNbt(nbt);
-        } else {
-            UUID uuid = nbt.getUuid("UUID");
-            Entity entity = serverWorld.getEntity(uuid);
-
-            if (entity != null) {
-                EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), entity, entity.getPos().add(0, 1, 0), new Vec3d(0.15, 0.15, 0.15));
-
-                entity.saveNbt(nbt);
-                entity.discard();
-            }
-        }
-
-        clone.put(shikigamiKey, nbt);
-        heroStack.set(ShadowHero.SHIKIGAMI, clone);
+        shikigamiMap = new HashMap<>(shikigamiMap);
+        shikigamiMap.put(shikigamiKey, result);
+        heroStack.set(ShadowHero.SHIKIGAMI, shikigamiMap);
     }
 
-    public static <T extends TameableEntity & Shikigami> T summonAtRaycastBlock(PlayerEntity player, T shikigami) {
-        BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 16);
+    // I'm not a big fan of using nbtCompound as the return value, but nbt is a bit cooked so rip
+    // Todo: also, might make range configurable in the future or extract it back out to a generic helper
+    private static <T extends TameableEntity & Shikigami> NbtCompound summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt) {
+        BlockHitResult blockHitResult = RaycastUtils.blockRaycast(playerEntity, 16);
         if (blockHitResult == null) return null;
-
         BlockPos pos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
 
-        shikigami.setPosition(pos.toCenterPos());
-        shikigami.setOwner(player);
-        player.getWorld().spawnEntity(shikigami);
+        T shikigami;
+
+        if (nbt.contains("UUID")) {
+            Optional<Entity> entity = EntityType.getEntityFromNbt(nbt, serverWorld);
+            if (entity.isEmpty()) return null;
+
+            shikigami = (T) entity.get();
+            shikigami.setPosition(pos.toCenterPos());
+            serverWorld.spawnEntity(shikigami);
+        } else {
+            shikigami = shikigamiType.create(serverWorld);
+            if (shikigami == null) return null;
+
+            shikigami.setPosition(pos.toCenterPos());
+            shikigami.setOwner(playerEntity);
+            serverWorld.spawnEntity(shikigami);
+
+            shikigami.setPersistent();
+            shikigami.setTamed(true, false);
+        }
+
         EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), shikigami, shikigami.getPos(), new Vec3d(0.15, 0.15, 0.15));
 
-        return shikigami;
+        NbtCompound newNbt = new NbtCompound();
+        shikigami.saveNbt(newNbt);
+        newNbt.putBoolean("summoned", true);
+
+        return newNbt;
     }
 
-    public static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity player, T shikigami) {
-        shikigami.setPos(player.getX(), player.getY(), player.getZ());
-        shikigami.setOwner(player);
-        player.getWorld().spawnEntity(shikigami);
-        return shikigami;
+    private static NbtCompound desummonShikigami(ServerWorld serverWorld, NbtCompound nbt) {
+        if (!nbt.contains("UUID")) return null;
+
+        UUID uuid = nbt.getUuid("UUID");
+        Entity entity = serverWorld.getEntity(uuid);
+
+        if (entity == null) {
+            nbt.putBoolean("summoned", false);
+            return nbt;
+        }
+
+        NbtCompound newNbt = new NbtCompound();
+        entity.saveNbt(newNbt);
+
+        EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), entity, entity.getPos().add(0, 1, 0), new Vec3d(0.15, 0.15, 0.15));
+
+        entity.discard();
+        newNbt.putBoolean("summoned", false);
+
+        return newNbt;
     }
 }
