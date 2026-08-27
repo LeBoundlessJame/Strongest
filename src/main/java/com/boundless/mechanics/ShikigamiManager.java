@@ -1,7 +1,6 @@
 package com.boundless.mechanics;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.shadow_hero.ShadowHero;
 import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;

@@ -1,7 +1,7 @@
 package com.boundless;
 
-import com.boundless.client.hud.HeroHudRenderer;
 import com.boundless.client.KeyInputHandler;
+import com.boundless.client.hud.HeroHudRenderer;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.ArmorRenderRegistry;
 import com.boundless.registry.EntityRenderRegistry;

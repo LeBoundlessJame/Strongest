@@ -2,8 +2,8 @@ package com.boundless.ability.generic;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.util.Shikigami;
 import com.boundless.mechanics.ShikigamiManager;
+import com.boundless.util.Shikigami;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
