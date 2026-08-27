@@ -19,4 +19,9 @@ public class DataComponentUtils {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, stack.getOrDefault(component, 0) + amount);
     }
+
+    public static void toggleBoolean(PlayerEntity player, ComponentType<Boolean> component, boolean fallback) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+        stack.set(component, !stack.getOrDefault(component, fallback));
+    }
 }

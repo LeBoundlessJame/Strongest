@@ -32,5 +32,9 @@ public class DataComponentRegistry {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.id(name), builder.apply(ComponentType.builder()).build());
     }
 
+    public static ComponentType<Boolean> registerBoolean(String name) {
+        return registerComponent(name, builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
+    }
+
     public static void initialize() {}
 }
