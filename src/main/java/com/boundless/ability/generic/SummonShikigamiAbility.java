@@ -36,7 +36,7 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     }
 
     @Override
-    public long getCooldown() {
+    public long getCooldown(PlayerEntity player) {
         return this.cooldown;
     }
 

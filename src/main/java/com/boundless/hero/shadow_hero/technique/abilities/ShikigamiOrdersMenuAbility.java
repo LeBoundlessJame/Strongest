@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
         DataComponentUtils.toggleBoolean(player, TenShadowsComponents.SHIKIGAMI_ORDER_MENU,false);
     }
 
