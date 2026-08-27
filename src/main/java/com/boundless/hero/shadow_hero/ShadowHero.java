@@ -33,8 +33,8 @@ public class ShadowHero extends Hero {
 
     public ShadowHero() {
         TechniqueLoadout loadout = TechniqueLoadout.builder()
-                .ability(AbilityKey.ATTACK, TenShadowsTechnique::getLeftClickAbility)
-                .ability(AbilityKey.USE, TenShadowsTechnique.ROUNDHOUSE_KICK)
+                .ability(AbilityKey.ATTACK, TenShadowsTechnique.ROUNDHOUSE_KICK)
+                .ability(AbilityKey.USE, TenShadowsTechnique::getRightClickAbility)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)

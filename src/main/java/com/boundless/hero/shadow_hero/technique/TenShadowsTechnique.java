@@ -39,7 +39,7 @@ public class TenShadowsTechnique {
     public static final TechniqueAbility GAMA = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.GAMA, 300, 5));
     public static final TechniqueAbility GAMA_GRAPPLE = TechniqueAbilityRegistry.register(new GamaGrappleAbility());
 
-    public static Identifier getLeftClickAbility(PlayerEntity player) {
-        return player.getVehicle() instanceof GamaEntity ? GAMA_GRAPPLE.getAbilityId() : PUNCH.getAbilityId();
+    public static Identifier getRightClickAbility(PlayerEntity player) {
+        return player.getVehicle() instanceof GamaEntity ? GAMA_GRAPPLE.getAbilityId() : ROUNDHOUSE_KICK.getAbilityId();
     }
 }
