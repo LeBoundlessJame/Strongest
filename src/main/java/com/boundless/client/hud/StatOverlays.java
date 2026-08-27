@@ -42,7 +42,9 @@ public class StatOverlays {
         }
 
         Identifier healthBar = player.isCreative() ? HEALTH_GOLD : HEALTH;
-        context.drawTexture(healthBar, x, y, 0, 0, 0, healthProgress, 10, 66, 10);
+        int width = player.isCreative() ? maxWidth : healthProgress;
+
+        context.drawTexture(healthBar, x, y, 0, 0, 0, width, 10, 66, 10);
     }
 
     public static void renderCursedEnergyOverlay(MinecraftClient client, DrawContext context) {
