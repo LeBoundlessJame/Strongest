@@ -50,4 +50,9 @@ public class GamaGrappleAbility extends TechniqueAbility {
         return super.canActivate(player) &&
                 player.getControllingVehicle() instanceof GamaEntity gama && gama.getOwner() == player;
     }
+
+    @Override
+    public String getDisplayString() {
+        return "Gama Grapple";
+    }
 }
