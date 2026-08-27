@@ -9,18 +9,6 @@ import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
-import com.boundless.registry.AttributeRegistry;
-import com.mojang.serialization.Codec;
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.nbt.NbtCompound;
-
-import java.util.Map;
-
-import static com.boundless.registry.DataComponentRegistry.registerComponent;
 
 public class ShadowHero extends Hero {
     public ShadowHero() {
@@ -32,7 +20,7 @@ public class ShadowHero extends Hero {
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
-                .ability(AbilityKey.ABILITY_FOUR, TenShadowsTechnique.SHIKIGAMI_ORDERS)
+                .ability(AbilityKey.ABILITY_FOUR, TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU)
                 .build();
 
         this.heroData = HeroData.builder()
