@@ -48,7 +48,7 @@ public class ShikigamiUtils {
             Entity entity = serverWorld.getEntity(uuid);
 
             if (entity != null) {
-                EffekUtils.playEffect(BoundlessAPI.identifier("divine_dog_summon"), entity, entity.getPos().add(0, 1, 0), new Vec3d(0.15, 0.15, 0.15));
+                EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), entity, entity.getPos().add(0, 1, 0), new Vec3d(0.15, 0.15, 0.15));
 
                 entity.saveNbt(nbt);
                 entity.discard();
@@ -75,7 +75,7 @@ public class ShikigamiUtils {
         shikigami.setPosition(pos.toCenterPos());
         shikigami.setOwner(player);
         player.getWorld().spawnEntity(shikigami);
-        EffekUtils.playEffect(BoundlessAPI.identifier("divine_dog_summon"), shikigami, shikigami.getPos(), new Vec3d(0.15, 0.15, 0.15));
+        EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), shikigami, shikigami.getPos(), new Vec3d(0.15, 0.15, 0.15));
 
         return shikigami;
     }

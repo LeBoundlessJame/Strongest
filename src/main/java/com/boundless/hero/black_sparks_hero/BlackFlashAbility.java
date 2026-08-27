@@ -26,7 +26,7 @@ public class BlackFlashAbility {
 
             livingEntity.timeUntilRegen = 0;
             MeleeUtils.knockback(player, livingEntity, knockbackMultiplier);
-            CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.identifier("flash")));
+            CombatUtils.attack(heroAction, damage, Optional.of(BoundlessAPI.id("flash")));
             if (livingEntity instanceof PlayerEntity target) {
                 playBlackFlashVisuals(target, 6);
             }

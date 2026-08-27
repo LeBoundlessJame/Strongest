@@ -5,7 +5,6 @@ import mod.azure.azurelib.common.animation.controller.AzAnimationController;
 import mod.azure.azurelib.common.animation.controller.AzAnimationControllerContainer;
 import mod.azure.azurelib.common.animation.impl.AzEntityAnimator;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +17,6 @@ public class GamaAnimator<T extends AnimalEntity> extends AzEntityAnimator<T> {
 
     @Override
     public @NotNull Identifier getAnimationLocation(T animatable) {
-        return BoundlessAPI.identifier("animations/entity/gama.animation.json");
+        return BoundlessAPI.id("animations/entity/gama.animation.json");
     }
 }

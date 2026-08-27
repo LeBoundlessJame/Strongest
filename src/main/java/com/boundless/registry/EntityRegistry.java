@@ -27,11 +27,11 @@ public class EntityRegistry {
     public static final EntityType<GrappleEntity> GRAPPLE = registerEntityType("grapple", GrappleEntity::new, 0.6F, 0.85F, 0.68F);
 
     public static <T extends Entity> EntityType<T> registerEntityType(String name, EntityType.EntityFactory<T> factory, float width, float height) {
-        return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.identifier(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));
+        return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.id(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));
     }
 
     public static <T extends Entity> EntityType<T> registerEntityType(String name, EntityType.EntityFactory<T> factory, float width, float height, float eyeHeight) {
-        return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.identifier(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).eyeHeight(eyeHeight).build(name));
+        return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.id(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).eyeHeight(eyeHeight).build(name));
     }
 
     public static void registerAttributes() {

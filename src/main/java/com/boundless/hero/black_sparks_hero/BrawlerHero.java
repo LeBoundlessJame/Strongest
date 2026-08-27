@@ -36,14 +36,14 @@ public class BrawlerHero extends Hero {
     public static BrawlerHeroConfig.AbilityDamageConfig DAMAGE = CONFIG.abilityDamageConfig;
     public static BrawlerHeroConfig.AbilityCooldownConfig COOLDOWNS = CONFIG.abilityCooldownConfig;
 
-    public static Ability MEDIUM_ATTACK = AbilityManager.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.identifier("yuji_medium"), BoundlessAPI.hudPNG("leg"));
-    public static Ability SPIN_KICK = AbilityManager.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.identifier("spin_kick"), "Spin Kick");
-    public static Ability BLACK_FLASH = AbilityManager.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("black_flash"), "Black Flash");
+    public static Ability MEDIUM_ATTACK = AbilityManager.ability(BrawlerHero::mediumAttack, COOLDOWNS.mediumAttack.get(), BoundlessAPI.id("yuji_medium"), BoundlessAPI.hudPNG("leg"));
+    public static Ability SPIN_KICK = AbilityManager.ability(BrawlerHero::spinKick, COOLDOWNS.spinKick.get(), BoundlessAPI.id("spin_kick"), "Spin Kick");
+    public static Ability BLACK_FLASH = AbilityManager.ability(BrawlerMelee::blackFlash, COOLDOWNS.blackFlash.get(), BoundlessAPI.id("black_flash"), "Black Flash");
 
-    public static Ability LIGHT_ATTACK = AbilityManager.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.identifier("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
-    public static Ability DIVERGENT_FIST = AbilityManager.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.identifier("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
+    public static Ability LIGHT_ATTACK = AbilityManager.ability(BrawlerMelee::lightAttack, COOLDOWNS.lightAttack.get(), BoundlessAPI.id("brawler_light_attack"), BoundlessAPI.hudPNG("arm"));
+    public static Ability DIVERGENT_FIST = AbilityManager.ability(BrawlerMelee::divergentFist, COOLDOWNS.blackFlash.get(), BoundlessAPI.id("divergent_fist"), BoundlessAPI.hudPNG("arm"), "Divergent Fist");
 
-    public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.identifier("dash"), false, 10, "key.boundless.ability_one", "Dash (Hold To Leap)");
+    public static HeldAbility DASH = new DashAbility(DashAbility::chargedLeap, null, COOLDOWNS.dodge.get(), 22, 22, BoundlessAPI.hudPNG("dash"), BoundlessAPI.id("dash"), false, 10, "key.boundless.ability_one", "Dash (Hold To Leap)");
 
     public static ComponentType<Long> CHARGED_LEAP_TIME_WINDOW = DataComponentRegistry.registerComponent("charged_leap_time_window", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
     public static ComponentType<Long> MINIGAME_END_TIMESTAMP = DataComponentRegistry.registerComponent("minigame_end_timestamp", builder -> ComponentType.<Long>builder().codec(Codec.LONG));
@@ -52,12 +52,12 @@ public class BrawlerHero extends Hero {
     public static ComponentType<Boolean> DROPKICK_DAMAGE_TRIGGERED = DataComponentRegistry.registerComponent("dropkick_damage_triggered", builder -> ComponentType.<Boolean>builder().codec(Codec.BOOL));
 
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
-            .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
-            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("damage_resistance"), CONFIG.damageReduction.get(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
-            .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.identifier("generic_jump_strength"), 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
-            .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.identifier("generic_safe_fall_damage_distance"), 35, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
-            .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.identifier("top_speed_multiplier"), 2.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
-            .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.identifier("ticks_until_max_speed"), 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.id("generic_max_health"), 20f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+            .add(AttributeRegistry.DAMAGE_RESISTANCE, new EntityAttributeModifier(BoundlessAPI.id("damage_resistance"), CONFIG.damageReduction.get(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.id("generic_jump_strength"), 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+            .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.id("generic_safe_fall_damage_distance"), 35, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+            .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.id("top_speed_multiplier"), 2.5f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
+            .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.id("ticks_until_max_speed"), 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .build();
 
     public BrawlerHero() {
@@ -103,7 +103,7 @@ public class BrawlerHero extends Hero {
             if (CombatUtils.isRolling(player)) return;
 
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
-            CombatUtils.attack(heroAction, DAMAGE.mediumAttackPerHit.get(), Optional.of(BoundlessAPI.identifier("melee_impact")));
+            CombatUtils.attack(heroAction, DAMAGE.mediumAttackPerHit.get(), Optional.of(BoundlessAPI.id("melee_impact")));
             CombatUtils.perEnemyLogic(heroAction, (attacker, target) -> {
                 target.addVelocity(0, 0.5f, 0);
                 target.velocityModified = true;
@@ -112,7 +112,7 @@ public class BrawlerHero extends Hero {
         };
         tasks.put(4, kick);
         tasks.put(8, kick);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("double_kick"), 1.0f, attackCount % 2 == 0, true, 2000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("double_kick"), 1.0f, attackCount % 2 == 0, true, 2000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, 8);
     }
@@ -120,7 +120,7 @@ public class BrawlerHero extends Hero {
     public static void spinKick(PlayerEntity player) {
         if (!AttackUtils.canAttack(player)) return;
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("spin_kick"), 1.0f, false, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
 

@@ -50,7 +50,7 @@ public class DropkickLogic {
             });
         }
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("dropkick"), 2f, false, true, 5000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dropkick"), 2f, false, true, 5000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         AttackUtils.startAttackTimer(player, 15);
     }
@@ -61,12 +61,12 @@ public class DropkickLogic {
 
         Vec3d effectScale = new Vec3d(player.getScale() * 0.5f, player.getScale() * 0.5f, player.getScale() * 0.5f);
         Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-        EffekUtils.playRotatedEffect(BoundlessAPI.identifier("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
+        EffekUtils.playRotatedEffect(BoundlessAPI.id("melee_impact_crit"), player, target.getPos().add(0, target.getHeight() / 2, 0), effectScale, effectRotation);
 
         CameraUtils.playCameraShake(player);
         target.damage(target.getDamageSources().generic(), BrawlerHero.DAMAGE.spinKick.get());
         CombatUtils.uppercutKnockback(player, target);
-        CombatUtils.playImpactVisual(player, target, BoundlessAPI.identifier("landing_impact"));
+        CombatUtils.playImpactVisual(player, target, BoundlessAPI.id("landing_impact"));
     }
 
     public static boolean canDropkick(PlayerEntity player) {

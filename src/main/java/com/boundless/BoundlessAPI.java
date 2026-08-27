@@ -37,12 +37,12 @@ public class BoundlessAPI implements ModInitializer {
 		LOGGER.info("Boundless API Initialized");
 	}
 
-	public static Identifier identifier(String name) {
+	public static Identifier id(String name) {
 		return Identifier.of(BoundlessAPI.MOD_ID, name);
 	}
 
 	public static Identifier hudPNG(String name) {
-		return BoundlessAPI.identifier("textures/gui/sprites/hud/" + name + ".png");
+		return BoundlessAPI.id("textures/gui/sprites/hud/" + name + ".png");
 	}
 	public static Identifier textureID(String name) {
 		return Identifier.of(BoundlessAPI.MOD_ID, "textures/item/hero/" + name + ".png");

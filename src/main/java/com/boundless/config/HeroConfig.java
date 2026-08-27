@@ -8,7 +8,7 @@ import me.fzzyhmstrs.fzzy_config.config.Config;
 
 public class HeroConfig extends Config {
     public HeroConfig() {
-        super(BoundlessAPI.identifier("hero_config"));
+        super(BoundlessAPI.id("hero_config"));
     }
 
     public BrawlerHeroConfig BLACK_SPARKS_CONFIG = new BrawlerHeroConfig();

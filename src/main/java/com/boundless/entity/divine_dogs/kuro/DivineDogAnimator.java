@@ -17,6 +17,6 @@ public class DivineDogAnimator<T extends WolfEntity> extends AzEntityAnimator<T>
 
     @Override
     public @NotNull Identifier getAnimationLocation(T animatable) {
-        return BoundlessAPI.identifier("animations/entity/divine_dog.animation.json");
+        return BoundlessAPI.id("animations/entity/divine_dog.animation.json");
     }
 }

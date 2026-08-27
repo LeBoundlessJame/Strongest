@@ -15,6 +15,6 @@ public class MalevolentShrineAnimator extends AzEntityAnimator {
 
     @Override
     public @NotNull Identifier getAnimationLocation(Object o) {
-        return BoundlessAPI.identifier("animations/entity/malevolent_shrine.animation.json");
+        return BoundlessAPI.id("animations/entity/malevolent_shrine.animation.json");
     }
 }

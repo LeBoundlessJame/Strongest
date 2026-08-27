@@ -127,24 +127,24 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
                 }
 
                 if (entity.age % ShrineHero.DOMAIN.timeBetweenSlashVFX.get() == 0 && entity.isAlive()) {
-                    EffekUtils.playRandomRotatedEffect(BoundlessAPI.identifier("upgraded_dismantle"), entity, entity.getPos().add(0, entity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
+                    EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), entity, entity.getPos().add(0, entity.getHeight() / 2, 0), new Vec3d(1, 1, 1));
                 }
             });
         }
     }
 
     public void bindSurehitEffect(Vec3d pos, float scale) {
-        ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(this.getWorld(), BoundlessAPI.identifier("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + this.getId()));
+        ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(this.getWorld(), BoundlessAPI.id("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + this.getId()));
         particleEmitter.position(pos);
         particleEmitter.scale(scale);
         AAALevel.addParticle(this.getWorld(), true, particleEmitter);
     }
 
     public void destroySurehitEffect() {
-        var effect = EffectRegistry.get(BoundlessAPI.identifier("optimised_shrine"));
+        var effect = EffectRegistry.get(BoundlessAPI.id("optimised_shrine"));
 
         if (effect != null) {
-            Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.identifier("optimised_shrine" + this.getId()));
+            Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.id("optimised_shrine" + this.getId()));
             emitter.ifPresent(particleEmitter -> particleEmitter.stop());
         }
     }

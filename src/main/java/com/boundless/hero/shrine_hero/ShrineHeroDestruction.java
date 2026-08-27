@@ -22,16 +22,16 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ShrineHeroDestruction {
-    public static Ability OPEN = AbilityManager.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.identifier("open"), "Open");
-    public static Ability SHRINE = AbilityManager.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.identifier("malevolent_shrine"), "Malevolent Shrine");
+    public static Ability OPEN = AbilityManager.ability(ShrineHeroDestruction::open, ShrineHero.COOLDOWNS.open.get(), BoundlessAPI.id("open"), "Open");
+    public static Ability SHRINE = AbilityManager.ability(ShrineHeroDestruction::shrine, ShrineHero.COOLDOWNS.domainExpansion.get(), BoundlessAPI.id("malevolent_shrine"), "Malevolent Shrine");
 
     public static void open(PlayerEntity player) {
-        EffekUtils.playEffect(BoundlessAPI.identifier("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
+        EffekUtils.playEffect(BoundlessAPI.id("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
         String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("open"), true, 5000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("open"), true, 5000);
 
         for (int i = 0; i < 20; i++) {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
@@ -44,7 +44,7 @@ public class ShrineHeroDestruction {
             openEntity.setNoGravity(true);
             openEntity.setPitch(user.getPitch());
             openEntity.setYaw(user.getYaw());
-            EffekUtils.playBoundRotatedEffect(BoundlessAPI.identifier("fuga_arrow"), openEntity, new Vec3d(2f, 2f, 2f), new Vec3d(user.getPitch(), user.getYaw() * -1, 0));
+            EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("fuga_arrow"), openEntity, new Vec3d(2f, 2f, 2f), new Vec3d(user.getPitch(), user.getYaw() * -1, 0));
             user.getWorld().spawnEntity(openEntity);
             performFurnaceNukeIfPossible(user);
         });
@@ -61,7 +61,7 @@ public class ShrineHeroDestruction {
         if (player.getWorld().isClient) return;
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, ShrineHero.DOMAIN.initialDelay.get(), 2, false, false, false));
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("domain_expansion_shrine"), 1.0f, true, false, 4000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
         MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());
@@ -86,7 +86,7 @@ public class ShrineHeroDestruction {
         if (shrine == null) return;
 
         shrine.initiateFurnaceNuke();
-        EffekUtils.playEffect(BoundlessAPI.identifier("domain_fuga"), shrine, shrine.getPos().add(0f, 0.1f, 0f), 10);
+        EffekUtils.playEffect(BoundlessAPI.id("domain_fuga"), shrine, shrine.getPos().add(0f, 0.1f, 0f), 10);
 
         shrine.entitiesInRange.forEach(entity -> {
             if (!shrine.getWorld().isClient && shrine.getWorld().getGameRules().getBoolean(GameRulesRegistry.TECHNIQUE_DESTRUCTION)) {

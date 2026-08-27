@@ -32,14 +32,14 @@ public class BoogieLogic {
         Vec3d secondPos = second.getPos();
 
         if (first instanceof LivingEntity livingEntity) {
-            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
+            EffekUtils.playVisual(livingEntity, BoundlessAPI.id("energy_spark"));
         }
 
         second.requestTeleport(firstPos.x, firstPos.y, firstPos.z);
         first.requestTeleport(secondPos.x, secondPos.y, secondPos.z);
 
         if (second instanceof LivingEntity livingEntity) {
-            EffekUtils.playVisual(livingEntity, BoundlessAPI.identifier("energy_spark"));
+            EffekUtils.playVisual(livingEntity, BoundlessAPI.id("energy_spark"));
             first.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, firstPos);
         }
 
@@ -79,7 +79,7 @@ public class BoogieLogic {
     public static void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
         TargetSelectMenu.closeMenu(user);
-        PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.identifier("clap"), 2.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.id("clap"), 2.0f, false, true, 3000);
         SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);
     }
 }

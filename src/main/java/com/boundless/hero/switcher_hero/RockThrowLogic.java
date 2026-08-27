@@ -28,7 +28,7 @@ public class RockThrowLogic {
 
         HeroUtils.getHeroStack(player).set(SwitcherHero.SECONDARY_TARGET_ID, rock.getId());
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("aura"), 2.0f, false, false, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("aura"), 2.0f, false, false, 3000);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
@@ -36,7 +36,7 @@ public class RockThrowLogic {
         for (int i = 0; i < 40; i++) {
             tasks.put(i, (user, action) -> {
                 if (player.age % 4 == 0) {
-                    EffekUtils.playEffect(BoundlessAPI.identifier("todo_aura"), player, player.getPos(), new Vec3d(3, 3, 3));
+                    EffekUtils.playEffect(BoundlessAPI.id("todo_aura"), player, player.getPos(), new Vec3d(3, 3, 3));
                 }
                 if (!player.hasStatusEffect(StatusEffects.SLOWNESS) && !player.isSneaking()) {
                     user.setVelocity(player.getRotationVector().multiply(2.0).x, player.getVelocity().y, player.getRotationVector().multiply(2.0).z);
@@ -54,7 +54,7 @@ public class RockThrowLogic {
         tasks.put(7, (user, heroAction) -> {
             BlackFlashAbility.blackFlash(player, 200, new Vec3d(10f, 1.0f, 10f), heroAction);
         });
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("spin_kick"), 1.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("spin_kick"), 1.0f, false, true, 3000);
         ActionUtils.performAction(player, Action.builder().scheduledTasks(tasks).build());
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 7, 2, true, false, false));
         AttackUtils.startAttackTimer(player, 10);

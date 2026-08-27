@@ -21,7 +21,7 @@ public class SwitcherMediumLogic {
                 .impactSound(SoundRegistry.EARTH_IMPACT)
                 .animationSpeed(1.0f)
                 .damage(12f)
-                .animation(BoundlessAPI.identifier("double_kick"))
+                .animation(BoundlessAPI.id("double_kick"))
                 .impactTick(4)
                 .attackDuration(8)
                 .build();

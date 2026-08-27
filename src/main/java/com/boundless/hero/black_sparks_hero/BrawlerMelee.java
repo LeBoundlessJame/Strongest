@@ -20,7 +20,7 @@ public class BrawlerMelee {
 
         if (!AttackUtils.canAttack(player)) return;
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("hook"), 1.0f, attackCount % 2 == 0, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         Action hook = Action.builder()
@@ -44,7 +44,7 @@ public class BrawlerMelee {
         if (!AttackUtils.canAttack(player)) return;
 
         // Todo: attackCount % 2 == 0
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("hook"), 1.0f, true, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("hook"), 1.0f, true, true, 3000);
 
         SoundUtils.playSound(player, SoundRegistry.MISS_HIT);
         Action divergentFist = Action.builder()
@@ -61,7 +61,7 @@ public class BrawlerMelee {
 
         MeleeUtils.forEach(player, action, (user, entity) -> {
             if (BlackFlashAbility.calculateBlackFlash(player)) {
-                CombatUtils.playImpactVisual(player, (LivingEntity) entity, BoundlessAPI.identifier("divergent_fist_impact"));
+                CombatUtils.playImpactVisual(player, (LivingEntity) entity, BoundlessAPI.id("divergent_fist_impact"));
                 BlackFlashAbility.blackFlash(player, 200, new Vec3d(10f, 1.0f, 10f), action);
                 return;
             }
@@ -71,15 +71,15 @@ public class BrawlerMelee {
             if (!(entity instanceof LivingEntity livingEntity)) return;
 
             SoundUtils.playSound(player, SoundRegistry.ENERGY_IMPACT_2);
-            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("divergent_fist_impact"));
+            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.id("divergent_fist_impact"));
             CombatUtils.strongKnockback(player, livingEntity, 5);
         });
     }
 // Todo: Find a fix for manji kick animation. (I made A VERY sus as fuck fix, but like it works :sob:)
     public static void manjiKick(PlayerEntity player) {
         Action manjiKick = Action.builder()
-                .scheduledTask(4, (user, action) -> PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("manji_kick_parry"), 1.5f, false, true, 3001))
-                .scheduledTask(20, (user, action) -> PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("idle"), 1f, false, true, 3002))
+                .scheduledTask(4, (user, action) -> PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("manji_kick_parry"), 1.5f, false, true, 3001))
+                .scheduledTask(20, (user, action) -> PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("idle"), 1f, false, true, 3002))
                 .build();
         ActionUtils.performAction(player, manjiKick);
     }

@@ -21,7 +21,7 @@ public class StatusEffectRegistry {
     public static final RegistryEntry<StatusEffect> BLEED = registerStatusEffect("bleed", new BleedEffect(StatusEffectCategory.HARMFUL, 0xff0000));
 
     private static RegistryEntry<StatusEffect> registerStatusEffect(String name, StatusEffect statusEffect) {
-        return Registry.registerReference(Registries.STATUS_EFFECT, BoundlessAPI.identifier(name), statusEffect);
+        return Registry.registerReference(Registries.STATUS_EFFECT, BoundlessAPI.id(name), statusEffect);
     }
 
     public static void initialize() {

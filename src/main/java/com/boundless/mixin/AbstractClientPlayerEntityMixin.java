@@ -22,7 +22,7 @@ public class AbstractClientPlayerEntityMixin implements IAnimatedHero {
     @Unique
     private final ModifierLayer<IAnimation> modAnimationContainer = new ModifierLayer<>();
     @Unique
-    private Identifier lastTriggeredAnimation = BoundlessAPI.identifier("null");
+    private Identifier lastTriggeredAnimation = BoundlessAPI.id("null");
     @Unique
     private final HashMap<Identifier, Integer> animationPriorityMap = new HashMap<>();
 

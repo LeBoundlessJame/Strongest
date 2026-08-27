@@ -2,7 +2,6 @@ package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.components.KeybindHoldData;
-import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadoutComponent;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
@@ -30,7 +29,7 @@ public class DataComponentRegistry {
     public static final ComponentType<Map<String, KeybindHoldData>> HELD_KEYBIND = registerComponent("held_keybind", builder -> ComponentType.<Map<String, KeybindHoldData>>builder().codec(Codec.unboundedMap(Codec.STRING, CodecRegistry.KEYBIND_HOLD_CODEC)));
 
     public static <T> ComponentType<T> registerComponent(String name, UnaryOperator<ComponentType.Builder<T>> builder) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.identifier(name), builder.apply(ComponentType.builder()).build());
+        return Registry.register(Registries.DATA_COMPONENT_TYPE, BoundlessAPI.id(name), builder.apply(ComponentType.builder()).build());
     }
 
     public static void initialize() {}

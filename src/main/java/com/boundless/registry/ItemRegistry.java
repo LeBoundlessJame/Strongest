@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class ItemRegistry {
     public static ArrayList<Item> ITEMS = new ArrayList<>();
 
-    public static final Item PLAYFUL_CLOUD = registerItem(BoundlessAPI.identifier("playful_cloud"), new Item(new Item.Settings().maxCount(1)));
-    public static final Item DEMONIC_FINGER = registerItem(BoundlessAPI.identifier("demonic_finger"), new DemonicFingerItem(new Item.Settings().food(new FoodComponent.Builder().snack().alwaysEdible().build()).maxCount(20)));
+    public static final Item PLAYFUL_CLOUD = registerItem(BoundlessAPI.id("playful_cloud"), new Item(new Item.Settings().maxCount(1)));
+    public static final Item DEMONIC_FINGER = registerItem(BoundlessAPI.id("demonic_finger"), new DemonicFingerItem(new Item.Settings().food(new FoodComponent.Builder().snack().alwaysEdible().build()).maxCount(20)));
     // Todo: for testing only. Remove eventually
-    public static final Item FULL_HEAL = registerItem(BoundlessAPI.identifier("full_heal"), new FullHealItem(new Item.Settings()));
+    public static final Item FULL_HEAL = registerItem(BoundlessAPI.id("full_heal"), new FullHealItem(new Item.Settings()));
 
     public static Item registerItem(Identifier identifier, Item item) {
         return Registry.register(Registries.ITEM, identifier, item);

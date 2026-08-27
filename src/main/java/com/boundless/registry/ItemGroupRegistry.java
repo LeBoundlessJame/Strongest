@@ -30,6 +30,6 @@ public class ItemGroupRegistry {
             .build();
 
     public static void initialize() {
-        Registry.register(Registries.ITEM_GROUP, BoundlessAPI.identifier("boundless_group"), BOUNDLESS_GROUP);
+        Registry.register(Registries.ITEM_GROUP, BoundlessAPI.id("boundless_group"), BOUNDLESS_GROUP);
     }
 }

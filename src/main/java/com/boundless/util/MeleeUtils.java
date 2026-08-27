@@ -5,7 +5,6 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.SoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Ownable;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -22,7 +21,7 @@ public class MeleeUtils {
             entity.damage(entity.getDamageSources().generic(), damage);
             if (!(entity instanceof LivingEntity livingEntity)) return;
 
-            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.identifier("melee_impact"));
+            CombatUtils.playImpactVisual(player, livingEntity, BoundlessAPI.id("melee_impact"));
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
             knockback(user, livingEntity, knockback);
         });

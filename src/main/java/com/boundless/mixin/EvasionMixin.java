@@ -24,7 +24,7 @@ public class EvasionMixin {
     public void boundless$damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity)(Object)this;
         if (source.isIn(DamageTypeTags.IS_PROJECTILE) && SwitcherHero.isSwitcher(player) && source.getAttacker() != null) {
-            PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("clap"), 2.0f, false, false, 3000);
+            PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("clap"), 2.0f, false, false, 3000);
             SoundUtils.playSound(player, SoundRegistry.CLAP_1);
             cir.cancel();
 

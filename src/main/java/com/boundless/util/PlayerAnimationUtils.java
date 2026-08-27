@@ -63,7 +63,7 @@ public class PlayerAnimationUtils {
         int lastPriority = ((IAnimatedHero) user).boundless$getAnimationPriority(lastTriggeredAnimation, 1000);
         if (priority < lastPriority && currentAnimationContainer.isActive()) return;
 
-        if (Objects.equals(animation, BoundlessAPI.identifier("null"))) {
+        if (Objects.equals(animation, BoundlessAPI.id("null"))) {
             ((IAnimatedHero) user).boundless$setLastTriggeredAnimation(null);
             currentAnimationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTCIRC), null);
             return;
@@ -92,7 +92,7 @@ public class PlayerAnimationUtils {
     public static void stopAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
         Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
         if (animations.containsKey(lastTriggeredAnimation)) {
-            playClientAnimation(user, BoundlessAPI.identifier("null"), 1.0f, false, false, 9999);
+            playClientAnimation(user, BoundlessAPI.id("null"), 1.0f, false, false, 9999);
         }
     }
 

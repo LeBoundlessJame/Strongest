@@ -56,7 +56,7 @@ public class RockEntity extends PersistentProjectileEntity {
         }
 
         if (this.age % 2 == 0) {
-            EffekUtils.playEffect(BoundlessAPI.identifier("energy_flicker"), this, this.getPos(), new Vec3d(1, 1, 1));
+            EffekUtils.playEffect(BoundlessAPI.id("energy_flicker"), this, this.getPos(), new Vec3d(1, 1, 1));
         }
     }
 

@@ -32,6 +32,6 @@ public class HeroActionRenderer extends EntityRenderer<PersistentProjectileEntit
 
     @Override
     public Identifier getTexture(PersistentProjectileEntity entity) {
-        return BoundlessAPI.identifier("hero_action");
+        return BoundlessAPI.id("hero_action");
     }
 }

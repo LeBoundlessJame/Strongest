@@ -19,7 +19,7 @@ public class BleedEffect extends StatusEffect {
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity.age % this.damageInterval != 0) return true;
-        EffekUtils.playVisual(entity, BoundlessAPI.identifier("dismantle_impact"), new Vec3d(entity.getHeight() / 16, entity.getHeight() / 16, entity.getHeight() / 16));
+        EffekUtils.playVisual(entity, BoundlessAPI.id("dismantle_impact"), new Vec3d(entity.getHeight() / 16, entity.getHeight() / 16, entity.getHeight() / 16));
         entity.damage(DamageTypeRegistry.getDamageSource(entity, DamageTypeRegistry.BLEED), (amplifier + 1) * this.damagePerLevel);
         return true;
     }

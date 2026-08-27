@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 public class GrabLogic {
 
     public static void suplex(PlayerEntity player) {
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.identifier("suplex"), 1.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("suplex"), 1.0f, false, true, 3000);
 
         LinkedHashMap<Integer, BiConsumer<PlayerEntity, HeroActionEntity>> tasks = new LinkedHashMap<>();
 
@@ -37,7 +37,7 @@ public class GrabLogic {
         });
 
         tasks.put(6, (user, action) -> {
-            //CombatUtils.attack(action, 10f, Optional.of(BoundlessAPI.identifier("melee_impact_crit")));
+            //CombatUtils.attack(action, 10f, Optional.of(BoundlessAPI.id("melee_impact_crit")));
             if (!user.getPassengerList().isEmpty()) {
                 CameraUtils.playCameraShake(user);
                 user.getPassengerList().getFirst().damage(user.getDamageSources().generic(), 10f);

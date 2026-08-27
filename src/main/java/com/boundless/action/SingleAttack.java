@@ -19,9 +19,9 @@ public class SingleAttack {
     @Builder.Default
     SoundEvent impactSound = SoundRegistry.MISS_HIT;
     @Builder.Default
-    Identifier impactVFX = BoundlessAPI.identifier("melee_impact");
+    Identifier impactVFX = BoundlessAPI.id("melee_impact");
     @Builder.Default
-    Identifier animation = BoundlessAPI.identifier("hook");
+    Identifier animation = BoundlessAPI.id("hook");
     @Builder.Default
     float animationSpeed = 1.0f;
     @Builder.Default

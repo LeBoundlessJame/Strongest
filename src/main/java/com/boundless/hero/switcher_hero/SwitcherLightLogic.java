@@ -20,7 +20,7 @@ public class SwitcherLightLogic {
                 .damage(SwitcherHero.DAMAGE.lightAttack.get())
                 .impactSound(SoundRegistry.EARTH_IMPACT)
                 .animationSpeed(1.0f)
-                .animation(BoundlessAPI.identifier("hook"))
+                .animation(BoundlessAPI.id("hook"))
                 .impactTick(4)
                 .attackDuration(4)
                 .build();

@@ -30,7 +30,7 @@ public class PunchAbility extends TechniqueAbility {
     private float damage;
 
     @Builder.Default
-    private Identifier animation = BoundlessAPI.identifier("hook");
+    private Identifier animation = BoundlessAPI.id("hook");
     @Builder.Default
     private float animationSpeed = 1.0f;
 

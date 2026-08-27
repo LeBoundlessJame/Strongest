@@ -14,7 +14,7 @@ public class DamageTypeRegistry {
     public static final RegistryKey<DamageType> BLEED = registerDamageType("bleed");
 
     public static RegistryKey<DamageType> registerDamageType(String name) {
-        return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, BoundlessAPI.identifier(name));
+        return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, BoundlessAPI.id(name));
     }
 
     public static DamageSource getDamageSource(LivingEntity livingEntity, RegistryKey<DamageType> type) {
