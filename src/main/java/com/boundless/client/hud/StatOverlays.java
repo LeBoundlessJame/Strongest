@@ -21,7 +21,7 @@ public class StatOverlays {
     public static final Identifier CURSED_ENERGY_WHITE = BoundlessAPI.hudPNG("cursed_energy_white");
 
     private static final StatTrail HEALTH_TRAIL = new StatTrail(4, 4);
-    private static final StatTrail CURSED_ENERGY_TRAIL = new StatTrail(4, 4);
+    private static final StatTrail CURSED_ENERGY_TRAIL = new StatTrail(8, 4);
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
