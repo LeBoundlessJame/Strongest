@@ -2,6 +2,7 @@ package com.boundless.mechanics;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.shadow_hero.ShadowHero;
+import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.RaycastUtils;
@@ -27,7 +28,7 @@ public class ShikigamiManager {
         if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
         ItemStack heroStack = HeroUtils.getHeroStack(player);
-        Map<String, NbtCompound> shikigamiMap = heroStack.getOrDefault(ShadowHero.SHIKIGAMI, new HashMap<>());
+        Map<String, NbtCompound> shikigamiMap = heroStack.getOrDefault(TenShadowsComponents.SHIKIGAMI, new HashMap<>());
 
         String shikigamiKey = shikigamiType.toString();
         NbtCompound nbt = shikigamiMap.getOrDefault(shikigamiKey, new NbtCompound());
@@ -40,7 +41,7 @@ public class ShikigamiManager {
 
         shikigamiMap = new HashMap<>(shikigamiMap);
         shikigamiMap.put(shikigamiKey, result);
-        heroStack.set(ShadowHero.SHIKIGAMI, shikigamiMap);
+        heroStack.set(TenShadowsComponents.SHIKIGAMI, shikigamiMap);
     }
 
     // I'm not a big fan of using nbtCompound as the return value, but nbt is a bit cooked so rip

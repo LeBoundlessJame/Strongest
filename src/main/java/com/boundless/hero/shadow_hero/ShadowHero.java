@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
+import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
@@ -21,8 +22,6 @@ import java.util.Map;
 import static com.boundless.registry.DataComponentRegistry.registerComponent;
 
 public class ShadowHero extends Hero {
-    public static final ComponentType<Map<String, NbtCompound>> SHIKIGAMI = registerComponent("shikigami", builder -> ComponentType.<Map<String, NbtCompound>>builder().codec(Codec.unboundedMap(Codec.STRING, NbtCompound.CODEC)));
-
     public static AttributeModifiersComponent ATTRIBUTES = AttributeModifiersComponent.builder()
             .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.id("generic_max_health"), 380f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
             .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.id("generic_jump_strength"), 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
@@ -32,12 +31,15 @@ public class ShadowHero extends Hero {
             .build();
 
     public ShadowHero() {
+        TenShadowsComponents.initialize();
+
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique.PUNCH)
                 .ability(AbilityKey.USE, TenShadowsTechnique::getRightClickAbility)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
+                .ability(AbilityKey.ABILITY_FOUR, TenShadowsTechnique.SHIKIGAMI_ORDERS)
                 .build();
 
         this.heroData = HeroData.builder()
