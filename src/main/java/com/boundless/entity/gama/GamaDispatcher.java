@@ -1,7 +1,6 @@
 package com.boundless.entity.gama;
 
 import com.boundless.util.EntityAnimationUtils;
-import com.boundless.util.PlayerAnimationUtils;
 import mod.azure.azurelib.common.animation.dispatch.command.AzCommand;
 import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 import net.minecraft.entity.LivingEntity;

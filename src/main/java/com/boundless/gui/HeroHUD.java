@@ -1,10 +1,11 @@
 package com.boundless.gui;
 
-import com.boundless.ability.Ability;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
-import com.boundless.registry.*;
+import com.boundless.registry.ShaderRegistry;
+import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import com.boundless.util.ShaderAccessor;
@@ -16,8 +17,6 @@ import net.minecraft.util.Identifier;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class HeroHUD {
     public static void render(DrawContext context, RenderTickCounter renderTickCounter) {

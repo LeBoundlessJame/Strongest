@@ -1,10 +1,8 @@
 package com.boundless.util;
 
-import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;

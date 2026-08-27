@@ -1,14 +1,9 @@
 package com.boundless.mechanics;
 
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.util.DataComponentUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-
-import java.util.Map;
 
 public class CursedEnergyManager {
     public static void setCursedEnergy(PlayerEntity player, int cursedEnergy) {

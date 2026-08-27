@@ -8,13 +8,13 @@
     "EvasionMixin",
     "GrabMixin",
     "HandSwingMixin",
+    "HungerPreventionMixin",
     "InvulnerabilityMixin",
     "KeybindAccessor",
     "LeapingMixin",
     "LivingEntityMixin",
     "ReviveMixin",
-    "SpeedMixin",
-    "HungerPreventionMixin"
+    "SpeedMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2,7 +2,8 @@ package com.boundless.hero.shadow_hero.technique;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.ability.generic.*;
+import com.boundless.ability.generic.PunchAbility;
+import com.boundless.ability.generic.SummonShikigamiAbility;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.hero.shadow_hero.technique.abilities.GamaGrappleAbility;
 import com.boundless.registry.EntityRegistry;

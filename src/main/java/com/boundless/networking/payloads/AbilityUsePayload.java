@@ -1,7 +1,7 @@
 package com.boundless.networking.payloads;
 
-import com.boundless.networking.PayloadRegistry;
 import com.boundless.mechanics.AbilityManager;
+import com.boundless.networking.PayloadRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

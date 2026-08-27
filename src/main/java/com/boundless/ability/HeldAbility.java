@@ -1,9 +1,9 @@
 package com.boundless.ability;
 
 import com.boundless.ability.components.KeybindHoldData;
+import com.boundless.mechanics.AbilityManager;
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.DataComponentRegistry;
-import com.boundless.mechanics.AbilityManager;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import lombok.Getter;

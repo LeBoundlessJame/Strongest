@@ -1,6 +1,5 @@
 package com.boundless.registry;
 
-import com.boundless.ability.Ability;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.EmptyAbility;
 import net.minecraft.util.Identifier;

@@ -4,8 +4,8 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.action.SingleAttack;
 import com.boundless.hero.switcher_hero.SwitcherHero;
-import com.boundless.registry.SoundRegistry;
 import com.boundless.mechanics.AbilityManager;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.util.AttackUtils;
 import net.minecraft.entity.player.PlayerEntity;
 

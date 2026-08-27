@@ -2,10 +2,8 @@ package com.boundless.util;
 
 import com.boundless.client.CameraShake;
 import com.boundless.networking.payloads.CameraShakePayload;
-import com.boundless.registry.DataComponentRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 

@@ -2,8 +2,8 @@ package com.boundless.client;
 
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
-import com.boundless.networking.payloads.AbilityUsePayload;
 import com.boundless.mechanics.AbilityManager;
+import com.boundless.networking.payloads.AbilityUsePayload;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.KeybindingUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

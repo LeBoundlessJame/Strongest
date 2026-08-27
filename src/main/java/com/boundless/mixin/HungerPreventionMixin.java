@@ -1,6 +1,5 @@
 package com.boundless.mixin;
 
-import com.boundless.registry.GameRulesRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;

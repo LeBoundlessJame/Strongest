@@ -2,7 +2,6 @@ package com.boundless.loadouts;
 
 import com.mojang.serialization.Codec;
 import lombok.Getter;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.StringIdentifiable;
 
 public enum AbilityKey implements StringIdentifiable {

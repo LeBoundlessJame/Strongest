@@ -1,7 +1,6 @@
 package com.boundless.hero.api;
 
 import com.boundless.ability.Ability;
-import com.boundless.ability.AbilityLoadout;
 import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.DataComponentRegistry;
 import lombok.Getter;
