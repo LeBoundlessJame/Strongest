@@ -25,7 +25,7 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
 
     @Override
     public Identifier getAbilityId() {
-        return BoundlessAPI.id("shikigami_order");
+        return BoundlessAPI.id("shikigami_order_" + this.sequenceCharacter);
     }
 
     @Override
