@@ -11,6 +11,7 @@ import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrdersMenuAbi
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
+import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -44,7 +45,14 @@ public class TenShadowsTechnique {
             .knockback(new Vec3d(1.2, 0.6, 1.2))
             .build());
 
+
     public static Identifier getRightClickAbility(PlayerEntity player) {
+        if (HeroUtils.getHeroStack(player).getOrDefault(TenShadowsComponents.SHIKIGAMI_ORDER_MENU, false)) return SHIKIGAMI_ORDER_RIGHT.getAbilityId();
         return player.getVehicle() instanceof GamaEntity ? GAMA_GRAPPLE.getAbilityId() : ROUNDHOUSE_KICK.getAbilityId();
+    }
+
+    public static Identifier getLeftClickAbility(PlayerEntity player) {
+        if (HeroUtils.getHeroStack(player).getOrDefault(TenShadowsComponents.SHIKIGAMI_ORDER_MENU, false)) return SHIKIGAMI_ORDER_LEFT.getAbilityId();
+        return PUNCH.getAbilityId();
     }
 }
