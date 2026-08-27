@@ -20,43 +20,15 @@ public class StatOverlays {
     public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
     public static final Identifier CURSED_ENERGY_WHITE = BoundlessAPI.hudPNG("cursed_energy_white");
 
-    private static final int TRAIL_DELAY_TICKS = 4;
-    private static final int TRAIL_TRANSITION_TICKS = 4;
-
-    private static boolean hasPrevHealth = false;
-    private static float prevHealth;
-    private static float trailingHealth;
-    private static float trailingHealthStart;
-    private static int lastDamageTimestamp;
+    private static final StatTrail HEALTH_TRAIL = new StatTrail(4, 4);
+    private static final StatTrail CURSED_ENERGY_TRAIL = new StatTrail(4, 4);
 
     public static void renderHealthOverlay(MinecraftClient client, DrawContext context) {
         PlayerEntity player = client.player;
         if (player == null) return;
 
         float health = player.getHealth();
-
-        if (!hasPrevHealth) {
-            prevHealth = health;
-            trailingHealth = health;
-            hasPrevHealth = true;
-        }
-
-        if (health < prevHealth) {
-            trailingHealth = prevHealth;
-            trailingHealthStart = prevHealth;
-            lastDamageTimestamp = player.age;
-        }
-
-        prevHealth = health;
-
-        if (lastDamageTimestamp >= 0) {
-            int ticksSinceLastDamage = player.age - lastDamageTimestamp;
-
-            if (ticksSinceLastDamage > TRAIL_DELAY_TICKS && trailingHealth > health) {
-                float progress = MathHelper.clamp((ticksSinceLastDamage - TRAIL_DELAY_TICKS) / (float) TRAIL_TRANSITION_TICKS, 0.0f, 1.0f);
-                trailingHealth = MathHelper.lerp(progress, trailingHealthStart, health);
-            }
-        }
+        float trailingHealth = HEALTH_TRAIL.getUpdatedDisplay(health, player);
 
         int x = context.getScaledWindowWidth() / 2 - 107;
         int y = context.getScaledWindowHeight() - 34;
