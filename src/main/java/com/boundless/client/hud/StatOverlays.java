@@ -1,4 +1,4 @@
-package com.boundless.client;
+package com.boundless.client.hud;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.mechanics.CursedEnergyManager;
@@ -18,6 +18,7 @@ public class StatOverlays {
     public static final Identifier HEALTH = BoundlessAPI.hudPNG("health");
     public static final Identifier HEALTH_WHITE = BoundlessAPI.hudPNG("health_white");
     public static final Identifier CURSED_ENERGY = BoundlessAPI.hudPNG("cursed_energy");
+    public static final Identifier CURSED_ENERGY_WHITE = BoundlessAPI.hudPNG("cursed_energy_white");
 
     private static final int TRAIL_DELAY_TICKS = 4;
     private static final int TRAIL_TRANSITION_TICKS = 4;

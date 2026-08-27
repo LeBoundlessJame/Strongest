@@ -1,4 +1,4 @@
-package com.boundless.client;
+package com.boundless.client.hud;
 
 import com.boundless.gui.HeroHUD;
 import com.boundless.hero.api.HeroData;

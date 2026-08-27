@@ -1,6 +1,6 @@
 package com.boundless.mixin;
 
-import com.boundless.client.StatOverlays;
+import com.boundless.client.hud.StatOverlays;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
