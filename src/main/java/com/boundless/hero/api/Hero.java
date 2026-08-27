@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.ability.HeldAbility;
+import com.boundless.mechanics.CursedEnergyManager;
 import com.boundless.registry.AbilityRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.HeroRegistry;
@@ -63,8 +64,6 @@ public abstract class Hero {
     }
 
     public static void onHeroTick(PlayerEntity player) {
-        for (HeldAbility heldAbility: HELD_ABILITIES) {
-            heldAbility.holdTickLogic(player);
-        }
+        CursedEnergyManager.regenCursedEnergyTick(player);
     }
 }
