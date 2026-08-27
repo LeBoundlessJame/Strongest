@@ -6,6 +6,8 @@ import com.boundless.ability.generic.*;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 public class TenShadowsTechnique {
@@ -32,4 +34,8 @@ public class TenShadowsTechnique {
     public static final TechniqueAbility KURO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_KURO, 200, 5));
     public static final TechniqueAbility SHIRO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_SHIRO, 200, 5));
     public static final TechniqueAbility GAMA = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.GAMA, 300, 5));
+
+    public static Identifier getLeftClickAbility(PlayerEntity player) {
+        return PUNCH.getAbilityId();
+    }
 }
