@@ -15,6 +15,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 public class TenShadowsTechnique {
+    public static final TechniqueAbility KURO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_KURO, 200, 5));
+    public static final TechniqueAbility SHIRO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_SHIRO, 200, 5));
+    public static final TechniqueAbility GAMA = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.GAMA, 300, 5));
+    public static final TechniqueAbility GAMA_GRAPPLE = TechniqueAbilityRegistry.register(new GamaGrappleAbility());
+    public static final TechniqueAbility SHIKIGAMI_ORDERS = TechniqueAbilityRegistry.register(new ShikigamiOrdersAbility());
+
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
             .abilityId(BoundlessAPI.id("megumi_punch"))
             .damage(18f)
@@ -34,12 +40,6 @@ public class TenShadowsTechnique {
             .impactSound(SoundRegistry.IMPACT_HEAVY_1)
             .knockback(new Vec3d(1.2, 0.6, 1.2))
             .build());
-
-    public static final TechniqueAbility KURO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_KURO, 200, 5));
-    public static final TechniqueAbility SHIRO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_SHIRO, 200, 5));
-    public static final TechniqueAbility GAMA = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.GAMA, 300, 5));
-    public static final TechniqueAbility GAMA_GRAPPLE = TechniqueAbilityRegistry.register(new GamaGrappleAbility());
-    public static final TechniqueAbility SHIKIGAMI_ORDERS = TechniqueAbilityRegistry.register(new ShikigamiOrdersAbility());
 
     public static Identifier getRightClickAbility(PlayerEntity player) {
         return player.getVehicle() instanceof GamaEntity ? GAMA_GRAPPLE.getAbilityId() : ROUNDHOUSE_KICK.getAbilityId();
