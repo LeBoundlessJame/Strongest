@@ -3,7 +3,7 @@ package com.boundless.ability.generic;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.util.Shikigami;
-import com.boundless.util.ShikigamiUtils;
+import com.boundless.mechanics.ShikigamiManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +22,7 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
 
     @Override
     public void activate(PlayerEntity playerEntity) {
-        ShikigamiUtils.toggleShikigami(playerEntity, this.shikigamiType);
+        ShikigamiManager.toggleShikigami(playerEntity, this.shikigamiType);
     }
 
     @Override

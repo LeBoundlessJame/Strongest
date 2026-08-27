@@ -1,7 +1,11 @@
-package com.boundless.util;
+package com.boundless.mechanics;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.shadow_hero.ShadowHero;
+import com.boundless.util.EffekUtils;
+import com.boundless.util.HeroUtils;
+import com.boundless.util.RaycastUtils;
+import com.boundless.util.Shikigami;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
@@ -18,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ShikigamiUtils {
+public class ShikigamiManager {
     public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
         if (player.getWorld().isClient || !(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
