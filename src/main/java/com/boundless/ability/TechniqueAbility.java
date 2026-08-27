@@ -20,7 +20,7 @@ public abstract class TechniqueAbility {
         if (!canActivate(player)) return;
         activate(player);
 
-        if (this.getCost() > 0) CursedEnergyManager.addCursedEnergy(player, -this.getCost());
+        if (this.getCost() > 0 && !player.isCreative()) CursedEnergyManager.addCursedEnergy(player, -this.getCost());
         CooldownManager.setAbilityCooldown(player, this.getAbilityId(), this.getCooldown());
     }
 
