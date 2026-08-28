@@ -34,12 +34,17 @@ public class ShikigamiManager {
         BlockHitResult blockHitResult = RaycastUtils.blockRaycast(playerEntity, range);
         if (blockHitResult == null) return null;
         BlockPos pos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
-        return summonShikigami(playerEntity, serverWorld, shikigamiType, nbt, pos.toCenterPos());
+        T shikigami = summonShikigami(playerEntity, serverWorld, shikigamiType, nbt, pos.toCenterPos());
+        if (shikigami == null) return null;
+
+        NbtCompound newNbt = new NbtCompound();
+        shikigami.saveNbt(newNbt);
+        newNbt.putBoolean("summoned", true);
+
+        return newNbt;
     }
 
-    // I'm not a big fan of using nbtCompound as the return value, but nbt is a bit cooked so rip
-    // Todo: also, might make range configurable in the future or extract it back out to a generic helper
-    private static <T extends TameableEntity & Shikigami> NbtCompound summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d position) {
+    private static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d pos) {
         T shikigami;
 
         if (nbt.containsUuid("UUID")) {
@@ -56,16 +61,11 @@ public class ShikigamiManager {
             shikigami.setTamed(true, false);
         }
 
-        shikigami.setPosition(position);
+        shikigami.setPosition(pos);
         serverWorld.spawnEntity(shikigami);
+        shikigami.onSummon(playerEntity);
 
-        if (shikigami instanceof Shikigami shikigamiEntity) shikigamiEntity.onSummon(playerEntity);
-
-        NbtCompound newNbt = new NbtCompound();
-        shikigami.saveNbt(newNbt);
-        newNbt.putBoolean("summoned", true);
-
-        return newNbt;
+        return shikigami;
     }
 
     private static <T extends TameableEntity & Shikigami> NbtCompound desummonShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
