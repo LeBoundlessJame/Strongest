@@ -46,6 +46,12 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
     @Nullable @Getter @Setter
     GrappleEntity grapple = null;
 
+    @Nullable @Getter @Setter
+    Entity pullTarget = null;
+
+    @Getter @Setter
+    public int pullTimer = 0;
+
     public GamaEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new GamaDispatcher(this);
@@ -132,6 +138,11 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
     @Override
     public void tick() {
         super.tick();
+
+        if (pullTimer > 0) {
+            pullTimer--;
+        }
+
         moveAnalysis.update();
         this.animationTick();
     }
@@ -256,5 +267,16 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
 
         this.setVelocity(velocity.x * horizontalMultiplier, verticalVelocity, velocity.z * horizontalMultiplier);
         this.velocityDirty = true;
+    }
+
+    public void pullTarget(Entity target) {
+        if (this.getWorld().isClient) return;
+        this.setPullTarget(target);
+        this.setPullTimer(5);
+
+        Vec3d direction = this.getPos().subtract(target.getPos()).normalize();
+        double pullStrength = target.distanceTo(this) * 0.15;
+        target.setVelocity(direction.add(0, 0.5, 0).multiply(pullStrength, 1, pullStrength));
+        target.velocityModified = true;
     }
 }
