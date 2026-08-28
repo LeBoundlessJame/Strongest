@@ -1,5 +1,9 @@
 package com.boundless.util;
 
-public interface Shikigami {
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
+public interface Shikigami {
+    default void onSummon(PlayerEntity player) {}
+    default void onDesummon() {}
 }

@@ -3,6 +3,7 @@ package com.boundless.entity.divine_dogs.kuro;
 import com.boundless.entity.divine_dogs.goals.DivineDogMeleeGoal;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import com.boundless.util.TenShadowsShikigami;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +16,7 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
-public class DivineDogKuroEntity extends WolfEntity implements Shikigami {
+public class DivineDogKuroEntity extends WolfEntity implements TenShadowsShikigami {
     public final DivineDogDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
 

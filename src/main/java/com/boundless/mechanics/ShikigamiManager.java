@@ -61,7 +61,7 @@ public class ShikigamiManager {
         shikigami.setPosition(position);
         serverWorld.spawnEntity(shikigami);
 
-        EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), shikigami, shikigami.getPos(), new Vec3d(0.15, 0.15, 0.15));
+        if (shikigami instanceof Shikigami shikigamiEntity) shikigamiEntity.onSummon(playerEntity);
 
         NbtCompound newNbt = new NbtCompound();
         shikigami.saveNbt(newNbt);
@@ -84,7 +84,7 @@ public class ShikigamiManager {
         NbtCompound newNbt = new NbtCompound();
         entity.saveNbt(newNbt);
 
-        EffekUtils.playEffect(BoundlessAPI.id("divine_dog_summon"), entity, entity.getPos().add(0, 1, 0), new Vec3d(0.15, 0.15, 0.15));
+        if (entity instanceof Shikigami shikigami) shikigami.onDesummon();
 
         entity.discard();
         newNbt.putBoolean("summoned", false);

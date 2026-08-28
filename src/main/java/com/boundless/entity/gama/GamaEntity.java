@@ -4,6 +4,7 @@ import com.boundless.entity.gama.goals.ToadLeapGoal;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import com.boundless.util.TenShadowsShikigami;
 import lombok.Getter;
 import lombok.Setter;
 import mod.azure.azurelib.common.util.MoveAnalysis;
@@ -37,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class GamaEntity extends TameableEntity implements Shikigami, Tameable, JumpingMount {
+public class GamaEntity extends TameableEntity implements TenShadowsShikigami, Tameable, JumpingMount {
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
     public final GamaDispatcher dispatcher;

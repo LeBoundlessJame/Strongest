@@ -6,6 +6,7 @@ import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.Shikigami;
+import com.boundless.util.TenShadowsShikigami;
 import lombok.Getter;
 import lombok.Setter;
 import mod.azure.azurelib.common.util.MoveAnalysis;
@@ -33,7 +34,7 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
-public class DivineDogShiroEntity extends DivineDogKuroEntity implements Shikigami, InventoryOwner {
+public class DivineDogShiroEntity extends DivineDogKuroEntity implements TenShadowsShikigami, InventoryOwner {
     public final DivineDogDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
     private final SimpleInventory inventory = new SimpleInventory(1);
