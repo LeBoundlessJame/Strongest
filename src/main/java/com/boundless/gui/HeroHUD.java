@@ -3,6 +3,7 @@ package com.boundless.gui;
 import com.boundless.ability.AbilityEntry;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.loadouts.TechniqueLoadout;
+import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.ShaderRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
@@ -83,27 +84,9 @@ public class HeroHUD {
                 boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.key().getTranslationKey()).getBoundKeyLocalizedText().getString();
             }
 
-            renderKeybindAbility(client, context, offset, boundKey, displayText, 0);
+            renderKeybindAbility(client, context, offset, boundKey, displayText, (int) CooldownManager.getRemainingCooldownTicks(client.player, abilityId));
             offset++;
         }
-        /*
-        LinkedHashMap<String, Identifier> abilityLoadout = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.ABILITY_LOADOUT, new LinkedHashMap<>()));
-        LinkedHashMap<Identifier, Long> abilityCooldowns = new LinkedHashMap<>(HeroUtils.getHeroStack(client.player).getOrDefault(DataComponentRegistry.COOLDOWN_DATA, new LinkedHashMap<>()));
-
-        int offset = 1;
-        for (Map.Entry<String, Identifier> entry : abilityLoadout.entrySet()) {
-            Ability ability = AbilityRegistry.getAbilityFromID(entry.getValue());
-            if (ability == null || ability.isHide() || ability.getDisplayText() == null) continue;
-            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.getKey()).getBoundKeyLocalizedText().getString();
-
-            long endTick = abilityCooldowns.getOrDefault(ability.getAbilityID(), 0L);
-            int cooldown = Math.toIntExact(endTick - client.player.getWorld().getTime());
-
-            renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayText(), cooldown);
-            offset += 1;
-        }
-
-         */
     }
 
     public static void renderKeybindAbility(MinecraftClient client, DrawContext context, int yOffset, String boundKey, Text abilityText, int cooldown) {

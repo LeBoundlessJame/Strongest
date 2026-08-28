@@ -15,13 +15,17 @@ public class CooldownManager {
         DataComponentUtils.updateMap(heroStack, DataComponentRegistry.COOLDOWN_DATA, abilityID, player.getWorld().getTime() + cooldownTime);
     }
 
-    public static long getAbilityCooldown(PlayerEntity player, Identifier abilityId) {
+    public static long getAbilityCooldownEnd(PlayerEntity player, Identifier abilityId) {
         ItemStack heroStack = HeroUtils.getHeroStack(player);
         Map<Identifier, Long> cooldownData = heroStack.getOrDefault(DataComponentRegistry.COOLDOWN_DATA, Map.of());
         return cooldownData.getOrDefault(abilityId, 0L);
     }
 
+    public static long getRemainingCooldownTicks(PlayerEntity player, Identifier abilityId) {
+        return getAbilityCooldownEnd(player, abilityId) - player.getWorld().getTime();
+    }
+
     public static boolean isOnCooldown(PlayerEntity player, Identifier abilityId) {
-        return player.getWorld().getTime() < getAbilityCooldown(player, abilityId);
+        return player.getWorld().getTime() < getAbilityCooldownEnd(player, abilityId);
     }
 }
