@@ -3,6 +3,7 @@ package com.boundless.entity.gama;
 import com.boundless.entity.gama.goals.ToadLeapGoal;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.registry.EntityRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.TenShadowsShikigami;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -277,6 +279,10 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
         double pullStrength = target.distanceTo(this) * 0.15;
         target.setVelocity(direction.add(0, 0.5, 0).multiply(pullStrength, 1, pullStrength));
         target.velocityModified = true;
+
+        if (target instanceof LivingEntity livingEntity) {
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.STUN, 40, 0, false, false, true));
+        }
     }
 
     public void setPullTarget(@Nullable Entity target) {
