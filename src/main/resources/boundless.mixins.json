@@ -14,7 +14,8 @@
     "LeapingMixin",
     "LivingEntityMixin",
     "ReviveMixin",
-    "SpeedMixin"
+    "SpeedMixin",
+    "StunVfxRemovalMixin"
   ],
   "injectors": {
     "defaultRequire": 1
