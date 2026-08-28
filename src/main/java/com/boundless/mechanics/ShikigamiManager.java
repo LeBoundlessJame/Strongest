@@ -1,24 +1,19 @@
 package com.boundless.mechanics;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.util.EffekUtils;
-import com.boundless.util.HeroUtils;
 import com.boundless.util.RaycastUtils;
 import com.boundless.util.Shikigami;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,11 +21,7 @@ public class ShikigamiManager {
     public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
         if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
-        ItemStack heroStack = HeroUtils.getHeroStack(player);
-        Map<String, NbtCompound> shikigamiMap = heroStack.getOrDefault(TenShadowsComponents.SHIKIGAMI, new HashMap<>());
-
-        String shikigamiKey = shikigamiType.toString();
-        NbtCompound nbt = shikigamiMap.getOrDefault(shikigamiKey, new NbtCompound());
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
 
         NbtCompound result = nbt.getBoolean("summoned")
                 ? desummonShikigami(serverWorld, nbt)
@@ -38,9 +29,7 @@ public class ShikigamiManager {
 
         if (result == null) return;
 
-        shikigamiMap = new HashMap<>(shikigamiMap);
-        shikigamiMap.put(shikigamiKey, result);
-        heroStack.set(TenShadowsComponents.SHIKIGAMI, shikigamiMap);
+        ShikigamiNbtManager.setNbt(player, shikigamiType, result);
     }
 
     // I'm not a big fan of using nbtCompound as the return value, but nbt is a bit cooked so rip
