@@ -6,6 +6,7 @@ import com.boundless.entity.gama.GamaEntity;
 import com.boundless.mechanics.ShikigamiManager;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.util.RaycastUtils;
+import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
@@ -32,6 +33,8 @@ public class GamaPullAbility extends TechniqueAbility {
 
         gama.setPullTarget(target);
         gama.setPullTimer(5);
+        gama.pullTarget(target);
+        gama.lookAt(EntityAnchorArgumentType.EntityAnchor.FEET, target.getPos());
     }
 
     @Override
