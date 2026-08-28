@@ -89,4 +89,14 @@ public class ShikigamiManager {
 
         return newNbt;
     }
+
+    public static <T extends TameableEntity & Shikigami> T getShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
+        if (!(player.getWorld() instanceof ServerWorld serverWorld)) return null;
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
+
+        if (!nbt.getBoolean("summoned") || !nbt.contains("UUID")) return null;
+
+        Entity entity = serverWorld.getEntity(nbt.getUuid("UUID"));
+        return (T) entity;
+    }
 }
