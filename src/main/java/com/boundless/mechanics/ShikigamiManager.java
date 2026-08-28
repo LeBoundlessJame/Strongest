@@ -28,7 +28,7 @@ public class ShikigamiManager {
     }
 
     // Todo: might make this a boolean later in case we want unsuccessful summons to not consume CE, but we'll see
-    private static <T extends TameableEntity & Shikigami> void summonShikigamiAtRay(PlayerEntity playerEntity, EntityType<T> shikigamiType, float range) {
+    public static <T extends TameableEntity & Shikigami> void summonShikigamiAtRay(PlayerEntity playerEntity, EntityType<T> shikigamiType, float range) {
         BlockHitResult blockHitResult = RaycastUtils.blockRaycast(playerEntity, range);
         if (blockHitResult == null) return;
         BlockPos pos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
@@ -36,7 +36,7 @@ public class ShikigamiManager {
         summonShikigamiAt(playerEntity, shikigamiType, pos.toCenterPos());
     }
 
-    private static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d pos) {
+    public static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d pos) {
         T shikigami;
 
         if (nbt.containsUuid("UUID")) {
@@ -60,7 +60,7 @@ public class ShikigamiManager {
         return shikigami;
     }
 
-    private static <T extends TameableEntity & Shikigami> void desummonShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
+    public static <T extends TameableEntity & Shikigami> void desummonShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
         NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
         if (!nbt.containsUuid("UUID")) return;
 
