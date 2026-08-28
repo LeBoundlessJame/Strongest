@@ -41,4 +41,9 @@ public class GamaPullAbility extends TechniqueAbility {
     public Identifier getAbilityId() {
         return BoundlessAPI.id("gama_pull");
     }
+
+    @Override
+    public String getDisplayString() {
+        return "L R L - Gama Pull";
+    }
 }

@@ -1,59 +1,78 @@
 package com.boundless.loadouts;
 
+import com.boundless.ability.AbilityEntry;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 public class TechniqueLoadout {
-    private final Map<AbilityKey, Function<PlayerEntity, Identifier>> abilities;
-    private final Map<AbilityKey, Set<Identifier>> allPossibleAbilities;
+    private final List<AbilityEntry> abilities;
+    private final Map<AbilityKey, AbilityEntry> keybindAbilities;
 
-    private TechniqueLoadout(Map<AbilityKey, Function<PlayerEntity, Identifier>> abilities, Map<AbilityKey, Set<Identifier>> allPossibleAbilities) {
-        this.abilities = abilities;
-        this.allPossibleAbilities = allPossibleAbilities;
+    private TechniqueLoadout(List<AbilityEntry> abilities) {
+        this.abilities = List.copyOf(abilities);
+
+        Map<AbilityKey, AbilityEntry> keybindAbilities = new HashMap<>();
+
+        for (AbilityEntry entry: this.abilities) {
+            if (entry.key() == null) continue;
+
+            keybindAbilities.put(entry.key(), entry);
+        }
+
+        this.keybindAbilities = Map.copyOf(keybindAbilities);
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
+    public List<AbilityEntry> getAbilities() {
+        return abilities;
+    }
+
+    public AbilityEntry getKeybindAbility(AbilityKey key) {
+        return keybindAbilities.get(key);
+    }
+
     public Identifier getAbilityId(AbilityKey key, PlayerEntity player) {
-        Function<PlayerEntity, Identifier> resolver = abilities.get(key);
+        AbilityEntry entry = keybindAbilities.get(key);
 
-        if (resolver == null) return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        if (entry == null) return TechniqueAbilityRegistry.EMPTY.getAbilityId();
 
-        return resolver.apply(player);
+        return entry.getAbilityId(player);
     }
 
     public static class Builder {
-        private final Map<AbilityKey, Function<PlayerEntity, Identifier>> abilities = new HashMap<>();
-        private final Map<AbilityKey, Set<Identifier>> allPossibleAbilities = new HashMap<>();
+        private final List<AbilityEntry> abilities = new ArrayList<>();
 
         public Builder ability(AbilityKey key, TechniqueAbility ability) {
-            abilities.put(key, player -> ability.getAbilityId());
-            allPossibleAbilities.computeIfAbsent(key, idSet -> new HashSet<>()).add(ability.getAbilityId());
-            return this;
+            return ability(key, playerEntity -> ability.getAbilityId(), ability.getAbilityId());
         }
 
         public Builder ability(AbilityKey key, Function<PlayerEntity, Identifier> resolver, Identifier... possibleAbilities) {
-            abilities.put(key, resolver);
-            allPossibleAbilities.computeIfAbsent(key, idSet -> new HashSet<>()).addAll(Set.of(possibleAbilities));
+            abilities.add(new AbilityEntry(key, resolver, Set.of(possibleAbilities)));
             return this;
         }
 
+        public Builder ability(TechniqueAbility ability) {
+            return ability(null, playerEntity -> ability.getAbilityId(), ability.getAbilityId());
+        }
+
         public TechniqueLoadout build() {
-            return new TechniqueLoadout(Map.copyOf(abilities), Map.copyOf(allPossibleAbilities));
+            return new TechniqueLoadout(abilities);
         }
     }
 
     public TechniqueLoadoutComponent asComponent() {
-        return new TechniqueLoadoutComponent(allPossibleAbilities);
+        Set<Identifier> allAbilities = new HashSet<>();
+        for (AbilityEntry entry: abilities) {
+            allAbilities.addAll(entry.possibleAbilities());
+        }
+        return new TechniqueLoadoutComponent(Set.copyOf(allAbilities));
     }
 }

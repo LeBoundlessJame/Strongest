@@ -14,7 +14,6 @@ public class ShadowHero extends Hero {
     public ShadowHero() {
         TenShadowsComponents.initialize();
 
-        // Todo: gotta rework the Identifier... thing, it's getting kinda annoying
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, TenShadowsTechnique::getLeftClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId(), TenShadowsTechnique.PUNCH.getAbilityId())
                 .ability(AbilityKey.USE, TenShadowsTechnique::getRightClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId(), TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId(), TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId())
@@ -22,6 +21,7 @@ public class ShadowHero extends Hero {
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
                 .ability(AbilityKey.ABILITY_FOUR, TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU)
+                .ability(TenShadowsTechnique.GAMA_PULL)
                 .build();
 
         this.heroData = HeroData.builder()

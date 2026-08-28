@@ -1,5 +1,6 @@
 package com.boundless.gui;
 
+import com.boundless.ability.AbilityEntry;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
@@ -64,13 +65,17 @@ public class HeroHUD {
         TechniqueLoadout loadout = HeroUtils.getTechniqueLoadout(client.player);
         int offset = 1;
 
-        for (AbilityKey abilityKey: AbilityKey.values()) {
-            Identifier abilityId = loadout.getAbilityId(abilityKey, client.player);
+        for (AbilityEntry entry: loadout.getAbilities()) {
+            Identifier abilityId = entry.getAbilityId(client.player);
             TechniqueAbility ability = TechniqueAbilityRegistry.getAbilityFromID(abilityId);
 
             if (ability == null || ability.getDisplayString() == null) continue;
 
-            String boundKey = KeybindingUtils.getKeyBindingFromTranslation(abilityKey.getTranslationKey()).getBoundKeyLocalizedText().getString();
+            String boundKey = "";
+
+            if (entry.key() != null) {
+                boundKey = KeybindingUtils.getKeyBindingFromTranslation(entry.key().getTranslationKey()).getBoundKeyLocalizedText().getString();
+            }
 
             renderKeybindAbility(client, context, offset, boundKey, ability.getDisplayString(), 0);
             offset++;
