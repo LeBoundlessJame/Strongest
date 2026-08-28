@@ -3,6 +3,7 @@ package com.boundless.effect;
 import com.boundless.BoundlessAPI;
 import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.util.EffekUtils;
+import com.boundless.util.VFXUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -14,14 +15,7 @@ public class StunEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity.age % 100 != 0) return true;
-        EffekUtils.playVisual(entity, BoundlessAPI.id("stun"), new Vec3d(entity.getHeight() / 16, entity.getHeight() / 16, entity.getHeight() / 16));
-        return true;
-    }
-
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
+    public void onApplied(LivingEntity entity, int amplifier) {
+        VFXUtils.createAndSpawnEffectInstance(entity, "stun", new Vec3d(0, entity.getHeight(), 0), 0.5f, true);
     }
 }
