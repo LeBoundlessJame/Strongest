@@ -3,13 +3,21 @@ package com.boundless.hero.shadow_hero.technique.abilities;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.gama.GamaEntity;
+import com.boundless.gui.HeroHUD;
+import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
+import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
+import com.boundless.mechanics.ComboManager;
 import com.boundless.mechanics.ShikigamiManager;
+import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.EntityRegistry;
+import com.boundless.util.DataComponentUtils;
+import com.boundless.util.HeroUtils;
 import com.boundless.util.RaycastUtils;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -45,7 +53,7 @@ public class GamaPullAbility extends TechniqueAbility {
 
     @Override
     public Text getDisplayText(PlayerEntity player) {
-        return Text.literal("Gama Pull: L - R - R");
+        return Text.literal("Gama Pull: ").append(ComboManager.formattedComboText("LRR", ComboManager.getProgress(player, TenShadowsComponents.CURRENT_ORDER_SEQUENCE)));
     }
 
     @Override
