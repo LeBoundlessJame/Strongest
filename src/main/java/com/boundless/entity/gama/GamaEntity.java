@@ -35,22 +35,19 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.UUID;
 
 public class GamaEntity extends TameableEntity implements TenShadowsShikigami, Tameable, JumpingMount {
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+    private static final TrackedData<OptionalInt> PULL_TARGET = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.OPTIONAL_INT);
+    private static final TrackedData<Integer> PULL_TIMER = DataTracker.registerData(GamaEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public final GamaDispatcher dispatcher;
     public final MoveAnalysis moveAnalysis;
 
     @Nullable @Getter @Setter
     GrappleEntity grapple = null;
-
-    @Nullable @Getter @Setter
-    Entity pullTarget = null;
-
-    @Getter @Setter
-    public int pullTimer = 0;
 
     public GamaEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -139,8 +136,8 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
     public void tick() {
         super.tick();
 
-        if (pullTimer > 0) {
-            pullTimer--;
+        if (this.getPullTimer() > 0) {
+            this.setPullTimer(this.getPullTimer() - 1);
         }
 
         moveAnalysis.update();
@@ -192,6 +189,8 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
         builder.add(OWNER_UUID, Optional.empty());
+        builder.add(PULL_TARGET, OptionalInt.empty());
+        builder.add(PULL_TIMER, 0);
     }
 
     @Override
@@ -278,5 +277,25 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
         double pullStrength = target.distanceTo(this) * 0.15;
         target.setVelocity(direction.add(0, 0.5, 0).multiply(pullStrength, 1, pullStrength));
         target.velocityModified = true;
+    }
+
+    public void setPullTarget(@Nullable Entity target) {
+        this.dataTracker.set(PULL_TARGET, target != null ? OptionalInt.of(target.getId()) : OptionalInt.empty());
+    }
+
+    public void setPullTimer(int time) {
+        this.dataTracker.set(PULL_TIMER, time);
+    }
+
+    @Nullable
+    public Entity getPullTarget() {
+        OptionalInt id = this.dataTracker.get(PULL_TARGET);
+        if (id.isEmpty()) return null;
+
+        return this.getWorld().getEntityById(id.getAsInt());
+    }
+
+    public int getPullTimer() {
+        return this.dataTracker.get(PULL_TIMER);
     }
 }

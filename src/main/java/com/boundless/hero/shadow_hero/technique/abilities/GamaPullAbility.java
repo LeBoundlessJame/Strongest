@@ -2,6 +2,9 @@ package com.boundless.hero.shadow_hero.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.entity.gama.GamaEntity;
+import com.boundless.mechanics.ShikigamiManager;
+import com.boundless.registry.EntityRegistry;
 import com.boundless.util.RaycastUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,11 +19,19 @@ public class GamaPullAbility extends TechniqueAbility {
         Entity target = result == null ? RaycastUtils.thickRaycast(player, 32, 1.5f) : result.getEntity();
         if (target == null || target == player) return;
 
-        Vec3d direction = player.getPos().subtract(target.getPos()).normalize();
-        double pullStrength = target.distanceTo(player) * 0.15;
+        Vec3d leftSide = player.getRotationVector().crossProduct(new Vec3d(0, 1, 0)).normalize().multiply(-1);
+        Vec3d gamaPos = player.getPos().add(leftSide.multiply(1.5));
+        GamaEntity gama = ShikigamiManager.getShikigami(player, EntityRegistry.GAMA);
 
-        target.setVelocity(direction.add(0, 0.5, 0).multiply(pullStrength, 1, pullStrength));
-        target.velocityModified = true;
+        if (gama != null) {
+            ShikigamiManager.desummonShikigami(player, EntityRegistry.GAMA);
+        }
+
+        gama = ShikigamiManager.summonShikigamiAt(player, EntityRegistry.GAMA, gamaPos);
+        if (gama == null) return;
+
+        gama.setPullTarget(target);
+        gama.setPullTimer(5);
     }
 
     @Override
