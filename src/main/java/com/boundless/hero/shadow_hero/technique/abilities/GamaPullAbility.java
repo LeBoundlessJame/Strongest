@@ -45,6 +45,11 @@ public class GamaPullAbility extends TechniqueAbility {
 
     @Override
     public Text getDisplayText(PlayerEntity player) {
-        return Text.literal("Gama Pull: L - R - L");
+        return Text.literal("Gama Pull: L - R - R");
+    }
+
+    @Override
+    public long getCooldown(PlayerEntity player) {
+        return 240;
     }
 }
