@@ -41,7 +41,7 @@ public class GamaEntityRenderer<T extends GamaEntity> extends AzEntityRenderer<T
 
         // it's cooked, but this needs to be vec3d.zero because it's relative to gama's pos
         Vec3d start = Vec3d.ZERO;
-        Vec3d end = target.getLerpedPos(partialTick).subtract(gama.getLerpedPos(partialTick));
+        Vec3d end = target.getLerpedPos(partialTick).add(0, target.getHeight() / 2, 0).subtract(gama.getLerpedPos(partialTick));
 
         RenderUtils.renderRope(start, end, poseStack, bufferSource, packedLight);
     }
