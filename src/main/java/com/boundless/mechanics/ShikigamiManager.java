@@ -27,12 +27,13 @@ public class ShikigamiManager {
         }
     }
 
-    private static <T extends TameableEntity & Shikigami> boolean summonShikigamiAtRay(PlayerEntity playerEntity, EntityType<T> shikigamiType, float range) {
+    // Todo: might make this a boolean later in case we want unsuccessful summons to not consume CE, but we'll see
+    private static <T extends TameableEntity & Shikigami> void summonShikigamiAtRay(PlayerEntity playerEntity, EntityType<T> shikigamiType, float range) {
         BlockHitResult blockHitResult = RaycastUtils.blockRaycast(playerEntity, range);
-        if (blockHitResult == null) return false;
+        if (blockHitResult == null) return;
         BlockPos pos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
 
-        return summonShikigamiAt(playerEntity, shikigamiType, pos.toCenterPos()) != null;
+        summonShikigamiAt(playerEntity, shikigamiType, pos.toCenterPos());
     }
 
     private static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d pos) {
