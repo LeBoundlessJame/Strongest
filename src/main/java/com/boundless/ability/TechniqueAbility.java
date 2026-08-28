@@ -2,6 +2,7 @@ package com.boundless.ability;
 
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.mechanics.CursedEnergyManager;
+import com.boundless.registry.StatusEffectRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -21,7 +22,9 @@ public abstract class TechniqueAbility {
     }
 
     public boolean canActivate(PlayerEntity player) {
-        return !CooldownManager.isOnCooldown(player, this.getAbilityId()) && (this.getCost(player) == 0 || player.isCreative() || CursedEnergyManager.getCursedEnergy(player) >= this.getCost(player));
+        return !CooldownManager.isOnCooldown(player, this.getAbilityId())
+                && (this.getCost(player) == 0 || player.isCreative() || CursedEnergyManager.getCursedEnergy(player) >= this.getCost(player))
+                && !player.hasStatusEffect(StatusEffectRegistry.STUN);
     }
 
     public long getCooldown(PlayerEntity player) {
