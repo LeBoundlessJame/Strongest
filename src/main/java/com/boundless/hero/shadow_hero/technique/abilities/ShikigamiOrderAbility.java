@@ -21,6 +21,7 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         if (ComboManager.updateCombo(player, TenShadowsComponents.CURRENT_ORDER_SEQUENCE, sequenceCharacter, GAMA)) {
             TenShadowsTechnique.GAMA_PULL.use(player);
+            TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU.use(player);
         }
     }
 
