@@ -113,7 +113,8 @@ public class HeroHUD {
         MutableText displayText = Text.literal("");
 
         if (!boundKey.isEmpty()) {
-            displayText = displayText.append(Text.literal(boundKey + " - ").formatted(Formatting.AQUA));
+            displayText = displayText.append(Text.literal(boundKey).formatted(Formatting.AQUA));
+            displayText = displayText.append(Text.literal(" - ").formatted(Formatting.GRAY));
         }
 
         displayText = displayText.append(abilityText);
@@ -126,7 +127,7 @@ public class HeroHUD {
         int y = (10 + padY) * yOffset - padY;
 
         context.fill(10, y, 10 + (padX * 2) + x, y + 12, client.options.getTextBackgroundColor(0.4F));
-        context.drawText(client.textRenderer, displayText, 12, y + padY, 0xff00fcff, false);
+        context.drawText(client.textRenderer, displayText, 12, y + padY, 0xffffff, false);
     }
 
     public static String cooldownToSeconds(int cooldown) {
