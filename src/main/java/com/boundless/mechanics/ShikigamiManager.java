@@ -1,7 +1,5 @@
 package com.boundless.mechanics;
 
-import com.boundless.BoundlessAPI;
-import com.boundless.util.EffekUtils;
 import com.boundless.util.RaycastUtils;
 import com.boundless.util.Shikigami;
 import net.minecraft.entity.Entity;

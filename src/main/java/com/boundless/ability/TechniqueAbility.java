@@ -2,7 +2,6 @@ package com.boundless.ability;
 
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.mechanics.CursedEnergyManager;
-import lombok.Getter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 

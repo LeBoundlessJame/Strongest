@@ -3,7 +3,6 @@ package com.boundless.entity.gama;
 import com.boundless.entity.gama.goals.ToadLeapGoal;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.registry.EntityRegistry;
-import com.boundless.util.Shikigami;
 import com.boundless.util.TenShadowsShikigami;
 import lombok.Getter;
 import lombok.Setter;

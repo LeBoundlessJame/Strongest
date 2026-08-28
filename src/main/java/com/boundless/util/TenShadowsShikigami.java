@@ -2,7 +2,6 @@ package com.boundless.util;
 
 import com.boundless.BoundlessAPI;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 

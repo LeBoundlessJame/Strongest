@@ -1,6 +1,5 @@
 package com.boundless.util;
 
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public interface Shikigami {

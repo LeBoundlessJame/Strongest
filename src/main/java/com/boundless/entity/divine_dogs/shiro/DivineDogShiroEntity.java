@@ -5,7 +5,6 @@ import com.boundless.entity.divine_dogs.goals.SearchForItemGoal;
 import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.registry.EntityRegistry;
-import com.boundless.util.Shikigami;
 import com.boundless.util.TenShadowsShikigami;
 import lombok.Getter;
 import lombok.Setter;
