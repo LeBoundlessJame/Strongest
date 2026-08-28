@@ -14,6 +14,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -104,6 +105,10 @@ public class HeroHUD {
 
         if (cooldown > 0) {
             displayText = displayText.append(Text.literal(" (" + cooldownToSeconds(cooldown) + ")").formatted(Formatting.GOLD));
+        }
+
+        if (client.player.hasStatusEffect(StatusEffectRegistry.STUN)) {
+            displayText.formatted(Formatting.OBFUSCATED);
         }
 
         int x = client.textRenderer.getWidth(displayText);
