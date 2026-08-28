@@ -22,7 +22,7 @@ public class ShikigamiManager {
         NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
 
         NbtCompound result = nbt.getBoolean("summoned")
-                ? desummonShikigami(serverWorld, nbt)
+                ? desummonShikigami(player, shikigamiType)
                 : summonShikigamiAtRay(player, serverWorld, shikigamiType, nbt, 16);
 
         if (result == null) return;
@@ -42,7 +42,7 @@ public class ShikigamiManager {
     private static <T extends TameableEntity & Shikigami> NbtCompound summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d position) {
         T shikigami;
 
-        if (nbt.contains("UUID")) {
+        if (nbt.containsUuid("UUID")) {
             Optional<Entity> entity = EntityType.getEntityFromNbt(nbt, serverWorld);
             if (entity.isEmpty()) return null;
 
@@ -68,25 +68,23 @@ public class ShikigamiManager {
         return newNbt;
     }
 
-    private static NbtCompound desummonShikigami(ServerWorld serverWorld, NbtCompound nbt) {
-        if (!nbt.contains("UUID")) return null;
+    private static <T extends TameableEntity & Shikigami> NbtCompound desummonShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
+        if (!nbt.containsUuid("UUID")) return null;
 
-        UUID uuid = nbt.getUuid("UUID");
-        Entity entity = serverWorld.getEntity(uuid);
+        T shikigami = getShikigami(player, shikigamiType);
 
-        if (entity == null) {
+        if (shikigami == null) {
             nbt.putBoolean("summoned", false);
             return nbt;
         }
 
         NbtCompound newNbt = new NbtCompound();
-        entity.saveNbt(newNbt);
+        shikigami.saveNbt(newNbt);
+        shikigami.onDesummon();
+        shikigami.discard();
 
-        if (entity instanceof Shikigami shikigami) shikigami.onDesummon();
-
-        entity.discard();
         newNbt.putBoolean("summoned", false);
-
         return newNbt;
     }
 
@@ -94,7 +92,7 @@ public class ShikigamiManager {
         if (!(player.getWorld() instanceof ServerWorld serverWorld)) return null;
         NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
 
-        if (!nbt.getBoolean("summoned") || !nbt.contains("UUID")) return null;
+        if (!nbt.getBoolean("summoned") || !nbt.containsUuid("UUID")) return null;
 
         Entity entity = serverWorld.getEntity(nbt.getUuid("UUID"));
         return (T) entity;
