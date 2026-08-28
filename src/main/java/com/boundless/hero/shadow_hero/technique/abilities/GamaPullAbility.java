@@ -9,6 +9,7 @@ import com.boundless.util.RaycastUtils;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -43,7 +44,7 @@ public class GamaPullAbility extends TechniqueAbility {
     }
 
     @Override
-    public String getDisplayString() {
-        return "L R L - Gama Pull";
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.literal("Gama Pull: L - R - L");
     }
 }

@@ -5,6 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.util.DataComponentUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
@@ -20,8 +21,8 @@ public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
     }
 
     @Override
-    public String getDisplayString() {
-        return "Shikigami Orders";
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.literal("Shikigami Orders");
     }
 
     @Override

@@ -3,12 +3,13 @@ package com.boundless.ability;
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.mechanics.CursedEnergyManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public abstract class TechniqueAbility {
     public abstract void activate(PlayerEntity player);
     public abstract Identifier getAbilityId();
-    public String getDisplayString() { return null; }
+    public Text getDisplayText(PlayerEntity playerEntity) { return null; }
     public int cost = 0;
 
     public final void use(PlayerEntity player) {

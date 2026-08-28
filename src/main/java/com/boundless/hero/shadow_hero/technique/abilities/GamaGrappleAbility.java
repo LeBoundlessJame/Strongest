@@ -6,6 +6,7 @@ import com.boundless.entity.gama.GamaEntity;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.util.RaycastUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -52,7 +53,7 @@ public class GamaGrappleAbility extends TechniqueAbility {
     }
 
     @Override
-    public String getDisplayString() {
-        return "Gama Grapple";
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.literal("Gama Grapple");
     }
 }

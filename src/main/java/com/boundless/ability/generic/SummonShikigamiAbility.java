@@ -31,8 +31,8 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     }
 
     @Override
-    public String getDisplayString() {
-        return "Summon " + Text.translatable(shikigamiType.getTranslationKey()).getString();
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.literal("Summon " + Text.translatable(shikigamiType.getTranslationKey()).getString());
     }
 
     @Override

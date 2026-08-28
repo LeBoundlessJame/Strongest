@@ -7,6 +7,7 @@ import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.mechanics.ComboManager;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ShikigamiOrderAbility extends TechniqueAbility {
@@ -31,8 +32,8 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
     }
 
     @Override
-    public String getDisplayString() {
-        return "Shikigami Order";
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.literal("Shikigami Order");
     }
 
     @Override
