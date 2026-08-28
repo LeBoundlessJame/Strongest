@@ -230,7 +230,7 @@ public class GamaEntity extends TameableEntity implements TenShadowsShikigami, T
     }
 
     public static DefaultAttributeContainer.Builder createFrogAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f).add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0).add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0).add(EntityAttributes.GENERIC_SCALE, 2.0);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f).add(EntityAttributes.GENERIC_MAX_HEALTH, 200.0).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0).add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0).add(EntityAttributes.GENERIC_SCALE, 2.0);
     }
 
     @Override
