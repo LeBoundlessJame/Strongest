@@ -3,6 +3,7 @@ package com.boundless.hero.shadow_hero.technique.abilities;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
+import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.mechanics.ComboManager;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,7 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
         if (ComboManager.updateCombo(player, TenShadowsComponents.CURRENT_ORDER_SEQUENCE, sequenceCharacter, GAMA)) {
-            System.out.println("Gama!");
+            TenShadowsTechnique.GAMA_PULL.use(player);
         }
     }
 

@@ -6,6 +6,7 @@ import com.boundless.ability.generic.PunchAbility;
 import com.boundless.ability.generic.SummonShikigamiAbility;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.hero.shadow_hero.technique.abilities.GamaGrappleAbility;
+import com.boundless.hero.shadow_hero.technique.abilities.GamaPullAbility;
 import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrderAbility;
 import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrdersMenuAbility;
 import com.boundless.registry.EntityRegistry;
@@ -21,6 +22,7 @@ public class TenShadowsTechnique {
     public static final TechniqueAbility SHIRO = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.DIVINE_DOG_SHIRO, 200, 5));
     public static final TechniqueAbility GAMA = TechniqueAbilityRegistry.register(new SummonShikigamiAbility(EntityRegistry.GAMA, 300, 5));
     public static final TechniqueAbility GAMA_GRAPPLE = TechniqueAbilityRegistry.register(new GamaGrappleAbility());
+    public static final TechniqueAbility GAMA_PULL = TechniqueAbilityRegistry.register(new GamaPullAbility());
     public static final TechniqueAbility TOGGLE_SHIKIGAMI_ORDERS_MENU = TechniqueAbilityRegistry.register(new ShikigamiOrdersMenuAbility());
     public static final TechniqueAbility SHIKIGAMI_ORDER_LEFT = TechniqueAbilityRegistry.register(new ShikigamiOrderAbility("L"));
     public static final TechniqueAbility SHIKIGAMI_ORDER_RIGHT = TechniqueAbilityRegistry.register(new ShikigamiOrderAbility("R"));
