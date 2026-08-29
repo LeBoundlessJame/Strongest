@@ -3,12 +3,16 @@ package com.boundless.hero.ratio_technique_hero;
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
+import com.boundless.hero.ratio_technique_hero.technique.RatioTechniqueAbilityResolver;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
+import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
 public class RatioTechniqueHero extends Hero {
     public RatioTechniqueHero() {
-        TechniqueLoadout loadout = TechniqueLoadout.builder().build();
+        TechniqueLoadout loadout = TechniqueLoadout.builder()
+                .ability(AbilityKey.ATTACK, RatioTechniqueAbilityResolver::getLeftClickAbility)
+                .ability(AbilityKey.USE, RatioTechniqueAbilityResolver::getRightClickAbility).build();
 
         this.heroData = HeroData.builder()
                 .name("ratio_technique_hero")
@@ -20,6 +24,7 @@ public class RatioTechniqueHero extends Hero {
                 .tickHandler(Hero::onHeroTick)
                 .maxCursedEnergy(7000)
                 .build();
+
         this.registerHero();
     }
 }
