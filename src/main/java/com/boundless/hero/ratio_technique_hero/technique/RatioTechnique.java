@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
-    public static final TechniqueAbility ATTEMPT_SKILLCHECK = TechniqueAbilityRegistry.register(new AttemptSkillcheckAbility());
 
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
             .abilityId(BoundlessAPI.id("nanami_punch"))
