@@ -12,7 +12,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:attack): Punch$(li)$(k:use): Roundhouse$(li)$(k:boundless.ability_one): Summon $(l:techniques/shadow#kuro)$(t:Go to Kuro's Page)Kuro$(/l)$(/t)$(li)$(k:boundless.ability_two): Summon $(l:techniques/shadow#shiro)$(t:Go to Shiro's Page)Shiro$(/l)$(/t)$(li)$(k:boundless.ability_three): Summon $(l:techniques/shadow#gama)$(t:Go to Big Boss's Page)Gama$(/l)$(/t)"
+      "text": "Ten Shadows is an inherited technique, passed down through generations of the Zenin clan.$(br2)Abilities $(li)$(k:attack): Punch$(li)$(k:use): Roundhouse$(li)$(k:boundless.ability_one): Summon $(l:techniques/shadow#kuro)$(t:Go to Kuro's Page)Kuro$(/l)$(/t)$(li)$(k:boundless.ability_two): Summon $(l:techniques/shadow#shiro)$(t:Go to Shiro's Page)Shiro$(/l)$(/t)$(li)$(k:boundless.ability_three): Summon $(l:techniques/shadow#gama)$(t:Go to Gama's Page)Gama$(/l)$(/t)"
     },
     {
       "type": "patchouli:image",
@@ -23,7 +23,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Kuro specialises in heavy damage and raw attack power. He can pounce and apply bleeding to enemies. $(br2)Kuro has the following base stats:$(li)Health: 435$(li)Damage: 15$(li)Cursed Energy Usage: 200"
+      "text": "Kuro specialises in heavy damage and raw attack power. He deals high damage, and applies bleeding to enemies. $(br2)Kuro has the following base stats:$(li)Health: 435$(li)Damage: 15$(li)Cursed Energy Usage: 200"
     },
     {
       "type": "patchouli:image",
@@ -34,18 +34,18 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Although not as strong as Kuro, Shiro is excellent for tracking. Hand Shiro an item and it will find you a duplicate within a given range. $(br2)Shiro has the following base stats:$(li)Health: 435$(li)Damage: 10$(li)Cursed Energy Usage: 200"
+      "text": "Although not as strong as Kuro, Shiro is excellent for tracking and pairs nicely with him for additional damage. Hand Shiro an item and it will find you a duplicate within a given range. $(br2)Shiro has the following base stats:$(li)Health: 435$(li)Damage: 10$(li)Cursed Energy Usage: 200"
     },
     {
       "type": "patchouli:image",
-      "title": "Big Boss Gama",
+      "title": "Gama",
       "anchor": "gama",
       "border": true,
       "images": ["boundless:textures/gui/chars/gama.png"]
     },
     {
       "type": "patchouli:text",
-      "text": "He's the Big Boss, You can ride him, He's a Pacifist. $(br2)Gama has the following base stats:$(li)Health: 10$(li)Damage: 10$(li)Cursed Energy Usage: 300"
+      "text": "Gama specializes in utility. You can grapple by right clicking when mounted, and leap higher by charging his jump. Gama does not deal damage directly; instead, his pull combo brings the enemy towards him, and applies a 2 second stun, allowing you a chance to deal damage. $(br2)Gama has the following base stats:$(li)Health: 200$(li)Cursed Energy Usage: 300"
     }
   ]
 }
