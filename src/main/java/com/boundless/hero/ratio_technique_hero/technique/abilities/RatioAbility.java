@@ -25,6 +25,11 @@ public class RatioAbility extends TechniqueAbility {
         return 100;
     }
 
+    @Override
+    public int getCost(PlayerEntity player) {
+        return 233;
+    }
+
     private static void startSkillcheck(PlayerEntity player, long duration, long ticksUntilTarget, long leniency) {
         long startTick = player.getWorld().getTime();
 
