@@ -3,13 +3,11 @@ package com.boundless.hero.ratio_technique_hero.technique;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.PunchAbility;
-import com.boundless.hero.ratio_technique_hero.technique.abilities.AttemptSkillcheckAbility;
 import com.boundless.hero.ratio_technique_hero.technique.abilities.RatioAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 
 public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());

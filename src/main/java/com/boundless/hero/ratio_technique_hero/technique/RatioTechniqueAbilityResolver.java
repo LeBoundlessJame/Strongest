@@ -15,10 +15,4 @@ public class RatioTechniqueAbilityResolver {
     public static Identifier getLeftClickAbility(PlayerEntity player) {
         return RatioTechnique.PUNCH.getAbilityId();
     }
-
-    //        if (HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK) != null) return RatioTechnique.ATTEMPT_SKILLCHECK.getAbilityId();
-
-    public static Identifier getRatioAbility(PlayerEntity player) {
-        return RatioTechnique.RATIO.getAbilityId();
-    }
 }
