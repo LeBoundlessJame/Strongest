@@ -17,7 +17,7 @@ public class RatioSkillcheckHUD {
         if (skillcheck == null) return;
 
         int x = context.getScaledWindowWidth() / 2 - 130;
-        int y = context.getScaledWindowHeight() / 2 + 20;
+        int y = context.getScaledWindowHeight() - 120;
 
         context.drawTexture(RATIO_SKILLCHECK, x, y, 0, 0, 260, 60, 260, 60);
     }
