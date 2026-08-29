@@ -17,6 +17,12 @@ public class AttemptSkillcheckAbility extends TechniqueAbility {
         RatioSkillcheck skillcheck = HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK);
         if (skillcheck == null) return;
 
+        // Todo: might need a tick method for this instead to remove stale ratio skillchecks
+        if (skillcheck.isExpired(player.getWorld().getTime())) {
+            HeroUtils.getHeroStack(player).remove(RatioComponents.RATIO_SKILLCHECK);
+            return;
+        }
+
         if (skillcheck.isSuccessful(player.getWorld().getTime())) {
             player.sendMessage(Text.of("Ratio success!"));
         } else {
