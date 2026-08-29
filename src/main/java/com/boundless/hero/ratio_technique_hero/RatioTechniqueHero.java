@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
+import com.boundless.hero.ratio_technique_hero.technique.RatioTechnique;
 import com.boundless.hero.ratio_technique_hero.technique.RatioTechniqueAbilityResolver;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
 import com.boundless.loadouts.AbilityKey;
@@ -25,6 +26,7 @@ public class RatioTechniqueHero extends Hero {
                 .modelIdentifier(BoundlessAPI.modelID("ratio_technique_hero"))
                 .textureIdentifier(BoundlessAPI.textureID("nanami"))
                 .tickHandler(Hero::onHeroTick)
+                .tickHandler(RatioTechnique::ratioTick)
                 .maxCursedEnergy(7000)
                 .build();
 

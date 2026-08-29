@@ -7,6 +7,8 @@ import com.boundless.hero.ratio_technique_hero.technique.abilities.AttemptSkillc
 import com.boundless.hero.ratio_technique_hero.technique.abilities.RatioAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
+import com.boundless.util.HeroUtils;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
@@ -22,4 +24,15 @@ public class RatioTechnique {
                 RATIO.use(playerEntity);
             }))
             .build());
+
+    public static void ratioTick(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
+
+        RatioSkillcheck skillcheck = HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK);
+        if (skillcheck == null) return;
+
+        if (skillcheck.isExpired(player.getWorld().getTime())) {
+            HeroUtils.getHeroStack(player).remove(RatioComponents.RATIO_SKILLCHECK);
+        }
+    }
 }
