@@ -43,7 +43,7 @@ public class HeldAbility extends Ability {
             
             if (data.startTimestamp() >= cooldownEnd) {
                 this.getAbilityLogic().accept(player);
-                CooldownManager.setAbilityCooldown(player, this.getAbilityID(), this.getCooldown());
+                CooldownManager.setAbilityCooldownIfHigher(player, this.getAbilityID(), this.getCooldown());
             }
         }
     }

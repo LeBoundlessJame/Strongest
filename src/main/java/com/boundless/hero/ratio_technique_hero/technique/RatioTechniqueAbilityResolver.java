@@ -16,8 +16,9 @@ public class RatioTechniqueAbilityResolver {
         return RatioTechnique.PUNCH.getAbilityId();
     }
 
+    //        if (HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK) != null) return RatioTechnique.ATTEMPT_SKILLCHECK.getAbilityId();
+
     public static Identifier getRatioAbility(PlayerEntity player) {
-        if (HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK) != null) return RatioTechnique.ATTEMPT_SKILLCHECK.getAbilityId();
-        return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        return RatioTechnique.RATIO.getAbilityId();
     }
 }

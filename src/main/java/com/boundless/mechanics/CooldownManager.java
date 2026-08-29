@@ -10,6 +10,13 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 
 public class CooldownManager {
+    public static void setAbilityCooldownIfHigher(PlayerEntity player, Identifier abilityID, long cooldownTime) {
+        if (getRemainingCooldownTicks(player, abilityID) > cooldownTime) return;
+
+        ItemStack heroStack = HeroUtils.getHeroStack(player);
+        DataComponentUtils.updateMap(heroStack, DataComponentRegistry.COOLDOWN_DATA, abilityID, player.getWorld().getTime() + cooldownTime);
+    }
+
     public static void setAbilityCooldown(PlayerEntity player, Identifier abilityID, long cooldownTime) {
         ItemStack heroStack = HeroUtils.getHeroStack(player);
         DataComponentUtils.updateMap(heroStack, DataComponentRegistry.COOLDOWN_DATA, abilityID, player.getWorld().getTime() + cooldownTime);
