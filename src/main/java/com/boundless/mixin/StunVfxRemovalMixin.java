@@ -14,10 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class StunVfxRemovalMixin {
     @Inject(at = @At("HEAD"), method = "onStatusEffectRemoved")
     protected void boundless$onStatusEffectRemoved(StatusEffectInstance effect, CallbackInfo ci) {
-        /* TODO: FIX
         if (effect.getEffectType().value() instanceof StunEffect) {
             VFXUtils.destroyEffectInstance("stun", ((LivingEntity)(Object)this).getId());
         }
-         */
     }
 }
