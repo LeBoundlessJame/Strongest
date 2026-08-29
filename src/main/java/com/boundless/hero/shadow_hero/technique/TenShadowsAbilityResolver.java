@@ -1,13 +1,12 @@
 package com.boundless.hero.shadow_hero.technique;
 
-import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class TenShadowsLoadoutResolver {
+public class TenShadowsAbilityResolver {
 
     public static Identifier getRightClickAbility(PlayerEntity player) {
         if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId();
