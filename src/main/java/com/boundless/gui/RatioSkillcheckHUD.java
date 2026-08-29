@@ -32,8 +32,10 @@ public class RatioSkillcheckHUD {
 
         float speed = (RATIO_TARGET - RATIO_LINES_START) / (float) (skillcheck.targetTick() - skillcheck.startTick());
         float distance = (currentTick - skillcheck.startTick()) * speed;
-
         int cursorX = x + RATIO_LINES_START + Math.round(distance);
-        context.drawTexture(RATIO_CURSOR, cursorX, y + 20, 0, 0, 16, 16, 16, 16);
+
+        if (cursorX < x + RATIO_LINES_END) {
+            context.drawTexture(RATIO_CURSOR, cursorX, y + 20, 0, 0, 16, 16, 16, 16);
+        }
     }
 }
