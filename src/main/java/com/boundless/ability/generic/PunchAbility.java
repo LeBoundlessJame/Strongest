@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
@@ -27,7 +28,9 @@ public class PunchAbility extends TechniqueAbility {
     private int impactTick = 2;
     @Builder.Default
     private int attackDuration = 10;
+
     private float damage;
+    private BiFunction<PlayerEntity, LivingEntity, Float> damageResolver;
 
     @Builder.Default
     private Identifier animation = BoundlessAPI.id("hook");
@@ -51,6 +54,7 @@ public class PunchAbility extends TechniqueAbility {
 
     @Builder.Default
     private Vec3d knockback = new Vec3d(0.6, 0.3, 0.6);
+    private BiFunction<PlayerEntity, LivingEntity, Vec3d> knockbackResolver;
 
     @Override
     public void activate(PlayerEntity player) {
@@ -71,9 +75,22 @@ public class PunchAbility extends TechniqueAbility {
     private void impact(PlayerEntity player, HeroActionEntity action) {
         MeleeUtils.forEach(player, action, (attacker, entity) -> {
             if (!(entity instanceof LivingEntity target)) return;
-                MeleeUtils.basicHit(attacker, action, this.damage, this.knockback);
-                SoundUtils.playSound(attacker, this.impactSound);
-                onHitEvent.accept(attacker, target);
+
+            float damage = this.damage;
+            Vec3d knockback = this.knockback;
+
+            if (damageResolver != null) {
+                damage = damageResolver.apply(player, target);
+            }
+
+            if (knockbackResolver != null) {
+                knockback = knockbackResolver.apply(player, target);
+            }
+
+            MeleeUtils.basicHit(attacker, action, damage, knockback);
+
+            SoundUtils.playSound(attacker, this.impactSound);
+            onHitEvent.accept(attacker, target);
         });
 
         postAttackEvent.accept(player);
