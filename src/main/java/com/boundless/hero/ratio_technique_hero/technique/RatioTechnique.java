@@ -32,11 +32,7 @@ public class RatioTechnique {
         RatioSkillcheck skillcheck = HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK);
         if (skillcheck == null) return;
 
-        if (player.getWorld().getTime() == skillcheck.targetTick()) {
-            player.sendMessage(Text.of("Now!"));
-        }
-
-        if (skillcheck.isExpired(player.getWorld().getTime())) {
+        if (skillcheck.isExpired(player.getWorld().getTime()) || !(skillcheck.canStillSucceed(player.getWorld().getTime()))) {
             HeroUtils.getHeroStack(player).remove(RatioComponents.RATIO_SKILLCHECK);
         }
     }

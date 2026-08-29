@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 public class RatioAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
-        RatioAbility.startSkillcheck(player, 100, 20, 5);
+        RatioAbility.startSkillcheck(player, 40, 20, 5);
     }
 
     @Override

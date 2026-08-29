@@ -25,4 +25,8 @@ public record RatioSkillcheck(long startTick, long endTick, long targetTick, lon
     public boolean isExpired(long currentTick) {
         return currentTick > endTick;
     }
+
+    public boolean canStillSucceed(long currentTick) {
+        return currentTick <= targetTick + leniency;
+    }
 }
