@@ -28,6 +28,9 @@ public class HeroHUD {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null || client.player == null || !HeroUtils.isHero(client.player)) return;
 
+        // Todo: this should be in some sort of hud tick on ratio hero specifically, but for now this works
+        RatioSkillcheckHUD.render(client, context);
+
         // Todo: make this a mixin
         if (client.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
             //((ShaderAccessor) client.gameRenderer).boundless$loadShader(ShaderRegistry.CLEAVE);
