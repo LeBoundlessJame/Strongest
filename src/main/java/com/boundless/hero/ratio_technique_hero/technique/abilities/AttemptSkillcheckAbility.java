@@ -4,6 +4,8 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
 import com.boundless.hero.ratio_technique_hero.technique.RatioSkillcheck;
+import com.boundless.hero.ratio_technique_hero.technique.RatioTechnique;
+import com.boundless.mechanics.CooldownManager;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
@@ -25,6 +27,7 @@ public class AttemptSkillcheckAbility extends TechniqueAbility {
 
         if (skillcheck.isSuccessful(player.getWorld().getTime())) {
             player.sendMessage(Text.of("Ratio success!"));
+            CooldownManager.setAbilityCooldown(player, RatioTechnique.RATIO.getAbilityId(), 0);
         } else {
             player.sendMessage(Text.of("Ratio fail."));
         }
