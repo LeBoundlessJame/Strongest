@@ -22,7 +22,7 @@ public class ShadowHero extends Hero {
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsAbilityResolver::getAbilityOne)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsAbilityResolver::getAbilityTwo)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsAbilityResolver::getAbilityThree)
-                .ability(TenShadowsTechnique.GAMA_PULL)
+                .ability(TenShadowsAbilityResolver::getGamaPull)
                 .build();
 
         this.heroData = HeroData.builder()

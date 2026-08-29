@@ -63,6 +63,10 @@ public class TechniqueLoadout {
             return ability(null, playerEntity -> ability.getAbilityId(), ability.getAbilityId());
         }
 
+        public Builder ability(Function<PlayerEntity, Identifier> resolver, Identifier... possibleAbilities) {
+            return ability(null, resolver, possibleAbilities);
+        }
+
         public TechniqueLoadout build() {
             return new TechniqueLoadout(abilities);
         }
