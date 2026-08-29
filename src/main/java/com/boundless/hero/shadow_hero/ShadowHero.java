@@ -6,6 +6,7 @@ import com.boundless.hero.api.HeroData;
 import com.boundless.hero.black_sparks_hero.BrawlerHUD;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
 import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
+import com.boundless.hero.shadow_hero.technique.TenShadowsLoadoutResolver;
 import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
@@ -15,12 +16,12 @@ public class ShadowHero extends Hero {
         TenShadowsComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
-                .ability(AbilityKey.ATTACK, TenShadowsTechnique::getLeftClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId(), TenShadowsTechnique.PUNCH.getAbilityId())
-                .ability(AbilityKey.USE, TenShadowsTechnique::getRightClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId(), TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId(), TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId())
-                .ability(AbilityKey.ABILITY_TWO, TenShadowsTechnique.SHIRO)
-                .ability(AbilityKey.ABILITY_THREE, TenShadowsTechnique.GAMA)
-                .ability(AbilityKey.ABILITY_ONE, TenShadowsTechnique.KURO)
                 .ability(AbilityKey.ABILITY_FOUR, TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU)
+                .ability(AbilityKey.ATTACK, TenShadowsLoadoutResolver::getLeftClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId(), TenShadowsTechnique.PUNCH.getAbilityId())
+                .ability(AbilityKey.USE, TenShadowsLoadoutResolver::getRightClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId(), TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId(), TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId())
+                .ability(AbilityKey.ABILITY_ONE, TenShadowsLoadoutResolver::getAbilityOne)
+                .ability(AbilityKey.ABILITY_TWO, TenShadowsLoadoutResolver::getAbilityTwo)
+                .ability(AbilityKey.ABILITY_THREE, TenShadowsLoadoutResolver::getAbilityThree)
                 .ability(TenShadowsTechnique.GAMA_PULL)
                 .build();
 

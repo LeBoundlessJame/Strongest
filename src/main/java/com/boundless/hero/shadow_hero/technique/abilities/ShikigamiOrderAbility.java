@@ -32,11 +32,6 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
-        return Text.literal("Shikigami Order");
-    }
-
-    @Override
     public long getCooldown(PlayerEntity player) {
         return 2;
     }
