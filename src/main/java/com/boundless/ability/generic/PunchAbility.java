@@ -30,7 +30,6 @@ public class PunchAbility extends TechniqueAbility {
     private int attackDuration = 10;
 
     private float damage;
-    private BiFunction<PlayerEntity, LivingEntity, Float> damageResolver;
 
     @Builder.Default
     private Identifier animation = BoundlessAPI.id("hook");
@@ -46,15 +45,14 @@ public class PunchAbility extends TechniqueAbility {
     private Consumer<PlayerEntity> preAttackEvent = (player) -> {
     };
     @Builder.Default
-    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {
-    };
+    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {};
     @Builder.Default
-    private Consumer<PlayerEntity> postAttackEvent = (player) -> {
-    };
+    private Consumer<PlayerEntity> postAttackEvent = (player) -> {};
 
     @Builder.Default
     private Vec3d knockback = new Vec3d(0.6, 0.3, 0.6);
-    private BiFunction<PlayerEntity, LivingEntity, Vec3d> knockbackResolver;
+
+    private BiConsumer<PlayerEntity, HeroActionEntity> impactEventOverride;
 
     @Override
     public void activate(PlayerEntity player) {
@@ -73,21 +71,15 @@ public class PunchAbility extends TechniqueAbility {
     }
 
     private void impact(PlayerEntity player, HeroActionEntity action) {
+        if (impactEventOverride != null) {
+            impactEventOverride.accept(player, action);
+            postAttackEvent.accept(player);
+            return;
+        }
+
         MeleeUtils.forEach(player, action, (attacker, entity) -> {
             if (!(entity instanceof LivingEntity target)) return;
-
-            float damage = this.damage;
-            Vec3d knockback = this.knockback;
-
-            if (damageResolver != null) {
-                damage = damageResolver.apply(player, target);
-            }
-
-            if (knockbackResolver != null) {
-                knockback = knockbackResolver.apply(player, target);
-            }
-
-            MeleeUtils.basicHit(attacker, action, damage, knockback);
+            MeleeUtils.basicHit(attacker, action, this.damage, this.knockback);
 
             SoundUtils.playSound(attacker, this.impactSound);
             onHitEvent.accept(attacker, target);
