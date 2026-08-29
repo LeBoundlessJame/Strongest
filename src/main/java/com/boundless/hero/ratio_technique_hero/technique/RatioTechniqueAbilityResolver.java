@@ -11,6 +11,6 @@ public class RatioTechniqueAbilityResolver {
     }
 
     public static Identifier getLeftClickAbility(PlayerEntity player) {
-        return TenShadowsTechnique.PUNCH.getAbilityId();
+        return RatioTechnique.PUNCH.getAbilityId();
     }
 }
