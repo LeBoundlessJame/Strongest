@@ -1,9 +1,9 @@
 package com.boundless.hero.shadow_hero;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.gui.HeroHUD;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.black_sparks_hero.BrawlerHUD;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
 import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAbilityResolver;
@@ -29,7 +29,7 @@ public class ShadowHero extends Hero {
                 .name("shadow_hero")
                 .defaultTechniqueLoadout(loadout)
                 .attributes(TenShadowsAttributes.ATTRIBUTES)
-                .hudRenderer(BrawlerHUD::render)
+                .hudRenderer(HeroHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .modelIdentifier(BoundlessAPI.modelID("shadow_hero"))
                 .textureIdentifier(BoundlessAPI.textureID("shadow_hero"))

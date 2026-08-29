@@ -13,7 +13,7 @@ import net.minecraft.text.Text;
 public class ItemGroupRegistry {
 
     public static final ItemGroup BOUNDLESS_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(HeroRegistry.BLACK_SPARKS_HERO.getArmorSet().getFirst()))
+            .icon(() -> new ItemStack(HeroRegistry.SHADOW_HERO.getArmorSet().getFirst()))
             .displayName(Text.translatable("itemGroup.boundless.boundless_group"))
             .entries((context, entries) -> {
                 for (Hero hero: HeroRegistry.HEROES) {
