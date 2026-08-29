@@ -44,6 +44,8 @@ public class KeyInputHandler {
 
     private static boolean isKeybindingPressed(KeyBinding keyBinding) {
         InputUtil.Key key = InputUtil.fromTranslationKey(keyBinding.getBoundKeyTranslationKey());
+        if (key == null) return false;
+
         long handle = MinecraftClient.getInstance().getWindow().getHandle();
 
         if (key.getCategory() == InputUtil.Type.KEYSYM) {

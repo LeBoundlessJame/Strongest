@@ -29,7 +29,6 @@ public class ShadowHero extends Hero {
                 .name("shadow_hero")
                 .defaultTechniqueLoadout(loadout)
                 .attributes(TenShadowsAttributes.ATTRIBUTES)
-                .hudRenderer(HeroHUD::render)
                 .tickHandler(Hero::heroSprintHandler)
                 .modelIdentifier(BoundlessAPI.modelID("shadow_hero"))
                 .textureIdentifier(BoundlessAPI.textureID("shadow_hero"))
