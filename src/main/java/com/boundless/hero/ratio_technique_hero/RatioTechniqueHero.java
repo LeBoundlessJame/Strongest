@@ -29,6 +29,8 @@ public class RatioTechniqueHero extends Hero {
                 .tickHandler(Hero::onHeroTick)
                 .tickHandler(RatioTechnique::ratioTick)
                 .maxCursedEnergy(7000)
+                .blackFlashChance(0.5f)
+                .blackFlashDamageMultiplier(2.5f)
                 .build();
 
         this.registerHero();

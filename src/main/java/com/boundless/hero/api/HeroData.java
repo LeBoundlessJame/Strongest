@@ -64,4 +64,10 @@ public class HeroData {
 
     @Builder.Default
     private final int maxCursedEnergy = 0;
+
+    @Builder.Default
+    private final float blackFlashChance = 0;
+
+    @Builder.Default
+    private final float blackFlashDamageMultiplier = 2.5f;
 }

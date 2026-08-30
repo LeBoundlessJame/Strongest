@@ -3,6 +3,7 @@ package com.boundless.hero.api;
 import com.boundless.ability.Ability;
 import com.boundless.loadouts.TechniqueLoadout;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.StrongestComponents;
 import lombok.Getter;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
@@ -54,6 +55,9 @@ public class HeroArmor extends ArmorItem {
 
         settings.component(DataComponentRegistry.CURSED_ENERGY_MAX, heroData.getMaxCursedEnergy());
         settings.component(DataComponentRegistry.CURSED_ENERGY, heroData.getMaxCursedEnergy());
+
+        settings.component(StrongestComponents.BLACK_FLASH_CHANCE, heroData.getBlackFlashChance());
+        settings.component(StrongestComponents.BLACK_FLASH_DAMAGE_MULTIPLIER, heroData.getBlackFlashDamageMultiplier());
 
         return settings;
     }
