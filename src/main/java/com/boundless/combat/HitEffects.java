@@ -45,7 +45,7 @@ public class HitEffects {
         }
 
         for (SoundEvent sound: sounds) {
-            SoundUtils.playSound(target, sound);
+            SoundUtils.playSound(player, sound);
         }
     }
 
