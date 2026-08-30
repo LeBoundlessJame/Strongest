@@ -21,4 +21,8 @@ public class BlackFlashManager {
     public static float getBlackFlashMultiplier(PlayerEntity player) {
         return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_DAMAGE_MULTIPLIER, 2.5f);
     }
+
+    public static void blackFlashImpact(PlayerEntity player) {
+
+    }
 }
