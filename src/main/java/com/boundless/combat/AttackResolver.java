@@ -12,9 +12,9 @@ public class AttackResolver {
         // Todo: I gotta make it so that some of this stuff is pulled in from custom reusable resolvers
         if (hit.getAbility() instanceof BlackFlashable && BlackFlashManager.shouldBlackFlash(hit.getAttacker())) {
             hit.multiplyDamage(BlackFlashManager.getBlackFlashMultiplier(hit.getAttacker()));
-            hit.setKnockback(hit.getKnockback().multiply(1.5f, 0.75f, 1.5f));
+            hit.setKnockback(hit.getKnockback().multiply(3f, 1.5f, 3f));
             hit.getHitEffects().addSounds(List.of(SoundRegistry.EARTH_IMPACT, SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_3, SoundRegistry.ENERGY_IMPACT_HEAVY));
-            hit.getHitEffects().addVisual(BoundlessAPI.id("black_flash_impact"));
+            hit.getHitEffects().addVisual(BoundlessAPI.id("black_flash"));
         }
 
         return hit;
