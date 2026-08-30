@@ -30,7 +30,6 @@ public class AttackUtils {
         int priority = singleAttack.getAnimationPriority();
         int attackDuration = singleAttack.getAttackDuration();
         int impactTick = singleAttack.getImpactTick();
-        BiConsumer<PlayerEntity, Entity> perEntityLogic = singleAttack.getPerEntityLogic();
 
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
@@ -39,7 +38,7 @@ public class AttackUtils {
         BiConsumer<PlayerEntity, HeroActionEntity> hit = (user, heroAction) -> {
             if (CombatUtils.isRolling(player)) return;
             SoundUtils.playSound(player, sound);
-            CombatUtils.attack(heroAction, damage, Optional.of(attackVFX), perEntityLogic);
+            CombatUtils.hit(player, heroAction, damage);
         };
         tasks.put(impactTick, hit);
         PlayerAnimationUtils.playSyncedAnimation(player, animation, animationSpeed, attackCount % 2 == 0, true, priority);

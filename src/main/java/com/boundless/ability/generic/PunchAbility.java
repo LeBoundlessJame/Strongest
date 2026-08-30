@@ -77,13 +77,7 @@ public class PunchAbility extends TechniqueAbility {
             return;
         }
 
-        MeleeUtils.forEach(player, action, (attacker, entity) -> {
-            if (!(entity instanceof LivingEntity target)) return;
-            MeleeUtils.basicHit(attacker, action, this.damage, this.knockback);
-
-            SoundUtils.playSound(attacker, this.impactSound);
-            onHitEvent.accept(attacker, target);
-        });
+        CombatUtils.hit(player, this, action, damage, knockback, onHitEvent);
 
         postAttackEvent.accept(player);
     }

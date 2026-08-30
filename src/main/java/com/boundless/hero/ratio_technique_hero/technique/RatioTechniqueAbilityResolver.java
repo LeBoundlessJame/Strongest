@@ -12,9 +12,4 @@ public class RatioTechniqueAbilityResolver {
     public static Identifier getRightClickAbility(PlayerEntity player) {
         return TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId();
     }
-
-    public static float resolveRatioDamage(PlayerEntity player, float baseDamage) {
-        if (!BlackFlashManager.shouldBlackFlash(player)) return baseDamage;
-        return BlackFlashManager.resolveBlackFlashDamage(player, baseDamage);
-    }
 }

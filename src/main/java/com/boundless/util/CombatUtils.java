@@ -1,8 +1,10 @@
 package com.boundless.util;
 
+import com.boundless.ability.TechniqueAbility;
+import com.boundless.combat.AttackResolver;
+import com.boundless.combat.Hit;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -12,13 +14,36 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public class CombatUtils {
+
+    public static void hit(PlayerEntity player, TechniqueAbility ability, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit) {
+        action.repositionBox();
+
+        for (LivingEntity target: getTargets(player, action, entity -> true)) {
+            Hit hit = new Hit(player, target, ability, action, baseDamage, knockback);
+            hit = AttackResolver.resolveHit(hit);
+
+            applyHit(hit);
+            // Todo: I might make this override the existing damage logic or something but we'll see
+            onHit.accept(player, target);
+        }
+    }
+
+    public static void applyHit(Hit hit) {
+        LivingEntity target = hit.getTarget();
+        target.damage(target.getDamageSources().generic(), hit.getDamage());
+        target.takeKnockback(5, target.getRotationVector().x, target.getRotationVector().z);
+    }
+
     public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action, Predicate<LivingEntity> predicate) {
         return action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> isValidTarget(player, entity) && predicate.test(entity));
+    }
+
+    public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action) {
+        return getTargets(player, action, entity -> true);
     }
 
     public static void slow(LivingEntity livingEntity, int duration, int amplifier) {
