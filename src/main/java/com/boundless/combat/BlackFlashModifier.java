@@ -25,7 +25,7 @@ public class BlackFlashModifier implements AttackModifier {
 
     @Override
     public void onTrigger(PlayerEntity player) {
-        int duration = 6;
+        int duration = 4;
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, duration - 2, 4, true, false, false));
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, duration, 4, true, false, false));
     }
