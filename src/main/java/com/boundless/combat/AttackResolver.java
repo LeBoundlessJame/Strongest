@@ -18,6 +18,7 @@ public class AttackResolver {
         for (AttackModifier modifier: heroData.getAttackModifiers()) {
             if (modifier.shouldTrigger(player)) {
                 activeModifiers.add(modifier);
+                modifier.onTrigger(player);
             }
         }
 
