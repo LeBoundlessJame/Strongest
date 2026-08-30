@@ -24,9 +24,12 @@ public class CombatUtils {
     public static void hit(PlayerEntity player, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         action.repositionBox();
 
+        List<LivingEntity> targets = getTargets(player, action, entity -> true);
+        if (targets.isEmpty()) return;
+
         AttackContext context = AttackResolver.resolveAttack(player);
 
-        for (LivingEntity target: getTargets(player, action, entity -> true)) {
+        for (LivingEntity target: targets) {
             Hit hit = new Hit(player, target, action, baseDamage, knockback, new HitEffects(hitEffects));
             hit = AttackResolver.resolveHit(hit, context);
 
