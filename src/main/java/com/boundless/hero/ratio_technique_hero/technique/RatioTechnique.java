@@ -17,6 +17,7 @@ public class RatioTechnique {
             .damage(22)
             .attackDuration(8)
             .whiffSound(SoundRegistry.MISS_HIT)
+            .animation(BoundlessAPI.id("nanami_slash"))
             .build());
 
     public static void ratioTick(PlayerEntity player) {
