@@ -1,13 +1,7 @@
 package com.boundless.hero.ratio_technique_hero.technique;
 
-import com.boundless.loadouts.TechniqueLoadoutComponent;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-
-import java.util.List;
-import java.util.Set;
 
 public record RatioSkillcheck(long startTick, long endTick, long targetTick, long leniency) {
     public static final Codec<RatioSkillcheck> CODEC = RecordCodecBuilder.create(builder -> {

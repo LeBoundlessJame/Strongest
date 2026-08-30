@@ -1,26 +1,18 @@
 package com.boundless.entity.gama;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.entity.grapple.GrappleEntityRenderer;
 import com.boundless.util.RenderUtils;
-import mod.azure.azurelib.common.model.AzBone;
-import mod.azure.azurelib.common.render.AzRendererPipelineContext;
 import mod.azure.azurelib.common.render.entity.AzEntityRenderer;
 import mod.azure.azurelib.common.render.entity.AzEntityRendererConfig;
-import mod.azure.azurelib.common.render.entity.AzEntityRendererPipelineContext;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public class GamaEntityRenderer<T extends GamaEntity> extends AzEntityRenderer<T> {
     private static final Identifier GEO = BoundlessAPI.id("geo/entity/gama.geo.json");

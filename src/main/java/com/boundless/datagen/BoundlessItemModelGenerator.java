@@ -3,7 +3,6 @@ package com.boundless.datagen;
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.HeroRegistry;
-import com.boundless.registry.ItemRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;

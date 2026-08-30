@@ -20,13 +20,13 @@
     "defaultRequire": 1
   },
   "client": [
+    "AAADebugPreventionMixin",
     "AbstractClientPlayerEntityMixin",
     "ArmorInvisibilityMixin",
     "CameraMixin",
     "CameraVisibilityMixin",
     "ShaderLoaderMixin",
     "SkinLayerMixin",
-    "StatOverlayMixin",
-    "AAADebugPreventionMixin"
+    "StatOverlayMixin"
   ]
 }

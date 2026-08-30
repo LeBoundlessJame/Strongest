@@ -1,12 +1,11 @@
 package com.boundless.hero.shadow_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.gui.HeroHUD;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
+import com.boundless.hero.shadow_hero.technique.TenShadowsAbilityResolver;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
 import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
-import com.boundless.hero.shadow_hero.technique.TenShadowsAbilityResolver;
 import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;

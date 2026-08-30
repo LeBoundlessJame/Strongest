@@ -3,6 +3,7 @@ package com.boundless.util;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.combat.AttackResolver;
 import com.boundless.combat.Hit;
+import com.boundless.combat.HitEffects;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import net.minecraft.entity.LivingEntity;
@@ -19,11 +20,11 @@ import java.util.function.Predicate;
 
 public class CombatUtils {
 
-    public static void hit(PlayerEntity player, TechniqueAbility ability, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit) {
+    public static void hit(PlayerEntity player, TechniqueAbility ability, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         action.repositionBox();
 
         for (LivingEntity target: getTargets(player, action, entity -> true)) {
-            Hit hit = new Hit(player, target, ability, action, baseDamage, knockback);
+            Hit hit = new Hit(player, target, ability, action, baseDamage, knockback, new HitEffects(hitEffects));
             hit = AttackResolver.resolveHit(hit);
 
             applyHit(hit);

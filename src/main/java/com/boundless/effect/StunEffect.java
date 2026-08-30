@@ -1,8 +1,5 @@
 package com.boundless.effect;
 
-import com.boundless.BoundlessAPI;
-import com.boundless.registry.DamageTypeRegistry;
-import com.boundless.util.EffekUtils;
 import com.boundless.util.VFXUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;

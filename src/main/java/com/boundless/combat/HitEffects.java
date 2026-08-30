@@ -24,6 +24,11 @@ public class HitEffects {
         this.sounds = new ArrayList<>();
     }
 
+    public HitEffects(HitEffects effects) {
+        this.visuals = new ArrayList<>(effects.visuals);
+        this.sounds = new ArrayList<>(effects.sounds);
+    }
+
     public HitEffects(List<Identifier> visuals, List<SoundEvent> sounds) {
         this.visuals = new ArrayList<>(visuals);
         this.sounds = new ArrayList<>(sounds);

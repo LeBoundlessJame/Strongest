@@ -1,10 +1,6 @@
 package com.boundless.hero.ratio_technique_hero.technique;
 
-import com.boundless.entity.gama.GamaEntity;
 import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
-import com.boundless.mechanics.BlackFlashManager;
-import com.boundless.registry.TechniqueAbilityRegistry;
-import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 

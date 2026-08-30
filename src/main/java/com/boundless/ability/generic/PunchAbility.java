@@ -3,19 +3,20 @@ package com.boundless.ability.generic;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.action.Action;
+import com.boundless.combat.HitEffects;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import lombok.Builder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
@@ -37,9 +38,9 @@ public class PunchAbility extends TechniqueAbility implements BlackFlashable {
     private float animationSpeed = 1.0f;
 
     @Builder.Default
-    private SoundEvent whiffSound = SoundEvents.INTENTIONALLY_EMPTY;
+    private SoundEvent whiffSound = SoundRegistry.MISS_HIT;
     @Builder.Default
-    private SoundEvent impactSound = SoundEvents.INTENTIONALLY_EMPTY;
+    private HitEffects impactEffects = new HitEffects(List.of(BoundlessAPI.id("melee_impact")), List.of(SoundRegistry.IMPACT_HEAVY_1));
 
     @Builder.Default
     private Consumer<PlayerEntity> preAttackEvent = (player) -> {
@@ -77,7 +78,7 @@ public class PunchAbility extends TechniqueAbility implements BlackFlashable {
             return;
         }
 
-        CombatUtils.hit(player, this, action, damage, knockback, onHitEvent);
+        CombatUtils.hit(player, this, action, damage, knockback, onHitEvent, impactEffects);
 
         postAttackEvent.accept(player);
     }

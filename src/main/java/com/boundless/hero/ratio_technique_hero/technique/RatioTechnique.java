@@ -17,7 +17,6 @@ public class RatioTechnique {
             .damage(22)
             .attackDuration(8)
             .whiffSound(SoundRegistry.MISS_HIT)
-            .impactSound(SoundRegistry.IMPACT_HEAVY_1)
             .build());
 
     public static void ratioTick(PlayerEntity player) {

@@ -6,9 +6,7 @@ import com.boundless.hero.ratio_technique_hero.technique.RatioSkillcheck;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 public class RatioSkillcheckHUD {
     private static final Identifier RATIO_SKILLCHECK = BoundlessAPI.hudPNG("ratio_skillcheck");

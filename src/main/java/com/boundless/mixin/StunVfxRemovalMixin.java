@@ -1,6 +1,5 @@
 package com.boundless.mixin;
 
-import com.boundless.BoundlessAPI;
 import com.boundless.effect.StunEffect;
 import com.boundless.util.VFXUtils;
 import net.minecraft.entity.LivingEntity;

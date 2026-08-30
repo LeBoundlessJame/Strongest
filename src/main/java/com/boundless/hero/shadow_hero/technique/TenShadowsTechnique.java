@@ -4,17 +4,12 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.PunchAbility;
 import com.boundless.ability.generic.SummonShikigamiAbility;
-import com.boundless.entity.gama.GamaEntity;
 import com.boundless.hero.shadow_hero.technique.abilities.GamaGrappleAbility;
 import com.boundless.hero.shadow_hero.technique.abilities.GamaPullAbility;
 import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrderAbility;
 import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrdersMenuAbility;
 import com.boundless.registry.EntityRegistry;
-import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
-import com.boundless.util.HeroUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 public class TenShadowsTechnique {
@@ -31,8 +26,6 @@ public class TenShadowsTechnique {
             .abilityId(BoundlessAPI.id("megumi_punch"))
             .damage(18f)
             .attackDuration(8)
-            .whiffSound(SoundRegistry.MISS_HIT)
-            .impactSound(SoundRegistry.IMPACT_HEAVY_1)
             .build());
 
     public static final TechniqueAbility ROUNDHOUSE_KICK = TechniqueAbilityRegistry.register(PunchAbility.builder()
@@ -42,8 +35,6 @@ public class TenShadowsTechnique {
             .attackDuration(17)
             .impactTick(9)
             .animationSpeed(1.15f)
-            .whiffSound(SoundRegistry.MISS_HIT)
-            .impactSound(SoundRegistry.IMPACT_HEAVY_1)
             .knockback(new Vec3d(1.2, 0.6, 1.2))
             .build());
 }
