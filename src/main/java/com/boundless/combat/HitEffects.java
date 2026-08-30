@@ -19,6 +19,11 @@ public class HitEffects {
     @Getter @Setter
     private List<SoundEvent> sounds;
 
+    public HitEffects() {
+        this.visuals = new ArrayList<>();
+        this.sounds = new ArrayList<>();
+    }
+
     public HitEffects(List<Identifier> visuals, List<SoundEvent> sounds) {
         this.visuals = new ArrayList<>(visuals);
         this.sounds = new ArrayList<>(sounds);
