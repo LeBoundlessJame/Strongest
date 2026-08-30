@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
 @Builder
-public class PunchAbility extends TechniqueAbility {
+public class PunchAbility extends TechniqueAbility implements BlackFlashable {
     private Identifier abilityId;
 
     @Builder.Default

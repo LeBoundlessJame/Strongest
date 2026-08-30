@@ -35,7 +35,8 @@ public class CombatUtils {
     public static void applyHit(Hit hit) {
         LivingEntity target = hit.getTarget();
         target.damage(target.getDamageSources().generic(), hit.getDamage());
-        target.takeKnockback(5, target.getRotationVector().x, target.getRotationVector().z);
+        target.setVelocity(hit.getKnockback());
+        target.velocityModified = true;
     }
 
     public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action, Predicate<LivingEntity> predicate) {
