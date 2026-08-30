@@ -18,9 +18,6 @@ public class RatioTechnique {
             .attackDuration(8)
             .whiffSound(SoundRegistry.MISS_HIT)
             .impactSound(SoundRegistry.IMPACT_HEAVY_1)
-            .onHitEvent(((playerEntity, livingEntity) -> {
-                RATIO.use(playerEntity);
-            }))
             .build());
 
     public static void ratioTick(PlayerEntity player) {

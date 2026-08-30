@@ -15,7 +15,7 @@ public class RatioTechniqueHero extends Hero {
         RatioComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
-                .ability(AbilityKey.ATTACK, RatioTechniqueAbilityResolver::getLeftClickAbility)
+                .ability(AbilityKey.ATTACK, RatioTechnique.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, RatioTechnique.RATIO)
                 .ability(AbilityKey.USE, RatioTechniqueAbilityResolver::getRightClickAbility).build();
 
