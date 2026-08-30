@@ -18,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
@@ -55,15 +56,19 @@ public class PunchAbility extends TechniqueAbility {
 
     private BiConsumer<PlayerEntity, HeroActionEntity> impactEventOverride;
 
+    @Builder.Default
+    private Function<PlayerEntity, Boolean> mirrorAnimationProvider = (player) -> {
+        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+        return attackCount % 2 == 0;
+    };
+
     @Override
     public void activate(PlayerEntity player) {
         if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
 
-        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-
         preAttackEvent.accept(player);
-        PlayerAnimationUtils.playSyncedAnimation(player, this.animation, this.animationSpeed, attackCount % 2 == 0, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(player), true, 3000);
         SoundUtils.playSound(player, this.whiffSound);
 
         Action action = Action.builder().scheduledTask(impactTick, this::impact).build();
