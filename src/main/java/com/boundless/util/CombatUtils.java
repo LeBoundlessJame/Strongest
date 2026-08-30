@@ -6,69 +6,23 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
-// Todo: Some of this class could definitely do with being removed and replaced
 public class CombatUtils {
+    public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action, Predicate<LivingEntity> predicate) {
+        return action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> isValidTarget(player, entity) && predicate.test(entity));
+    }
 
     public static void slow(LivingEntity livingEntity, int duration, int amplifier) {
         livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, duration, amplifier, false, false, false));
-    }
-
-    public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual, BiConsumer<PlayerEntity, Entity> perEntityLogic) {
-        heroAction.repositionBox();
-        if (heroAction.getOwner() == null) return;
-        PlayerEntity player = (PlayerEntity) heroAction.getOwner();
-
-        for (LivingEntity target : heroAction.getWorld().getEntitiesByClass(LivingEntity.class, heroAction.getBoundingBox(), entity -> true)) {
-            if (target != player) {
-                if (perEntityLogic != null) {
-                    perEntityLogic.accept(player, target);
-                }
-                impactVisual.ifPresent((identifier) -> playImpactVisual(player, target, impactVisual.get()));
-                target.damage(target.getDamageSources().generic(), damage);
-            }
-        }
-    }
-
-    public static void attack(HeroActionEntity heroAction, float damage, Optional<Identifier> impactVisual) {
-        CombatUtils.attack(heroAction, damage, impactVisual, null);
-    }
-
-    public static void perEnemyLogic(HeroActionEntity heroAction, BiConsumer<PlayerEntity, LivingEntity> logic) {
-        heroAction.repositionBox();
-        if (heroAction.getOwner() == null) return;
-        PlayerEntity player = (PlayerEntity) heroAction.getOwner();
-
-        for (LivingEntity target : heroAction.getWorld().getEntitiesByClass(LivingEntity.class, heroAction.getBoundingBox(), entity -> true)) {
-            if (target != player) {
-                logic.accept(player, target);
-            }
-        }
-    }
-
-    public static void aoeAttack(PlayerEntity player, float radius, BiConsumer<PlayerEntity, LivingEntity> logic) {
-        for (LivingEntity target : player.getWorld().getEntitiesByClass(LivingEntity.class, player.getBoundingBox().expand(radius), entity -> true)) {
-            if (target != player) {
-                logic.accept(player, target);
-            }
-        }
-    }
-
-    // Bypasses knockback reduction
-    public static void strongKnockback(PlayerEntity player, LivingEntity target, float strength) {
-        target.setVelocity(player.getRotationVector().x * strength, 1, player.getRotationVector().z * strength);
-        target.velocityModified = true;
-    }
-
-    public static void uppercutKnockback(PlayerEntity player, LivingEntity target) {
-        target.setVelocity(player.getRotationVector().x * 1.2, 1, player.getRotationVector().z * 1.2);
-        target.velocityModified = true;
     }
 
     public static void playImpactVisual(PlayerEntity player, LivingEntity target, Identifier impactVisual) {
@@ -79,5 +33,9 @@ public class CombatUtils {
 
     public static boolean isRolling(PlayerEntity player) {
         return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ROLLING_END, 0L);
+    }
+
+    private static boolean isValidTarget(PlayerEntity player, LivingEntity entity) {
+        return player != entity && (!(entity instanceof TameableEntity tameable && tameable.getOwner() == player));
     }
 }
