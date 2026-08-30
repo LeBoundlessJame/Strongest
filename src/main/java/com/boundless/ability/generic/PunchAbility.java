@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
 @Builder
-public class PunchAbility extends TechniqueAbility implements BlackFlashable {
+public class PunchAbility extends TechniqueAbility {
     private Identifier abilityId;
 
     @Builder.Default
@@ -78,7 +78,7 @@ public class PunchAbility extends TechniqueAbility implements BlackFlashable {
             return;
         }
 
-        CombatUtils.hit(player, this, action, damage, knockback, onHitEvent, impactEffects);
+        CombatUtils.hit(player, action, damage, knockback, onHitEvent, impactEffects);
 
         postAttackEvent.accept(player);
     }

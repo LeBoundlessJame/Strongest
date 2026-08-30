@@ -1,22 +1,33 @@
 package com.boundless.combat;
 
-import com.boundless.BoundlessAPI;
-import com.boundless.mechanics.BlackFlashManager;
-import com.boundless.registry.SoundRegistry;
-import com.boundless.util.BlackFlashable;
+import com.boundless.hero.api.HeroData;
+import com.boundless.util.HeroUtils;
+import net.minecraft.entity.player.PlayerEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AttackResolver {
-    public static Hit resolveHit(Hit hit) {
-        // Todo: I gotta make it so that some of this stuff is pulled in from custom reusable resolvers
-        if (hit.getAbility() instanceof BlackFlashable && BlackFlashManager.shouldBlackFlash(hit.getAttacker())) {
-            hit.multiplyDamage(BlackFlashManager.getBlackFlashMultiplier(hit.getAttacker()));
-            hit.setKnockback(hit.getKnockback().multiply(3f, 1.5f, 3f));
-            hit.getHitEffects().addSounds(List.of(SoundRegistry.EARTH_IMPACT, SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_3, SoundRegistry.ENERGY_IMPACT_HEAVY));
-            hit.getHitEffects().addVisual(BoundlessAPI.id("black_flash"));
+
+    public static AttackContext resolveAttack(PlayerEntity player) {
+        // Todo: Might want to attack modifiers component based in the future or something
+        // Todo: so that yuta can steal ratio attack modifier or MBA or something
+        HeroData heroData = HeroUtils.getHeroData(player);
+        List<AttackModifier> activeModifiers = new ArrayList<>();
+
+        for (AttackModifier modifier: heroData.getAttackModifiers()) {
+            if (modifier.shouldTrigger(player)) {
+                activeModifiers.add(modifier);
+            }
         }
 
+        return new AttackContext(activeModifiers);
+    }
+
+    public static Hit resolveHit(Hit hit, AttackContext context) {
+        for (AttackModifier modifier: context.getActiveModifiers()) {
+            modifier.apply(hit);
+        }
         return hit;
     }
 }

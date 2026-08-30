@@ -1,6 +1,7 @@
 package com.boundless.util;
 
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.combat.AttackContext;
 import com.boundless.combat.AttackResolver;
 import com.boundless.combat.Hit;
 import com.boundless.combat.HitEffects;
@@ -20,12 +21,14 @@ import java.util.function.Predicate;
 
 public class CombatUtils {
 
-    public static void hit(PlayerEntity player, TechniqueAbility ability, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
+    public static void hit(PlayerEntity player, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         action.repositionBox();
 
+        AttackContext context = AttackResolver.resolveAttack(player);
+
         for (LivingEntity target: getTargets(player, action, entity -> true)) {
-            Hit hit = new Hit(player, target, ability, action, baseDamage, knockback, new HitEffects(hitEffects));
-            hit = AttackResolver.resolveHit(hit);
+            Hit hit = new Hit(player, target, action, baseDamage, knockback, new HitEffects(hitEffects));
+            hit = AttackResolver.resolveHit(hit, context);
 
             applyHit(hit);
             // Todo: I might make this override the existing damage logic or something but we'll see
@@ -36,11 +39,11 @@ public class CombatUtils {
     public static void applyHit(Hit hit) {
         PlayerEntity attacker = hit.getAttacker();
         LivingEntity target = hit.getTarget();
-        Vec3d knockbackMultiplier = hit.getKnockback();
 
-        target.damage(target.getDamageSources().generic(), hit.getDamage());
         hit.getHitEffects().playEffects(attacker, target);
 
+        Vec3d knockbackMultiplier = hit.getKnockback();
+        target.damage(target.getDamageSources().generic(), hit.getDamage());
         target.setVelocity(attacker.getRotationVector().x * knockbackMultiplier.x, knockbackMultiplier.y, attacker.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
     }
