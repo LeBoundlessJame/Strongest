@@ -56,4 +56,12 @@ public class HitEffects {
     public void addSound(SoundEvent sound) {
         this.sounds.add(sound);
     }
+
+    public void addSounds(List<SoundEvent> sounds) {
+        this.sounds.addAll(sounds);
+    }
+
+    public void addVisuals(List<Identifier> visuals) {
+        this.visuals.addAll(visuals);
+    }
 }
