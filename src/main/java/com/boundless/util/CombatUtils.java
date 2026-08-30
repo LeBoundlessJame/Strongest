@@ -47,6 +47,7 @@ public class CombatUtils {
 
         Vec3d knockbackMultiplier = hit.getKnockback();
         target.damage(target.getDamageSources().generic(), hit.getDamage());
+        System.out.println(hit.getDamage());
         target.setVelocity(attacker.getRotationVector().x * knockbackMultiplier.x, knockbackMultiplier.y, attacker.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
     }
