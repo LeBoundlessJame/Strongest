@@ -31,6 +31,10 @@ public class Hit {
         this.hitEffects = hitEffects;
     }
 
+    public Hit(PlayerEntity attacker, LivingEntity target, TechniqueAbility ability, HeroActionEntity action, float damage, Vec3d knockback) {
+        this(attacker, target, ability, action, damage, knockback, new HitEffects());
+    }
+
     public void multiplyDamage(float multiplier) {
         this.damage = damage * multiplier;
     }
