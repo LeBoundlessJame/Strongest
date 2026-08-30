@@ -21,7 +21,7 @@ public class RatioModifier implements AttackModifier {
 
     @Override
     public void apply(Hit hit) {
-        hit.multiplyDamage(hit.getDamage() * 1.75f);
+        hit.multiplyDamage(1.75f);
         hit.getHitEffects().addSounds(List.of(SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_HEAVY));
     }
 
