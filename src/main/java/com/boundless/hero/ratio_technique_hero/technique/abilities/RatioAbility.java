@@ -19,7 +19,10 @@ public class RatioAbility extends TechniqueAbility {
         if (skillcheck == null) {
             RatioAbility.startSkillcheck(player, 40, 20, 2);
         } else {
-            player.sendMessage(Text.of(skillcheck.isSuccessful(player.getWorld().getTime()) ? "Ratio succcess!" : "Ratio fail"));
+            if (skillcheck.isSuccessful(player.getWorld().getTime())) {
+                HeroUtils.getHeroStack(player).set(RatioComponents.RATIO_NEXT_ATTACK, true);
+            }
+
             HeroUtils.getHeroStack(player).remove(RatioComponents.RATIO_SKILLCHECK);
             CooldownManager.setAbilityCooldownIfHigher(player, this.getAbilityId(), 200);
         }

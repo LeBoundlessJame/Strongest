@@ -3,7 +3,6 @@ package com.boundless.hero.api;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
 import com.boundless.combat.AttackModifier;
-import com.boundless.combat.BlackFlashModifier;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.armor.HeroArmorRenderer;
 import com.boundless.loadouts.TechniqueLoadout;

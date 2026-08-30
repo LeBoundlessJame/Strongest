@@ -1,7 +1,8 @@
 package com.boundless.hero.ratio_technique_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.combat.BlackFlashModifier;
+import com.boundless.combat.attack_modifiers.BlackFlashModifier;
+import com.boundless.combat.attack_modifiers.RatioModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
@@ -33,6 +34,7 @@ public class RatioTechniqueHero extends Hero {
                 .blackFlashChance(0.02f)
                 .blackFlashDamageMultiplier(2.5f)
                 .attackModifier(new BlackFlashModifier())
+                .attackModifier(new RatioModifier())
                 .build();
 
         this.registerHero();

@@ -1,10 +1,11 @@
-package com.boundless.combat;
+package com.boundless.combat.attack_modifiers;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.combat.AttackModifier;
+import com.boundless.combat.Hit;
 import com.boundless.mechanics.BlackFlashManager;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.CameraUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 

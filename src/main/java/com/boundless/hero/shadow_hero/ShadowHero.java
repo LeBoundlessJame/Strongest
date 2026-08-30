@@ -1,7 +1,7 @@
 package com.boundless.hero.shadow_hero;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.combat.BlackFlashModifier;
+import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAbilityResolver;
