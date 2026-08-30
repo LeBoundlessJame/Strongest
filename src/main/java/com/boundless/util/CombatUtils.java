@@ -13,7 +13,9 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -23,10 +25,18 @@ public class CombatUtils {
 
     public static void hit(PlayerEntity player, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         action.repositionBox();
-
         List<LivingEntity> targets = getTargets(player, action, entity -> true);
-        if (targets.isEmpty()) return;
+        applyHits(player, action, targets, baseDamage, knockback, onHit, hitEffects);
+    }
 
+    public static void hitInRadius(PlayerEntity player, HeroActionEntity action, Vec3d center, Vec3d radius, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
+        action.repositionBox();
+        List<LivingEntity> targets = getTargetsInRadius(player, player.getWorld(), center, radius, entity -> true);
+        applyHits(player, action, targets, baseDamage, knockback, onHit, hitEffects);
+    }
+
+    private static void applyHits(PlayerEntity player, HeroActionEntity action, List<LivingEntity> targets, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
+        if (targets.isEmpty()) return;
         AttackContext context = AttackResolver.resolveAttack(player);
 
         for (LivingEntity target: targets) {
@@ -34,7 +44,6 @@ public class CombatUtils {
             hit = AttackResolver.resolveHit(hit, context);
 
             applyHit(hit);
-            // Todo: I might make this override the existing damage logic or something but we'll see
             onHit.accept(player, target);
         }
     }
@@ -47,9 +56,13 @@ public class CombatUtils {
 
         Vec3d knockbackMultiplier = hit.getKnockback();
         target.damage(target.getDamageSources().generic(), hit.getDamage());
-        System.out.println(hit.getDamage());
         target.setVelocity(attacker.getRotationVector().x * knockbackMultiplier.x, knockbackMultiplier.y, attacker.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
+    }
+
+    public static List<LivingEntity> getTargetsInRadius(PlayerEntity player, World world, Vec3d center, Vec3d radius, Predicate<LivingEntity> predicate) {
+        Box box = new Box(center.subtract(radius), center.add(radius));
+        return world.getEntitiesByClass(LivingEntity.class, box, entity -> isValidTarget(player, entity) && predicate.test(entity));
     }
 
     public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action, Predicate<LivingEntity> predicate) {
