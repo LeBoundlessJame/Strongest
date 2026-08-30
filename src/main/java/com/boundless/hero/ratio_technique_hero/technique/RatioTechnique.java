@@ -15,10 +15,10 @@ public class RatioTechnique {
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
             .abilityId(BoundlessAPI.id("nanami_punch"))
             .damage(22)
-            .attackDuration(8)
+            .attackDuration(10)
             .whiffSound(SoundRegistry.MISS_HIT)
             .animation(BoundlessAPI.id("nanami_slash"))
-            .mirrorAnimationProvider((playerEntity -> false))
+            .mirrorAnimationProvider((playerEntity -> true))
             .build());
 
     public static void ratioTick(PlayerEntity player) {
