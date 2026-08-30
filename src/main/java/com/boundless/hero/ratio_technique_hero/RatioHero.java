@@ -12,8 +12,8 @@ import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
-public class RatioTechniqueHero extends Hero {
-    public RatioTechniqueHero() {
+public class RatioHero extends Hero {
+    public RatioHero() {
         RatioComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
