@@ -33,9 +33,13 @@ public class CombatUtils {
     }
 
     public static void applyHit(Hit hit) {
+        LivingEntity attacker = hit.getAttacker();
         LivingEntity target = hit.getTarget();
+        Vec3d knockbackMultiplier = hit.getKnockback();
+
         target.damage(target.getDamageSources().generic(), hit.getDamage());
-        target.setVelocity(hit.getKnockback());
+        System.out.println(hit.getDamage());
+        target.setVelocity(attacker.getRotationVector().x * knockbackMultiplier.x, knockbackMultiplier.y, attacker.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
     }
 

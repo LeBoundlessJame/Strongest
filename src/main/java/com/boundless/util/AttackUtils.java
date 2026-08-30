@@ -29,5 +29,4 @@ public class AttackUtils {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(DataComponentRegistry.COMBAT_MODE_ENABLED, !HeroUtils.combatModeEnabled(player));
     }
-
 }

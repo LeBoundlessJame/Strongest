@@ -9,6 +9,7 @@ public class AttackResolver {
         if (hit.getAbility() instanceof BlackFlashable && BlackFlashManager.shouldBlackFlash(hit.getAttacker())) {
             hit.multiplyDamage(BlackFlashManager.getBlackFlashMultiplier(hit.getAttacker()));
             hit.setKnockback(hit.getKnockback().multiply(1.5f, 0.75f, 1.5f));
+            System.out.println("Kokusen!");
         }
 
         return hit;
