@@ -1,6 +1,7 @@
 package com.boundless.hero.shadow_hero;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.combat.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.shadow_hero.technique.TenShadowsAbilityResolver;
@@ -35,6 +36,7 @@ public class ShadowHero extends Hero {
                 .maxCursedEnergy(5000)
                 .blackFlashDamageMultiplier(2.5f)
                 .blackFlashChance(0.01f)
+                .attackModifier(new BlackFlashModifier())
                 .build();
         this.registerHero();
     }
