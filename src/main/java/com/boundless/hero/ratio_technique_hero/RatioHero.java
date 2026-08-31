@@ -21,6 +21,7 @@ public class RatioHero extends Hero {
                 .ability(AbilityKey.ATTACK, RatioTechnique.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, RatioTechnique.RATIO)
                 .ability(AbilityKey.ABILITY_TWO, RatioTechnique.COLLAPSE)
+                .ability(AbilityKey.ABILITY_THREE, RatioTechniqueAbilityResolver::getOvertimeAbility)
                 .ability(AbilityKey.USE, RatioTechniqueAbilityResolver::getRightClickAbility).build();
 
         this.heroData = HeroData.builder()
