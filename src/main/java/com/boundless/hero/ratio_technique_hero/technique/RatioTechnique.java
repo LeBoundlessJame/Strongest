@@ -3,6 +3,7 @@ package com.boundless.hero.ratio_technique_hero.technique;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.PunchAbility;
+import com.boundless.hero.ratio_technique_hero.technique.abilities.CollapseAbility;
 import com.boundless.hero.ratio_technique_hero.technique.abilities.RatioAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
+    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(100));
 
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
             .abilityId(BoundlessAPI.id("nanami_punch"))
