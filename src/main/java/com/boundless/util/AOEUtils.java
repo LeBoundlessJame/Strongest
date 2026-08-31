@@ -28,7 +28,7 @@ public class AOEUtils {
         List<BlockPos> blocks = new ArrayList<>();
         BlockPos.iterate(min, max).forEach(pos -> {
             if (predicate.test(world.getBlockState(pos))) {
-                blocks.add(pos);
+                blocks.add(pos.toImmutable());
             }
         });
 
