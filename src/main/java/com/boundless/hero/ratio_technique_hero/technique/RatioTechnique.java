@@ -14,12 +14,11 @@ public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
     public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(100));
 
-    public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
-            .abilityId(BoundlessAPI.id("nanami_punch"))
-            .damage(22)
-            .attackDuration(10)
-            .whiffSound(SoundRegistry.MISS_HIT)
-            .build());
+    public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility()
+            .setAbilityId(BoundlessAPI.id("nanami_punch"))
+            .setDamage(22)
+            .setAttackDuration(10)
+            .setWhiffSound(SoundRegistry.MISS_HIT));
 
     public static void ratioTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;

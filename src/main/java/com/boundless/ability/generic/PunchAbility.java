@@ -9,6 +9,9 @@ import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
@@ -22,41 +25,34 @@ import java.util.function.Function;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
-@Builder
+@Getter
+@Setter
+@Accessors(chain = true)
 public class PunchAbility extends TechniqueAbility {
     private Identifier abilityId;
 
-    @Builder.Default
     private int impactTick = 2;
-    @Builder.Default
     private int attackDuration = 10;
 
     private float damage;
 
-    @Builder.Default
     private Identifier animation = BoundlessAPI.id("hook");
-    @Builder.Default
     private float animationSpeed = 1.0f;
 
-    @Builder.Default
     private SoundEvent whiffSound = SoundRegistry.MISS_HIT;
-    @Builder.Default
     private HitEffects impactEffects = new HitEffects(List.of(BoundlessAPI.id("melee_impact")), List.of(SoundRegistry.IMPACT_HEAVY_1));
 
-    @Builder.Default
     private Consumer<PlayerEntity> preAttackEvent = (player) -> {
     };
-    @Builder.Default
-    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {};
-    @Builder.Default
-    private Consumer<PlayerEntity> postAttackEvent = (player) -> {};
+    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {
+    };
+    private Consumer<PlayerEntity> postAttackEvent = (player) -> {
+    };
 
-    @Builder.Default
     private Vec3d knockback = new Vec3d(0.6, 0.3, 0.6);
 
     private BiConsumer<PlayerEntity, HeroActionEntity> impactEventOverride;
 
-    @Builder.Default
     private Function<PlayerEntity, Boolean> mirrorAnimationProvider = (player) -> {
         DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
