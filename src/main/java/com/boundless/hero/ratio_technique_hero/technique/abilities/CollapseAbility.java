@@ -18,4 +18,9 @@ public class CollapseAbility extends AOEAbility {
     public Identifier getAbilityId() {
         return BoundlessAPI.id("collapse");
     }
+
+    @Override
+    public long getCooldown(PlayerEntity player) {
+        return 100;
+    }
 }

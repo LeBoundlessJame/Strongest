@@ -31,6 +31,7 @@ public class AOEAbility extends TechniqueAbility implements AOE {
 
     @Override
     public void activate(PlayerEntity player) {
+        if (player.getWorld().isClient) return;
         Action action = Action.builder().scheduledTask(this.getImpactTick(), this::activateAOE).build();
         ActionUtils.performAction(player, action);
     }
