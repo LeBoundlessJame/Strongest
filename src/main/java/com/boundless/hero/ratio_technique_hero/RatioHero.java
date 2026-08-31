@@ -32,7 +32,7 @@ public class RatioHero extends Hero {
                 .tickHandler(Hero::onHeroTick)
                 .tickHandler(RatioTechnique::ratioTick)
                 .maxCursedEnergy(7000)
-                .blackFlashChance(0.02f)
+                .blackFlashChance(1)
                 .blackFlashDamageMultiplier(2.5f)
                 .attackModifier(new BlackFlashModifier())
                 .attackModifier(new RatioModifier())
