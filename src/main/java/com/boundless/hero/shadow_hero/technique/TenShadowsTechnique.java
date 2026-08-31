@@ -22,19 +22,17 @@ public class TenShadowsTechnique {
     public static final TechniqueAbility SHIKIGAMI_ORDER_LEFT = TechniqueAbilityRegistry.register(new ShikigamiOrderAbility("L"));
     public static final TechniqueAbility SHIKIGAMI_ORDER_RIGHT = TechniqueAbilityRegistry.register(new ShikigamiOrderAbility("R"));
 
-    public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(PunchAbility.builder()
-            .abilityId(BoundlessAPI.id("megumi_punch"))
-            .damage(18f)
-            .attackDuration(8)
-            .build());
+    public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility()
+            .setAbilityId(BoundlessAPI.id("megumi_punch"))
+            .setDamage(18f)
+            .setAttackDuration(8));
 
-    public static final TechniqueAbility ROUNDHOUSE_KICK = TechniqueAbilityRegistry.register(PunchAbility.builder()
-            .abilityId(BoundlessAPI.id("megumi_roundhouse"))
-            .animation(BoundlessAPI.id("roundhouse"))
-            .damage(36)
-            .attackDuration(17)
-            .impactTick(9)
-            .animationSpeed(1.15f)
-            .knockback(new Vec3d(1.2, 0.6, 1.2))
-            .build());
+    public static final TechniqueAbility ROUNDHOUSE_KICK = TechniqueAbilityRegistry.register(new PunchAbility()
+            .setAbilityId(BoundlessAPI.id("megumi_roundhouse"))
+            .setAnimation(BoundlessAPI.id("roundhouse"))
+            .setDamage(36)
+            .setAttackDuration(17)
+            .setImpactTick(9)
+            .setAnimationSpeed(1.15f)
+            .setKnockback(new Vec3d(1.2, 0.6, 1.2)));
 }
