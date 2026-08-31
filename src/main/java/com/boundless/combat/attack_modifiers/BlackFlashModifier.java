@@ -22,7 +22,7 @@ public class BlackFlashModifier implements AttackModifier {
         hit.multiplyDamage(BlackFlashManager.getBlackFlashMultiplier(hit.getAttacker()));
         hit.setKnockback(hit.getKnockback().multiply(3f, 1.5f, 3f));
         hit.getHitEffects().addSounds(List.of(SoundRegistry.EARTH_IMPACT, SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_3, SoundRegistry.ENERGY_IMPACT_HEAVY));
-        hit.getHitEffects().addVisual(BoundlessAPI.id("black_flash_impact"));
+        hit.getHitEffects().addVisual(BoundlessAPI.id("black_flash"));
     }
 
     @Override
