@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -35,5 +36,10 @@ public class CollapseAbility extends AOEAbility implements AOE {
     @Override
     public long getCooldown(PlayerEntity player) {
         return 100;
+    }
+
+    @Override
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.of("Collapse");
     }
 }
