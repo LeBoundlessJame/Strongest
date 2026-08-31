@@ -6,6 +6,7 @@ import com.boundless.hero.ratio_technique_hero.technique.RatioSkillcheck;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
 public class RatioSkillcheckHUD {
@@ -17,7 +18,7 @@ public class RatioSkillcheckHUD {
     private static final int RATIO_LINES_END = 190;
     private static final int RATIO_TARGET = 154;
 
-    public static void render(MinecraftClient client, DrawContext context) {
+    public static void render(MinecraftClient client, DrawContext context, RenderTickCounter renderTickCounter) {
         RatioSkillcheck skillcheck = HeroUtils.getHeroStack(client.player).get(RatioComponents.RATIO_SKILLCHECK);
         if (skillcheck == null) return;
 
@@ -26,7 +27,7 @@ public class RatioSkillcheckHUD {
 
         context.drawTexture(RATIO_SKILLCHECK, x, y, 0, 0, 260, 60, 260, 60);
 
-        long currentTick = client.player.getWorld().getTime();
+        float currentTick = client.player.getWorld().getTime() + renderTickCounter.getTickDelta(false);
 
         float speed = (RATIO_TARGET - RATIO_LINES_START) / (float) (skillcheck.targetTick() - skillcheck.startTick());
         float distance = (currentTick - skillcheck.startTick()) * speed;

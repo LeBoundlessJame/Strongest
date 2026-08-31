@@ -28,7 +28,7 @@ public class HeroHUD {
         if (client == null || client.player == null || !HeroUtils.isHero(client.player)) return;
 
         // Todo: this should be in some sort of hud tick on ratio hero specifically, but for now this works
-        RatioSkillcheckHUD.render(client, context);
+        RatioSkillcheckHUD.render(client, context, renderTickCounter);
 
         // Todo: make this a mixin
         if (client.player.hasStatusEffect(StatusEffectRegistry.IMPACT_FRAME_EFFECT)) {
