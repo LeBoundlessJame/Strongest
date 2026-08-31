@@ -18,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.WorldEvents;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class CollapseAbility extends AOEAbility implements AOE {
     public void activateAOE(PlayerEntity player, HeroActionEntity action) {
         super.activateAOE(player, action);
         EffekUtils.playEffect(BoundlessAPI.id("collapse_impact"), player, player.getPos(), new Vec3d(0.5f, 0.5f, 0.5f));
+        player.getWorld().syncWorldEvent(WorldEvents.SMASH_ATTACK, player.getSteppingPos(), 750);
     }
 
     @Override

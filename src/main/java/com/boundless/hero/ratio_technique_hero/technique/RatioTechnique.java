@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
-    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(100));
+    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(100).setImpactTick(0));
 
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility()
             .setAbilityId(BoundlessAPI.id("nanami_punch"))
