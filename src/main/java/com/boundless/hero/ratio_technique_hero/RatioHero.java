@@ -5,6 +5,7 @@ import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.combat.attack_modifiers.RatioModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
+import com.boundless.hero.ratio_technique_hero.client.RatioHeroRenderer;
 import com.boundless.hero.ratio_technique_hero.technique.RatioAttributes;
 import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
 import com.boundless.hero.ratio_technique_hero.technique.RatioTechnique;
@@ -28,6 +29,7 @@ public class RatioHero extends Hero {
                 .name("ratio_technique_hero")
                 .defaultTechniqueLoadout(loadout)
                 .attributes(RatioAttributes.ATTRIBUTES)
+                .armorRenderer(RatioHeroRenderer::new)
                 .tickHandler(Hero::heroSprintHandler)
                 .modelIdentifier(BoundlessAPI.modelID("ratio_technique_hero"))
                 .textureIdentifier(BoundlessAPI.textureID("nanami"))

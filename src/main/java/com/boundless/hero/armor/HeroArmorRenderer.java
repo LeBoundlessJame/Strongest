@@ -8,17 +8,24 @@ import mod.azure.azurelib.common.render.armor.AzArmorRendererPipelineContext;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class HeroArmorRenderer extends AzArmorRenderer {
-    public HeroArmorRenderer(Identifier model, Identifier texture) {
+
+    public HeroArmorRenderer(BiFunction<Entity, ItemStack, Identifier> model, BiFunction<Entity, ItemStack, Identifier> texture) {
         super(AzArmorRendererConfig.builder(model, texture).setPipelineContext(pipelineContext()).build());
+    }
+
+    public HeroArmorRenderer(Identifier model, Identifier texture) {
+        this((entity, stack) -> model, (entity, stack) -> texture);
     }
 
     private static Function<AzRendererPipeline<UUID, ItemStack>, AzRendererPipelineContext<UUID, ItemStack>> pipelineContext() {
