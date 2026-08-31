@@ -2,6 +2,7 @@ package com.boundless.hero.ratio_technique_hero.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.util.PlayerAnimationUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -10,7 +11,7 @@ import net.minecraft.util.Identifier;
 public class OvertimeAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
-
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("overtime"));
     }
 
     @Override
