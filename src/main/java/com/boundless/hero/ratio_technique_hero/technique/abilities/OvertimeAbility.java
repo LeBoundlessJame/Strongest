@@ -3,6 +3,7 @@ package com.boundless.hero.ratio_technique_hero.technique.abilities;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
+import com.boundless.util.AttackUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.PlayerAnimationUtils;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +14,7 @@ import net.minecraft.util.Identifier;
 public class OvertimeAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
+        AttackUtils.startAttackTimer(player, 77);
         HeroUtils.getHeroStack(player).set(RatioComponents.OVERTIME_ELAPSED, 1);
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("overtime"));
     }

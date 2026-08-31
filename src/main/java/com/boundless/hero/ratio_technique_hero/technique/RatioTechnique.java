@@ -35,7 +35,7 @@ public class RatioTechnique {
     public static void overtimeTick(PlayerEntity player) {
         ItemStack stack = HeroUtils.getHeroStack(player);
 
-        int elapsedOvertime = stack.get(RatioComponents.OVERTIME_ELAPSED);
+        int elapsedOvertime = stack.getOrDefault(RatioComponents.OVERTIME_ELAPSED, 0);
         if (elapsedOvertime <= 0) return;
         if (elapsedOvertime >= MAX_OVERTIME_DURATION) {
             stack.set(RatioComponents.OVERTIME_ELAPSED, 0);
