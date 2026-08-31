@@ -42,7 +42,8 @@ public class BoundlessItemModelGenerator extends FabricModelProvider {
         for (Hero hero : HeroRegistry.HEROES) {
             ArrayList<Item> armor = hero.getArmorSet();
 
-            if (hero.heroData.getName().equals("shrine_hero") || hero.heroData.getName().equals("black_sparks_hero")) {
+            // Todo: this is abosolutely diabolical. shouldn't be hard coded!
+            if (hero.heroData.getName().equals("shrine_hero") || hero.heroData.getName().equals("black_sparks_hero") || hero.heroData.getName().equals("shadow_hero")) {
                 MASK_LARGE.upload(ModelIds.getItemModelId(armor.get(0)), heroTexture(hero.heroData.getTextureIdentifier()), itemModelGenerator.writer);
                 CHESTPLATE_LARGE.upload(ModelIds.getItemModelId(armor.get(1)), heroTexture(hero.heroData.getTextureIdentifier()), itemModelGenerator.writer);
                 LEGGINGS_LARGE.upload(ModelIds.getItemModelId(armor.get(2)), heroTexture(hero.heroData.getTextureIdentifier()), itemModelGenerator.writer);
