@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ItemRegistry {
     public static ArrayList<Item> ITEMS = new ArrayList<>();
 
-    public static final Item CLEAVER = registerItem(BoundlessAPI.id("cleaver"), new Item(new Item.Settings()));
+    public static final Item CLEAVER = registerItem(BoundlessAPI.id("cleaver"), new Item(new Item.Settings().maxCount(1)));
     public static final Item PLAYFUL_CLOUD = registerItem(BoundlessAPI.id("playful_cloud"), new Item(new Item.Settings().maxCount(1)));
     // Todo: for testing only. Remove eventually
     public static final Item FULL_HEAL = registerItem(BoundlessAPI.id("full_heal"), new FullHealItem(new Item.Settings()));
