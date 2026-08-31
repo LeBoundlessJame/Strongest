@@ -9,10 +9,11 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 public class RatioTechnique {
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
-    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(100).setImpactTick(0));
+    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(100).setImpactTick(0).setRadius(new Vec3d(4, 3, 4)));
 
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility()
             .setAbilityId(BoundlessAPI.id("nanami_punch"))
