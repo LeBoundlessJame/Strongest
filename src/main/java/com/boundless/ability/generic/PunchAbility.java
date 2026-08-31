@@ -25,9 +25,7 @@ import java.util.function.Function;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
-@Getter
-@Setter
-@Accessors(chain = true)
+@Getter @Setter @Accessors(chain = true)
 public class PunchAbility extends TechniqueAbility {
     private Identifier abilityId;
 

@@ -31,11 +31,11 @@ public class CombatUtils {
 
     public static void hitInRadius(PlayerEntity player, HeroActionEntity action, Vec3d center, Vec3d radius, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         action.repositionBox();
-        List<LivingEntity> targets = getTargetsInRadius(player, player.getWorld(), center, radius, entity -> true);
+        List<LivingEntity> targets = AOEUtils.getTargetsInRadius(player, player.getWorld(), center, radius, entity -> true);
         applyHits(player, action, targets, baseDamage, knockback, onHit, hitEffects);
     }
 
-    private static void applyHits(PlayerEntity player, HeroActionEntity action, List<LivingEntity> targets, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
+    public static void applyHits(PlayerEntity player, HeroActionEntity action, List<LivingEntity> targets, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         if (targets.isEmpty()) return;
         AttackContext context = AttackResolver.resolveAttack(player);
 
@@ -60,11 +60,6 @@ public class CombatUtils {
         target.velocityModified = true;
     }
 
-    public static List<LivingEntity> getTargetsInRadius(PlayerEntity player, World world, Vec3d center, Vec3d radius, Predicate<LivingEntity> predicate) {
-        Box box = new Box(center.subtract(radius), center.add(radius));
-        return world.getEntitiesByClass(LivingEntity.class, box, entity -> isValidTarget(player, entity) && predicate.test(entity));
-    }
-
     public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action, Predicate<LivingEntity> predicate) {
         return action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> isValidTarget(player, entity) && predicate.test(entity));
     }
@@ -87,7 +82,7 @@ public class CombatUtils {
         return player.getWorld().getTime() <= HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ROLLING_END, 0L);
     }
 
-    private static boolean isValidTarget(PlayerEntity player, LivingEntity entity) {
+    public static boolean isValidTarget(PlayerEntity player, LivingEntity entity) {
         return player != entity && (!(entity instanceof TameableEntity tameable && tameable.getOwner() == player));
     }
 }
