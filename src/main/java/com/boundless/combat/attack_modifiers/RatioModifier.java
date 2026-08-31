@@ -29,6 +29,7 @@ public class RatioModifier implements AttackModifier {
 
     @Override
     public void onTrigger(PlayerEntity player) {
+        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
         HeroUtils.getHeroStack(player).set(RatioComponents.RATIO_NEXT_ATTACK, false);
     }
 }
