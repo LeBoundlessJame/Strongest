@@ -10,9 +10,12 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 
 public class RatioTechnique {
+    public static final int MAX_OVERTIME_DURATION = 6000;
+
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
     public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(30).setImpactTick(0).setRadius(new Vec3d(4, 3, 4)));
     public static final TechniqueAbility OVERTIME = TechniqueAbilityRegistry.register(new OvertimeAbility());
@@ -25,7 +28,23 @@ public class RatioTechnique {
 
     public static void ratioTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
+        skillcheck(player);
+        overtimeTick(player);
+    }
 
+    public static void overtimeTick(PlayerEntity player) {
+        ItemStack stack = HeroUtils.getHeroStack(player);
+
+        int elapsedOvertime = stack.get(RatioComponents.OVERTIME_ELAPSED);
+        if (elapsedOvertime <= 0) return;
+        if (elapsedOvertime >= MAX_OVERTIME_DURATION) {
+            stack.set(RatioComponents.OVERTIME_ELAPSED, 0);
+            return;
+        }
+        stack.set(RatioComponents.OVERTIME_ELAPSED, elapsedOvertime + 1);
+    }
+
+    public static void skillcheck(PlayerEntity player) {
         RatioSkillcheck skillcheck = HeroUtils.getHeroStack(player).get(RatioComponents.RATIO_SKILLCHECK);
         if (skillcheck == null) return;
 
