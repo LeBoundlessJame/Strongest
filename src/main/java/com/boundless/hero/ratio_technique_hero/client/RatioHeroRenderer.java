@@ -2,7 +2,10 @@ package com.boundless.hero.ratio_technique_hero.client;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.armor.HeroArmorRenderer;
+import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
+import com.boundless.util.HeroUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -16,10 +19,15 @@ public class RatioHeroRenderer extends HeroArmorRenderer {
     }
 
     private static Identifier getTexture(Entity entity, ItemStack stack) {
-        return entity.isSneaking() ? OVERTIME : NORMAL;
+        if (entity instanceof PlayerEntity player && getOvertimeTicks(player) >= 25) return OVERTIME;
+        return NORMAL;
     }
 
     private static Identifier getModel(Entity entity, ItemStack stack) {
         return MODEL;
+    }
+
+    private static int getOvertimeTicks(PlayerEntity player) {
+        return HeroUtils.getHeroStack(player).getOrDefault(RatioComponents.OVERTIME_ELAPSED, 0);
     }
 }
