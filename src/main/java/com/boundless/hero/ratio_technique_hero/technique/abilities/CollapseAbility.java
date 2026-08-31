@@ -30,12 +30,12 @@ public class CollapseAbility extends AOEAbility implements AOE {
 
     public void activateAOE(PlayerEntity player, HeroActionEntity action) {
         super.activateAOE(player, action);
-        EffekUtils.playVisual(player, BoundlessAPI.id(""));
+        EffekUtils.playEffect(BoundlessAPI.id("collapse_impact"), player, player.getPos(), new Vec3d(0.5f, 0.5f, 0.5f));
     }
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 100;
+        return 10;
     }
 
     @Override
