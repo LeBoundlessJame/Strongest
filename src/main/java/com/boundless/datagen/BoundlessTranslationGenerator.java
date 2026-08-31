@@ -29,6 +29,8 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, "Max-Speed Buildup Time");
         translationBuilder.add(AttributeRegistry.DAMAGE_RESISTANCE, "Damage Resistance");
 
+        translationBuilder.add(ItemRegistry.FULL_HEAL, "Full Heal");
+        translationBuilder.add(ItemRegistry.CLEAVER, "Cleaver");
         translationBuilder.add(ItemRegistry.PLAYFUL_CLOUD, "Playful Cloud");
 
         translationBuilder.add("itemGroup.boundless.boundless_group", "Boundless");
