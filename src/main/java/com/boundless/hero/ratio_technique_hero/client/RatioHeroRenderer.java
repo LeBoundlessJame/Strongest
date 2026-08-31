@@ -19,7 +19,7 @@ public class RatioHeroRenderer extends HeroArmorRenderer {
     }
 
     private static Identifier getTexture(Entity entity, ItemStack stack) {
-        if (entity instanceof PlayerEntity player && getOvertimeTicks(player) >= 25) return OVERTIME;
+        if (entity instanceof PlayerEntity player && getOvertimeTicks(player) >= 5) return OVERTIME;
         return NORMAL;
     }
 
