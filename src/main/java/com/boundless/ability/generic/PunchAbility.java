@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.action.Action;
 import com.boundless.combat.HitEffects;
+import com.boundless.combat.MeleeHitbox;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
@@ -18,6 +19,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -65,7 +67,7 @@ public class PunchAbility extends TechniqueAbility {
         PlayerAnimationUtils.playSyncedAnimation(player, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(player), true, 3000);
         SoundUtils.playSound(player, this.whiffSound);
 
-        Action action = Action.builder().scheduledTask(impactTick, this::impact).build();
+        Action action = Action.builder().scheduledTask(this.impactTick, this::impact).build();
         AttackUtils.startAttackTimer(player, this.attackDuration);
         ActionUtils.performAction(player, action);
     }
@@ -77,7 +79,8 @@ public class PunchAbility extends TechniqueAbility {
             return;
         }
 
-        CombatUtils.hit(player, action, damage, knockback, onHitEvent, impactEffects);
+        List<LivingEntity> targets = new MeleeHitbox(4.0, 180.0).getTargetsInArc(player);
+        CombatUtils.applyHits(player, action, targets, damage, knockback, onHitEvent, impactEffects);
 
         postAttackEvent.accept(player);
     }
