@@ -25,6 +25,7 @@ public class RatioModifier implements AttackModifier {
         hit.addDamage(hit.getTarget().getMaxHealth() * 0.07f);
         hit.getHitEffects().addSounds(List.of(SoundRegistry.ENERGY_IMPACT_2, SoundRegistry.ENERGY_IMPACT_HEAVY));
         hit.getHitEffects().addVisual(BoundlessAPI.id("ratio_impact"));
+        hit.getHitEffects().addSounds(List.of(SoundRegistry.RATIO_IMPACT_1, SoundRegistry.RATIO_IMPACT_2));
     }
 
     @Override

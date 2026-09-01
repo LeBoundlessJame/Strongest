@@ -69,5 +69,15 @@
     "sounds": [
       "boundless:slash_2"
     ]
+  },
+  "ratio_impact_1": {
+    "sounds": [
+      "boundless:ratio_impact_1"
+    ]
+  },
+  "ratio_impact_2": {
+    "sounds": [
+      "boundless:ratio_impact_2"
+    ]
   }
 }
