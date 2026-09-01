@@ -13,6 +13,9 @@ public class RatioSkillcheckHUD {
     private static final Identifier RATIO_SKILLCHECK = BoundlessAPI.hudPNG("ratio_skillcheck");
     private static final Identifier RATIO_CURSOR = BoundlessAPI.hudPNG("ratio_cursor");
 
+    // this is to prevent mismatch
+    private static int HORIZONTAL_OFFSET = 9;
+
     // yes, i'm using hard coded pixel positions. yes, i know it's slightly cooked, but it works guys fr
     private static final int RATIO_LINES_START = 68;
     private static final int RATIO_LINES_END = 190;
@@ -31,7 +34,7 @@ public class RatioSkillcheckHUD {
 
         float speed = (RATIO_TARGET - RATIO_LINES_START) / (float) (skillcheck.targetTick() - skillcheck.startTick());
         float distance = (currentTick - skillcheck.startTick()) * speed;
-        int cursorX = x + RATIO_LINES_START + Math.round(distance);
+        int cursorX = x + RATIO_LINES_START + Math.round(distance) - HORIZONTAL_OFFSET;
 
         if (cursorX < x + RATIO_LINES_END) {
             context.drawTexture(RATIO_CURSOR, cursorX, y + 20, 0, 0, 16, 16, 16, 16);

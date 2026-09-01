@@ -22,7 +22,7 @@ public class RatioAbility extends TechniqueAbility {
 
         if (skillcheck == null) {
             long leniency = isUsingCleaver(player) ? 3 : 1;
-            float damageMultiplierReward = isUsingCleaver(player) ? 1.75f : 2.0f;
+            float damageMultiplierReward = isUsingCleaver(player) ? 1.5f : 1.75f;
 
             startSkillcheck(player, 40, 20, leniency, damageMultiplierReward);
             return;
