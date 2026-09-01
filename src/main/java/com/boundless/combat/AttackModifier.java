@@ -6,4 +6,5 @@ public interface AttackModifier {
     boolean shouldTrigger(PlayerEntity player);
     void apply(Hit hit);
     default void onTrigger(PlayerEntity player) {};
+    default void postTrigger(PlayerEntity player) {};
 }

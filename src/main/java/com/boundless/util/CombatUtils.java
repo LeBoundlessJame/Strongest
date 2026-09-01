@@ -46,6 +46,8 @@ public class CombatUtils {
             applyHit(hit);
             onHit.accept(player, target);
         }
+
+        context.postTrigger(player);
     }
 
     public static void applyHit(Hit hit) {

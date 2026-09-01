@@ -3,13 +3,14 @@ package com.boundless.hero.ratio_technique_hero.technique;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-public record RatioSkillcheck(long startTick, long endTick, long targetTick, long leniency) {
+public record RatioSkillcheck(long startTick, long endTick, long targetTick, long leniency, float nextAttackRatioMultiplier) {
     public static final Codec<RatioSkillcheck> CODEC = RecordCodecBuilder.create(builder -> {
         return builder.group(Codec.LONG.fieldOf("start_tick")
                 .forGetter(RatioSkillcheck::startTick), Codec.LONG.fieldOf("endTick")
                 .forGetter(RatioSkillcheck::endTick), Codec.LONG.fieldOf("target_tick")
                 .forGetter(RatioSkillcheck::targetTick), Codec.LONG.fieldOf("leniency")
-                .forGetter(RatioSkillcheck::leniency)).apply(builder, RatioSkillcheck::new);
+                .forGetter(RatioSkillcheck::leniency), Codec.FLOAT.fieldOf("next_attack_ratio_multiplier")
+                .forGetter(RatioSkillcheck::nextAttackRatioMultiplier)).apply(builder, RatioSkillcheck::new);
     });
 
     public boolean isSuccessful(long attemptTick) {
