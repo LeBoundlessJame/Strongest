@@ -79,7 +79,7 @@ public class PunchAbility extends TechniqueAbility {
             return;
         }
 
-        List<LivingEntity> targets = new MeleeHitbox(4.0, 180.0).getTargetsInArc(player);
+        List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
         CombatUtils.applyHits(player, action, targets, damage, knockback, onHitEvent, impactEffects);
 
         postAttackEvent.accept(player);
