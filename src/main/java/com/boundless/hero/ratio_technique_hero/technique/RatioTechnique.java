@@ -17,7 +17,7 @@ public class RatioTechnique {
     public static final int MAX_OVERTIME_DURATION = 6000;
 
     public static final TechniqueAbility RATIO = TechniqueAbilityRegistry.register(new RatioAbility());
-    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(30).setImpactTick(5).setRadius(new Vec3d(4, 3, 4)));
+    public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(30).setImpactTick(5).setRadius(new Vec3d(6, 5, 6)));
     public static final TechniqueAbility OVERTIME = TechniqueAbilityRegistry.register(new OvertimeAbility());
 
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility()

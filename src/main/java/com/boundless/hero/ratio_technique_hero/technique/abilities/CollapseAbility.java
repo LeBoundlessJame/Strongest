@@ -26,6 +26,7 @@ public class CollapseAbility extends AOEAbility implements AOE {
         return BoundlessAPI.id("collapse");
     }
 
+    // Todo: I should also make some sort of 'AttackAbility' interface or something that requires an attack duration and starts timer
     // Todo: I hate the unclearness of 'activate' vs 'activateAOE'. Definitely gonna clear this up soon frfr
     @Override
     public void activate(PlayerEntity player) {
@@ -41,7 +42,7 @@ public class CollapseAbility extends AOEAbility implements AOE {
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 10;
+        return 300;
     }
 
     @Override
