@@ -48,7 +48,7 @@ public class RatioAbility extends TechniqueAbility {
 
     @Override
     public int getCost(PlayerEntity player) {
-        return 233;
+        return 733;
     }
 
     @Override
