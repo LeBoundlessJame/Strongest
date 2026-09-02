@@ -5,10 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.AOEAbility;
 import com.boundless.ability.generic.PunchAbility;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import com.boundless.util.AOE;
-import com.boundless.util.AOEUtils;
-import com.boundless.util.CombatUtils;
-import com.boundless.util.EffekUtils;
+import com.boundless.util.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +24,13 @@ public class CollapseAbility extends AOEAbility implements AOE {
     @Override
     public Identifier getAbilityId() {
         return BoundlessAPI.id("collapse");
+    }
+
+    // Todo: I hate the unclearness of 'activate' vs 'activateAOE'. Definitely gonna clear this up soon frfr
+    @Override
+    public void activate(PlayerEntity player) {
+        super.activate(player);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("collapse"));
     }
 
     public void activateAOE(PlayerEntity player, HeroActionEntity action) {
