@@ -6,6 +6,7 @@ import com.boundless.combat.Hit;
 import com.boundless.mechanics.BlackFlashManager;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.util.CameraUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -28,6 +29,7 @@ public class BlackFlashModifier implements AttackModifier {
     @Override
     public void onTrigger(PlayerEntity player) {
         int duration = 5;
+        CameraUtils.playCameraShake(player);
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, duration - 2, 4, true, false, false));
         player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, duration, 4, true, false, false));
     }
