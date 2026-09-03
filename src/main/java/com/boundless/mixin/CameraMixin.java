@@ -30,31 +30,17 @@ public abstract class CameraMixin implements CameraShakeAccessor {
 
         DamageSource recentSource = client.player.getRecentDamageSource();
 
+        if (!cameraShakes.isEmpty()) {
+            cameraShakes.removeIf(CameraShake::isMarkFinished);
+            cameraShakes.forEach((cameraShake -> {
+                cameraShake.getCameraShakeLogic().accept(client, matrices);
+            }));
+        }
+
         if (recentSource != null && recentSource.isOf(DamageTypeRegistry.BLEED)) {
             ci.cancel();
             return;
         }
-
-        /*
-        if (client.player != null && client.player.isSneaking() && cameraShakes.isEmpty()) {
-            CameraShake cameraShake = new CameraShake();
-            cameraShake.setStartTimestamp(client.player.getWorld().getTime());
-            cameraShake.setEndTimestamp(client.player.getWorld().getTime() + 40);
-            cameraShake.setIntensity(1.2f);
-            cameraShakes.add(cameraShake);
-        }
-
-         */
-
-        // Todo: Revisit the camera shake stuff later
-        /*
-        if (cameraShakes.isEmpty()) return;
-        cameraShakes.removeIf(CameraShake::isMarkFinished);
-        cameraShakes.forEach((cameraShake -> {
-            cameraShake.getCameraShakeLogic().accept(client, matrices);
-        }));
-
-         */
     }
 
     public void boundless$addCameraShake(CameraShake cameraShake) {
