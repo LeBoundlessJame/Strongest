@@ -3,7 +3,7 @@ package com.boundless.combat.attack_modifiers;
 import com.boundless.BoundlessAPI;
 import com.boundless.combat.AttackModifier;
 import com.boundless.combat.Hit;
-import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
+import com.boundless.hero.nanami.technique.RatioComponents;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;

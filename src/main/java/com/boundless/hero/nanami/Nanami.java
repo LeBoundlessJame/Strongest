@@ -1,21 +1,20 @@
-package com.boundless.hero.ratio_technique_hero;
+package com.boundless.hero.nanami;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.combat.attack_modifiers.RatioModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.ratio_technique_hero.client.RatioHeroRenderer;
-import com.boundless.hero.ratio_technique_hero.technique.RatioAttributes;
-import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
-import com.boundless.hero.ratio_technique_hero.technique.RatioTechnique;
-import com.boundless.hero.ratio_technique_hero.technique.RatioTechniqueAbilityResolver;
-import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
+import com.boundless.hero.nanami.client.RatioHeroRenderer;
+import com.boundless.hero.nanami.technique.RatioAttributes;
+import com.boundless.hero.nanami.technique.RatioComponents;
+import com.boundless.hero.nanami.technique.RatioTechnique;
+import com.boundless.hero.nanami.technique.RatioTechniqueAbilityResolver;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
-public class RatioHero extends Hero {
-    public RatioHero() {
+public class Nanami extends Hero {
+    public Nanami() {
         RatioComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
@@ -26,7 +25,7 @@ public class RatioHero extends Hero {
                 .ability(AbilityKey.USE, RatioTechniqueAbilityResolver::getRightClickAbility).build();
 
         this.heroData = HeroData.builder()
-                .name("ratio_technique_hero")
+                .name("nanami")
                 .defaultTechniqueLoadout(loadout)
                 .attributes(RatioAttributes.ATTRIBUTES)
                 .armorRenderer(RatioHeroRenderer::new)

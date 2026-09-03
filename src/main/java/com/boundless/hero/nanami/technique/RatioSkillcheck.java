@@ -1,4 +1,4 @@
-package com.boundless.hero.ratio_technique_hero.technique;
+package com.boundless.hero.nanami.technique;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

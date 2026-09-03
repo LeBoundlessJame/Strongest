@@ -1,18 +1,18 @@
-package com.boundless.hero.shadow_hero;
+package com.boundless.hero.megumi;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.shadow_hero.technique.TenShadowsAbilityResolver;
-import com.boundless.hero.shadow_hero.technique.TenShadowsAttributes;
-import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
-import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
+import com.boundless.hero.megumi.technique.TenShadowsAbilityResolver;
+import com.boundless.hero.megumi.technique.TenShadowsAttributes;
+import com.boundless.hero.megumi.technique.TenShadowsComponents;
+import com.boundless.hero.megumi.technique.TenShadowsTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
-public class ShadowHero extends Hero {
-    public ShadowHero() {
+public class Megumi extends Hero {
+    public Megumi() {
         TenShadowsComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
@@ -26,7 +26,7 @@ public class ShadowHero extends Hero {
                 .build();
 
         this.heroData = HeroData.builder()
-                .name("shadow_hero")
+                .name("megumi")
                 .defaultTechniqueLoadout(loadout)
                 .attributes(TenShadowsAttributes.ATTRIBUTES)
                 .tickHandler(Hero::heroSprintHandler)

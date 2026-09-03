@@ -1,6 +1,6 @@
-package com.boundless.hero.ratio_technique_hero.technique;
+package com.boundless.hero.nanami.technique;
 
-import com.boundless.hero.shadow_hero.technique.TenShadowsTechnique;
+import com.boundless.hero.megumi.technique.TenShadowsTechnique;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;

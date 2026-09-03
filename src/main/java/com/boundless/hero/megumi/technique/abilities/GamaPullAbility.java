@@ -1,9 +1,9 @@
-package com.boundless.hero.shadow_hero.technique.abilities;
+package com.boundless.hero.megumi.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.gama.GamaEntity;
-import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
+import com.boundless.hero.megumi.technique.TenShadowsComponents;
 import com.boundless.mechanics.ComboManager;
 import com.boundless.mechanics.ShikigamiManager;
 import com.boundless.registry.EntityRegistry;

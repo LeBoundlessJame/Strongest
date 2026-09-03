@@ -1,23 +1,17 @@
-package com.boundless.hero.ratio_technique_hero.technique.abilities;
+package com.boundless.hero.nanami.technique.abilities;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.AOEAbility;
-import com.boundless.ability.generic.PunchAbility;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.util.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldEvents;
-
-import java.util.List;
 
 @Getter @Setter @Accessors(chain = true)
 public class CollapseAbility extends AOEAbility implements AOE {

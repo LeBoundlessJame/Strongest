@@ -1,8 +1,8 @@
-package com.boundless.hero.ratio_technique_hero.technique.abilities;
+package com.boundless.hero.nanami.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
+import com.boundless.hero.nanami.technique.RatioComponents;
 import com.boundless.util.AttackUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.PlayerAnimationUtils;

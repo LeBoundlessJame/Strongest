@@ -1,11 +1,11 @@
-package com.boundless.hero.ratio_technique_hero.technique;
+package com.boundless.hero.nanami.technique;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.PunchAbility;
-import com.boundless.hero.ratio_technique_hero.technique.abilities.CollapseAbility;
-import com.boundless.hero.ratio_technique_hero.technique.abilities.OvertimeAbility;
-import com.boundless.hero.ratio_technique_hero.technique.abilities.RatioAbility;
+import com.boundless.hero.nanami.technique.abilities.CollapseAbility;
+import com.boundless.hero.nanami.technique.abilities.OvertimeAbility;
+import com.boundless.hero.nanami.technique.abilities.RatioAbility;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;

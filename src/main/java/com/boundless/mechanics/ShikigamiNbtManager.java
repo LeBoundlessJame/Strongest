@@ -1,6 +1,6 @@
 package com.boundless.mechanics;
 
-import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
+import com.boundless.hero.megumi.technique.TenShadowsComponents;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.Shikigami;
 import net.minecraft.entity.EntityType;

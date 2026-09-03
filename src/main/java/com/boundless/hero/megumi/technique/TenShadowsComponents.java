@@ -1,4 +1,4 @@
-package com.boundless.hero.shadow_hero.technique;
+package com.boundless.hero.megumi.technique;
 
 import com.boundless.registry.DataComponentRegistry;
 import com.mojang.serialization.Codec;

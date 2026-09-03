@@ -1,8 +1,8 @@
-package com.boundless.hero.ratio_technique_hero.client;
+package com.boundless.hero.nanami.client;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.armor.HeroArmorRenderer;
-import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
+import com.boundless.hero.nanami.technique.RatioComponents;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

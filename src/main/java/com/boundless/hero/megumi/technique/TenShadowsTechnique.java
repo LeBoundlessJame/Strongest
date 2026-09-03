@@ -1,13 +1,13 @@
-package com.boundless.hero.shadow_hero.technique;
+package com.boundless.hero.megumi.technique;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.PunchAbility;
 import com.boundless.ability.generic.SummonShikigamiAbility;
-import com.boundless.hero.shadow_hero.technique.abilities.GamaGrappleAbility;
-import com.boundless.hero.shadow_hero.technique.abilities.GamaPullAbility;
-import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrderAbility;
-import com.boundless.hero.shadow_hero.technique.abilities.ShikigamiOrdersMenuAbility;
+import com.boundless.hero.megumi.technique.abilities.GamaGrappleAbility;
+import com.boundless.hero.megumi.technique.abilities.GamaPullAbility;
+import com.boundless.hero.megumi.technique.abilities.ShikigamiOrderAbility;
+import com.boundless.hero.megumi.technique.abilities.ShikigamiOrdersMenuAbility;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import net.minecraft.util.math.Vec3d;

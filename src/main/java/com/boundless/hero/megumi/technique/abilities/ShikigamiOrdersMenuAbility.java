@@ -1,8 +1,8 @@
-package com.boundless.hero.shadow_hero.technique.abilities;
+package com.boundless.hero.megumi.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.hero.shadow_hero.technique.TenShadowsComponents;
+import com.boundless.hero.megumi.technique.TenShadowsComponents;
 import com.boundless.util.DataComponentUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;

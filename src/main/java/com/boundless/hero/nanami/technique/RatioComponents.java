@@ -1,4 +1,4 @@
-package com.boundless.hero.ratio_technique_hero.technique;
+package com.boundless.hero.nanami.technique;
 
 import com.boundless.registry.DataComponentRegistry;
 import com.mojang.serialization.Codec;

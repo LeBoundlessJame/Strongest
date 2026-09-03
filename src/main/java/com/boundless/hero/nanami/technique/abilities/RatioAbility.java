@@ -1,9 +1,9 @@
-package com.boundless.hero.ratio_technique_hero.technique.abilities;
+package com.boundless.hero.nanami.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
-import com.boundless.hero.ratio_technique_hero.technique.RatioSkillcheck;
+import com.boundless.hero.nanami.technique.RatioComponents;
+import com.boundless.hero.nanami.technique.RatioSkillcheck;
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.registry.ItemRegistry;
 import com.boundless.util.HeroUtils;

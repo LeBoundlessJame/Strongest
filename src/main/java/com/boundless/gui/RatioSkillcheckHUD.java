@@ -1,8 +1,8 @@
 package com.boundless.gui;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.hero.ratio_technique_hero.technique.RatioComponents;
-import com.boundless.hero.ratio_technique_hero.technique.RatioSkillcheck;
+import com.boundless.hero.nanami.technique.RatioComponents;
+import com.boundless.hero.nanami.technique.RatioSkillcheck;
 import com.boundless.util.HeroUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
