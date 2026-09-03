@@ -7,6 +7,7 @@ import com.boundless.hero.api.HeroData;
 import com.boundless.hero.nanami.technique.RatioAttributes;
 import com.boundless.hero.nanami.technique.RatioTechnique;
 import com.boundless.hero.nanami.technique.RatioTechniqueAbilityResolver;
+import com.boundless.hero.yuji.technique.YujiAttributes;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
@@ -24,7 +25,7 @@ public class Yuji extends Hero {
         this.heroData = HeroData.builder()
                 .name("yuji")
                 .defaultTechniqueLoadout(loadout)
-                .attributes(RatioAttributes.ATTRIBUTES)
+                .attributes(YujiAttributes.ATTRIBUTES)
                 .tickHandler(Hero::heroSprintHandler)
                 .modelIdentifier(BoundlessAPI.modelID("yuji"))
                 .textureIdentifier(BoundlessAPI.textureID("yuji"))
