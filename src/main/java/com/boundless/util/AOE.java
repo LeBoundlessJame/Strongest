@@ -2,7 +2,6 @@ package com.boundless.util;
 
 import com.boundless.ability.generic.AOEAbility;
 import com.boundless.entity.hero_action.HeroActionEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 

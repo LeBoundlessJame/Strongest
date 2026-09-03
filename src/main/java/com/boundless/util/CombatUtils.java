@@ -1,6 +1,5 @@
 package com.boundless.util;
 
-import com.boundless.ability.TechniqueAbility;
 import com.boundless.combat.AttackContext;
 import com.boundless.combat.AttackResolver;
 import com.boundless.combat.Hit;
@@ -13,9 +12,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.BiConsumer;
