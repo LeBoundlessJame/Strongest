@@ -32,4 +32,8 @@ public class ComponentUtils {
     public static <T> void clear(PlayerEntity player, ComponentType<T> component) {
         HeroUtils.getHeroStack(player).remove(component);
     }
+
+    public static <T> T get(PlayerEntity player, ComponentType<T> component) {
+        return HeroUtils.getHeroStack(player).get(component);
+    }
 }
