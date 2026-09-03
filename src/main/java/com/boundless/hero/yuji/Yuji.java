@@ -9,6 +9,7 @@ import com.boundless.hero.nanami.technique.RatioTechnique;
 import com.boundless.hero.nanami.technique.RatioTechniqueAbilityResolver;
 import com.boundless.hero.yuji.technique.YujiAttributes;
 import com.boundless.hero.yuji.technique.YujiComponents;
+import com.boundless.hero.yuji.technique.YujiTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
@@ -20,6 +21,7 @@ public class Yuji extends Hero {
         // For now, will use megumi's roundhouse until I get things setup
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, RatioTechnique.PUNCH)
+                .ability(AbilityKey.ABILITY_ONE, YujiTechnique.DIVERGENT_ENERGY)
                 .ability(AbilityKey.USE, RatioTechniqueAbilityResolver::getRightClickAbility).build();
 
         this.heroData = HeroData.builder()
