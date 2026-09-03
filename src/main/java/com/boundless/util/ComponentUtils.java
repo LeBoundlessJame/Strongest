@@ -28,4 +28,8 @@ public class ComponentUtils {
     public static <T> void set(PlayerEntity player, ComponentType<T> component, T value) {
         HeroUtils.getHeroStack(player).set(component, value);
     }
+
+    public static <T> void clear(PlayerEntity player, ComponentType<T> component) {
+        HeroUtils.getHeroStack(player).remove(component);
+    }
 }
