@@ -52,7 +52,7 @@ public class PunchAbility extends TechniqueAbility {
     private BiConsumer<PlayerEntity, HeroActionEntity> impactEventOverride;
 
     private Function<PlayerEntity, Boolean> mirrorAnimationProvider = (player) -> {
-        DataComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         return attackCount % 2 == 0;
     };

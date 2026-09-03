@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Todo: this whole class could do with an expansion / elaboration
-public class DataComponentUtils {
+public class ComponentUtils {
     public static <A, B> void updateMap(ItemStack heroStack, ComponentType<Map<A, B>> mapComponent, A key, B value) {
         HashMap<A, B> map = new HashMap<>(heroStack.getOrDefault(mapComponent, new HashMap<>()));
         map.put(key, value);
@@ -23,5 +23,9 @@ public class DataComponentUtils {
     public static void toggleBoolean(PlayerEntity player, ComponentType<Boolean> component, boolean fallback) {
         ItemStack stack = HeroUtils.getHeroStack(player);
         stack.set(component, !stack.getOrDefault(component, fallback));
+    }
+
+    public static <T> void set(PlayerEntity player, ComponentType<T> component, T value) {
+        HeroUtils.getHeroStack(player).set(component, value);
     }
 }
