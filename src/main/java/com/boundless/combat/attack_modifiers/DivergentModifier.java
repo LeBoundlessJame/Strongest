@@ -45,12 +45,13 @@ public class DivergentModifier implements AttackModifier {
     public void postTrigger(PlayerEntity player) {
         if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
-        AttackContext context = AttackResolver.resolveAttack(player);
         List<DivergentTarget> targets = ComponentUtils.getOr(player, YujiComponents.DIVERGENT_TARGETS, List.of());
 
         if (!targets.isEmpty()) {
             TickScheduler.schedule(serverWorld, DIVERGENT_DELAY_TICKS, () -> {
                 if (!player.isAlive()) return;
+
+                AttackContext context = AttackResolver.resolveAttack(player);
 
                 for (DivergentTarget target: targets) {
                     Entity entity = serverWorld.getEntity(target.uuid());
