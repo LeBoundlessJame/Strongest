@@ -31,7 +31,7 @@ public class PunchAbility extends TechniqueAbility {
     private Identifier abilityId;
 
     private int impactTick = 2;
-    private int attackDuration = 10;
+    private int attackDuration = 8;
 
     private Identifier animation = BoundlessAPI.id("hook");
     private float animationSpeed = 1.0f;

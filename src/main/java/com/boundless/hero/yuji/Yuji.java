@@ -1,6 +1,7 @@
 package com.boundless.hero.yuji;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.combat.CombatAbilities;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
@@ -13,12 +14,10 @@ import com.boundless.loadouts.TechniqueLoadout;
 
 public class Yuji extends Hero {
     public Yuji() {
-        // Todo: Might make roundhouse generic, and then make it calculated on player's melee stat
-        // For now, will use megumi's roundhouse until I get things setup
         TechniqueLoadout loadout = TechniqueLoadout.builder()
-                .ability(AbilityKey.ATTACK, YujiTechnique.PUNCH)
+                .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, YujiTechnique.DIVERGENT_ENERGY)
-                .ability(AbilityKey.USE, YujiTechnique.ROUNDHOUSE_KICK).build();
+                .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
 
         this.heroData = HeroData.builder()
                 .name("yuji")
