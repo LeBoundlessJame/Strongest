@@ -32,7 +32,7 @@ public class Yuji extends Hero {
                 .textureIdentifier(BoundlessAPI.textureID("yuji"))
                 .tickHandler(Hero::onHeroTick)
                 .maxCursedEnergy(5000)
-                .blackFlashChance(0.08f)
+                .blackFlashChance(0.5f)
                 .blackFlashDamageMultiplier(1.9f)
                 .meleeStrength(22)
                 .attackModifier(new BlackFlashModifier())

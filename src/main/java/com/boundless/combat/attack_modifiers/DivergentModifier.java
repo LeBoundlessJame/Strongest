@@ -1,15 +1,18 @@
 package com.boundless.combat.attack_modifiers;
 
-import com.boundless.combat.AttackModifier;
-import com.boundless.combat.Hit;
+import com.boundless.BoundlessAPI;
+import com.boundless.combat.*;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.hero.yuji.technique.components.DivergentTarget;
+import com.boundless.registry.SoundRegistry;
 import com.boundless.tick.TickScheduler;
+import com.boundless.util.CombatUtils;
 import com.boundless.util.ComponentUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,7 @@ public class DivergentModifier implements AttackModifier {
     public void postTrigger(PlayerEntity player) {
         if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
 
+        AttackContext context = AttackResolver.resolveAttack(player);
         List<DivergentTarget> targets = ComponentUtils.getOr(player, YujiComponents.DIVERGENT_TARGETS, List.of());
 
         if (!targets.isEmpty()) {
@@ -50,9 +54,15 @@ public class DivergentModifier implements AttackModifier {
 
                 for (DivergentTarget target: targets) {
                     Entity entity = serverWorld.getEntity(target.uuid());
-                    if (entity instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
-                        livingEntity.damage(livingEntity.getDamageSources().generic(), target.damage() * SECOND_HIT_MULTIPLIER);
-                    }
+                    if (!(entity instanceof LivingEntity livingEntity && livingEntity.isAlive())) continue;
+
+                    HitEffects divergentEffects = new HitEffects();
+                    divergentEffects.addVisual(BoundlessAPI.id("divergent_fist_impact"));
+                    divergentEffects.addSound(SoundRegistry.ENERGY_IMPACT_2);
+
+                    Hit delayedHit = new Hit(player, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(1.2, 0.6, 1.2), divergentEffects);
+
+                    CombatUtils.resolveAndApplyHit(delayedHit, context);
                 }
             });
         }

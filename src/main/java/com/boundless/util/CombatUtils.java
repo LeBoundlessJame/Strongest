@@ -24,15 +24,19 @@ public class CombatUtils {
         applyHits(player, targets, baseDamage, knockback, onHit, hitEffects);
     }
 
+    public static void resolveAndApplyHit(Hit hit, AttackContext context) {
+        hit = AttackResolver.resolveHit(hit, context);
+        applyHit(hit);
+    }
+
     public static void applyHits(PlayerEntity player, List<LivingEntity> targets, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         if (targets.isEmpty()) return;
         AttackContext context = AttackResolver.resolveAttack(player);
 
         for (LivingEntity target: targets) {
             Hit hit = new Hit(player, target, baseDamage, knockback, new HitEffects(hitEffects));
-            hit = AttackResolver.resolveHit(hit, context);
+            resolveAndApplyHit(hit, context);
 
-            applyHit(hit);
             onHit.accept(player, target);
         }
 
