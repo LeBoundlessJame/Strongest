@@ -5,5 +5,5 @@ import com.boundless.hero.yuji.technique.abilities.DivergentFistAbility;
 import com.boundless.registry.TechniqueAbilityRegistry;
 
 public class YujiTechnique {
-    public static final TechniqueAbility DIVERGENT_ENERGY = TechniqueAbilityRegistry.register(new DivergentFistAbility());
+    public static final TechniqueAbility DIVERGENT_FIST = TechniqueAbilityRegistry.register(new DivergentFistAbility());
 }

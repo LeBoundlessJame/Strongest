@@ -6,8 +6,6 @@ import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.combat.attack_modifiers.DivergentModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.nanami.technique.RatioTechnique;
-import com.boundless.hero.nanami.technique.RatioTechniqueAbilityResolver;
 import com.boundless.hero.yuji.technique.YujiAttributes;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.hero.yuji.technique.YujiTechnique;
@@ -20,7 +18,7 @@ public class Yuji extends Hero {
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
-                .ability(AbilityKey.ABILITY_ONE, YujiTechnique.DIVERGENT_ENERGY)
+                .ability(AbilityKey.ABILITY_ONE, YujiTechnique.DIVERGENT_FIST)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
 
         this.heroData = HeroData.builder()
