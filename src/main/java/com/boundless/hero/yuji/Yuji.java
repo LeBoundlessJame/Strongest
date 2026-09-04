@@ -9,12 +9,15 @@ import com.boundless.hero.api.HeroData;
 import com.boundless.hero.nanami.technique.RatioTechnique;
 import com.boundless.hero.nanami.technique.RatioTechniqueAbilityResolver;
 import com.boundless.hero.yuji.technique.YujiAttributes;
+import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.hero.yuji.technique.YujiTechnique;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
 public class Yuji extends Hero {
     public Yuji() {
+        YujiComponents.initialize();
+
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, YujiTechnique.DIVERGENT_ENERGY)
