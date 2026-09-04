@@ -2,7 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"manji": {
-			"animation_length": 0.6667,
+			"animation_length": 0.75,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -14,7 +14,7 @@
 							"easing": "easeInSine"
 						},
 						"0.5": {
-							"vector": [-102.0736, 33.9629, 94.7982],
+							"vector": [-91.6232, 35.7692, 112.9737],
 							"easing": "easeOutQuint"
 						}
 					},
