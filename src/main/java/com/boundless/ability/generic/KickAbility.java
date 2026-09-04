@@ -11,6 +11,7 @@ public class KickAbility extends PunchAbility {
     public KickAbility() {
         this.setImpactTick(9);
         this.setAttackDuration(17);
+        this.setAnimation(BoundlessAPI.id("roundhouse"));
         this.setAnimationSpeed(1.15f);
         this.setKnockback(new Vec3d(1.2, 0.6, 1.2));
     }
