@@ -20,12 +20,6 @@ public class RatioTechnique {
     public static final TechniqueAbility COLLAPSE = TechniqueAbilityRegistry.register(new CollapseAbility().setDamage(30).setImpactTick(5).setRadius(new Vec3d(6, 5, 6)));
     public static final TechniqueAbility OVERTIME = TechniqueAbilityRegistry.register(new OvertimeAbility());
 
-    public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility()
-            .setAbilityId(BoundlessAPI.id("nanami_punch"))
-            .setDamage(22)
-            .setAttackDuration(10)
-            .setWhiffSound(SoundRegistry.MISS_HIT));
-
     public static void ratioTick(PlayerEntity player) {
         if (player.getWorld().isClient) return;
         skillcheck(player);

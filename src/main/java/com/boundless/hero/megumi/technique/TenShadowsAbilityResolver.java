@@ -1,5 +1,6 @@
 package com.boundless.hero.megumi.technique;
 
+import com.boundless.combat.CombatAbilities;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.registry.TechniqueAbilityRegistry;
 import com.boundless.util.HeroUtils;
@@ -10,12 +11,12 @@ public class TenShadowsAbilityResolver {
 
     public static Identifier getRightClickAbility(PlayerEntity player) {
         if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId();
-        return player.getVehicle() instanceof GamaEntity ? TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId() : TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId();
+        return player.getVehicle() instanceof GamaEntity ? TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId() : CombatAbilities.ROUNDHOUSE_KICK.getAbilityId();
     }
 
     public static Identifier getLeftClickAbility(PlayerEntity player) {
         if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId();
-        return TenShadowsTechnique.PUNCH.getAbilityId();
+        return CombatAbilities.PUNCH.getAbilityId();
     }
 
     public static Identifier getAbilityOne(PlayerEntity player) {

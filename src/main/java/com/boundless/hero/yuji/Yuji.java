@@ -30,6 +30,7 @@ public class Yuji extends Hero {
                 .maxCursedEnergy(5000)
                 .blackFlashChance(0.08f)
                 .blackFlashDamageMultiplier(1.9f)
+                .meleeStrength(22)
                 .attackModifier(new BlackFlashModifier())
                 .build();
 

@@ -1,6 +1,7 @@
 package com.boundless.hero.megumi;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.combat.CombatAbilities;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
@@ -17,8 +18,8 @@ public class Megumi extends Hero {
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ABILITY_FOUR, TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU)
-                .ability(AbilityKey.ATTACK, TenShadowsAbilityResolver::getLeftClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId(), TenShadowsTechnique.PUNCH.getAbilityId())
-                .ability(AbilityKey.USE, TenShadowsAbilityResolver::getRightClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId(), TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId(), TenShadowsTechnique.ROUNDHOUSE_KICK.getAbilityId())
+                .ability(AbilityKey.ATTACK, TenShadowsAbilityResolver::getLeftClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId(), CombatAbilities.PUNCH.getAbilityId())
+                .ability(AbilityKey.USE, TenShadowsAbilityResolver::getRightClickAbility, TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId(), TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId(), CombatAbilities.ROUNDHOUSE_KICK.getAbilityId())
                 .ability(AbilityKey.ABILITY_ONE, TenShadowsAbilityResolver::getAbilityOne)
                 .ability(AbilityKey.ABILITY_TWO, TenShadowsAbilityResolver::getAbilityTwo)
                 .ability(AbilityKey.ABILITY_THREE, TenShadowsAbilityResolver::getAbilityThree)
@@ -36,6 +37,7 @@ public class Megumi extends Hero {
                 .maxCursedEnergy(5000)
                 .blackFlashDamageMultiplier(2.5f)
                 .blackFlashChance(0.01f)
+                .meleeStrength(17)
                 .attackModifier(new BlackFlashModifier())
                 .build();
         this.registerHero();

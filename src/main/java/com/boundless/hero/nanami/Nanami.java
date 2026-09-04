@@ -1,6 +1,7 @@
 package com.boundless.hero.nanami;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.combat.CombatAbilities;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.combat.attack_modifiers.RatioModifier;
 import com.boundless.hero.api.Hero;
@@ -18,11 +19,11 @@ public class Nanami extends Hero {
         RatioComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
-                .ability(AbilityKey.ATTACK, RatioTechnique.PUNCH)
+                .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, RatioTechnique.RATIO)
                 .ability(AbilityKey.ABILITY_TWO, RatioTechnique.COLLAPSE)
                 .ability(AbilityKey.ABILITY_THREE, RatioTechniqueAbilityResolver::getOvertimeAbility)
-                .ability(AbilityKey.USE, RatioTechniqueAbilityResolver::getRightClickAbility).build();
+                .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
 
         this.heroData = HeroData.builder()
                 .name("nanami")
@@ -37,6 +38,7 @@ public class Nanami extends Hero {
                 .maxCursedEnergy(7000)
                 .blackFlashChance(0.02f)
                 .blackFlashDamageMultiplier(2.5f)
+                .meleeStrength(19)
                 .attackModifier(new BlackFlashModifier())
                 .attackModifier(new RatioModifier())
                 .build();
