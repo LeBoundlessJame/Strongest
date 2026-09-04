@@ -19,25 +19,17 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public class CombatUtils {
-
-    public static void hit(PlayerEntity player, HeroActionEntity action, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
-        action.repositionBox();
-        List<LivingEntity> targets = getTargets(player, action, entity -> true);
-        applyHits(player, action, targets, baseDamage, knockback, onHit, hitEffects);
-    }
-
-    public static void hitInRadius(PlayerEntity player, HeroActionEntity action, Vec3d center, Vec3d radius, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
-        action.repositionBox();
+    public static void hitInRadius(PlayerEntity player, Vec3d center, Vec3d radius, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         List<LivingEntity> targets = AOEUtils.getTargetsInRadius(player, player.getWorld(), center, radius, entity -> true);
-        applyHits(player, action, targets, baseDamage, knockback, onHit, hitEffects);
+        applyHits(player, targets, baseDamage, knockback, onHit, hitEffects);
     }
 
-    public static void applyHits(PlayerEntity player, HeroActionEntity action, List<LivingEntity> targets, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
+    public static void applyHits(PlayerEntity player, List<LivingEntity> targets, float baseDamage, Vec3d knockback, BiConsumer<PlayerEntity, LivingEntity> onHit, HitEffects hitEffects) {
         if (targets.isEmpty()) return;
         AttackContext context = AttackResolver.resolveAttack(player);
 
         for (LivingEntity target: targets) {
-            Hit hit = new Hit(player, target, action, baseDamage, knockback, new HitEffects(hitEffects));
+            Hit hit = new Hit(player, target, baseDamage, knockback, new HitEffects(hitEffects));
             hit = AttackResolver.resolveHit(hit, context);
 
             applyHit(hit);
@@ -57,14 +49,6 @@ public class CombatUtils {
         target.damage(target.getDamageSources().generic(), hit.getDamage());
         target.setVelocity(attacker.getRotationVector().x * knockbackMultiplier.x, knockbackMultiplier.y, attacker.getRotationVector().z * knockbackMultiplier.z);
         target.velocityModified = true;
-    }
-
-    public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action, Predicate<LivingEntity> predicate) {
-        return action.getWorld().getEntitiesByClass(LivingEntity.class, action.getBoundingBox(), entity -> isValidTarget(player, entity) && predicate.test(entity));
-    }
-
-    public static List<LivingEntity> getTargets(PlayerEntity player, HeroActionEntity action) {
-        return getTargets(player, action, entity -> true);
     }
 
     public static void slow(LivingEntity livingEntity, int duration, int amplifier) {

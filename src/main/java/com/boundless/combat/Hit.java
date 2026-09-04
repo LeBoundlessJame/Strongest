@@ -12,7 +12,6 @@ import net.minecraft.util.math.Vec3d;
 public class Hit {
     private final PlayerEntity attacker;
     private final LivingEntity target;
-    private final HeroActionEntity action;
     @Getter @Setter
     private float damage;
     @Getter @Setter
@@ -20,17 +19,16 @@ public class Hit {
     @Getter @Setter
     private HitEffects hitEffects;
 
-    public Hit(PlayerEntity attacker, LivingEntity target, HeroActionEntity action, float damage, Vec3d knockback, HitEffects hitEffects) {
+    public Hit(PlayerEntity attacker, LivingEntity target, float damage, Vec3d knockback, HitEffects hitEffects) {
         this.attacker = attacker;
         this.target = target;
-        this.action = action;
         this.damage = damage;
         this.knockback = knockback;
         this.hitEffects = hitEffects;
     }
 
-    public Hit(PlayerEntity attacker, LivingEntity target, TechniqueAbility ability, HeroActionEntity action, float damage, Vec3d knockback) {
-        this(attacker, target, action, damage, knockback, new HitEffects());
+    public Hit(PlayerEntity attacker, LivingEntity target, TechniqueAbility ability, float damage, Vec3d knockback) {
+        this(attacker, target, damage, knockback, new HitEffects());
     }
 
     public void multiplyDamage(float multiplier) {

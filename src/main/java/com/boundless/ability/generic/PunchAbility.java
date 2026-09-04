@@ -9,6 +9,7 @@ import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
+import com.boundless.tick.TickScheduler;
 import com.boundless.util.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +49,7 @@ public class PunchAbility extends TechniqueAbility {
 
     private Vec3d knockback = new Vec3d(0.6, 0.3, 0.6);
 
-    private BiConsumer<PlayerEntity, HeroActionEntity> impactEventOverride;
+    private Consumer<PlayerEntity> impactEventOverride;
 
     private Function<PlayerEntity, Boolean> mirrorAnimationProvider = (player) -> {
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
@@ -64,20 +65,19 @@ public class PunchAbility extends TechniqueAbility {
         PlayerAnimationUtils.playSyncedAnimation(player, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(player), true, 3000);
         SoundUtils.playSound(player, this.whiffSound);
 
-        Action action = Action.builder().scheduledTask(this.impactTick, this::impact).build();
+        TickScheduler.schedule(player.getWorld(), this.impactTick, () -> this.impact(player));
         AttackUtils.startAttackTimer(player, this.attackDuration);
-        ActionUtils.performAction(player, action);
     }
 
-    private void impact(PlayerEntity player, HeroActionEntity action) {
+    private void impact(PlayerEntity player) {
         if (impactEventOverride != null) {
-            impactEventOverride.accept(player, action);
+            impactEventOverride.accept(player);
             postAttackEvent.accept(player);
             return;
         }
 
         List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
-        CombatUtils.applyHits(player, action, targets, this.getDamage(player), knockback, onHitEvent, impactEffects);
+        CombatUtils.applyHits(player, targets, this.getDamage(player), knockback, onHitEvent, impactEffects);
 
         postAttackEvent.accept(player);
     }

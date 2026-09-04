@@ -5,6 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.action.Action;
 import com.boundless.combat.HitEffects;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.tick.TickScheduler;
 import com.boundless.util.AOE;
 import com.boundless.util.ActionUtils;
 import lombok.Getter;
@@ -32,8 +33,8 @@ public class AOEAbility extends TechniqueAbility implements AOE {
     @Override
     public void activate(PlayerEntity player) {
         if (player.getWorld().isClient) return;
-        Action action = Action.builder().scheduledTask(this.getImpactTick(), this::activateAOE).build();
-        ActionUtils.performAction(player, action);
+
+        TickScheduler.schedule(player.getWorld(), this.impactTick, () -> this.activateAOE(player));
     }
 
     @Override

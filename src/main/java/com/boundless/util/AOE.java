@@ -8,10 +8,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.List;
 
 public interface AOE {
-    default void activateAOE(PlayerEntity player, HeroActionEntity action) {
+    default void activateAOE(PlayerEntity player) {
         AOEAbility aoeAbility = (AOEAbility) this;
-        action.repositionBox();
         List<LivingEntity> targets = AOEUtils.getTargetsInRadius(player, player.getWorld(), player.getPos(), aoeAbility.getRadius(), entity -> true);
-        CombatUtils.applyHits(player, action, targets, aoeAbility.getDamage(), aoeAbility.getKnockback(), aoeAbility.getOnHit(), aoeAbility.getHitEffects());
+        CombatUtils.applyHits(player, targets, aoeAbility.getDamage(), aoeAbility.getKnockback(), aoeAbility.getOnHit(), aoeAbility.getHitEffects());
     }
 }

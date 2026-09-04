@@ -30,8 +30,8 @@ public class CollapseAbility extends AOEAbility implements AOE {
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("collapse"));
     }
 
-    public void activateAOE(PlayerEntity player, HeroActionEntity action) {
-        super.activateAOE(player, action);
+    public void activateAOE(PlayerEntity player) {
+        super.activateAOE(player);
         EffekUtils.playEffect(BoundlessAPI.id("collapse_impact"), player, player.getPos(), new Vec3d(0.5f, 0.5f, 0.5f));
         player.getWorld().syncWorldEvent(WorldEvents.SMASH_ATTACK, player.getSteppingPos(), 750);
     }
