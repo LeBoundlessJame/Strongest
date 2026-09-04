@@ -29,7 +29,7 @@ public class DivergentModifier implements AttackModifier {
 
     @Override
     public void onTrigger(PlayerEntity player) {
-        TickScheduler.schedule(player.getWorld(), 20, () -> System.out.println("IT WORKS!"));
+        //TickScheduler.schedule(player.getWorld(), 20, () -> System.out.println("IT WORKS!"));
     }
 
     @Override
