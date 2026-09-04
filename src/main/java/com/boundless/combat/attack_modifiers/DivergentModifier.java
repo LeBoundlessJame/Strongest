@@ -7,6 +7,7 @@ import com.boundless.hero.nanami.technique.RatioComponents;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.tick.TickScheduler;
 import com.boundless.util.ComponentUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -17,7 +18,8 @@ import java.util.List;
 public class DivergentModifier implements AttackModifier {
     @Override
     public boolean shouldTrigger(PlayerEntity player) {
-        return ComponentUtils.get(player, YujiComponents.DIVERGENCE_ACTIVE);
+        //ComponentUtils.get(player, YujiComponents.DIVERGENCE_ACTIVE) != null
+        return true;
     }
 
     @Override
@@ -27,11 +29,11 @@ public class DivergentModifier implements AttackModifier {
 
     @Override
     public void onTrigger(PlayerEntity player) {
-
+        TickScheduler.schedule(player.getWorld(), 20, () -> System.out.println("IT WORKS!"));
     }
 
     @Override
     public void postTrigger(PlayerEntity player) {
-        ComponentUtils.remove(player, YujiComponents.DIVERGENCE_ACTIVE);
+        //ComponentUtils.remove(player, YujiComponents.DIVERGENCE_ACTIVE);
     }
 }

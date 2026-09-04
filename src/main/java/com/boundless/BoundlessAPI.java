@@ -4,7 +4,9 @@ import com.boundless.ability.Grab;
 import com.boundless.combat.CombatAbilities;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.*;
+import com.boundless.tick.TickScheduler;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,7 @@ public class BoundlessAPI implements ModInitializer {
         DamageTypeRegistry.initialize();
         StrongestComponents.initialize();
         GameRulesRegistry.initialize();
+		ServerTickEvents.END_SERVER_TICK.register(TickScheduler::tick);
 		LOGGER.info("Boundless API Initialized");
 	}
 

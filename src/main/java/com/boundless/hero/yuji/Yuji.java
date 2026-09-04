@@ -3,6 +3,7 @@ package com.boundless.hero.yuji;
 import com.boundless.BoundlessAPI;
 import com.boundless.combat.CombatAbilities;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
+import com.boundless.combat.attack_modifiers.DivergentModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.nanami.technique.RatioTechnique;
@@ -32,6 +33,7 @@ public class Yuji extends Hero {
                 .blackFlashDamageMultiplier(1.9f)
                 .meleeStrength(22)
                 .attackModifier(new BlackFlashModifier())
+                .attackModifier(new DivergentModifier())
                 .build();
 
         this.registerHero();
