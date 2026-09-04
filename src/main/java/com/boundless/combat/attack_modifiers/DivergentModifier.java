@@ -5,11 +5,14 @@ import com.boundless.combat.*;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.hero.yuji.technique.components.DivergentTarget;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.tick.TickScheduler;
+import com.boundless.util.CameraUtils;
 import com.boundless.util.CombatUtils;
 import com.boundless.util.ComponentUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
@@ -51,6 +54,9 @@ public class DivergentModifier implements AttackModifier {
             TickScheduler.schedule(serverWorld, DIVERGENT_DELAY_TICKS, () -> {
                 if (!player.isAlive()) return;
 
+                CameraUtils.playCameraShake(player);
+                player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
+
                 AttackContext context = AttackResolver.resolveAttack(player);
 
                 for (DivergentTarget target: targets) {
@@ -61,7 +67,7 @@ public class DivergentModifier implements AttackModifier {
                     divergentEffects.addVisual(BoundlessAPI.id("divergent_fist_impact"));
                     divergentEffects.addSound(SoundRegistry.ENERGY_IMPACT_2);
 
-                    Hit delayedHit = new Hit(player, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(1.2, 0.6, 1.2), divergentEffects);
+                    Hit delayedHit = new Hit(player, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(0.6, 0.3, 0.6), divergentEffects);
 
                     CombatUtils.resolveAndApplyHit(delayedHit, context);
                 }
