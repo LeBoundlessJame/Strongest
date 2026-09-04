@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+// Todo: Might fully remove this class at some point, gotta think over if I need it for rendering or something
 public class ActionUtils {
 
     public static Action singleAction(int taskTick, BiConsumer<PlayerEntity, HeroActionEntity> taskLogic) {

@@ -66,6 +66,6 @@ public class CombatUtils {
     }
 
     public static boolean isValidTarget(PlayerEntity player, LivingEntity entity) {
-        return player != entity && (!(entity instanceof TameableEntity tameable && tameable.getOwner() == player));
+        return entity.isAlive() && player != entity && (!(entity instanceof TameableEntity tameable && tameable.getOwner() == player));
     }
 }
