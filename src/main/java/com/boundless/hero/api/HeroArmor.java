@@ -59,6 +59,8 @@ public class HeroArmor extends ArmorItem {
         settings.component(StrongestComponents.BLACK_FLASH_CHANCE, heroData.getBlackFlashChance());
         settings.component(StrongestComponents.BLACK_FLASH_DAMAGE_MULTIPLIER, heroData.getBlackFlashDamageMultiplier());
 
+        // Todo: I gotta clean all this up, and pass components through the hero creator
+        settings.component(StrongestComponents.MELEE_STRENGTH, heroData.getMeleeStrength());
         return settings;
     }
 

@@ -13,13 +13,16 @@ import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -74,4 +77,7 @@ public class HeroData {
 
     @Singular
     private final List<AttackModifier> attackModifiers;
+
+    @Builder.Default
+    private final float meleeStrength = 1;
 }
