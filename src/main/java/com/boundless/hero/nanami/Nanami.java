@@ -6,7 +6,7 @@ import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.combat.attack_modifiers.RatioModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
-import com.boundless.hero.nanami.client.RatioHeroRenderer;
+import com.boundless.hero.nanami.client.NanamiRenderer;
 import com.boundless.hero.nanami.technique.RatioAttributes;
 import com.boundless.hero.nanami.technique.RatioComponents;
 import com.boundless.hero.nanami.technique.RatioTechnique;
@@ -29,9 +29,8 @@ public class Nanami extends Hero {
                 .name("nanami")
                 .defaultTechniqueLoadout(loadout)
                 .attributes(RatioAttributes.ATTRIBUTES)
-                .armorRenderer(RatioHeroRenderer::new)
+                .armorRenderer(NanamiRenderer::new)
                 .tickHandler(Hero::heroSprintHandler)
-                .modelIdentifier(BoundlessAPI.modelID("ratio_technique_hero"))
                 .textureIdentifier(BoundlessAPI.textureID("nanami"))
                 .tickHandler(Hero::onHeroTick)
                 .tickHandler(RatioTechnique::ratioTick)

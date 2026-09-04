@@ -9,13 +9,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-public class RatioHeroRenderer extends HeroArmorRenderer {
-    private static Identifier MODEL = BoundlessAPI.modelID("ratio_technique_hero");
+public class NanamiRenderer extends HeroArmorRenderer {
+    private static Identifier MODEL = BoundlessAPI.modelID("hero");
     private static Identifier NORMAL = BoundlessAPI.textureID("nanami");
     private static Identifier OVERTIME = BoundlessAPI.textureID("nanami_wrapped");
 
-    public RatioHeroRenderer(Identifier model, Identifier texture) {
-        super(RatioHeroRenderer::getModel, RatioHeroRenderer::getTexture);
+    public NanamiRenderer(Identifier model, Identifier texture) {
+        super(NanamiRenderer::getModel, NanamiRenderer::getTexture);
     }
 
     private static Identifier getTexture(Entity entity, ItemStack stack) {
