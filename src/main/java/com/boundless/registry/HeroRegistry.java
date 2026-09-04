@@ -1,5 +1,6 @@
 package com.boundless.registry;
 
+import com.boundless.combat.CombatAbilities;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.megumi.Megumi;
 import com.boundless.hero.nanami.Nanami;

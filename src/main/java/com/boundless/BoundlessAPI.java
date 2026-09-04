@@ -1,6 +1,7 @@
 package com.boundless;
 
 import com.boundless.ability.Grab;
+import com.boundless.combat.CombatAbilities;
 import com.boundless.networking.PayloadRegistry;
 import com.boundless.registry.*;
 import net.fabricmc.api.ModInitializer;

@@ -10,4 +10,5 @@ import com.boundless.registry.TechniqueAbilityRegistry;
 public class CombatAbilities {
     public static final TechniqueAbility PUNCH = TechniqueAbilityRegistry.register(new PunchAbility());
     public static final TechniqueAbility ROUNDHOUSE_KICK = TechniqueAbilityRegistry.register(new KickAbility());
+    public static void initialize() {}
 }

@@ -84,7 +84,7 @@ public class PunchAbility extends TechniqueAbility {
 
     @Override
     public Identifier getAbilityId() {
-        return abilityId;
+        return BoundlessAPI.id("punch");
     }
 
     public float getDamage(PlayerEntity player) {

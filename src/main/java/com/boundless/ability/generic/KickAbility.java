@@ -1,8 +1,10 @@
 package com.boundless.ability.generic;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.ComponentUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 public class KickAbility extends PunchAbility {
@@ -16,5 +18,10 @@ public class KickAbility extends PunchAbility {
     @Override
     public float getDamage(PlayerEntity player) {
         return super.getDamage(player) * 2;
+    }
+
+    @Override
+    public Identifier getAbilityId() {
+        return BoundlessAPI.id("roundhouse_kick");
     }
 }
