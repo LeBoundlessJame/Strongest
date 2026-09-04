@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 public class ManjiKickAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("manji_kick_parry"), 2.0f, false, true, 3000);
+        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("manji"), 1.0f, false, true, 3000);
     }
 
     @Override
