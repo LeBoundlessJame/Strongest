@@ -31,7 +31,7 @@ public class Yuji extends Hero {
                 .tickHandler(Hero::onHeroTick)
                 .maxCursedEnergy(5000)
                 .blackFlashChance(0.08f)
-                .blackFlashDamageMultiplier(1.9f)
+                .blackFlashDamageMultiplier(1.375f)
                 .meleeStrength(22)
                 .attackModifier(new BlackFlashModifier())
                 .attackModifier(new DivergentModifier())
