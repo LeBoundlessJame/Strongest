@@ -8,6 +8,7 @@ import com.boundless.combat.MeleeHitbox;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
+import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,8 +32,6 @@ public class PunchAbility extends TechniqueAbility {
 
     private int impactTick = 2;
     private int attackDuration = 10;
-
-    private float damage;
 
     private Identifier animation = BoundlessAPI.id("hook");
     private float animationSpeed = 1.0f;
@@ -78,7 +77,7 @@ public class PunchAbility extends TechniqueAbility {
         }
 
         List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
-        CombatUtils.applyHits(player, action, targets, damage, knockback, onHitEvent, impactEffects);
+        CombatUtils.applyHits(player, action, targets, this.getDamage(player), knockback, onHitEvent, impactEffects);
 
         postAttackEvent.accept(player);
     }
@@ -86,5 +85,9 @@ public class PunchAbility extends TechniqueAbility {
     @Override
     public Identifier getAbilityId() {
         return abilityId;
+    }
+
+    public float getDamage(PlayerEntity player) {
+        return ComponentUtils.getOr(player, StrongestComponents.MELEE_STRENGTH, 0f);
     }
 }

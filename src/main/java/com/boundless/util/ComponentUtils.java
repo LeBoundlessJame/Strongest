@@ -36,4 +36,8 @@ public class ComponentUtils {
     public static <T> T get(PlayerEntity player, ComponentType<T> component) {
         return HeroUtils.getHeroStack(player).get(component);
     }
+
+    public static <T> T getOr(PlayerEntity player, ComponentType<T> component, T fallback) {
+        return HeroUtils.getHeroStack(player).getOrDefault(component, fallback);
+    }
 }
