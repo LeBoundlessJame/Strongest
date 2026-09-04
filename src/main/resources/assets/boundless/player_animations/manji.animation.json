@@ -14,7 +14,7 @@
 							"easing": "easeInSine"
 						},
 						"0.6667": {
-							"vector": [-431.6232, 35.7692, 112.9737],
+							"vector": [-433.7615, 23.829, 108.6958],
 							"easing": "easeOutQuint"
 						}
 					},
@@ -137,7 +137,7 @@
 							"easing": "easeInSine"
 						},
 						"0.6667": {
-							"vector": [9.9509, -7.8751, 40.8021],
+							"vector": [-0.5259, -24.025, 21.2448],
 							"easing": "easeOutQuint"
 						}
 					},
