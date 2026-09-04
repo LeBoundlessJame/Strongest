@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class DivergentEnergyAbility extends TechniqueAbility {
+public class DivergentFistAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
         HeroUtils.getHeroStack(player).set(YujiComponents.DIVERGENCE_ACTIVE, true);
@@ -16,16 +16,16 @@ public class DivergentEnergyAbility extends TechniqueAbility {
 
     @Override
     public Identifier getAbilityId() {
-        return BoundlessAPI.id("divergence");
+        return BoundlessAPI.id("divergent_fist");
     }
 
     @Override
     public Text getDisplayText(PlayerEntity player) {
-        return Text.of("Divergent Energy");
+        return Text.of("Divergent Fist");
     }
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 300;
+        return 200;
     }
 }
