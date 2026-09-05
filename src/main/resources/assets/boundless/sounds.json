@@ -9,6 +9,11 @@
       "boundless:miss_hit"
     ]
   },
+  "divergent_impact": {
+    "sounds": [
+      "boundless:divergent_impact"
+    ]
+  },
   "clap_1": {
     "sounds": [
       "boundless:clap_1"

@@ -28,6 +28,8 @@ public class SoundRegistry {
     public static SoundEvent SLASH_1 = registerSoundEvent(BoundlessAPI.id("slash_1"));
     public static SoundEvent SLASH_2 = registerSoundEvent(BoundlessAPI.id("slash_2"));
 
+    public static SoundEvent DIVERGENT_IMPACT = registerSoundEvent(BoundlessAPI.id("divergent_impact"));
+
     public static SoundEvent registerSoundEvent(Identifier identifier) {
         Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
         return SoundEvent.of(identifier);

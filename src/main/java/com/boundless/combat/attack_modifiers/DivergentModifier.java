@@ -65,7 +65,7 @@ public class DivergentModifier implements AttackModifier {
 
                     HitEffects divergentEffects = new HitEffects();
                     divergentEffects.addVisual(BoundlessAPI.id("divergent_fist_impact"));
-                    divergentEffects.addSound(SoundRegistry.ENERGY_IMPACT_2);
+                    divergentEffects.addSound(SoundRegistry.DIVERGENT_IMPACT);
 
                     Hit delayedHit = new Hit(player, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(0.6, 0.3, 0.6), divergentEffects);
 
