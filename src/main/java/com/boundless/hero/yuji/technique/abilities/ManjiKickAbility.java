@@ -13,7 +13,7 @@ import net.minecraft.util.math.Vec3d;
 public class ManjiKickAbility extends KickAbility {
     public ManjiKickAbility() {
         this.setAnimation(BoundlessAPI.id("manji"));
-        this.setKnockback(new Vec3d(1.1, 1.2f, 1.1));
+        this.setKnockback(new Vec3d(1.4, 1.2f, 1.4));
         this.setAttackDuration(20);
         this.setImpactTick(11);
         this.setAnimationSpeed(1.0f);
