@@ -54,10 +54,10 @@ public class DivergentModifier implements AttackModifier {
             TickScheduler.schedule(serverWorld, DIVERGENT_DELAY_TICKS, () -> {
                 if (!player.isAlive()) return;
 
-                CameraUtils.playCameraShake(player);
-                player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
 
                 AttackContext context = AttackResolver.resolveAttack(player);
+
+                boolean visualsApplied = false;
 
                 for (DivergentTarget target: targets) {
                     Entity entity = serverWorld.getEntity(target.uuid());
@@ -70,6 +70,12 @@ public class DivergentModifier implements AttackModifier {
                     Hit delayedHit = new Hit(player, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(0.6, 0.3, 0.6), divergentEffects);
 
                     CombatUtils.resolveAndApplyHit(delayedHit, context);
+
+                    if (!visualsApplied) {
+                        CameraUtils.playCameraShake(player);
+                        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 2, 4, true, false, false));
+                        visualsApplied = true;
+                    }
                 }
             });
         }
