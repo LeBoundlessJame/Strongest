@@ -18,7 +18,7 @@ public class Yuji extends Hero {
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
-                .ability(AbilityKey.ABILITY_ONE, YujiTechnique.MANJI_KICK)
+                .ability(AbilityKey.ABILITY_ONE, YujiTechnique::kickAbilityResolver)
                 .ability(AbilityKey.ABILITY_TWO, YujiTechnique.DIVERGENT_FIST)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
 

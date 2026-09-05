@@ -13,9 +13,9 @@ import net.minecraft.util.math.Vec3d;
 public class ManjiKickAbility extends KickAbility {
     public ManjiKickAbility() {
         this.setAnimation(BoundlessAPI.id("manji"));
-        this.setKnockback(new Vec3d(1.4, 1.2f, 1.4));
+        this.setKnockback(new Vec3d(2.8, 1.2f, 2.8));
         this.setAttackDuration(20);
-        this.setImpactTick(11);
+        this.setImpactTick(8);
         this.setAnimationSpeed(1.0f);
     }
 
@@ -32,5 +32,10 @@ public class ManjiKickAbility extends KickAbility {
     @Override
     public Text getDisplayText(PlayerEntity player) {
         return Text.of("Manji Kick");
+    }
+
+    @Override
+    public boolean canActivate(PlayerEntity player) {
+        return super.canActivate(player) && player.isOnGround();
     }
 }
