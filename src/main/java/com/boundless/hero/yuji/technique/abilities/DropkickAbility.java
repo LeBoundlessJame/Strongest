@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 public class DropkickAbility extends KickAbility {
     public DropkickAbility() {
         this.setAnimation(BoundlessAPI.id("dropkick"));
-        this.setKnockback(new Vec3d(2.8, 0.8, 2.8));
+        this.setKnockback(new Vec3d(2.8, 0.6, 2.8));
         this.setAttackDuration(20);
         this.setImpactTick(5);
         this.setAnimationSpeed(2.0f);
