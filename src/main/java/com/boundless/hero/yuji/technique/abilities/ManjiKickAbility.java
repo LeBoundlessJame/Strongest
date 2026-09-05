@@ -2,15 +2,21 @@ package com.boundless.hero.yuji.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.ability.generic.KickAbility;
+import com.boundless.ability.generic.PunchAbility;
 import com.boundless.util.PlayerAnimationUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 
-public class ManjiKickAbility extends TechniqueAbility {
-    @Override
-    public void activate(PlayerEntity player) {
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("manji"), 1.0f, false, true, 3000);
+public class ManjiKickAbility extends KickAbility {
+    public ManjiKickAbility() {
+        this.setAnimation(BoundlessAPI.id("manji"));
+        this.setKnockback(new Vec3d(0.8, 1.0f, 0.8));
+        this.setAttackDuration(20);
+        this.setImpactTick(11);
+        this.setAnimationSpeed(1.0f);
     }
 
     @Override
