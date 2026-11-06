@@ -20,7 +20,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -81,20 +80,20 @@ public class HeroData {
     AttributeModifiersComponent attributes;
 
     @Builder.Default
-    private final AttributeValue max_health = new AttributeValue(0d, EntityAttributeModifier.Operation.ADD_VALUE);
+    private final float bonus_health = 20;
 
     @Builder.Default
-    private final AttributeValue jump_strength = new AttributeValue(0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+    private final float jump_strength = 0.5f;
 
     @Builder.Default
-    private final AttributeValue safe_fall_distance = new AttributeValue(35d, EntityAttributeModifier.Operation.ADD_VALUE);
+    private final float safe_fall_distance = 35;
 
     @Builder.Default
-    private final AttributeValue top_speed_multiplier = new AttributeValue(2.5d, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+    private final float top_speed_multiplier = 2.5f;
 
     @Builder.Default
-    private final AttributeValue ticks_until_max_speed = new AttributeValue(2d, EntityAttributeModifier.Operation.ADD_VALUE);
+    private final int ticks_until_max_speed = 2;
 
     @Builder.Default
-    private final AttributeValue size = new AttributeValue(1.0, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+    private final float size = 1.0f;
 }

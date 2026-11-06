@@ -100,12 +100,12 @@ public class HeroArmor extends ArmorItem {
 
         // I can figure out a more clever system later, but this is good for now
         return AttributeModifiersComponent.builder()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.id("generic_max_health"), heroData.getMax_health().value(), heroData.getMax_health().operation()), AttributeModifierSlot.CHEST)
-                .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.id("generic_jump_strength"), heroData.getJump_strength().value(), heroData.getJump_strength().operation()), AttributeModifierSlot.CHEST)
-                .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.id("generic_safe_fall_damage_distance"), heroData.getSafe_fall_distance().value(), heroData.getSafe_fall_distance().operation()), AttributeModifierSlot.CHEST)
-                .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.id("top_speed_multiplier"), heroData.getTop_speed_multiplier().value(), heroData.getTop_speed_multiplier().operation()), AttributeModifierSlot.CHEST)
-                .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.id("ticks_until_max_speed"), heroData.getTicks_until_max_speed().value(), heroData.getTicks_until_max_speed().operation()), AttributeModifierSlot.CHEST)
-                .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.id("generic_scale"), heroData.getSize().value(), heroData.getSize().operation()), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.id("generic_max_health"), heroData.getBonus_health(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.id("generic_scale"), heroData.getSize(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.id("generic_jump_strength"), heroData.getJump_strength(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.id("generic_safe_fall_damage_distance"), heroData.getSafe_fall_distance(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
+                .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.id("top_speed_multiplier"), heroData.getTop_speed_multiplier(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
+                .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.id("ticks_until_max_speed"), heroData.getTicks_until_max_speed(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
                 .build();
     }
 }

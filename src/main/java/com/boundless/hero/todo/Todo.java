@@ -1,7 +1,6 @@
 package com.boundless.hero.todo;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.attribute.AttributeValue;
 import com.boundless.combat.CombatAbilities;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
@@ -10,7 +9,6 @@ import com.boundless.hero.todo.technique.TodoTechnique;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 
 public class Todo extends Hero {
     public Todo() {
@@ -33,8 +31,8 @@ public class Todo extends Hero {
                 .blackFlashChance(0.04f)
                 .blackFlashDamageMultiplier(2.0f)
                 .meleeStrength(22)
-                .max_health(new AttributeValue(630, EntityAttributeModifier.Operation.ADD_VALUE))
-                .size(new AttributeValue(1.1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+                .bonus_health(630)
+                .size(1.1f)
                 .attackModifier(new BlackFlashModifier())
                 .build();
 
