@@ -32,17 +32,17 @@ public class SuplexAbility extends TechniqueAbility {
         List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
 
         if (!targets.isEmpty()) {
-            TickScheduler.schedule(player.getWorld(), 5, () -> this.startSuplex(player, targets.getFirst()));
+            TickScheduler.schedule(player.getWorld(), 3, () -> this.startSuplex(player, targets.getFirst()));
             TickScheduler.schedule(player.getWorld(), 6, () -> this.endSuplex(player));
         }
 
-        AttackUtils.startAttackTimer(player, 40);
+        AttackUtils.startAttackTimer(player, 20);
     }
 
     public void endSuplex(PlayerEntity player) {
         if (!player.getPassengerList().isEmpty()) {
             CameraUtils.playCameraShake(player);
-            player.getPassengerList().getFirst().damage(player.getDamageSources().generic(), 10f);
+            player.getPassengerList().getFirst().damage(player.getDamageSources().generic(), this.getDamage(player));
             SoundUtils.playSound(player, SoundRegistry.EARTH_IMPACT);
         }
 
@@ -71,6 +71,6 @@ public class SuplexAbility extends TechniqueAbility {
     }
 
     public float getDamage(PlayerEntity player) {
-        return 100;
+        return ComponentUtils.getOr(player, StrongestComponents.MELEE_STRENGTH, 0f) * 4.5f;
     }
 }
