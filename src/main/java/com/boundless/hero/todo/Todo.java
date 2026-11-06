@@ -32,7 +32,7 @@ public class Todo extends Hero {
                 .blackFlashDamageMultiplier(2.0f)
                 .meleeStrength(22)
                 .bonus_health(630)
-                .size(1.1f)
+                .bonus_size(0.1f)
                 .attackModifier(new BlackFlashModifier())
                 .build();
 

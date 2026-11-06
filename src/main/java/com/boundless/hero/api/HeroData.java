@@ -2,7 +2,6 @@ package com.boundless.hero.api;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
-import com.boundless.attribute.AttributeValue;
 import com.boundless.combat.AttackModifier;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.armor.HeroArmorRenderer;
@@ -15,7 +14,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -95,5 +93,5 @@ public class HeroData {
     private final int ticks_until_max_speed = 2;
 
     @Builder.Default
-    private final float size = 1.0f;
+    private final float bonus_size = 1.0f;
 }

@@ -101,7 +101,7 @@ public class HeroArmor extends ArmorItem {
         // I can figure out a more clever system later, but this is good for now
         return AttributeModifiersComponent.builder()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.id("generic_max_health"), heroData.getBonus_health(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
-                .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.id("generic_scale"), heroData.getSize(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.id("generic_scale"), heroData.getBonus_size(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
                 .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.id("generic_jump_strength"), heroData.getJump_strength(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), AttributeModifierSlot.CHEST)
                 .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.id("generic_safe_fall_damage_distance"), heroData.getSafe_fall_distance(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.CHEST)
                 .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.id("top_speed_multiplier"), heroData.getTop_speed_multiplier(), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.CHEST)
