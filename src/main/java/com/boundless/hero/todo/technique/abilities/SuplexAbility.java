@@ -19,10 +19,14 @@ import net.minecraft.world.WorldEvents;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
+
 public class SuplexAbility extends TechniqueAbility {
 
     @Override
     public void activate(PlayerEntity player) {
+        if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
+
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("suplex"), 1.0f, false, true, 3000);
 
         List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
