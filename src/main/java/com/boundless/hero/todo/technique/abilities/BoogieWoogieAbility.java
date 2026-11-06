@@ -13,6 +13,7 @@ import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -62,5 +63,9 @@ public class BoogieWoogieAbility extends TechniqueAbility {
 
     public long getCooldown(PlayerEntity player) {
         return 10;
+    }
+
+    public Text getDisplayText(PlayerEntity playerEntity) {
+        return Text.of("Boogie Woogie");
     }
 }

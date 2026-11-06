@@ -18,6 +18,7 @@ public class Todo extends Hero {
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, TodoTechnique.BOOGIE_WOOGIE)
                 .ability(AbilityKey.ABILITY_TWO, CombatAbilities.DROPKICK)
+                .ability(AbilityKey.ABILITY_THREE, TodoTechnique.SUPLEX)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
 
         this.heroData = HeroData.builder()
