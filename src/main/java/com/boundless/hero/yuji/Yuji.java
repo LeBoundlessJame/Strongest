@@ -20,7 +20,6 @@ public class Yuji extends Hero {
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, YujiTechnique::kickAbilityResolver)
                 .ability(AbilityKey.ABILITY_TWO, YujiTechnique.DIVERGENT_FIST)
-                .ability(YujiTechnique.BARRAGE_COMBO)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
 
         this.heroData = HeroData.builder()
