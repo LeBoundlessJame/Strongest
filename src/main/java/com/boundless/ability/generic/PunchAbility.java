@@ -83,7 +83,7 @@ public class PunchAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("punch");
     }
 

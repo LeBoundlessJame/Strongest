@@ -37,7 +37,7 @@ public class GamaGrappleAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("gama_grapple");
     }
 

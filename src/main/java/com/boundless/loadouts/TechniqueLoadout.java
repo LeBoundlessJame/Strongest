@@ -42,7 +42,7 @@ public class TechniqueLoadout {
     public Identifier getAbilityId(AbilityKey key, PlayerEntity player) {
         AbilityEntry entry = keybindAbilities.get(key);
 
-        if (entry == null) return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        if (entry == null) return TechniqueAbilityRegistry.EMPTY.getId();
 
         return entry.getAbilityId(player);
     }
@@ -51,7 +51,7 @@ public class TechniqueLoadout {
         private final List<AbilityEntry> abilities = new ArrayList<>();
 
         public Builder ability(AbilityKey key, TechniqueAbility ability) {
-            return ability(key, playerEntity -> ability.getAbilityId(), ability.getAbilityId());
+            return ability(key, playerEntity -> ability.getId(), ability.getId());
         }
 
         public Builder ability(AbilityKey key, Function<PlayerEntity, Identifier> resolver, Identifier... possibleAbilities) {
@@ -60,7 +60,7 @@ public class TechniqueLoadout {
         }
 
         public Builder ability(TechniqueAbility ability) {
-            return ability(null, playerEntity -> ability.getAbilityId(), ability.getAbilityId());
+            return ability(null, playerEntity -> ability.getId(), ability.getId());
         }
 
         public Builder ability(Function<PlayerEntity, Identifier> resolver, Identifier... possibleAbilities) {

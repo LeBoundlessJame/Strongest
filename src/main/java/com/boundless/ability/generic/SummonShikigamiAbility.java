@@ -26,7 +26,7 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("summon_" + shikigamiType.toString());
     }
 

@@ -18,7 +18,7 @@ public class DropkickAbility extends KickAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("dropkick");
     }
 

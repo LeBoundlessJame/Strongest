@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 public abstract class TechniqueAbility {
     public abstract void activate(PlayerEntity player);
-    public abstract Identifier getAbilityId();
+    public abstract Identifier getId();
     public Text getDisplayText(PlayerEntity playerEntity) { return null; }
     public int cost = 0;
 
@@ -18,11 +18,11 @@ public abstract class TechniqueAbility {
         activate(player);
 
         if (this.getCost(player) > 0 && !player.isCreative()) CursedEnergyManager.addCursedEnergy(player, -this.getCost(player));
-        CooldownManager.setAbilityCooldownIfHigher(player, this.getAbilityId(), this.getCooldown(player));
+        CooldownManager.setAbilityCooldownIfHigher(player, this.getId(), this.getCooldown(player));
     }
 
     public boolean canActivate(PlayerEntity player) {
-        return !CooldownManager.isOnCooldown(player, this.getAbilityId())
+        return !CooldownManager.isOnCooldown(player, this.getId())
                 && (this.getCost(player) == 0 || player.isCreative() || CursedEnergyManager.getCursedEnergy(player) >= this.getCost(player))
                 && !player.hasStatusEffect(StatusEffectRegistry.STUN);
     }

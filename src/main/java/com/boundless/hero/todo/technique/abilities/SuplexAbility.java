@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityPassengersSetS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldEvents;
@@ -22,7 +23,6 @@ import java.util.function.BiConsumer;
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
 public class SuplexAbility extends TechniqueAbility {
-
     @Override
     public void activate(PlayerEntity player) {
         if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
@@ -66,8 +66,12 @@ public class SuplexAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("suplex");
+    }
+
+    public Text getDisplayText(PlayerEntity playerEntity) {
+        return Text.of("Suplex");
     }
 
     public float getDamage(PlayerEntity player) {

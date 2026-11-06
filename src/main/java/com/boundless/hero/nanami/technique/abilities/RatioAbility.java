@@ -33,11 +33,11 @@ public class RatioAbility extends TechniqueAbility {
         }
 
         stack.remove(RatioComponents.RATIO_SKILLCHECK);
-        CooldownManager.setAbilityCooldownIfHigher(player, this.getAbilityId(), 200);
+        CooldownManager.setAbilityCooldownIfHigher(player, this.getId(), 200);
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("ratio");
     }
 

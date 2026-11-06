@@ -6,13 +6,14 @@ import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.todo.technique.TodoTechnique;
+import com.boundless.hero.todo.technique.components.BoogieWoogieComponents;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.loadouts.AbilityKey;
 import com.boundless.loadouts.TechniqueLoadout;
 
 public class Todo extends Hero {
     public Todo() {
-        YujiComponents.initialize();
+        BoogieWoogieComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)

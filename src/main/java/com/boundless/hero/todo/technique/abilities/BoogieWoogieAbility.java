@@ -53,7 +53,7 @@ public class BoogieWoogieAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("boogie_woogie");
     }
 

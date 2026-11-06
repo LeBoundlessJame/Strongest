@@ -21,7 +21,7 @@ public class BarrageComboAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("barrage_combo");
     }
 

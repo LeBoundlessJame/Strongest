@@ -10,33 +10,33 @@ import net.minecraft.util.Identifier;
 public class TenShadowsAbilityResolver {
 
     public static Identifier getRightClickAbility(PlayerEntity player) {
-        if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getAbilityId();
-        return player.getVehicle() instanceof GamaEntity ? TenShadowsTechnique.GAMA_GRAPPLE.getAbilityId() : CombatAbilities.ROUNDHOUSE_KICK.getAbilityId();
+        if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_RIGHT.getId();
+        return player.getVehicle() instanceof GamaEntity ? TenShadowsTechnique.GAMA_GRAPPLE.getId() : CombatAbilities.ROUNDHOUSE_KICK.getId();
     }
 
     public static Identifier getLeftClickAbility(PlayerEntity player) {
-        if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getAbilityId();
-        return CombatAbilities.PUNCH.getAbilityId();
+        if (isOrderMenu(player)) return TenShadowsTechnique.SHIKIGAMI_ORDER_LEFT.getId();
+        return CombatAbilities.PUNCH.getId();
     }
 
     public static Identifier getAbilityOne(PlayerEntity player) {
-        if (!isOrderMenu(player)) return TenShadowsTechnique.KURO.getAbilityId();
-        return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        if (!isOrderMenu(player)) return TenShadowsTechnique.KURO.getId();
+        return TechniqueAbilityRegistry.EMPTY.getId();
     }
 
     public static Identifier getAbilityTwo(PlayerEntity player) {
-        if (!isOrderMenu(player)) return TenShadowsTechnique.SHIRO.getAbilityId();
-        return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        if (!isOrderMenu(player)) return TenShadowsTechnique.SHIRO.getId();
+        return TechniqueAbilityRegistry.EMPTY.getId();
     }
 
     public static Identifier getAbilityThree(PlayerEntity player) {
-        if (!isOrderMenu(player)) return TenShadowsTechnique.GAMA.getAbilityId();
-        return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        if (!isOrderMenu(player)) return TenShadowsTechnique.GAMA.getId();
+        return TechniqueAbilityRegistry.EMPTY.getId();
     }
 
     public static Identifier getGamaPull(PlayerEntity player) {
-        if (isOrderMenu(player)) return TenShadowsTechnique.GAMA_PULL.getAbilityId();
-        return TechniqueAbilityRegistry.EMPTY.getAbilityId();
+        if (isOrderMenu(player)) return TenShadowsTechnique.GAMA_PULL.getId();
+        return TechniqueAbilityRegistry.EMPTY.getId();
     }
 
     private static boolean isOrderMenu(PlayerEntity player) {

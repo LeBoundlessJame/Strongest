@@ -20,7 +20,7 @@ public class ManjiKickAbility extends KickAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("manji_kick");
     }
 

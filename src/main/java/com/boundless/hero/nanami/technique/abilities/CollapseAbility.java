@@ -18,7 +18,7 @@ import net.minecraft.world.WorldEvents;
 @Getter @Setter @Accessors(chain = true)
 public class CollapseAbility extends AOEAbility implements AOE {
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("collapse");
     }
 

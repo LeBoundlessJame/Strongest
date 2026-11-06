@@ -22,7 +22,7 @@ public class KickAbility extends PunchAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("roundhouse_kick");
     }
 }

@@ -20,7 +20,7 @@ public class OvertimeAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("overtime");
     }
 

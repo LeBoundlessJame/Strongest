@@ -2,12 +2,10 @@ package com.boundless.ability.generic;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.action.Action;
 import com.boundless.combat.HitEffects;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.tick.TickScheduler;
 import com.boundless.util.AOE;
-import com.boundless.util.ActionUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -38,7 +36,7 @@ public class AOEAbility extends TechniqueAbility implements AOE {
     }
 
     @Override
-    public Identifier getAbilityId() {
-        return this.getAbilityId();
+    public Identifier getId() {
+        return this.getId();
     }
 }

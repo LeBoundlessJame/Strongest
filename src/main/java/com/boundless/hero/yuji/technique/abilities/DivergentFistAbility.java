@@ -15,7 +15,7 @@ public class DivergentFistAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("divergent_fist");
     }
 

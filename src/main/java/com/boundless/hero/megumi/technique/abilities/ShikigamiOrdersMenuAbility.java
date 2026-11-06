@@ -16,7 +16,7 @@ public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
     }
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("shikigami_orders_menu");
     }
 

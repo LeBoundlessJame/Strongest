@@ -11,7 +11,7 @@ public class EmptyAbility extends TechniqueAbility {
     public void activate(PlayerEntity playerEntity) {}
 
     @Override
-    public Identifier getAbilityId() {
+    public Identifier getId() {
         return BoundlessAPI.id("empty");
     }
 }

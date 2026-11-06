@@ -17,7 +17,7 @@ public class TechniqueAbilityRegistry {
     }
 
     public static <T extends TechniqueAbility> T register(T ability) {
-        ABILITIES.put(ability.getAbilityId(), ability);
+        ABILITIES.put(ability.getId(), ability);
         return ability;
     }
 
