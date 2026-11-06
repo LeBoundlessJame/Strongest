@@ -1,13 +1,18 @@
 package com.boundless.hero.api;
 
+import com.boundless.BoundlessAPI;
 import com.boundless.ability.Ability;
 import com.boundless.loadouts.TechniqueLoadout;
+import com.boundless.registry.AttributeRegistry;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.StrongestComponents;
 import lombok.Getter;
+import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
@@ -91,6 +96,16 @@ public class HeroArmor extends ArmorItem {
 
     @Override
     public @NotNull AttributeModifiersComponent getAttributeModifiers() {
-        return heroData.getAttributes();
+        if (heroData.getAttributes() != null) return heroData.getAttributes();
+
+        // I can figure out a more clever system later, but this is good for now
+        return AttributeModifiersComponent.builder()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(BoundlessAPI.id("generic_max_health"), heroData.getMax_health().value(), heroData.getMax_health().operation()), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_JUMP_STRENGTH, new EntityAttributeModifier(BoundlessAPI.id("generic_jump_strength"), heroData.getJump_strength().value(), heroData.getJump_strength().operation()), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE, new EntityAttributeModifier(BoundlessAPI.id("generic_safe_fall_damage_distance"), heroData.getSafe_fall_distance().value(), heroData.getSafe_fall_distance().operation()), AttributeModifierSlot.CHEST)
+                .add(AttributeRegistry.TOP_SPEED_MULTIPLIER, new EntityAttributeModifier(BoundlessAPI.id("top_speed_multiplier"), heroData.getTop_speed_multiplier().value(), heroData.getTop_speed_multiplier().operation()), AttributeModifierSlot.CHEST)
+                .add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, new EntityAttributeModifier(BoundlessAPI.id("ticks_until_max_speed"), heroData.getTicks_until_max_speed().value(), heroData.getTicks_until_max_speed().operation()), AttributeModifierSlot.CHEST)
+                .add(EntityAttributes.GENERIC_SCALE, new EntityAttributeModifier(BoundlessAPI.id("generic_scale"), heroData.getSize().value(), heroData.getSize().operation()), AttributeModifierSlot.CHEST)
+                .build();
     }
 }

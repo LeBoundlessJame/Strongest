@@ -2,6 +2,7 @@ package com.boundless.hero.api;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.AbilityLoadout;
+import com.boundless.attribute.AttributeValue;
 import com.boundless.combat.AttackModifier;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.hero.armor.HeroArmorRenderer;
@@ -13,16 +14,15 @@ import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -42,9 +42,6 @@ public class HeroData {
     private final List<Consumer<MinecraftClient>> clientTickEvents;
 
     private AbilityLoadout defaultAbilityLoadout;
-
-    @Builder.Default
-    private final AttributeModifiersComponent attributes = AttributeModifiersComponent.builder().build();
 
     @Builder.Default
     private final Identifier textureIdentifier = BoundlessAPI.textureID("hero");
@@ -80,4 +77,24 @@ public class HeroData {
 
     @Builder.Default
     private final float meleeStrength = 1;
+
+    AttributeModifiersComponent attributes;
+
+    @Builder.Default
+    private final AttributeValue max_health = new AttributeValue(0d, EntityAttributeModifier.Operation.ADD_VALUE);
+
+    @Builder.Default
+    private final AttributeValue jump_strength = new AttributeValue(0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+
+    @Builder.Default
+    private final AttributeValue safe_fall_distance = new AttributeValue(35d, EntityAttributeModifier.Operation.ADD_VALUE);
+
+    @Builder.Default
+    private final AttributeValue top_speed_multiplier = new AttributeValue(2.5d, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+
+    @Builder.Default
+    private final AttributeValue ticks_until_max_speed = new AttributeValue(2d, EntityAttributeModifier.Operation.ADD_VALUE);
+
+    @Builder.Default
+    private final AttributeValue size = new AttributeValue(1.0, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 }

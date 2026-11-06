@@ -4,6 +4,7 @@ import com.boundless.combat.CombatAbilities;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.megumi.Megumi;
 import com.boundless.hero.nanami.Nanami;
+import com.boundless.hero.todo.Todo;
 import com.boundless.hero.yuji.Yuji;
 
 import java.util.ArrayList;
@@ -13,5 +14,6 @@ public class HeroRegistry {
     public static Hero MEGUMI = new Megumi();
     public static Hero NANAMI = new Nanami();
     public static Hero YUJI = new Yuji();
+    public static Hero TODO = new Todo();
     public static void initialize() {}
 }
