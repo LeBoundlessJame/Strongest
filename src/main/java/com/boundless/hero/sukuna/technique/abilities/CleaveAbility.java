@@ -13,6 +13,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -70,5 +71,10 @@ public class CleaveAbility extends TechniqueAbility {
     @Override
     public Identifier getId() {
         return BoundlessAPI.id("cleave");
+    }
+
+    @Override
+    public Text getDisplayText(PlayerEntity player) {
+        return Text.of("Cleave");
     }
 }
