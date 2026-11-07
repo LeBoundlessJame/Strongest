@@ -2,6 +2,7 @@ package com.boundless.util;
 
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
+import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -44,6 +45,18 @@ public class EffekUtils {
                 .bindOnEntity(user)
                 .scale((float) scale.x, (float) scale.y, (float) scale.z)
                 .rotation((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z));
+
+        AAALevel.addParticle(user.getWorld(), true, instance);
+        return instance;
+    }
+
+    public static ParticleEmitterInfo playBoundRotatedEffect(Identifier identifier, Entity user, Vec3d scale, Vec3d rotation, Vec3d position) {
+        ParticleEmitterInfo instance = new ParticleEmitterInfo(identifier)
+                .clone()
+                .bindOnEntity(user)
+                .scale((float) scale.x, (float) scale.y, (float) scale.z)
+                .rotation((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z))
+                .entitySpaceRelativePosition(position);
 
         AAALevel.addParticle(user.getWorld(), true, instance);
         return instance;
