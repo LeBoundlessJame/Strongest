@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
@@ -27,13 +28,18 @@ public class DontMoveAbility extends TechniqueAbility {
         List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
 
         for (LivingEntity target: targets) {
-            CombatUtils.slow(target, 100, 3);
+            CombatUtils.slow(target, 80, 255);
         }
     }
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 20;
+        return 400;
+    }
+
+    @Override
+    public int getCost(PlayerEntity player) {
+        return 1000;
     }
 
     @Override

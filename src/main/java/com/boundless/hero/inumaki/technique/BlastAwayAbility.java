@@ -44,8 +44,13 @@ public class BlastAwayAbility extends TechniqueAbility {
     }
 
     @Override
+    public int getCost(PlayerEntity player) {
+        return 2000;
+    }
+
+    @Override
     public long getCooldown(PlayerEntity player) {
-        return 20;
+        return 2000;
     }
 
     @Override

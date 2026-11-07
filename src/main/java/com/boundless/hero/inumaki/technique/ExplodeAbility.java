@@ -32,7 +32,7 @@ public class ExplodeAbility extends TechniqueAbility {
             TickScheduler.schedule(player.getWorld(), 5, () -> {
                 for (LivingEntity target: targets) {
                     // Todo: add to config
-                    target.damage(target.getDamageSources().playerAttack(player), 80);
+                    target.damage(target.getDamageSources().playerAttack(player), 175);
                     EffekUtils.playEffect(BoundlessAPI.id("explode"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(target.getScale() * 0.3f, target.getScale() * 0.3f, target.getScale() * 0.3f));
                 }
             });
@@ -41,7 +41,12 @@ public class ExplodeAbility extends TechniqueAbility {
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 20;
+        return 40;
+    }
+
+    @Override
+    public int getCost(PlayerEntity player) {
+        return 1500;
     }
 
     @Override
