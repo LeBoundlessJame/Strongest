@@ -16,6 +16,7 @@ public class Sukuna extends Hero {
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ABILITY_ONE, SukunaTechnique.DISMANTLE)
+                .ability(AbilityKey.ABILITY_TWO, SukunaTechnique.CLEAVE)
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK)
                 .build();
@@ -24,15 +25,14 @@ public class Sukuna extends Hero {
                 .name("sukuna")
                 .defaultTechniqueLoadout(loadout)
                 .tickHandler(Hero::heroSprintHandler)
-                .modelIdentifier(BoundlessAPI.modelID("sukuna"))
+                .modelIdentifier(BoundlessAPI.modelID("yuji"))
                 .textureIdentifier(BoundlessAPI.textureID("sukuna"))
                 .tickHandler(Hero::onHeroTick)
-                .maxCursedEnergy(5000)
+                .maxCursedEnergy(15000)
                 .blackFlashChance(0.04f)
                 .blackFlashDamageMultiplier(2.0f)
                 .meleeStrength(22)
-                .bonus_health(630)
-                .bonus_size(0.1f)
+                .bonus_health(680)
                 .attackModifier(new BlackFlashModifier())
                 .build();
 

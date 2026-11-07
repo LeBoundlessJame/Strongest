@@ -93,5 +93,5 @@ public class HeroData {
     private final int ticks_until_max_speed = 2;
 
     @Builder.Default
-    private final float bonus_size = 1.0f;
+    private final float bonus_size = 0.0f;
 }

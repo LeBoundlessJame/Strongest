@@ -11,4 +11,5 @@ import net.minecraft.util.Identifier;
 
 public class SukunaTechnique {
     public static final TechniqueAbility DISMANTLE = TechniqueAbilityRegistry.register(new DismantleAbility());
+    public static final TechniqueAbility CLEAVE = TechniqueAbilityRegistry.register(new CleaveAbility());
 }
