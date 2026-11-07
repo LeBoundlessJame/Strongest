@@ -2,6 +2,7 @@ package com.boundless.registry;
 
 import com.boundless.combat.CombatAbilities;
 import com.boundless.hero.api.Hero;
+import com.boundless.hero.inumaki.Inumaki;
 import com.boundless.hero.megumi.Megumi;
 import com.boundless.hero.nanami.Nanami;
 import com.boundless.hero.sukuna.Sukuna;
@@ -17,5 +18,6 @@ public class HeroRegistry {
     public static Hero YUJI = new Yuji();
     public static Hero TODO = new Todo();
     public static Hero SUKUNA = new Sukuna();
+    public static Hero INUMAKI = new Inumaki();
     public static void initialize() {}
 }
