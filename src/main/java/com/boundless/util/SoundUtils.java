@@ -19,6 +19,7 @@ public class SoundUtils {
 
     public static void playSound(LivingEntity entity, SoundEvent sound, int lowerRange, int upperRange) {
         float pitch = entity.getRandom().nextBetween(lowerRange, upperRange) * 0.1f;
+        System.out.println(pitch);
         playSound(entity, sound, pitch);
     }
 }

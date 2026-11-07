@@ -7,9 +7,11 @@ import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.tick.TickScheduler;
 import com.boundless.util.CameraUtils;
 import com.boundless.util.EffekUtils;
+import com.boundless.util.SoundUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -19,6 +21,8 @@ import java.util.List;
 public class ExplodeAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
+        SoundUtils.playSound(player, SoundEvents.ENTITY_WARDEN_SONIC_BOOM, 15, 22);
+
         Vec3d effectScale =  new Vec3d(player.getScale() * 0.4f, player.getScale() * 0.4f, player.getScale() * 0.4f);
         Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
         Vec3d effectPosition = new Vec3d(player.getRotationVector().x, player.getStandingEyeHeight(), player.getRotationVector().z);
