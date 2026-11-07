@@ -21,22 +21,22 @@ public class TenShadowsAbilityResolver {
 
     public static Identifier getAbilityOne(PlayerEntity player) {
         if (!isOrderMenu(player)) return TenShadowsTechnique.KURO.getId();
-        return TechniqueAbilityRegistry.EMPTY.getId();
+        return null;
     }
 
     public static Identifier getAbilityTwo(PlayerEntity player) {
         if (!isOrderMenu(player)) return TenShadowsTechnique.SHIRO.getId();
-        return TechniqueAbilityRegistry.EMPTY.getId();
+        return null;
     }
 
     public static Identifier getAbilityThree(PlayerEntity player) {
         if (!isOrderMenu(player)) return TenShadowsTechnique.GAMA.getId();
-        return TechniqueAbilityRegistry.EMPTY.getId();
+        return null;
     }
 
     public static Identifier getGamaPull(PlayerEntity player) {
         if (isOrderMenu(player)) return TenShadowsTechnique.GAMA_PULL.getId();
-        return TechniqueAbilityRegistry.EMPTY.getId();
+        return null;
     }
 
     private static boolean isOrderMenu(PlayerEntity player) {

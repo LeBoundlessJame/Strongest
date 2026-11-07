@@ -8,6 +8,7 @@ import com.boundless.util.RaycastUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 
@@ -30,7 +31,12 @@ public class SelectTargetAbility extends TechniqueAbility {
 
     @Override
     public Identifier getId() {
-        return BoundlessAPI.id("select_boogie_woogie_target");
+        String version = target.equals(Target.PRIMARY) ? "primary" : "secondary";
+        return BoundlessAPI.id("select_boogie_woogie_target" + "_" + version);
+    }
+
+    public Text getDisplayText(PlayerEntity playerEntity) {
+        return target.equals(Target.PRIMARY) ? Text.of("Select primary target") : Text.of("Select secondary target");
     }
 
     @Override

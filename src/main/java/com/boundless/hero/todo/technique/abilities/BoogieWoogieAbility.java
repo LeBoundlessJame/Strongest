@@ -29,7 +29,7 @@ public class BoogieWoogieAbility extends TechniqueAbility {
         swapEntities(player, target);
     }
 
-    private void swapEntities(Entity first, Entity second) {
+    public void swapEntities(Entity first, Entity second) {
         Vec3d firstPos = first.getPos();
         Vec3d secondPos = second.getPos();
 
@@ -46,7 +46,7 @@ public class BoogieWoogieAbility extends TechniqueAbility {
         }
     }
 
-    public static void clap(PlayerEntity user) {
+    public void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
         PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.id("clap"), 2.0f, false, true, 3000);
         SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);

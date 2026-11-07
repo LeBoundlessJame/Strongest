@@ -8,6 +8,6 @@ public class RatioTechniqueAbilityResolver {
     public static Identifier getOvertimeAbility(PlayerEntity player) {
         long time = player.getWorld().getTimeOfDay() % 24000;
         boolean isWorkingHours = time >= 3000 && time <= 11000;
-        return isWorkingHours ? TechniqueAbilityRegistry.EMPTY.getId() : RatioTechnique.OVERTIME.getId();
+        return isWorkingHours ? null : RatioTechnique.OVERTIME.getId();
     }
 }

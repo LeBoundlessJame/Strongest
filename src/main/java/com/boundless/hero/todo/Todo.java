@@ -16,11 +16,13 @@ public class Todo extends Hero {
         BoogieWoogieComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
-                .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.ABILITY_ONE, TodoTechnique.BOOGIE_WOOGIE)
+                .ability(AbilityKey.ABILITY_THREE, TodoTechnique::getSwapEnabled)
                 .ability(AbilityKey.ABILITY_TWO, CombatAbilities.DROPKICK)
-                .ability(AbilityKey.ABILITY_THREE, TodoTechnique.SUPLEX)
-                .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK).build();
+                .ability(AbilityKey.ABILITY_FOUR, TodoTechnique.SELECT_TARGET_MENU)
+                .ability(AbilityKey.ATTACK, TodoTechnique::getLeftClickAbility)
+                .ability(AbilityKey.USE, TodoTechnique::getRightClickAbility)
+                .build();
 
         this.heroData = HeroData.builder()
                 .name("todo")
