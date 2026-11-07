@@ -21,7 +21,7 @@ public class BlastAwayAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         Vec3d effectScale =  new Vec3d(player.getScale() * 0.4f, player.getScale() * 0.4f, player.getScale() * 0.4f);
         Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-        Vec3d effectPosition = new Vec3d(0, player.getStandingEyeHeight(), 0); //player.getPos().add(0, player.getHeight(), 0);
+        Vec3d effectPosition = new Vec3d(player.getRotationVector().x, player.getStandingEyeHeight(), player.getRotationVector().z);
         EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), player, effectScale, effectRotation, effectPosition);
 
         List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
