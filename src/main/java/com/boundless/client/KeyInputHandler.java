@@ -34,6 +34,7 @@ public class KeyInputHandler {
         if (key == null || !isKeybindingPressed(key)) return;
 
         Identifier abilityID = loadout.getAbilityId(abilityKey, client.player);
+        if (abilityID == null) return;
 
         if (!AbilityManager.checkAndUseTechniqueAbility(client.player, abilityID)) {
             return;

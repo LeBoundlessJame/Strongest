@@ -41,6 +41,7 @@ public class TechniqueLoadout {
 
     public Identifier getAbilityId(AbilityKey key, PlayerEntity player) {
         AbilityEntry entry = keybindAbilities.get(key);
+        if (entry == null) return null;
 
         return entry.getAbilityId(player);
     }
