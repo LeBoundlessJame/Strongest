@@ -41,7 +41,7 @@ public class ExplodeAbility extends TechniqueAbility {
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 40;
+        return 800;
     }
 
     @Override
