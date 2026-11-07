@@ -17,6 +17,7 @@ public class Inumaki extends Hero {
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ABILITY_ONE, CursedSpeechTechnique.DONT_MOVE)
                 .ability(AbilityKey.ABILITY_TWO, CursedSpeechTechnique.BLAST_AWAY)
+                .ability(AbilityKey.ABILITY_THREE, CursedSpeechTechnique.EXPLODE)
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK)
                 .build();

@@ -34,6 +34,7 @@ public class BlastAwayAbility extends TechniqueAbility {
                 Vec3d knockbackMultiplier = new Vec3d(24, 2, 24);
 
                 for (LivingEntity target: targets) {
+                    // Todo: add status effect to targets as well later with packets
                     player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
                     target.setVelocity(player.getRotationVector().add(0, 0.5f, 0).multiply(knockbackMultiplier));
                     target.velocityModified = true;
