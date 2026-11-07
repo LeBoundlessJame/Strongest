@@ -5,6 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.combat.MeleeHitbox;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.tick.TickScheduler;
+import com.boundless.util.CameraUtils;
 import com.boundless.util.CombatUtils;
 import com.boundless.util.EffekUtils;
 import net.minecraft.entity.LivingEntity;
@@ -26,16 +27,17 @@ public class BlastAwayAbility extends TechniqueAbility {
 
         List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
 
+        CameraUtils.playCameraShake(player);
+
         if (!targets.isEmpty()) {
             TickScheduler.schedule(player.getWorld(), 5, () -> {
                 Vec3d knockbackMultiplier = new Vec3d(24, 2, 24);
 
                 for (LivingEntity target: targets) {
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
                     target.setVelocity(player.getRotationVector().add(0, 0.5f, 0).multiply(knockbackMultiplier));
                     target.velocityModified = true;
                 }
-
-                player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 8, 4, true, false, false));
             });
         }
     }
