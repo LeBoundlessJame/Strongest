@@ -23,4 +23,9 @@ public class MenuToggleAbility extends TechniqueAbility {
     public Text getDisplayText(PlayerEntity playerEntity) {
         return ComponentUtils.getOr(playerEntity, StrongestComponents.MENU_TOGGLE,false) ? Text.of("Open menu") : Text.of("Close menu");
     }
+
+    @Override
+    public long getCooldown(PlayerEntity player) {
+        return 5;
+    }
 }
