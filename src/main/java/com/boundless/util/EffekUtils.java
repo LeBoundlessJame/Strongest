@@ -56,7 +56,7 @@ public class EffekUtils {
                 .bindOnEntity(user)
                 .scale((float) scale.x, (float) scale.y, (float) scale.z)
                 .rotation((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z))
-                .entitySpaceRelativePosition(position);
+                .position(position);
 
         AAALevel.addParticle(user.getWorld(), true, instance);
         return instance;

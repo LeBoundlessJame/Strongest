@@ -18,8 +18,8 @@ public class DontMoveAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         Vec3d effectScale =  new Vec3d(player.getScale() * 0.5f, player.getScale() * 0.5f, player.getScale() * 0.5f);
         Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-        Vec3d effectPosition = player.getPos().add(0, player.getHeight() / 2, 0);
-        EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), player, effectScale, Vec3d.ZERO, effectPosition);
+        Vec3d effectPosition = new Vec3d(0, player.getStandingEyeHeight(), 0); //player.getPos().add(0, player.getHeight(), 0);
+        EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), player, effectScale, effectRotation, effectPosition);
 
         List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
 
