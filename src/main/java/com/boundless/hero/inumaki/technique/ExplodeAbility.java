@@ -33,6 +33,11 @@ public class ExplodeAbility extends TechniqueAbility {
         CameraUtils.playCameraShake(player);
 
         if (!targets.isEmpty()) {
+            TickScheduler.schedule(player.getWorld(), 3, () -> {
+                SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE);
+                SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_GENERIC_EXPLODE.value());
+            });
+
             TickScheduler.schedule(player.getWorld(), 5, () -> {
                 for (LivingEntity target: targets) {
                     // Todo: add to config
@@ -45,7 +50,7 @@ public class ExplodeAbility extends TechniqueAbility {
 
     @Override
     public long getCooldown(PlayerEntity player) {
-        return 800;
+        return 600;
     }
 
     @Override
