@@ -43,7 +43,18 @@ public class CoughSyrupItem extends Item {
             user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.COUGH_SYRUP, 1200, 0, false, false, true));
         }
 
-        return ItemStack.EMPTY;
+        if (stack.isEmpty()) {
+            return new ItemStack(Items.GLASS_BOTTLE);
+        } else {
+            if (user instanceof PlayerEntity playerEntity && !playerEntity.isInCreativeMode()) {
+                ItemStack itemStack = new ItemStack(Items.GLASS_BOTTLE);
+                if (!playerEntity.getInventory().insertStack(itemStack)) {
+                    playerEntity.dropItem(itemStack, false);
+                }
+            }
+
+            return stack;
+        }
     }
 
     @Override
