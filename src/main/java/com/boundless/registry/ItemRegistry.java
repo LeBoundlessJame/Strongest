@@ -28,5 +28,6 @@ public class ItemRegistry {
         ITEMS.add(CLEAVER);
         ITEMS.add(PLAYFUL_CLOUD);
         ITEMS.add(FULL_HEAL);
+        ITEMS.add(COUGH_SYRUP);
     }
 }

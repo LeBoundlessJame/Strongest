@@ -5,6 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.combat.MeleeHitbox;
 import com.boundless.mechanics.CursedEnergyManager;
 import com.boundless.registry.DamageTypeRegistry;
+import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.tick.TickScheduler;
 import com.boundless.util.CombatUtils;
 import com.boundless.util.EffekUtils;
@@ -44,6 +45,10 @@ public abstract class CursedSpeechAbility extends TechniqueAbility {
 
     public void takeRecoilDamage(PlayerEntity player, LivingEntity target) {
         float recoil = getRecoilDamage(player, target);
+
+        if (player.hasStatusEffect(StatusEffectRegistry.COUGH_SYRUP)) {
+            recoil /= 2;
+        }
 
         if (recoil > 0.0f) {
             player.damage(DamageTypeRegistry.getDamageSource(player, DamageTypeRegistry.BLEED), recoil);
