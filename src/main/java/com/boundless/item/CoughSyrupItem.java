@@ -52,6 +52,8 @@ public class CoughSyrupItem extends Item {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else {
             if (user instanceof PlayerEntity playerEntity && !playerEntity.isInCreativeMode()) {
+                stack.decrement(1);
+
                 ItemStack itemStack = new ItemStack(Items.GLASS_BOTTLE);
                 if (!playerEntity.getInventory().insertStack(itemStack)) {
                     playerEntity.dropItem(itemStack, false);
