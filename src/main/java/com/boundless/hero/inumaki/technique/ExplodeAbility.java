@@ -18,34 +18,21 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
 
-public class ExplodeAbility extends TechniqueAbility {
+public class ExplodeAbility extends CursedSpeechAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        SoundUtils.playSound(player, SoundEvents.ENTITY_WARDEN_SONIC_BOOM, 15, 22);
-
-        Vec3d effectScale =  new Vec3d(player.getScale() * 0.4f, player.getScale() * 0.4f, player.getScale() * 0.4f);
-        Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-        Vec3d effectPosition = new Vec3d(player.getRotationVector().x, player.getStandingEyeHeight(), player.getRotationVector().z);
-        EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), player, effectScale, effectRotation, effectPosition);
-
-        List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
-
+    public void onSpeechTrigger(PlayerEntity player, List<LivingEntity> targets) {
         CameraUtils.playCameraShake(player);
 
-        if (!targets.isEmpty()) {
-            TickScheduler.schedule(player.getWorld(), 3, () -> {
-                SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE);
-                SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_GENERIC_EXPLODE.value());
-            });
+        TickScheduler.schedule(player.getWorld(), 3, () -> {
+            SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE);
+            SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_GENERIC_EXPLODE.value());
+        });
+    }
 
-            TickScheduler.schedule(player.getWorld(), 5, () -> {
-                for (LivingEntity target: targets) {
-                    // Todo: add to config
-                    target.damage(target.getDamageSources().playerAttack(player), 175);
-                    EffekUtils.playEffect(BoundlessAPI.id("explode"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(target.getScale() * 0.3f, target.getScale() * 0.3f, target.getScale() * 0.3f));
-                }
-            });
-        }
+    @Override
+    public void cursedSpeechEffect(PlayerEntity player, LivingEntity target) {
+        target.damage(target.getDamageSources().playerAttack(player), 175);
+        EffekUtils.playEffect(BoundlessAPI.id("explode"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(target.getScale() * 0.3f, target.getScale() * 0.3f, target.getScale() * 0.3f));
     }
 
     @Override

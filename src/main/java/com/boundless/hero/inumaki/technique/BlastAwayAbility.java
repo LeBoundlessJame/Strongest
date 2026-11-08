@@ -19,36 +19,20 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
 
-public class BlastAwayAbility extends TechniqueAbility {
+public class BlastAwayAbility extends CursedSpeechAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        SoundUtils.playSound(player, SoundEvents.ENTITY_WARDEN_SONIC_BOOM, 15, 22);
+    public void cursedSpeechEffect(PlayerEntity player, LivingEntity target) {
+        Vec3d knockbackMultiplier = new Vec3d(24, 2, 24);
+        // Todo: add status effect to targets as well later with packets
+        target.setVelocity(player.getRotationVector().add(0, 0.5f, 0).multiply(knockbackMultiplier));
+        target.velocityModified = true;
+    }
 
-        Vec3d effectScale =  new Vec3d(player.getScale() * 0.4f, player.getScale() * 0.4f, player.getScale() * 0.4f);
-        Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-        Vec3d effectPosition = new Vec3d(player.getRotationVector().x, player.getStandingEyeHeight(), player.getRotationVector().z);
-        EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), player, effectScale, effectRotation, effectPosition);
-
-        List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
-
-        CameraUtils.playCameraShake(player);
-
-        if (!targets.isEmpty()) {
-
-            TickScheduler.schedule(player.getWorld(), 4, () -> {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
-            });
-
-            TickScheduler.schedule(player.getWorld(), 5, () -> {
-                Vec3d knockbackMultiplier = new Vec3d(24, 2, 24);
-
-                for (LivingEntity target: targets) {
-                    // Todo: add status effect to targets as well later with packets
-                    target.setVelocity(player.getRotationVector().add(0, 0.5f, 0).multiply(knockbackMultiplier));
-                    target.velocityModified = true;
-                }
-            });
-        }
+    @Override
+    public void onSpeechTrigger(PlayerEntity player, List<LivingEntity> targets) {
+        TickScheduler.schedule(player.getWorld(), 4, () -> {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
+        });
     }
 
     @Override
