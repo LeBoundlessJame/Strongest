@@ -4,6 +4,7 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.combat.MeleeHitbox;
 import com.boundless.mechanics.CursedEnergyManager;
+import com.boundless.registry.DamageTypeRegistry;
 import com.boundless.tick.TickScheduler;
 import com.boundless.util.CombatUtils;
 import com.boundless.util.EffekUtils;
@@ -44,7 +45,7 @@ public abstract class CursedSpeechAbility extends TechniqueAbility {
     public void takeRecoilDamage(PlayerEntity player, LivingEntity target) {
         float recoil = getRecoilDamage(player, target);
         if (recoil > 0.0f) {
-            player.damage(player.getDamageSources().playerAttack(player), recoil);
+            player.damage(DamageTypeRegistry.getDamageSource(player, DamageTypeRegistry.BLEED), recoil);
         }
     }
 
@@ -58,7 +59,7 @@ public abstract class CursedSpeechAbility extends TechniqueAbility {
     }
 
     public float getRecoilDamage(PlayerEntity player, LivingEntity target) {
-        if (!(target instanceof PlayerEntity playerTarget)) return 0;
+        if (!(target instanceof PlayerEntity playerTarget)) return 0.0f;
         float powerDifference = MathHelper.clamp(CursedEnergyManager.getCursedEnergy(player) / CursedEnergyManager.getMaxCursedEnergy(playerTarget), 0, 1);
         // Todo: add min and max recoil to config
         return MathHelper.lerp(powerDifference, 275, 0);
