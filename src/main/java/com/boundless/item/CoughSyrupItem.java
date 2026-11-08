@@ -39,6 +39,11 @@ public class CoughSyrupItem extends Item {
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         super.finishUsing(stack, world, user);
 
+        if (user instanceof ServerPlayerEntity serverPlayerEntity) {
+            Criteria.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
+            serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
+        }
+
         if (!world.isClient) {
             user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.COUGH_SYRUP, 1200, 0, false, false, true));
         }
