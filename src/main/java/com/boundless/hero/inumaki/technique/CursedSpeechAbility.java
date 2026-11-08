@@ -44,8 +44,13 @@ public abstract class CursedSpeechAbility extends TechniqueAbility {
 
     public void takeRecoilDamage(PlayerEntity player, LivingEntity target) {
         float recoil = getRecoilDamage(player, target);
+
         if (recoil > 0.0f) {
             player.damage(DamageTypeRegistry.getDamageSource(player, DamageTypeRegistry.BLEED), recoil);
+        }
+
+        if (recoil >= 50f) {
+            EffekUtils.playVisual(player, BoundlessAPI.id("dismantle_impact"), new Vec3d(player.getHeight() / 8, player.getHeight() / 8, player.getHeight() / 8));
         }
     }
 
