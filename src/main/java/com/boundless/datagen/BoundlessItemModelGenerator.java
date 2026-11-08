@@ -3,6 +3,7 @@ package com.boundless.datagen;
 import com.boundless.BoundlessAPI;
 import com.boundless.hero.api.Hero;
 import com.boundless.registry.HeroRegistry;
+import com.boundless.registry.ItemRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -37,6 +38,8 @@ public class BoundlessItemModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(ItemRegistry.COUGH_SYRUP, Models.GENERATED);
+
         // Todo: this is a small fix just for the update, change this in the future to not be hard coded
         // Todo: i might write a function later that allows for custom texture sizes to be specified; could be a good fix
         for (Hero hero : HeroRegistry.HEROES) {

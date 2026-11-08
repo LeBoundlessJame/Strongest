@@ -22,6 +22,7 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(EntityRegistry.DIVINE_DOG_SHIRO, "Shiro");
         translationBuilder.add(EntityRegistry.GAMA, "Gama");
 
+        translationBuilder.add(StatusEffectRegistry.COUGH_SYRUP.value(), "Cough Medicine");
         translationBuilder.add(StatusEffectRegistry.INVULNERABILITY_EFFECT.value(), "Invulnerability");
         translationBuilder.add(StatusEffectRegistry.BLEED.value(), "Bleed");
 
@@ -29,6 +30,7 @@ public class BoundlessTranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(AttributeRegistry.TIME_UNTIL_MAX_SPEED, "Max-Speed Buildup Time");
         translationBuilder.add(AttributeRegistry.DAMAGE_RESISTANCE, "Damage Resistance");
 
+        translationBuilder.add(ItemRegistry.COUGH_SYRUP, "Cough Medicine");
         translationBuilder.add(ItemRegistry.FULL_HEAL, "Full Heal");
         translationBuilder.add(ItemRegistry.CLEAVER, "Cleaver");
         translationBuilder.add(ItemRegistry.PLAYFUL_CLOUD, "Playful Cloud");
