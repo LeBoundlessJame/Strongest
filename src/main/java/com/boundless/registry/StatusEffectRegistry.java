@@ -1,10 +1,7 @@
 package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.effect.BleedEffect;
-import com.boundless.effect.ImpactFrameEffect;
-import com.boundless.effect.InvulnerabilityEffect;
-import com.boundless.effect.StunEffect;
+import com.boundless.effect.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
@@ -21,6 +18,7 @@ public class StatusEffectRegistry {
     public static final RegistryEntry<StatusEffect> GRAYSCALE = registerStatusEffect("grayscale_effect", new ImpactFrameEffect(StatusEffectCategory.NEUTRAL, 0xffffff));
     public static final RegistryEntry<StatusEffect> BLEED = registerStatusEffect("bleed", new BleedEffect(StatusEffectCategory.HARMFUL, 0xff0000));
     public static final RegistryEntry<StatusEffect> STUN = registerStatusEffect("stun", new StunEffect(StatusEffectCategory.HARMFUL, 0xff0000));
+    public static final RegistryEntry<StatusEffect> COUGH_SYRUP = registerStatusEffect("cough_syrup", new CoughSyrupEffect(StatusEffectCategory.BENEFICIAL, 0xff0000));
 
     private static RegistryEntry<StatusEffect> registerStatusEffect(String name, StatusEffect statusEffect) {
         return Registry.registerReference(Registries.STATUS_EFFECT, BoundlessAPI.id(name), statusEffect);

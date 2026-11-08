@@ -1,6 +1,7 @@
 package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.item.CoughSyrupItem;
 import com.boundless.item.FullHealItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -16,6 +17,7 @@ public class ItemRegistry {
     public static final Item PLAYFUL_CLOUD = registerItem(BoundlessAPI.id("playful_cloud"), new Item(new Item.Settings().maxCount(1)));
     // Todo: for testing only. Remove eventually
     public static final Item FULL_HEAL = registerItem(BoundlessAPI.id("full_heal"), new FullHealItem(new Item.Settings()));
+    public static final Item COUGH_SYRUP = registerItem(BoundlessAPI.id("cough_syrup"), new CoughSyrupItem(new Item.Settings()));
 
     public static Item registerItem(Identifier identifier, Item item) {
         return Registry.register(Registries.ITEM, identifier, item);
