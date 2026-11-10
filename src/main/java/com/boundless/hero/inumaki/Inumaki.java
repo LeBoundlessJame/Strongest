@@ -26,6 +26,7 @@ public class Inumaki extends Hero {
                 .name("inumaki")
                 .defaultTechniqueLoadout(loadout)
                 .tickHandler(Hero::heroSprintHandler)
+                .modelIdentifier(BoundlessAPI.modelID("inumaki"))
                 .textureIdentifier(BoundlessAPI.textureID("inumaki"))
                 .tickHandler(Hero::onHeroTick)
                 .maxCursedEnergy(8000)
