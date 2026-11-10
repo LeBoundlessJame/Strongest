@@ -28,9 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Setter
 @Getter
@@ -112,15 +110,20 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void shrineEffects() {
-        for (int x = (int) -domainRadius.x; x < domainRadius.x / 5 - 16; x += 16) {
-            for (int y = (int) -domainRadius.y; y < domainRadius.y / 5 - 16; y += 16) {
-                for (int z = (int) -domainRadius.z; z < domainRadius.z / 5 - 16; z += 16) {
-                    if (this.getRandom().nextFloat() > 0.8f) {
-                        //System.out.println(new Vec3d(x, y, z));
-                        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, new Vec3d(x, y, z), new Vec3d(5, 5, 5));
-                    }
-                }
-            }
+        // Sometimes my optimization genius is almost frightening
+        List<Vec3d> positions = new ArrayList<>();
+        int vfxCount = 15;
+
+        while (positions.size() < vfxCount) {
+            int x = this.getRandom().nextBetween((int) -domainRadius.x, (int) domainRadius.x);
+            int y = this.getRandom().nextBetween((int) -domainRadius.y, (int) domainRadius.y);
+            int z = this.getRandom().nextBetween((int) -domainRadius.z, (int) domainRadius.z);
+
+            positions.add(new Vec3d(x, y, z));
+        }
+
+        for (Vec3d pos: positions) {
+            EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, pos, new Vec3d(4, 4, 4));
         }
     }
 
