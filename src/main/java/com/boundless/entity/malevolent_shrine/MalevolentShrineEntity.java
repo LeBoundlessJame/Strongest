@@ -79,6 +79,10 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             this.discard();
         }
 
+        if (this.age % 5 == 0) {
+            shrineEffects();
+        }
+
         if (this.furnaceNukeActive) {
             if (furnaceNukeTicks < furnaceNukeDuration) {
                 furnaceNukeTicks++;
@@ -98,7 +102,6 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void initiateFurnaceNuke() {
-        destroySurehitEffect();
         furnaceNukeTicks = 0;
         furnaceNukeActive = true;
 
@@ -108,13 +111,26 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         }
     }
 
+    public void shrineEffects() {
+        for (int x = (int) -domainRadius.x; x < domainRadius.x / 5 - 16; x += 16) {
+            for (int y = (int) -domainRadius.y; y < domainRadius.y / 5 - 16; y += 16) {
+                for (int z = (int) -domainRadius.z; z < domainRadius.z / 5 - 16; z += 16) {
+                    if (this.getRandom().nextFloat() > 0.8f) {
+                        //System.out.println(new Vec3d(x, y, z));
+                        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, new Vec3d(x, y, z), new Vec3d(5, 5, 5));
+                    }
+                }
+            }
+        }
+    }
+
     public void shrineLogic() {
         if (this.age >= delay && this.age % 5 == 0) {
             applyShrineShaderInRadius();
         }
 
         if (!this.getWorld().isClient && this.age >= this.getDelay() && this.age % 100 == 0) {
-            bindSurehitEffect(this.getPos(), 15f);
+            //bindSurehitEffect(this.getPos(), 15f);
         }
 
         //        if (this.age % ShrineHero.DOMAIN.timeBetweenMobChecks.get() == 0) {
@@ -138,25 +154,8 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
         }
     }
 
-    public void bindSurehitEffect(Vec3d pos, float scale) {
-        ParticleEmitterInfo particleEmitter = ParticleEmitterInfo.create(this.getWorld(), BoundlessAPI.id("optimised_shrine"), Identifier.of(BoundlessAPI.MOD_ID, "optimised_shrine" + this.getId()));
-        particleEmitter.position(pos);
-        particleEmitter.scale(scale);
-        AAALevel.addParticle(this.getWorld(), true, particleEmitter);
-    }
-
-    public void destroySurehitEffect() {
-        var effect = EffectRegistry.get(BoundlessAPI.id("optimised_shrine"));
-
-        if (effect != null) {
-            Optional<ParticleEmitter> emitter = effect.getNamedEmitter(ParticleEmitter.Type.WORLD, BoundlessAPI.id("optimised_shrine" + this.getId()));
-            emitter.ifPresent(particleEmitter -> particleEmitter.stop());
-        }
-    }
-
     @Override
     public void remove(Entity.RemovalReason reason) {
-        destroySurehitEffect();
         this.setRemoved(reason);
     }
 
