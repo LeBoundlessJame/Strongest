@@ -17,6 +17,7 @@ public class Sukuna extends Hero {
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ABILITY_ONE, SukunaTechnique.DISMANTLE)
                 .ability(AbilityKey.ABILITY_TWO, SukunaTechnique.CLEAVE)
+                .ability(AbilityKey.ABILITY_THREE, SukunaTechnique.OPEN)
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK)
                 .build();

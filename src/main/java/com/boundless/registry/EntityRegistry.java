@@ -6,6 +6,7 @@ import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.entity.hero_action.HeroActionEntity;
+import com.boundless.entity.open.OpenEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,6 +20,7 @@ public class EntityRegistry {
     public static final EntityType<DivineDogShiroEntity> DIVINE_DOG_SHIRO = registerEntityType("divine_dog_shiro", DivineDogShiroEntity::new, 0.6F, 0.85F, 0.68F);
     public static final EntityType<GamaEntity> GAMA = registerEntityType("gama", GamaEntity::new, 0.6F, 0.85F, 0.68F);
     public static final EntityType<GrappleEntity> GRAPPLE = registerEntityType("grapple", GrappleEntity::new, 0.6F, 0.85F, 0.68F);
+    public static final EntityType<OpenEntity> OPEN = registerEntityType("open", OpenEntity::new, 1, 1);
 
     public static <T extends Entity> EntityType<T> registerEntityType(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.id(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));

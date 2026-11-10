@@ -5,6 +5,7 @@ import com.boundless.entity.divine_dogs.DivineDogEntityRenderer;
 import com.boundless.entity.gama.GamaEntityRenderer;
 import com.boundless.entity.grapple.GrappleEntityRenderer;
 import com.boundless.entity.hero_action.HeroActionRenderer;
+import com.boundless.entity.open.OpenEntityRenderer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 
 public class EntityRenderRegistry {
@@ -14,5 +15,6 @@ public class EntityRenderRegistry {
         EntityRendererRegistry.INSTANCE.register(EntityRegistry.DIVINE_DOG_SHIRO, ctx -> new DivineDogEntityRenderer<>(ctx, BoundlessAPI.id("textures/entity/divine_dog_white.png")));
         EntityRendererRegistry.INSTANCE.register(EntityRegistry.GAMA, ctx -> new GamaEntityRenderer<>(ctx));
         EntityRendererRegistry.INSTANCE.register(EntityRegistry.GRAPPLE, ctx -> new GrappleEntityRenderer(ctx));
+        EntityRendererRegistry.INSTANCE.register(EntityRegistry.OPEN, ctx -> new OpenEntityRenderer(ctx));
     }
 }
