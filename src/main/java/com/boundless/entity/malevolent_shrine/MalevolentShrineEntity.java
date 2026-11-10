@@ -110,19 +110,15 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void shrineEffects() {
-        // Sometimes my optimization genius is almost frightening
-        List<Vec3d> positions = new ArrayList<>();
         int vfxCount = 15;
 
-        while (positions.size() < vfxCount) {
+        for (int i = 0; i < vfxCount; i++) {
             int x = this.getRandom().nextBetween((int) -domainRadius.x, (int) domainRadius.x);
             int y = this.getRandom().nextBetween((int) -domainRadius.y, (int) domainRadius.y);
             int z = this.getRandom().nextBetween((int) -domainRadius.z, (int) domainRadius.z);
 
-            positions.add(new Vec3d(x, y, z));
-        }
+            Vec3d pos = new Vec3d(x, y, z);
 
-        for (Vec3d pos: positions) {
             EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, pos, new Vec3d(4, 4, 4));
         }
     }
