@@ -54,7 +54,7 @@ public class OpenAbility extends TechniqueAbility {
     }
 
     public Text getDisplayText(PlayerEntity playerEntity) {
-        return Text.of("Open");
+        return Text.of("Divine Flame - Open");
     }
 
     @Override
