@@ -110,7 +110,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void shrineEffects() {
-        int vfxCount = 15;
+        int vfxCount = 30;
 
         for (int i = 0; i < vfxCount; i++) {
             int x = this.getRandom().nextBetween((int) -domainRadius.x, (int) domainRadius.x);

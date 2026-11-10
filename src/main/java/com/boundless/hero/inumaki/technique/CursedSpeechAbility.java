@@ -70,7 +70,7 @@ public abstract class CursedSpeechAbility extends TechniqueAbility {
 
     public float getRecoilDamage(PlayerEntity player, LivingEntity target) {
         if (!(target instanceof PlayerEntity playerTarget)) return 0.0f;
-        float powerDifference = MathHelper.clamp(CursedEnergyManager.getCursedEnergy(player) / CursedEnergyManager.getMaxCursedEnergy(playerTarget), 0, 1);
+        float powerDifference = MathHelper.clamp(CursedEnergyManager.getCursedEnergy(player) / (float) CursedEnergyManager.getCursedEnergy(playerTarget), 0, 1);
         // Todo: add min and max recoil to config
         return MathHelper.lerp(powerDifference, 275, 0);
     }
