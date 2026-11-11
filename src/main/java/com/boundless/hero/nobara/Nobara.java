@@ -18,6 +18,7 @@ public class Nobara extends Hero {
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ABILITY_ONE, StrawdollTechnique.HAIRPIN)
                 .ability(AbilityKey.ABILITY_TWO, StrawdollTechnique.RESONANCE)
+                .ability(AbilityKey.ABILITY_THREE, StrawdollTechnique.THROW_NAIL)
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK)
                 .build();
