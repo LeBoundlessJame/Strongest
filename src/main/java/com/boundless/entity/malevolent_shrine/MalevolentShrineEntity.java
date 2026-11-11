@@ -77,7 +77,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             this.discard();
         }
 
-        if (this.age % 5 == 0) {
+        if (this.age % 1 == 0) {
             shrineEffects();
         }
 
@@ -110,7 +110,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
     }
 
     public void shrineEffects() {
-        int vfxCount = 30;
+        int vfxCount = 60;
 
         for (int i = 0; i < vfxCount; i++) {
             int x = this.getRandom().nextBetween((int) -domainRadius.x, (int) domainRadius.x);
@@ -119,7 +119,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
 
             Vec3d pos = new Vec3d(x, y, z).add(this.getPos());
 
-            EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, pos, new Vec3d(4, 4, 4));
+            EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, pos, new Vec3d(8, 8, 8));
         }
     }
 
