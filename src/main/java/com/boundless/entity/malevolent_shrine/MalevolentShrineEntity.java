@@ -117,7 +117,7 @@ public class MalevolentShrineEntity extends Entity implements Ownable {
             int y = this.getRandom().nextBetween((int) -domainRadius.y, (int) domainRadius.y);
             int z = this.getRandom().nextBetween((int) -domainRadius.z, (int) domainRadius.z);
 
-            Vec3d pos = new Vec3d(x, y, z);
+            Vec3d pos = new Vec3d(x, y, z).add(this.getPos());
 
             EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("upgraded_dismantle"), this, pos, new Vec3d(4, 4, 4));
         }
