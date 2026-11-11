@@ -29,13 +29,13 @@ public class ResonanceAbility extends TechniqueAbility {
         //SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_2, 20, 21);
 
         SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_1, 10, 11);
-        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("resonance_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(1, 1, 1));
+        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("resonance_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
         EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), target.getHeight() / 16);
     }
 
     @Override
     public Identifier getId() {
-        return BoundlessAPI.id("hairpin");
+        return BoundlessAPI.id("resonance");
     }
 
     public float getDamage(PlayerEntity player) {
@@ -51,6 +51,6 @@ public class ResonanceAbility extends TechniqueAbility {
     }
 
     public Text getDisplayText(PlayerEntity playerEntity) {
-        return Text.of("Hairpin");
+        return Text.of("Resonance");
     }
 }
