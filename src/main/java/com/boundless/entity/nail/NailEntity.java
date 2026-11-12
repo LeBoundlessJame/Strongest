@@ -18,6 +18,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class NailEntity extends PersistentProjectileEntity {
@@ -46,6 +47,14 @@ public class NailEntity extends PersistentProjectileEntity {
         if (this.age >= MAX_AGE) {
             this.discard();
         }
+    }
+
+    public void detonate() {
+        if (this.getOwner() == null) return;
+
+        SoundUtils.playSound((LivingEntity) this.getOwner(), SoundRegistry.RATIO_IMPACT_1, 10, 11);
+        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.35, 0.35, 0.35));
+        EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), this.getHeight() / 16);
     }
 
     @Override

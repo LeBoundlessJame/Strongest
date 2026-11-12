@@ -3,6 +3,7 @@ package com.boundless.hero.nobara.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
+import com.boundless.entity.nail.NailEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
@@ -14,6 +15,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
+
 public class HairpinAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
@@ -21,26 +24,18 @@ public class HairpinAbility extends TechniqueAbility {
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
-        EntityHitResult result = RaycastUtils.raycast(player, 64);
-        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
+        List<Entity> nails = AOEUtils.getEntitiesInRadius(player, player.getWorld(), player.getPos(), new Vec3d(64, 32, 64), entity -> entity instanceof NailEntity);
 
-        if (target == null || target == player) return;
-        target.damage(target.getDamageSources().playerAttack(player), this.getDamage(player));
-
-        //SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_2, 20, 21);
-
-        SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_1, 10, 11);
-        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(1, 1, 1));
-        EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), target.getHeight() / 16);
+        for (Entity nail: nails) {
+            if (((NailEntity) nail).getOwner() == player) {
+                ((NailEntity) nail).detonate();
+            }
+        }
     }
 
     @Override
     public Identifier getId() {
         return BoundlessAPI.id("hairpin");
-    }
-
-    public float getDamage(PlayerEntity player) {
-        return 20;
     }
 
     public int getCost(PlayerEntity player) {
