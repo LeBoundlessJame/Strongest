@@ -24,11 +24,11 @@ public class HairpinAbility extends TechniqueAbility {
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
-        List<Entity> nails = AOEUtils.getEntitiesInRadius(player, player.getWorld(), player.getPos(), new Vec3d(64, 32, 64), entity -> entity instanceof NailEntity);
+        List<NailEntity> nails = (List<NailEntity>) AOEUtils.getTargetsInRadius(player, player.getWorld(), player.getPos(), new Vec3d(64, 32, 64), entity -> entity instanceof NailEntity);
 
-        for (Entity nail: nails) {
-            if (((NailEntity) nail).getOwner() == player) {
-                ((NailEntity) nail).detonate();
+        for (NailEntity nail: nails) {
+            if (nail.getOwner() == player) {
+                nail.detonate();
             }
         }
     }
