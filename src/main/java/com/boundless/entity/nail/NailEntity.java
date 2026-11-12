@@ -26,11 +26,13 @@ public class NailEntity extends PersistentProjectileEntity {
 
     public NailEntity(EntityType<NailEntity> entityType, World world) {
         super(entityType, world);
+        this.setStack(Items.ARROW.getDefaultStack());
     }
 
     public NailEntity(LivingEntity livingEntity, World world) {
         super(EntityRegistry.NAIL, world);
         this.setOwner(livingEntity);
+        this.setStack(Items.ARROW.getDefaultStack());
     }
 
     @Override
