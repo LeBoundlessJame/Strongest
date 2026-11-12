@@ -19,9 +19,10 @@ public class AOEUtils {
         return world.getEntitiesByClass(LivingEntity.class, box, entity -> CombatUtils.isValidTarget(player, entity) && predicate.test(entity));
     }
 
-    public static List<? extends Entity> getEntitiesInRadius(PlayerEntity player, World world, Vec3d center, Vec3d radius, Predicate<Entity> predicate) {
+    // Todo: can use generics to simplify invocation
+    public static List<Entity> getEntitiesInRadius(PlayerEntity player, World world, Vec3d center, Vec3d radius, Predicate<Entity> predicate) {
         Box box = new Box(center.subtract(radius), center.add(radius));
-        return world.getEntitiesByClass(LivingEntity.class, box, entity -> CombatUtils.isValidTarget(player, entity) && predicate.test(entity));
+        return world.getEntitiesByClass(Entity.class, box, entity -> entity != player && predicate.test(entity));
     }
 
     public static List<BlockPos> getBlocksInRadius(World world, Vec3d center, Vec3d radius, Predicate<BlockState> predicate) {
