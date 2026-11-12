@@ -21,8 +21,11 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class NailEntity extends PersistentProjectileEntity {
-    int MAX_AGE = 1200;
+    private int MAX_AGE = 1200;
+    private Vec3d explosionRadius = new Vec3d(3, 3, 3);
 
     public NailEntity(EntityType<NailEntity> entityType, World world) {
         super(entityType, world);
@@ -53,11 +56,21 @@ public class NailEntity extends PersistentProjectileEntity {
 
     public void detonate() {
         if (this.getOwner() == null) return;
+        PlayerEntity owner = (PlayerEntity) this.getOwner();
 
-        System.out.println("Boom");
+        List<LivingEntity> targets = AOEUtils.getTargetsInRadius(owner, this.getWorld(), this.getPos(), explosionRadius, entity -> true);
+        targets.forEach(target -> target.damage(target.getDamageSources().playerAttack(owner), (float) this.getDamage()));
+
         SoundUtils.playSound((LivingEntity) this.getOwner(), SoundRegistry.RATIO_IMPACT_1, 10, 11);
         EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.35, 0.35, 0.35));
         EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), this.getHeight() / 16);
+
+        this.discard();
+    }
+
+    @Override
+    public double getDamage() {
+        return 20;
     }
 
     @Override
