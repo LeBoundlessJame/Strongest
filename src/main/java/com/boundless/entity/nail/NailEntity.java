@@ -63,7 +63,7 @@ public class NailEntity extends PersistentProjectileEntity {
         List<LivingEntity> targets = AOEUtils.getTargetsInRadius(owner, this.getWorld(), this.getPos(), explosionRadius, entity -> true);
         targets.forEach(target -> target.damage(target.getDamageSources().playerAttack(owner), (float) this.getDamage()));
 
-        SoundUtils.playSound(this, SoundRegistry.RATIO_IMPACT_1, 10, 11);
+        SoundUtils.playSound(this, SoundRegistry.ENERGY_IMPACT_HEAVY, 10, 11);
         EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.35, 0.35, 0.35));
 
         this.discard();
