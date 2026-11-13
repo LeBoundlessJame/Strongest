@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public record ResonanceData(float damageDealt, long lastDamagedTimestamp) {
     private static int MAX_TIME_BETWEEN_HITS = 1200;
+    private static int RESONANCE_THRESHOLD = 150;
 
     public static final Codec<ResonanceData> CODEC = RecordCodecBuilder.create(builder -> {
         return builder.group(
@@ -18,5 +19,9 @@ public record ResonanceData(float damageDealt, long lastDamagedTimestamp) {
 
     public boolean isExpired(long currentTick) {
         return currentTick - lastDamagedTimestamp > MAX_TIME_BETWEEN_HITS;
+    }
+
+    public boolean isResonanceReady() {
+        return damageDealt > RESONANCE_THRESHOLD;
     }
 }

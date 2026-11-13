@@ -25,7 +25,7 @@ public class ResonanceTrackingModifier implements AttackModifier {
 
         HashMap<UUID, ResonanceData> resonanceTracker = (HashMap<UUID, ResonanceData>) ComponentUtils.getOr(player, StrawdollComponents.RESONANCE_TRACKER, new HashMap<>());
 
-        if (!resonanceTracker.containsKey(uuid) || resonanceTracker.get(uuid).isExpired(player.getWorld().getTime())) {
+        if (!resonanceTracker.containsKey(uuid) || resonanceTracker.get(uuid) == null || resonanceTracker.get(uuid).isExpired(player.getWorld().getTime())) {
             ResonanceData data = new ResonanceData(hit.getDamage(), player.getWorld().getTime());
             ComponentUtils.updateMap(HeroUtils.getHeroStack(player), StrawdollComponents.RESONANCE_TRACKER, uuid, data);
         } else {
