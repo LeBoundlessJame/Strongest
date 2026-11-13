@@ -31,8 +31,10 @@ public class HairpinAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
         SoundUtils.playSound(player, SoundRegistry.CLICK, 10, 11);
+
         detonateImpaledNails(player);
         detonateGroundNails(player);
     }
@@ -68,6 +70,7 @@ public class HairpinAbility extends TechniqueAbility {
                 if (entity instanceof LivingEntity target) {
                     target.damage(target.getDamageSources().playerAttack(player), damage);
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
+                    EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.35, 0.35, 0.35));
                 }
             }
 
