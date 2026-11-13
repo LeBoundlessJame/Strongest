@@ -44,13 +44,13 @@ public class ResonanceAbility extends TechniqueAbility {
                 Entity target = world.getEntity(entry.getKey());
                 if (target != null) {
                     // Todo: make this scale instead, based on entity max health
-                    target.damage(target.getDamageSources().playerAttack(player), 1000);
+                    //target.damage(target.getDamageSources().playerAttack(player), 1000);
 
                     SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_1, 10, 11);
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("resonance_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                     EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), target.getHeight() / 16);
                 }
-                iterator.remove();
+                //iterator.remove();
             }
         }
 
