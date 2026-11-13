@@ -39,48 +39,47 @@ public class HairpinAbility extends TechniqueAbility {
 
     // Nails that hit the enemy successfully
     public void detonateImpaledNails(PlayerEntity player) {
-        TickScheduler.schedule(player.getWorld(), 10, () -> {
-            Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(player, StrawdollComponents.HAIRPIN_TARGETS, new HashMap<>());
-            targets = new HashMap<>(targets);
+        Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(player, StrawdollComponents.HAIRPIN_TARGETS, new HashMap<>());
+        targets = new HashMap<>(targets);
 
-            // Todo: I don't like this, but it works, will rework soon
-            targets.replaceAll((uuid, nails) -> new ArrayList<>(nails));
+        // Todo: I don't like this, but it works, will rework soon
+        targets.replaceAll((uuid, nails) -> new ArrayList<>(nails));
 
-            Iterator<Map.Entry<UUID, List<CursedNailData>>> iterator = targets.entrySet().iterator();
+        Iterator<Map.Entry<UUID, List<CursedNailData>>> iterator = targets.entrySet().iterator();
 
-            while (iterator.hasNext()) {
-                Map.Entry<UUID, List<CursedNailData>> entry = iterator.next();
+        while (iterator.hasNext()) {
+            Map.Entry<UUID, List<CursedNailData>> entry = iterator.next();
 
-                Iterator<CursedNailData> nailIterator = entry.getValue().iterator();
-                float damage = 0;
+            Iterator<CursedNailData> nailIterator = entry.getValue().iterator();
+            float damage = 0;
 
-                while (nailIterator.hasNext()) {
-                    CursedNailData nail = nailIterator.next();
+            while (nailIterator.hasNext()) {
+                CursedNailData nail = nailIterator.next();
 
-                    if (!nail.isExpired(player.getWorld().getTime())) {
-                        damage += 7.5f;
-                    } else {
-                        nailIterator.remove();
-                    }
-                }
-
-                if (damage > 0 && player.getWorld() instanceof ServerWorld world) {
-                    Entity entity = world.getEntity(entry.getKey());
-                    if (entity instanceof LivingEntity target) {
-                        target.damage(target.getDamageSources().playerAttack(player), damage);
-                        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
-                    }
+                if (!nail.isExpired(player.getWorld().getTime())) {
+                    damage += 7.5f;
+                } else {
+                    nailIterator.remove();
                 }
             }
 
-            ComponentUtils.set(player, StrawdollComponents.HAIRPIN_TARGETS, targets);
-        });
+            if (damage > 0 && player.getWorld() instanceof ServerWorld world) {
+                Entity entity = world.getEntity(entry.getKey());
+                if (entity instanceof LivingEntity target) {
+                    System.out.println("Dealt " + damage + " damage to " + entity.getName());
+                    target.damage(target.getDamageSources().playerAttack(player), damage);
+                    EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
+                }
+            }
+        }
+
+        ComponentUtils.set(player, StrawdollComponents.HAIRPIN_TARGETS, targets);
     }
 
     public void detonateGroundNails(PlayerEntity player) {
         List<Entity> nails = AOEUtils.getEntitiesInRadius(player, player.getWorld(), player.getPos(), new Vec3d(64, 32, 64), entity -> entity instanceof NailEntity);
 
-        for (Entity nail: nails) {
+        for (Entity nail : nails) {
             if (nail instanceof NailEntity nailEntity) {
                 if (nailEntity.getOwner() == player) {
                     nailEntity.detonate();
