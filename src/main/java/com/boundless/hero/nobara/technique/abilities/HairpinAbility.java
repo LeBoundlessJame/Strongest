@@ -66,7 +66,6 @@ public class HairpinAbility extends TechniqueAbility {
             if (damage > 0 && player.getWorld() instanceof ServerWorld world) {
                 Entity entity = world.getEntity(entry.getKey());
                 if (entity instanceof LivingEntity target) {
-                    System.out.println("Dealt " + damage + " damage to " + entity.getName());
                     target.damage(target.getDamageSources().playerAttack(player), damage);
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                 }
