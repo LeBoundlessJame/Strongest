@@ -4,6 +4,11 @@
       "boundless:impact_heavy_1"
     ]
   },
+  "click": {
+    "sounds": [
+      "boundless:click"
+    ]
+  },
   "miss_hit": {
     "sounds": [
       "boundless:miss_hit"

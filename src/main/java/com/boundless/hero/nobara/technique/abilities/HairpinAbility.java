@@ -32,6 +32,7 @@ public class HairpinAbility extends TechniqueAbility {
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+        SoundUtils.playSound(player, SoundRegistry.CLICK);
 
         detonateImpaledNails(player);
         detonateGroundNails(player);

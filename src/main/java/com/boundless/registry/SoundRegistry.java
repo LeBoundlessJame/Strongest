@@ -18,6 +18,7 @@ public class SoundRegistry {
     public static SoundEvent ENERGY_IMPACT_3 = registerSoundEvent(BoundlessAPI.id("energy_impact_3"));
     public static SoundEvent ENERGY_IMPACT_HEAVY = registerSoundEvent(BoundlessAPI.id("energy_impact_heavy"));
     public static SoundEvent CLAP_1 = registerSoundEvent(BoundlessAPI.id("clap_1"));
+    public static SoundEvent CLICK = registerSoundEvent(BoundlessAPI.id("click"));
 
     public static SoundEvent RATIO_IMPACT_1 = registerSoundEvent(BoundlessAPI.id("ratio_impact_1"));
     public static SoundEvent RATIO_IMPACT_2 = registerSoundEvent(BoundlessAPI.id("ratio_impact_2"));
