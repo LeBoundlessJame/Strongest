@@ -29,7 +29,8 @@ public class ResonanceAbility extends TechniqueAbility {
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
-        HashMap<UUID, ResonanceData> resonanceTracker = (HashMap<UUID, ResonanceData>) ComponentUtils.getOr(player, StrawdollComponents.RESONANCE_TRACKER, new HashMap<>());
+        Map<UUID, ResonanceData> resonanceTracker = ComponentUtils.getOr(player, StrawdollComponents.RESONANCE_TRACKER, new HashMap<>());
+        resonanceTracker = new HashMap<>(resonanceTracker);
 
         Iterator<Map.Entry<UUID, ResonanceData>> iterator = resonanceTracker.entrySet().iterator();
 
