@@ -80,7 +80,7 @@ public class ResonanceAbility extends TechniqueAbility {
     }
 
     public long getCooldown(PlayerEntity player) {
-        return 10;
+        return 300;
     }
 
     public Text getDisplayText(PlayerEntity playerEntity) {
