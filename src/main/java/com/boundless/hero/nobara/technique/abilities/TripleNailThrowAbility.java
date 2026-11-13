@@ -33,7 +33,7 @@ public class TripleNailThrowAbility extends TechniqueAbility {
     }
 
     public long getCooldown(PlayerEntity player) {
-        return 20;
+        return 600;
     }
 
     public int getCost(PlayerEntity player) {
