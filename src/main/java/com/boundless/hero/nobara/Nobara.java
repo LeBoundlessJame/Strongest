@@ -3,6 +3,7 @@ package com.boundless.hero.nobara;
 import com.boundless.BoundlessAPI;
 import com.boundless.combat.CombatAbilities;
 import com.boundless.combat.attack_modifiers.BlackFlashModifier;
+import com.boundless.combat.attack_modifiers.ResonanceTrackingModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.nobara.technique.StrawdollTechnique;
@@ -37,6 +38,7 @@ public class Nobara extends Hero {
                 .meleeStrength(22)
                 .bonus_health(680)
                 .attackModifier(new BlackFlashModifier())
+                .attackModifier(new ResonanceTrackingModifier())
                 .build();
 
         this.registerHero();

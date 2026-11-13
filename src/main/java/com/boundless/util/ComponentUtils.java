@@ -9,6 +9,8 @@ import java.util.Map;
 
 // Todo: this whole class could do with an expansion / elaboration
 public class ComponentUtils {
+
+    // Todo: change to use player instead of itemstack directly
     public static <A, B> void updateMap(ItemStack heroStack, ComponentType<Map<A, B>> mapComponent, A key, B value) {
         HashMap<A, B> map = new HashMap<>(heroStack.getOrDefault(mapComponent, new HashMap<>()));
         map.put(key, value);
