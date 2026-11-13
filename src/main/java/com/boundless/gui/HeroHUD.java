@@ -41,8 +41,9 @@ public class HeroHUD {
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.SHRINE_EFFECT)) {
             //ShaderRegistry.SHRINE_OVERLAY.render(renderTickCounter.getTickDelta(true));
             ShaderRegistry.SHRINE_OVERLAY.render(renderTickCounter.getTickDelta(true));
-        }
-        else {
+        } else if (client.player.hasStatusEffect(StatusEffectRegistry.INVERT)) {
+            ShaderRegistry.INVERT.render(renderTickCounter.getTickDelta(true));
+        } else {
             if (client.gameRenderer.getPostProcessor() != null) {
                 ((ShaderAccessor) client.gameRenderer).boundless$disablePostProcessor();
             }

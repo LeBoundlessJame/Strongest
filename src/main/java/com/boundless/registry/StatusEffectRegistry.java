@@ -19,6 +19,7 @@ public class StatusEffectRegistry {
     public static final RegistryEntry<StatusEffect> BLEED = registerStatusEffect("bleed", new BleedEffect(StatusEffectCategory.HARMFUL, 0xff0000));
     public static final RegistryEntry<StatusEffect> STUN = registerStatusEffect("stun", new StunEffect(StatusEffectCategory.HARMFUL, 0xff0000));
     public static final RegistryEntry<StatusEffect> COUGH_SYRUP = registerStatusEffect("cough_syrup", new CoughSyrupEffect(StatusEffectCategory.BENEFICIAL, 0xff0000));
+    public static final RegistryEntry<StatusEffect> INVERT = registerStatusEffect("invert", new ImpactFrameEffect(StatusEffectCategory.BENEFICIAL, 0x5d8385));
 
     private static RegistryEntry<StatusEffect> registerStatusEffect(String name, StatusEffect statusEffect) {
         return Registry.registerReference(Registries.STATUS_EFFECT, BoundlessAPI.id(name), statusEffect);
