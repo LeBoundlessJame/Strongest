@@ -95,10 +95,6 @@ public class NailEntity extends PersistentProjectileEntity {
             nails.add(new CursedNailData(this.getWorld().getTime()));
             ComponentUtils.updateMap(HeroUtils.getHeroStack(player), StrawdollComponents.HAIRPIN_TARGETS, targetUUID, nails);
         }
-
-        if (result.getEntity() instanceof LivingEntity livingEntity) {
-            System.out.println("Entity health: " + livingEntity.getHealth());
-        }
     }
 
     protected SoundEvent getHitSound() {
