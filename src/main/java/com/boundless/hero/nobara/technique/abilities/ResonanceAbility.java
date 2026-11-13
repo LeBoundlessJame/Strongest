@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
@@ -46,17 +47,18 @@ public class ResonanceAbility extends TechniqueAbility {
                     iterator.remove();
                 } else if (data.isResonanceReady() && player.getWorld() instanceof ServerWorld world) {
                     Entity target = world.getEntity(entry.getKey());
-                    if (target != null) {
-                        // Todo: make this scale instead, based on entity max health
-                        //target.damage(target.getDamageSources().playerAttack(player), 1000);
-                        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVERT, 5, 0, true, false, false));
-
+                    if (target instanceof LivingEntity livingEntity) {
                         SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_2, 20, 21);
                         SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_1, 10, 11);
+                        // Todo: make this scale instead, based on entity max health
+                        livingEntity.damage(target.getDamageSources().playerAttack(player), livingEntity.getMaxHealth() * 0.3f);
+
+                        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVERT, 3, 0, true, false, false));
+                        CameraUtils.playCameraShake(player);
                         EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("resonance_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                         EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), target.getHeight() / 16);
                     }
-                    //iterator.remove();
+                    iterator.remove();
                 }
             }
 
