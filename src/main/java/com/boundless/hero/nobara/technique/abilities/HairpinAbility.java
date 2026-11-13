@@ -70,6 +70,8 @@ public class HairpinAbility extends TechniqueAbility {
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                 }
             }
+
+            iterator.remove();
         }
 
         ComponentUtils.set(player, StrawdollComponents.HAIRPIN_TARGETS, targets);
