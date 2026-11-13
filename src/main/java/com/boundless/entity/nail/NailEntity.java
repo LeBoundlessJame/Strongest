@@ -1,6 +1,8 @@
 package com.boundless.entity.nail;
 
 import com.boundless.BoundlessAPI;
+import com.boundless.hero.nobara.technique.components.CursedNailData;
+import com.boundless.hero.nobara.technique.components.StrawdollComponents;
 import com.boundless.registry.EntityRegistry;
 import com.boundless.registry.GameRulesRegistry;
 import com.boundless.registry.SoundRegistry;
@@ -21,7 +23,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.*;
 
 public class NailEntity extends PersistentProjectileEntity {
     private int MAX_AGE = 1200;
@@ -84,7 +86,14 @@ public class NailEntity extends PersistentProjectileEntity {
         super.onEntityHit(result);
         if (result.getEntity() == null || this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.id("energy_spark"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
-        //this.discard();
+
+        if (this.getOwner() instanceof PlayerEntity player) {
+            Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(player, StrawdollComponents.HAIRPIN_TARGETS, new HashMap()<>);
+            List<CursedNailData> nails = targets.getOrDefault(result.getEntity(), new ArrayList<>());
+            nails.add(new CursedNailData(this.getWorld().getTime()));
+
+            ComponentUtils.updateMap(HeroUtils.getHeroStack(player), StrawdollComponents.HAIRPIN_TARGETS, result.getEntity().getUuid(), nails);
+        }
     }
 
     protected SoundEvent getHitSound() {
