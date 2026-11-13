@@ -63,7 +63,6 @@ public class NailEntity extends PersistentProjectileEntity {
 
         SoundUtils.playSound((LivingEntity) this.getOwner(), SoundRegistry.RATIO_IMPACT_1, 10, 11);
         EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), new Vec3d(0.35, 0.35, 0.35));
-        EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), this, this.getPos().add(0, this.getHeight() / 2, 0), this.getHeight() / 16);
 
         this.discard();
     }

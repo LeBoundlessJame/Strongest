@@ -6,6 +6,7 @@ import com.boundless.combat.attack_modifiers.BlackFlashModifier;
 import com.boundless.hero.api.Hero;
 import com.boundless.hero.api.HeroData;
 import com.boundless.hero.nobara.technique.StrawdollTechnique;
+import com.boundless.hero.nobara.technique.components.StrawdollComponents;
 import com.boundless.hero.sukuna.technique.SukunaTechnique;
 import com.boundless.hero.sukuna.technique.components.SukunaComponents;
 import com.boundless.loadouts.AbilityKey;
@@ -13,7 +14,7 @@ import com.boundless.loadouts.TechniqueLoadout;
 
 public class Nobara extends Hero {
     public Nobara() {
-        SukunaComponents.initialize();
+        StrawdollComponents.initialize();
 
         TechniqueLoadout loadout = TechniqueLoadout.builder()
                 .ability(AbilityKey.ABILITY_ONE, StrawdollTechnique.HAIRPIN)
