@@ -45,7 +45,7 @@ public class HairpinAbility extends TechniqueAbility {
     }
 
     public long getCooldown(PlayerEntity player) {
-        return 100;
+        return 40;
     }
 
     public Text getDisplayText(PlayerEntity playerEntity) {
