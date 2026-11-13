@@ -39,6 +39,7 @@ public class HeroHUD {
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.GRAYSCALE)) {
             ShaderRegistry.GRAYSCALE.render(renderTickCounter.getTickDelta(true));
         } else if (client.player.hasStatusEffect(StatusEffectRegistry.SHRINE_EFFECT)) {
+            //ShaderRegistry.SHRINE_OVERLAY.render(renderTickCounter.getTickDelta(true));
             ShaderRegistry.SHRINE_OVERLAY.render(renderTickCounter.getTickDelta(true));
         }
         else {

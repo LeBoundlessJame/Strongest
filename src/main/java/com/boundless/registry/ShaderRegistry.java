@@ -13,4 +13,6 @@ public class ShaderRegistry {
             .manage(BoundlessAPI.id("shaders/post/grayscale.json"));
     public static final ManagedShaderEffect SHRINE_OVERLAY = ShaderEffectManager.getInstance()
             .manage(BoundlessAPI.id("shaders/post/shrine_overlay.json"));
+    public static final ManagedShaderEffect INVERT = ShaderEffectManager.getInstance()
+            .manage(BoundlessAPI.id("shaders/post/invert.json"));
 }
