@@ -21,6 +21,7 @@ public class Nobara extends Hero {
                 .ability(AbilityKey.ABILITY_ONE, StrawdollTechnique.HAIRPIN)
                 .ability(AbilityKey.ABILITY_TWO, StrawdollTechnique.RESONANCE)
                 .ability(AbilityKey.ABILITY_THREE, StrawdollTechnique.THROW_NAIL)
+                .ability(AbilityKey.ABILITY_FOUR, StrawdollTechnique.TRIPLE_NAIL_THROW)
                 .ability(AbilityKey.ATTACK, CombatAbilities.PUNCH)
                 .ability(AbilityKey.USE, CombatAbilities.ROUNDHOUSE_KICK)
                 .build();

@@ -3,21 +3,14 @@ package com.boundless.hero.nobara.technique.abilities;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.nail.NailEntity;
-import com.boundless.entity.open.OpenEntity;
 import com.boundless.tick.TickScheduler;
 import com.boundless.util.EffekUtils;
-import com.boundless.util.PlayerAnimationUtils;
-import com.boundless.util.SoundUtils;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
-public class ThrowNailAbility extends TechniqueAbility {
+public class NailThrowAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
         TickScheduler.schedule(player.getWorld(), 1, () -> {
