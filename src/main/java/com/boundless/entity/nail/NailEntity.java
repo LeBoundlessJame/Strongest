@@ -87,12 +87,13 @@ public class NailEntity extends PersistentProjectileEntity {
         if (result.getEntity() == null || this.getOwner() == null) return;
         EffekUtils.playEffect(BoundlessAPI.id("energy_spark"), this, this.getPos().add(0f, 0.1f, 0f), 0.5f);
 
+        UUID targetUUID = result.getEntity().getUuid();
+
         if (this.getOwner() instanceof PlayerEntity player) {
             Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(player, StrawdollComponents.HAIRPIN_TARGETS, new HashMap());
-            List<CursedNailData> nails = targets.getOrDefault(result.getEntity(), new ArrayList<>());
+            List<CursedNailData> nails = new ArrayList<>(targets.getOrDefault(targetUUID, new ArrayList<>()));
             nails.add(new CursedNailData(this.getWorld().getTime()));
-
-            ComponentUtils.updateMap(HeroUtils.getHeroStack(player), StrawdollComponents.HAIRPIN_TARGETS, result.getEntity().getUuid(), nails);
+            ComponentUtils.updateMap(HeroUtils.getHeroStack(player), StrawdollComponents.HAIRPIN_TARGETS, targetUUID, nails);
         }
     }
 

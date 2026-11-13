@@ -43,6 +43,9 @@ public class HairpinAbility extends TechniqueAbility {
             Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(player, StrawdollComponents.HAIRPIN_TARGETS, new HashMap<>());
             targets = new HashMap<>(targets);
 
+            // Todo: I don't like this, but it works, will rework soon
+            targets.replaceAll((uuid, nails) -> new ArrayList<>(nails));
+
             Iterator<Map.Entry<UUID, List<CursedNailData>>> iterator = targets.entrySet().iterator();
 
             while (iterator.hasNext()) {
@@ -65,7 +68,7 @@ public class HairpinAbility extends TechniqueAbility {
                     Entity entity = world.getEntity(entry.getKey());
                     if (entity instanceof LivingEntity target) {
                         target.damage(target.getDamageSources().playerAttack(player), damage);
-                        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("resonance_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
+                        EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                     }
                 }
             }
