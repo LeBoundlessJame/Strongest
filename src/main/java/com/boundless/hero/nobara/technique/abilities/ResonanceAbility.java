@@ -76,7 +76,7 @@ public class ResonanceAbility extends TechniqueAbility {
     }
 
     public int getCost(PlayerEntity player) {
-        return 200;
+        return 1000;
     }
 
     public long getCooldown(PlayerEntity player) {

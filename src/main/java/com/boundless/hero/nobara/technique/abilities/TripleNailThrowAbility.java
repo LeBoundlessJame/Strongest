@@ -45,7 +45,7 @@ public class TripleNailThrowAbility extends TechniqueAbility {
     }
 
     public int getCost(PlayerEntity player) {
-        return 2000;
+        return 300;
     }
 
     public Text getDisplayText(PlayerEntity playerEntity) {
