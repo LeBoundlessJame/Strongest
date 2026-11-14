@@ -3,6 +3,7 @@ package com.boundless.entity.divine_dogs.goals;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.entity.finger_bearer.FingerBearerEntity;
 import com.boundless.registry.StatusEffectRegistry;
+import com.boundless.tick.TickScheduler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -39,8 +40,10 @@ public class SorcererMeleeGoal <T extends PathAwareEntity> extends MeleeAttackGo
                 fingerBearer.dispatcher.chargeUp();
             }
 
-            this.mob.swingHand(Hand.MAIN_HAND);
-            this.mob.tryAttack(target);
+            TickScheduler.schedule(this.mob.getWorld(), 17, () -> {
+                this.mob.swingHand(Hand.MAIN_HAND);
+                this.mob.tryAttack(target);
+            });
         }
     }
 }
