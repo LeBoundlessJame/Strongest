@@ -1,5 +1,6 @@
 package com.boundless.entity.finger_bearer;
 
+import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -8,8 +9,17 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.World;
 
 public class FingerBearerEntity extends HostileEntity {
+    public final FingerBearerDispatcher dispatcher;
+
     public FingerBearerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
+        this.dispatcher = new FingerBearerDispatcher(this);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.dispatcher.walk();
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {

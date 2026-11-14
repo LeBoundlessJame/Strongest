@@ -13,6 +13,6 @@ public class FingerBearerEntityRenderer extends AzEntityRenderer<FingerBearerEnt
     private static final Identifier TEX = BoundlessAPI.id("textures/entity/finger_bearer.png");
 
     public FingerBearerEntityRenderer(EntityRendererFactory.Context context) {
-        super(AzEntityRendererConfig.<FingerBearerEntity>builder(GEO, TEX).build(), context);
+        super(AzEntityRendererConfig.<FingerBearerEntity>builder(GEO, TEX).setAnimatorProvider(FingerBearerAnimator::new).build(), context);
     }
 }

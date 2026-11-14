@@ -3,8 +3,8 @@
 	"animations": {
 		"walk": {
 			"loop": true,
-			"animation_length": 1,
 			"anim_time_update": "query.anim_time + query.delta_time",
+			"animation_length": 1,
 			"bones": {
 				"Head": {
 					"rotation": {
@@ -13,7 +13,7 @@
 				},
 				"Body": {
 					"rotation": {
-						"vector": [0, "-math.cos(query.anim_time * 360) * 1", 0]
+						"vector": [0, "-math.cos(query.anim_time * 360) * 1\n", 0]
 					}
 				},
 				"LeftArm": {
