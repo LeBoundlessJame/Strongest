@@ -1,7 +1,10 @@
 package com.boundless.entity.finger_bearer;
 
 import com.boundless.entity.divine_dogs.goals.DivineDogMeleeGoal;
+import com.boundless.entity.divine_dogs.goals.SorcererMeleeGoal;
 import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
+import lombok.Getter;
+import lombok.Setter;
 import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,6 +20,9 @@ public class FingerBearerEntity extends HostileEntity {
     public final MoveAnalysis moveAnalysis;
     public final FingerBearerDispatcher dispatcher;
 
+    @Getter @Setter
+    private boolean isMeleeAttacking = false;
+
     public FingerBearerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new FingerBearerDispatcher(this);
@@ -26,7 +32,7 @@ public class FingerBearerEntity extends HostileEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.0, true));
+        this.goalSelector.add(2, new SorcererMeleeGoal<>(this, 1.0, true));
         this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(10, new LookAroundGoal(this));
@@ -47,13 +53,6 @@ public class FingerBearerEntity extends HostileEntity {
 
     private void animationTick() {
         if (!this.getWorld().isClient) return;
-
-        /*
-        if (this.isAttacking()) {
-            this.dispatcher.chargeUp();
-            return;
-        }
-         */
 
         this.dispatcher.walk();
     }

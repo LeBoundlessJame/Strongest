@@ -6,7 +6,7 @@ import mod.azure.azurelib.common.animation.play_behavior.AzPlayBehaviors;
 public class FingerBearerDispatcher {
     private final FingerBearerEntity entity;
     private static final AzCommand WALK = azLoopedAnim("walk");
-    private static final AzCommand CHARGE_UP = azLoopedAnim("charge_up");
+    private static final AzCommand CHARGE_UP = azAnim("charge_up");
 
     public FingerBearerDispatcher(FingerBearerEntity animatable) {
         this.entity = animatable;
@@ -18,6 +18,10 @@ public class FingerBearerDispatcher {
 
     public void chargeUp() {
         CHARGE_UP.sendForEntity(entity);
+    }
+
+    public static AzCommand azAnim(String animation) {
+        return AzCommand.create("base_controller", animation, AzPlayBehaviors.PLAY_ONCE);
     }
 
     public static AzCommand azLoopedAnim(String animation) {
