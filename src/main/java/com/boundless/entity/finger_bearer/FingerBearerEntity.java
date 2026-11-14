@@ -1,25 +1,61 @@
 package com.boundless.entity.finger_bearer;
 
+import com.boundless.entity.divine_dogs.goals.DivineDogMeleeGoal;
 import com.boundless.entity.divine_dogs.kuro.DivineDogDispatcher;
+import mod.azure.azurelib.common.util.MoveAnalysis;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 public class FingerBearerEntity extends HostileEntity {
+    public final MoveAnalysis moveAnalysis;
     public final FingerBearerDispatcher dispatcher;
 
     public FingerBearerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new FingerBearerDispatcher(this);
+        this.moveAnalysis = new MoveAnalysis(this);
+    }
+
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.0, true));
+        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
+        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(10, new LookAroundGoal(this));
+        this.targetSelector.add(3, new RevengeGoal(this).setGroupRevenge());
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+    }
+
+    public boolean shouldAngerAt(LivingEntity entity) {
+        return true;
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.dispatcher.chargeUp();
+        this.moveAnalysis.update();
+        this.animationTick();
+    }
+
+    private void animationTick() {
+        if (!this.getWorld().isClient) return;
+
+        /*
+        if (this.isAttacking()) {
+            this.dispatcher.chargeUp();
+            return;
+        }
+         */
+
+        this.dispatcher.walk();
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
