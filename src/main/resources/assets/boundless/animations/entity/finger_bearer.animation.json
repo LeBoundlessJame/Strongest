@@ -2,29 +2,35 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"charge_up": {
-			"animation_length": 1.5,
+			"animation_length": 2,
 			"bones": {
 				"LeftArm": {
 					"position": {
 						"0": {
 							"vector": [0, 0, 0]
 						},
-						"0.208333": {
-							"vector": [-1, -6, 0],
+						"0.291667": {
+							"vector": [0.75, -3, 0],
 							"easing": "easeInOutSine"
 						},
-						"0.583333": {
-							"vector": [0, -6, 0]
+						"0.375": {
+							"vector": [0.75, -3, 0],
+							"easing": "easeInOutSine"
 						}
 					},
 					"rotation": {
 						"0": {
 							"vector": [0, 0, 0]
 						},
-						"0.208333": {
-							"vector": [-134.8677, 29.2211, -32.0393],
-							"easing": "easeInOutSine"
+						"0.25": {
+							"vector": [-67.5445, 67.4568, 60.9914]
+						},
+						"0.333333": {
+							"vector": [-67.5445, 67.4568, 60.9914]
 						}
+					},
+					"scale": {
+						"vector": [1, 1, 1]
 					}
 				},
 				"RightArm": {
@@ -32,22 +38,26 @@
 						"0": {
 							"vector": [0, 0, 0]
 						},
-						"0.208333": {
-							"vector": [0, -4, 0],
-							"easing": "easeInOutSine"
+						"0.291667": {
+							"vector": [-1, -1, 0]
 						},
-						"0.583333": {
-							"vector": [-1, -4, 0]
+						"0.375": {
+							"vector": [-1, -1, 0]
 						}
 					},
 					"rotation": {
 						"0": {
 							"vector": [0, 0, 0]
 						},
-						"0.208333": {
-							"vector": [-50.1553, -61.2435, -59.8964],
-							"easing": "easeInOutSine"
+						"0.25": {
+							"vector": [-30.0607, -68.3987, -76.5226]
+						},
+						"0.333333": {
+							"vector": [-30.0607, -68.3987, -76.5226]
 						}
+					},
+					"scale": {
+						"vector": [1, 1, 1]
 					}
 				},
 				"all": {
@@ -55,11 +65,14 @@
 						"0": {
 							"vector": [0, 0, 0]
 						},
-						"0.25": {
+						"0.333333": {
 							"vector": [0, 0, 0]
 						},
-						"1": {
-							"vector": ["-math.cos(query.anim_time * 360 * 100) * 0.3", "math.cos(query.anim_time * 360 * 100) * 0.3", 0]
+						"0.416667": {
+							"vector": [0, 0, 0]
+						},
+						"1.333333": {
+							"vector": ["-math.cos(query.anim_time * 360 * 15) * 0.3", "math.cos(query.anim_time * 360 * 15) * 0.3", 0]
 						}
 					}
 				}

@@ -19,7 +19,7 @@ public class FingerBearerEntity extends HostileEntity {
     @Override
     public void tick() {
         super.tick();
-        this.dispatcher.walk();
+        this.dispatcher.chargeUp();
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {

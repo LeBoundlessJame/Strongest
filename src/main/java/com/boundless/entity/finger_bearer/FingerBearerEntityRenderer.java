@@ -9,7 +9,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class FingerBearerEntityRenderer extends AzEntityRenderer<FingerBearerEntity> {
-    private static final Identifier GEO = BoundlessAPI.id("geo/item/hero.geo.json");
+    private static final Identifier GEO = BoundlessAPI.id("geo/entity/sorcerer.geo.json");
     private static final Identifier TEX = BoundlessAPI.id("textures/entity/finger_bearer.png");
 
     public FingerBearerEntityRenderer(EntityRendererFactory.Context context) {
