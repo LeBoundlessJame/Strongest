@@ -42,6 +42,7 @@ public class SorcererMeleeGoal <T extends PathAwareEntity> extends MeleeAttackGo
 
             TickScheduler.schedule(this.mob.getWorld(), 17, () -> {
                 this.mob.swingHand(Hand.MAIN_HAND);
+                // Todo: ensure they're still within range at this stage
                 this.mob.tryAttack(target);
             });
         }
