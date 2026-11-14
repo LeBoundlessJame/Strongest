@@ -20,9 +20,6 @@ public class FingerBearerEntity extends HostileEntity {
     public final MoveAnalysis moveAnalysis;
     public final FingerBearerDispatcher dispatcher;
 
-    @Getter @Setter
-    private boolean isMeleeAttacking = false;
-
     public FingerBearerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.dispatcher = new FingerBearerDispatcher(this);
