@@ -2,6 +2,8 @@ package com.boundless.registry;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.divine_dogs.DivineDogEntityRenderer;
+import com.boundless.entity.finger_bearer.FingerBearerEntity;
+import com.boundless.entity.finger_bearer.FingerBearerEntityRenderer;
 import com.boundless.entity.gama.GamaEntityRenderer;
 import com.boundless.entity.grapple.GrappleEntityRenderer;
 import com.boundless.entity.hero_action.HeroActionRenderer;
@@ -20,5 +22,6 @@ public class EntityRenderRegistry {
         EntityRendererRegistry.INSTANCE.register(EntityRegistry.OPEN, ctx -> new OpenEntityRenderer(ctx));
         EntityRendererRegistry.INSTANCE.register(EntityRegistry.MALEVOLENT_SHRINE, MalevolentShrineEntityRenderer::new);
         EntityRendererRegistry.INSTANCE.register(EntityRegistry.NAIL, NailEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(EntityRegistry.FINGER_BEARER, FingerBearerEntityRenderer::new);
     }
 }

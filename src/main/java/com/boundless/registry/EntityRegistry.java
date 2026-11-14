@@ -3,6 +3,7 @@ package com.boundless.registry;
 import com.boundless.BoundlessAPI;
 import com.boundless.entity.divine_dogs.kuro.DivineDogKuroEntity;
 import com.boundless.entity.divine_dogs.shiro.DivineDogShiroEntity;
+import com.boundless.entity.finger_bearer.FingerBearerEntity;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.entity.hero_action.HeroActionEntity;
@@ -25,6 +26,7 @@ public class EntityRegistry {
     public static final EntityType<OpenEntity> OPEN = registerEntityType("open", OpenEntity::new, 1, 1);
     public static final EntityType<MalevolentShrineEntity> MALEVOLENT_SHRINE = registerEntityType("malevolent_shrine", MalevolentShrineEntity::new, 8, 8);
     public static final EntityType<NailEntity> NAIL = registerEntityType("nail", NailEntity::new, 1, 1);
+    public static final EntityType<FingerBearerEntity> FINGER_BEARER = registerEntityType("finger_bearer", FingerBearerEntity::new, 0.6F, 1.8F, 1.62F);
 
     public static <T extends Entity> EntityType<T> registerEntityType(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return Registry.register(Registries.ENTITY_TYPE, BoundlessAPI.id(name), EntityType.Builder.<T>create(factory, SpawnGroup.MISC).dimensions(width, height).build(name));
@@ -38,6 +40,7 @@ public class EntityRegistry {
         FabricDefaultAttributeRegistry.register(DIVINE_DOG_KURO, DivineDogKuroEntity.createWolfAttributes());
         FabricDefaultAttributeRegistry.register(DIVINE_DOG_SHIRO, DivineDogShiroEntity.createWolfAttributes());
         FabricDefaultAttributeRegistry.register(GAMA, GamaEntity.createFrogAttributes());
+        FabricDefaultAttributeRegistry.register(FINGER_BEARER, FingerBearerEntity.createAttributes());
     }
 
     public static void initialize() {
