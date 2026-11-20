@@ -11,7 +11,7 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -21,20 +21,20 @@ import java.util.*;
 
 public class HairpinAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+    public void activate(LivingEntity user) {
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, user, 1);
+        int attackCount = HeroUtils.getHeroStack(user).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
-        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
-        SoundUtils.playSound(player, SoundRegistry.CLICK, 10, 11);
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+        SoundUtils.playSound(user, SoundRegistry.CLICK, 10, 11);
 
-        detonateImpaledNails(player);
-        detonateGroundNails(player);
+        detonateImpaledNails(user);
+        detonateGroundNails(user);
     }
 
     // Nails that hit the enemy successfully
-    public void detonateImpaledNails(PlayerEntity player) {
-        Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(player, StrawdollComponents.HAIRPIN_TARGETS, new HashMap<>());
+    public void detonateImpaledNails(LivingEntity user) {
+        Map<UUID, List<CursedNailData>> targets = ComponentUtils.getOr(user, StrawdollComponents.HAIRPIN_TARGETS, new HashMap<>());
         targets = new HashMap<>(targets);
 
         // Todo: I don't like this, but it works, will rework soon
@@ -51,17 +51,17 @@ public class HairpinAbility extends TechniqueAbility {
             while (nailIterator.hasNext()) {
                 CursedNailData nail = nailIterator.next();
 
-                if (!nail.isExpired(player.getWorld().getTime())) {
+                if (!nail.isExpired(user.getWorld().getTime())) {
                     damage += 7.5f;
                 } else {
                     nailIterator.remove();
                 }
             }
 
-            if (damage > 0 && player.getWorld() instanceof ServerWorld world) {
+            if (damage > 0 && user.getWorld() instanceof ServerWorld world) {
                 Entity entity = world.getEntity(entry.getKey());
                 if (entity instanceof LivingEntity target) {
-                    target.damage(target.getDamageSources().playerAttack(player), damage);
+                    target.damage(target.getDamageSources().mobAttack(user), damage);
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("hairpin_entity_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                     EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.35, 0.35, 0.35));
                 }
@@ -70,15 +70,15 @@ public class HairpinAbility extends TechniqueAbility {
             iterator.remove();
         }
 
-        ComponentUtils.set(player, StrawdollComponents.HAIRPIN_TARGETS, targets);
+        ComponentUtils.set(user, StrawdollComponents.HAIRPIN_TARGETS, targets);
     }
 
-    public void detonateGroundNails(PlayerEntity player) {
-        List<Entity> nails = AOEUtils.getEntitiesInRadius(player, player.getWorld(), player.getPos(), new Vec3d(64, 32, 64), entity -> entity instanceof NailEntity);
+    public void detonateGroundNails(LivingEntity user) {
+        List<Entity> nails = AOEUtils.getEntitiesInRadius(user, user.getWorld(), user.getPos(), new Vec3d(64, 32, 64), entity -> entity instanceof NailEntity);
 
         for (Entity nail : nails) {
             if (nail instanceof NailEntity nailEntity) {
-                if (nailEntity.getOwner() == player) {
+                if (nailEntity.getOwner() == user) {
                     nailEntity.detonate();
                 }
             }
@@ -90,15 +90,15 @@ public class HairpinAbility extends TechniqueAbility {
         return BoundlessAPI.id("hairpin");
     }
 
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 200;
     }
 
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 20;
     }
 
-    public Text getDisplayText(PlayerEntity playerEntity) {
+    public Text getDisplayText(LivingEntity userEntity) {
         return Text.of("Hairpin");
     }
 }

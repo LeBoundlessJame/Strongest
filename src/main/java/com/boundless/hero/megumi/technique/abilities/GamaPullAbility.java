@@ -10,7 +10,7 @@ import com.boundless.registry.EntityRegistry;
 import com.boundless.util.RaycastUtils;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
@@ -18,20 +18,20 @@ import net.minecraft.util.math.Vec3d;
 
 public class GamaPullAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        EntityHitResult result = RaycastUtils.raycast(player, 32);
-        Entity target = result == null ? RaycastUtils.thickRaycast(player, 32, 1.5f) : result.getEntity();
-        if (target == null || target == player) return;
+    public void activate(LivingEntity user) {
+        EntityHitResult result = RaycastUtils.raycast(user, 32);
+        Entity target = result == null ? RaycastUtils.thickRaycast(user, 32, 1.5f) : result.getEntity();
+        if (target == null || target == user) return;
 
-        Vec3d leftSide = player.getRotationVector().crossProduct(new Vec3d(0, 1, 0)).normalize().multiply(-1);
-        Vec3d gamaPos = player.getPos().add(leftSide.multiply(1.5));
-        GamaEntity gama = ShikigamiManager.getShikigami(player, EntityRegistry.GAMA);
+        Vec3d leftSide = user.getRotationVector().crossProduct(new Vec3d(0, 1, 0)).normalize().multiply(-1);
+        Vec3d gamaPos = user.getPos().add(leftSide.multiply(1.5));
+        GamaEntity gama = ShikigamiManager.getShikigami(user, EntityRegistry.GAMA);
 
         if (gama != null) {
-            ShikigamiManager.desummonShikigami(player, EntityRegistry.GAMA);
+            ShikigamiManager.desummonShikigami(user, EntityRegistry.GAMA);
         }
 
-        gama = ShikigamiManager.summonShikigamiAt(player, EntityRegistry.GAMA, gamaPos);
+        gama = ShikigamiManager.summonShikigamiAt(user, EntityRegistry.GAMA, gamaPos);
         if (gama == null) return;
 
         gama.setPullTarget(target);
@@ -46,12 +46,12 @@ public class GamaPullAbility extends TechniqueAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
-        return Text.literal("Gama Pull: ").append(ComboManager.formattedComboText("LRR", ComboManager.getProgress(player, TenShadowsComponents.CURRENT_ORDER_SEQUENCE)));
+    public Text getDisplayText(LivingEntity user) {
+        return Text.literal("Gama Pull: ").append(ComboManager.formattedComboText("LRR", ComboManager.getProgress(user, TenShadowsComponents.CURRENT_ORDER_SEQUENCE)));
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 240;
     }
 }

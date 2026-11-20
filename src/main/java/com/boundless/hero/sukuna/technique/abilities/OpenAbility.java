@@ -9,7 +9,7 @@ import com.boundless.util.AnimationManager;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -20,40 +20,40 @@ public class OpenAbility extends TechniqueAbility {
 
     // Todo: should probably let enemies know if fuga is about to happen
     @Override
-    public void activate(PlayerEntity player) {
-        EffekUtils.playEffect(BoundlessAPI.id("fuga_aura"), player, player.getPos().add(0, player.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
+    public void activate(LivingEntity user) {
+        EffekUtils.playEffect(BoundlessAPI.id("fuga_aura"), user, user.getPos().add(0, user.getHeight() / 2, 0), new Vec3d(0.2, 0.2, 0.2));
         //String message = "§6§l§ka§6" + " §6§l''Open.'' " + "§6§l§ka§6";
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
-        SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
-        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("open"), true, 5000);
+        user.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
+        SoundUtils.playSound(user, SoundEvents.BLOCK_FIRE_AMBIENT);
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("open"), true, 5000);
 
         for (int i = 0; i < 20; i++) {
-            player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);
+            user.getWorld().addImportantParticle(ParticleTypes.LAVA, user.getX() + Math.cos(i), user.getY(), user.getZ() + Math.sin(i), 0, 0, 0);
         }
 
-        TickScheduler.schedule(player.getWorld(), 90, () -> {
-            OpenEntity openEntity = new OpenEntity(player, player.getWorld());
-            openEntity.setVelocity(player.getRotationVector().multiply(4));
-            openEntity.setPosition(player.getPos().add(player.getRotationVector().multiply(2).x, 1, player.getRotationVector().multiply(2).z));
+        TickScheduler.schedule(user.getWorld(), 90, () -> {
+            OpenEntity openEntity = new OpenEntity(user, user.getWorld());
+            openEntity.setVelocity(user.getRotationVector().multiply(4));
+            openEntity.setPosition(user.getPos().add(user.getRotationVector().multiply(2).x, 1, user.getRotationVector().multiply(2).z));
             openEntity.setNoGravity(true);
-            openEntity.setPitch(player.getPitch());
-            openEntity.setYaw(player.getYaw());
-            EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("fuga_arrow"), openEntity, new Vec3d(2f, 2f, 2f), new Vec3d(player.getPitch(), player.getYaw() * -1, 0));
-            player.getWorld().spawnEntity(openEntity);
-            //performFurnaceNukeIfPossible(player);
+            openEntity.setPitch(user.getPitch());
+            openEntity.setYaw(user.getYaw());
+            EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("fuga_arrow"), openEntity, new Vec3d(2f, 2f, 2f), new Vec3d(user.getPitch(), user.getYaw() * -1, 0));
+            user.getWorld().spawnEntity(openEntity);
+            //performFurnaceNukeIfPossible(user);
         });
     }
 
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 20;
     }
 
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 2000;
     }
 
-    public Text getDisplayText(PlayerEntity playerEntity) {
+    public Text getDisplayText(LivingEntity userEntity) {
         return Text.of("Divine Flame - Open");
     }
 

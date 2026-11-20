@@ -9,7 +9,7 @@ import com.boundless.util.ComponentUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.AnimationManager;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -18,37 +18,37 @@ import java.util.List;
 
 public class TripleNailThrowAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+    public void activate(LivingEntity user) {
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, user, 1);
+        int attackCount = HeroUtils.getHeroStack(user).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
         List<Float> rotations = List.of(-45f, 0f, 45f);
 
-        TickScheduler.schedule(player.getWorld(), 1, () -> {
+        TickScheduler.schedule(user.getWorld(), 1, () -> {
             for (float rotation: rotations) {
-                Vec3d direction = player.getRotationVector().rotateY((float) Math.toRadians(-rotation / 6));
-                NailEntity nailEntity = new NailEntity(player, player.getWorld());
+                Vec3d direction = user.getRotationVector().rotateY((float) Math.toRadians(-rotation / 6));
+                NailEntity nailEntity = new NailEntity(user, user.getWorld());
                 nailEntity.setVelocity(direction.multiply(4));
-                nailEntity.setPosition(player.getPos().add(direction.multiply(2).x, 1, direction.multiply(2).z));
+                nailEntity.setPosition(user.getPos().add(direction.multiply(2).x, 1, direction.multiply(2).z));
                 nailEntity.setNoGravity(true);
-                nailEntity.setPitch(player.getPitch());
-                nailEntity.setYaw(player.getYaw() + rotation);
-                EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("curse_fire"), nailEntity, new Vec3d(0.5, 0.5, 0.5), new Vec3d(player.getPitch(), player.getYaw() * -1, 0));
-                player.getWorld().spawnEntity(nailEntity);
+                nailEntity.setPitch(user.getPitch());
+                nailEntity.setYaw(user.getYaw() + rotation);
+                EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("curse_fire"), nailEntity, new Vec3d(0.5, 0.5, 0.5), new Vec3d(user.getPitch(), user.getYaw() * -1, 0));
+                user.getWorld().spawnEntity(nailEntity);
             }
         });
     }
 
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 240;
     }
 
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 300;
     }
 
-    public Text getDisplayText(PlayerEntity playerEntity) {
+    public Text getDisplayText(LivingEntity userEntity) {
         return Text.of("Triple nail throw");
     }
 

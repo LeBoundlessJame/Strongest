@@ -7,7 +7,7 @@ import com.boundless.util.ComponentUtils;
 import com.boundless.util.RaycastUtils;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
@@ -20,13 +20,13 @@ public class SelectTargetAbility extends TechniqueAbility {
     }
 
     @Override
-    public void activate(PlayerEntity player) {
-        EntityHitResult result = RaycastUtils.raycast(player, 64);
-        Entity target = result == null ? RaycastUtils.thickRaycast(player, 64, 1.5f) : result.getEntity();
+    public void activate(LivingEntity user) {
+        EntityHitResult result = RaycastUtils.raycast(user, 64);
+        Entity target = result == null ? RaycastUtils.thickRaycast(user, 64, 1.5f) : result.getEntity();
 
-        if (target == null || target == player) return;
+        if (target == null || target == user) return;
         ComponentType<Integer> component = this.target.equals(Target.PRIMARY) ? BoogieWoogieComponents.PRIMARY_TARGET_ID : BoogieWoogieComponents.SECONDARY_TARGET_ID;
-        ComponentUtils.set(player, component, target.getId());
+        ComponentUtils.set(user, component, target.getId());
     }
 
     @Override
@@ -35,12 +35,12 @@ public class SelectTargetAbility extends TechniqueAbility {
         return BoundlessAPI.id("select_boogie_woogie_target" + "_" + version);
     }
 
-    public Text getDisplayText(PlayerEntity playerEntity) {
+    public Text getDisplayText(LivingEntity userEntity) {
         return target.equals(Target.PRIMARY) ? Text.of("Select primary target") : Text.of("Select secondary target");
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 5;
     }
 

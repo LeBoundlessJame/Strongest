@@ -10,7 +10,7 @@ import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -20,35 +20,35 @@ import java.util.List;
 
 public class CleaveAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("cleave"));
-        List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
+    public void activate(LivingEntity user) {
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("cleave"));
+        List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(user);
 
         for (LivingEntity target: targets) {
-            target.damage(target.getDamageSources().playerAttack(player), getCleaveDamage(player, target));
+            target.damage(target.getDamageSources().mobAttack(user), getCleaveDamage(user, target));
         }
 
         if (!targets.isEmpty()) {
             SoundUtils.playSound(targets.getFirst(), SoundRegistry.SLASH_1);
 
-            CameraUtils.playCameraShake(player);
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
+            // TODO: FIX ASAP CameraUtils.playCameraShake(user);
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, 4, 4, true, false, false));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 6, 4, true, false, false));
 
             LivingEntity livingEntity = targets.getFirst();
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 4, true, false, false));
 
-            EffekUtils.playRotatedEffect(BoundlessAPI.id("cleave_spikes"), livingEntity, new Vec3d(livingEntity.getX() - player.getRotationVector().x, livingEntity.getBodyY(0.5), livingEntity.getZ() - player.getRotationVector().z), new Vec3d(livingEntity.getHeight() / 10, livingEntity.getHeight() / 10, livingEntity.getHeight() / 10), new Vec3d(0, 0, player.getRotationVector().z));
-            EffekUtils.playRotatedEffect(BoundlessAPI.id("upgraded_cleave"), livingEntity, new Vec3d(livingEntity.getX() - player.getRotationVector().x, livingEntity.getBodyY(0.5), livingEntity.getZ() - player.getRotationVector().z), new Vec3d(livingEntity.getHeight() / 10, livingEntity.getHeight() / 10, livingEntity.getHeight() / 10), new Vec3d(0, 0, player.getRotationVector().z));
+            EffekUtils.playRotatedEffect(BoundlessAPI.id("cleave_spikes"), livingEntity, new Vec3d(livingEntity.getX() - user.getRotationVector().x, livingEntity.getBodyY(0.5), livingEntity.getZ() - user.getRotationVector().z), new Vec3d(livingEntity.getHeight() / 10, livingEntity.getHeight() / 10, livingEntity.getHeight() / 10), new Vec3d(0, 0, user.getRotationVector().z));
+            EffekUtils.playRotatedEffect(BoundlessAPI.id("upgraded_cleave"), livingEntity, new Vec3d(livingEntity.getX() - user.getRotationVector().x, livingEntity.getBodyY(0.5), livingEntity.getZ() - user.getRotationVector().z), new Vec3d(livingEntity.getHeight() / 10, livingEntity.getHeight() / 10, livingEntity.getHeight() / 10), new Vec3d(0, 0, user.getRotationVector().z));
             EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), livingEntity, livingEntity.getPos().add(0, livingEntity.getHeight() / 2, 0), livingEntity.getHeight() / 16);
         }
 
-        AttackUtils.startAttackTimer(player, 20);
+        AttackUtils.startAttackTimer(user, 20);
     }
 
     // % of max health, or flat damage, depending on which is higher
-    public float getCleaveDamage(PlayerEntity player, LivingEntity target) {
-        int fingersConsumed = ComponentUtils.getOr(player, SukunaComponents.SUKUNA_FINGERS_CONSUMED, 1);
+    public float getCleaveDamage(LivingEntity user, LivingEntity target) {
+        int fingersConsumed = ComponentUtils.getOr(user, SukunaComponents.SUKUNA_FINGERS_CONSUMED, 1);
         float percentage = MathHelper.lerp(fingersConsumed / 15, 20, 70);
         float damage = target.getMaxHealth() / percentage;
         // Todo: add as config
@@ -57,12 +57,12 @@ public class CleaveAbility extends TechniqueAbility {
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 100;
     }
 
     @Override
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 2000;
     }
 
@@ -72,7 +72,7 @@ public class CleaveAbility extends TechniqueAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.of("Cleave");
     }
 }

@@ -3,7 +3,7 @@ package com.boundless.util;
 import com.boundless.entity.hero_action.HeroActionEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -29,17 +29,17 @@ public class RaycastUtils {
         return null;
     }
 
-    public static Entity thickRaycast(PlayerEntity playerEntity, float range, float raycastRadius) {
-        if (!playerEntity.getWorld().isClient) {
-            Vec3d start = playerEntity.getCameraPosVec(1.0f);
-            Vec3d direction = playerEntity.getRotationVec(1.0f);
+    public static Entity thickRaycast(LivingEntity user, float range, float raycastRadius) {
+        if (!user.getWorld().isClient) {
+            Vec3d start = user.getCameraPosVec(1.0f);
+            Vec3d direction = user.getRotationVec(1.0f);
             Vec3d end = start.add(direction.x * range, direction.y * range, direction.z * range);
-            Box box = playerEntity.getBoundingBox().stretch(direction.multiply(range)).expand(raycastRadius);
+            Box box = user.getBoundingBox().stretch(direction.multiply(range)).expand(raycastRadius);
 
             Entity closestEntity = null;
             double closestDistance = range * range;
 
-            for (Entity entity: playerEntity.getWorld().getOtherEntities(playerEntity, box)) {
+            for (Entity entity: user.getWorld().getOtherEntities(user, box)) {
                 Box entityHitbox = entity.getBoundingBox().expand(raycastRadius);
 
                 Optional<Vec3d> raycastResult = entityHitbox.raycast(start, end);

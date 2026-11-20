@@ -4,15 +4,15 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.megumi.technique.TenShadowsComponents;
 import com.boundless.util.ComponentUtils;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
-        ComponentUtils.toggleBoolean(player, TenShadowsComponents.SHIKIGAMI_ORDER_MENU,false);
+    public void activate(LivingEntity user) {
+        if (user.getWorld().isClient) return;
+        ComponentUtils.toggleBoolean(user, TenShadowsComponents.SHIKIGAMI_ORDER_MENU,false);
     }
 
     @Override
@@ -21,12 +21,12 @@ public class ShikigamiOrdersMenuAbility extends TechniqueAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.literal("Shikigami Orders");
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 5;
     }
 }

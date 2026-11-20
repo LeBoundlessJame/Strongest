@@ -13,7 +13,7 @@ import com.boundless.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -26,13 +26,13 @@ import java.util.UUID;
 
 public class ResonanceAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+    public void activate(LivingEntity user) {
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, user, 1);
+        int attackCount = HeroUtils.getHeroStack(user).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
-        TickScheduler.schedule(player.getWorld(), 10, () -> {
-            Map<UUID, ResonanceData> resonanceTracker = ComponentUtils.getOr(player, StrawdollComponents.RESONANCE_TRACKER, new HashMap<>());
+        TickScheduler.schedule(user.getWorld(), 10, () -> {
+            Map<UUID, ResonanceData> resonanceTracker = ComponentUtils.getOr(user, StrawdollComponents.RESONANCE_TRACKER, new HashMap<>());
             resonanceTracker = new HashMap<>(resonanceTracker);
 
             Iterator<Map.Entry<UUID, ResonanceData>> iterator = resonanceTracker.entrySet().iterator();
@@ -41,18 +41,18 @@ public class ResonanceAbility extends TechniqueAbility {
                 Map.Entry<UUID, ResonanceData> entry = iterator.next();
                 ResonanceData data = entry.getValue();
 
-                if (data.isExpired(player.getWorld().getTime())) {
+                if (data.isExpired(user.getWorld().getTime())) {
                     iterator.remove();
-                } else if (data.isResonanceReady() && player.getWorld() instanceof ServerWorld world) {
+                } else if (data.isResonanceReady() && user.getWorld() instanceof ServerWorld world) {
                     Entity target = world.getEntity(entry.getKey());
                     if (target instanceof LivingEntity livingEntity) {
-                        SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_2, 20, 21);
-                        SoundUtils.playSound(player, SoundRegistry.RATIO_IMPACT_1, 10, 11);
+                        SoundUtils.playSound(user, SoundRegistry.RATIO_IMPACT_2, 20, 21);
+                        SoundUtils.playSound(user, SoundRegistry.RATIO_IMPACT_1, 10, 11);
                         // Todo: make this scale instead, based on entity max health
-                        livingEntity.damage(target.getDamageSources().playerAttack(player), livingEntity.getMaxHealth() * 0.3f);
+                        livingEntity.damage(target.getDamageSources().mobAttack(user), livingEntity.getMaxHealth() * 0.3f);
 
-                        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVERT, 3, 0, true, false, false));
-                        CameraUtils.playCameraShake(player);
+                        user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.INVERT, 3, 0, true, false, false));
+                        // TODO: FIX ASAP CameraUtils.playCameraShake(user);
                         EffekUtils.playRandomRotatedEffect(BoundlessAPI.id("resonance_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(0.5, 0.5, 0.5));
                         EffekUtils.playEffect(BoundlessAPI.id("dismantle_impact"), target, target.getPos().add(0, target.getHeight() / 2, 0), target.getHeight() / 16);
                     }
@@ -60,7 +60,7 @@ public class ResonanceAbility extends TechniqueAbility {
                 }
             }
 
-            ComponentUtils.set(player, StrawdollComponents.RESONANCE_TRACKER, resonanceTracker);
+            ComponentUtils.set(user, StrawdollComponents.RESONANCE_TRACKER, resonanceTracker);
         });
     }
 
@@ -69,19 +69,19 @@ public class ResonanceAbility extends TechniqueAbility {
         return BoundlessAPI.id("resonance");
     }
 
-    public float getDamage(PlayerEntity player) {
+    public float getDamage(LivingEntity user) {
         return 20;
     }
 
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 1000;
     }
 
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 300;
     }
 
-    public Text getDisplayText(PlayerEntity playerEntity) {
+    public Text getDisplayText(LivingEntity userEntity) {
         return Text.of("Resonance");
     }
 }
