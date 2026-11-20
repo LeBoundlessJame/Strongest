@@ -1,7 +1,7 @@
 package com.boundless.combat;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
@@ -16,7 +16,7 @@ public class MeleeHitbox {
         this.arcDegrees = arcDegrees;
     }
 
-    public List<LivingEntity> getTargetsInArc(PlayerEntity user) {
+    public List<LivingEntity> getTargetsInArc(LivingEntity user) {
         Vec3d origin = user.getEyePos();
         Vec3d facing = user.getRotationVector();
 

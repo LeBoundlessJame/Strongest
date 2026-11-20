@@ -11,7 +11,7 @@ import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -22,17 +22,17 @@ import java.util.List;
 
 public class DontMoveAbility extends CursedSpeechAbility {
     @Override
-    public void cursedSpeechEffect(PlayerEntity player, LivingEntity target) {
+    public void cursedSpeechEffect(LivingEntity user, LivingEntity target) {
         CombatUtils.slow(target, 80, 255);
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 400;
     }
 
     @Override
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 1000;
     }
 
@@ -42,7 +42,7 @@ public class DontMoveAbility extends CursedSpeechAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.of("Say 'Don't move'");
     }
 }

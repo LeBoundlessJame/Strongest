@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -25,7 +25,7 @@ public class AOEAbility extends TechniqueAbility implements AOE {
     private int duration = 10;
     private Vec3d radius = new Vec3d(3, 3, 3);
     private Vec3d knockback = new Vec3d(1, 0.5, 1);
-    private BiConsumer<PlayerEntity, LivingEntity> onHit = (player, target) -> {};
+    private BiConsumer<LivingEntity, LivingEntity> onHit = (user, target) -> {};
     private HitEffects hitEffects = new HitEffects(List.of(BoundlessAPI.id("melee_impact")), List.of(SoundRegistry.IMPACT_HEAVY_1));
 
     @Override

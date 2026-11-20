@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -38,46 +38,46 @@ public class PunchAbility extends TechniqueAbility {
     private SoundEvent whiffSound = SoundRegistry.MISS_HIT;
     private HitEffects impactEffects = new HitEffects(List.of(BoundlessAPI.id("melee_impact")), List.of(SoundRegistry.IMPACT_HEAVY_1));
 
-    private Consumer<PlayerEntity> preAttackEvent = (player) -> {
+    private Consumer<LivingEntity> preAttackEvent = (user) -> {
     };
-    private BiConsumer<PlayerEntity, LivingEntity> onHitEvent = (player, target) -> {
+    private BiConsumer<LivingEntity, LivingEntity> onHitEvent = (user, target) -> {
     };
-    private Consumer<PlayerEntity> postAttackEvent = (player) -> {
+    private Consumer<LivingEntity> postAttackEvent = (user) -> {
     };
 
     private Vec3d knockback = new Vec3d(0.6, 0.3, 0.6);
 
-    private Consumer<PlayerEntity> impactEventOverride;
+    private Consumer<LivingEntity> impactEventOverride;
 
-    private Function<PlayerEntity, Boolean> mirrorAnimationProvider = (player) -> {
-        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
-        int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
+    private Function<LivingEntity, Boolean> mirrorAnimationProvider = (user) -> {
+        ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, user, 1);
+        int attackCount = HeroUtils.getHeroStack(user).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
         return attackCount % 2 == 0;
     };
 
     @Override
-    public void activate(PlayerEntity player) {
-        if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
+    public void activate(LivingEntity user) {
+        if (!(user.getWorld().getTime() >= HeroUtils.getHeroStack(user).getOrDefault(ATTACK_END, 0L))) return;
 
-        preAttackEvent.accept(player);
-        AnimationManager.playSyncedAnimation(player, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(player), true, 3000);
-        SoundUtils.playSound(player, this.whiffSound);
+        preAttackEvent.accept(user);
+        AnimationManager.playSyncedAnimation(user, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(user), true, 3000);
+        SoundUtils.playSound(user, this.whiffSound);
 
-        TickScheduler.schedule(player.getWorld(), this.impactTick, () -> this.impact(player));
-        AttackUtils.startAttackTimer(player, this.attackDuration);
+        TickScheduler.schedule(user.getWorld(), this.impactTick, () -> this.impact(user));
+        AttackUtils.startAttackTimer(user, this.attackDuration);
     }
 
-    private void impact(PlayerEntity player) {
+    private void impact(LivingEntity user) {
         if (impactEventOverride != null) {
-            impactEventOverride.accept(player);
-            postAttackEvent.accept(player);
+            impactEventOverride.accept(user);
+            postAttackEvent.accept(user);
             return;
         }
 
-        List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
-        CombatUtils.applyHits(player, targets, this.getDamage(player), knockback, onHitEvent, impactEffects);
+        List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(user);
+        CombatUtils.applyHits(user, targets, this.getDamage(user), knockback, onHitEvent, impactEffects);
 
-        postAttackEvent.accept(player);
+        postAttackEvent.accept(user);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PunchAbility extends TechniqueAbility {
         return BoundlessAPI.id("punch");
     }
 
-    public float getDamage(PlayerEntity player) {
-        return ComponentUtils.getOr(player, StrongestComponents.MELEE_STRENGTH, 0f);
+    public float getDamage(LivingEntity user) {
+        return ComponentUtils.getOr(user, StrongestComponents.MELEE_STRENGTH, 0f);
     }
 }

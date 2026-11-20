@@ -10,7 +10,7 @@ import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -20,28 +20,28 @@ import java.util.List;
 
 public class ExplodeAbility extends CursedSpeechAbility {
     @Override
-    public void onSpeechTrigger(PlayerEntity player, List<LivingEntity> targets) {
-        CameraUtils.playCameraShake(player);
+    public void onSpeechTrigger(LivingEntity user, List<LivingEntity> targets) {
+        // TODO: FIX ASAP CameraUtils.playCameraShake(user);
 
-        TickScheduler.schedule(player.getWorld(), 3, () -> {
+        TickScheduler.schedule(user.getWorld(), 3, () -> {
             SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE);
             SoundUtils.playSound(targets.getFirst(), SoundEvents.ENTITY_GENERIC_EXPLODE.value());
         });
     }
 
     @Override
-    public void cursedSpeechEffect(PlayerEntity player, LivingEntity target) {
-        target.damage(target.getDamageSources().playerAttack(player), 175);
+    public void cursedSpeechEffect(LivingEntity user, LivingEntity target) {
+        target.damage(target.getDamageSources().mobAttack(user), 175);
         EffekUtils.playEffect(BoundlessAPI.id("explode"), target, target.getPos().add(0, target.getHeight() / 2, 0), new Vec3d(target.getScale() * 0.3f, target.getScale() * 0.3f, target.getScale() * 0.3f));
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 600;
     }
 
     @Override
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 1500;
     }
 
@@ -51,7 +51,7 @@ public class ExplodeAbility extends CursedSpeechAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.of("Say 'Explode'");
     }
 }

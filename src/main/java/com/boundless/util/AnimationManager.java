@@ -31,11 +31,15 @@ public class AnimationManager {
     /**
      * Plays an animation and sends a packet for multiplayer display
      **/
-    public static void playSyncedAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
+    public static void playSyncedAnimation(LivingEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {
         if (user.getWorld().isClient) return;
 
-        for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
-            ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, repeatIfPlaying, priority));
+        if (user instanceof PlayerEntity player) {
+            for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
+                ServerPlayNetworking.send(target, new AnimationPlayPayload(user.getUuid(), animation, speed, mirror, repeatIfPlaying, priority));
+            }
+        } else {
+            System.out.println("Support for non-player entity animation not yet complete; WIP");
         }
     }
 

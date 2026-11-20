@@ -4,15 +4,15 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.registry.StrongestComponents;
 import com.boundless.util.ComponentUtils;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class MenuToggleAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
-        ComponentUtils.toggleBoolean(player, StrongestComponents.MENU_TOGGLE,false);
+    public void activate(LivingEntity user) {
+        if (user.getWorld().isClient) return;
+        ComponentUtils.toggleBoolean(user, StrongestComponents.MENU_TOGGLE,false);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class MenuToggleAbility extends TechniqueAbility {
         return BoundlessAPI.id("menu_toggle");
     }
 
-    public Text getDisplayText(PlayerEntity playerEntity) {
-        return ComponentUtils.getOr(playerEntity, StrongestComponents.MENU_TOGGLE,false) ? Text.of("Open menu") : Text.of("Close menu");
+    public Text getDisplayText(LivingEntity user) {
+        return ComponentUtils.getOr(user, StrongestComponents.MENU_TOGGLE,false) ? Text.of("Open menu") : Text.of("Close menu");
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 5;
     }
 }

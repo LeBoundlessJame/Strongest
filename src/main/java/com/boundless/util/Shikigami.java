@@ -1,8 +1,8 @@
 package com.boundless.util;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 
 public interface Shikigami {
-    default void onSummon(PlayerEntity player) {}
+    default void onSummon(LivingEntity user) {}
     default void onDesummon() {}
 }

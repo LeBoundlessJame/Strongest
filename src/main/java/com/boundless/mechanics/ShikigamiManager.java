@@ -5,7 +5,7 @@ import com.boundless.util.Shikigami;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
@@ -15,28 +15,28 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Optional;
 
 public class ShikigamiManager {
-    public static <T extends TameableEntity & Shikigami> void toggleShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
-        if (!(player.getWorld() instanceof ServerWorld)) return;
+    public static <T extends TameableEntity & Shikigami> void toggleShikigami(LivingEntity user, EntityType<T> shikigamiType) {
+        if (!(user.getWorld() instanceof ServerWorld)) return;
 
-        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(user, shikigamiType);
 
         if (nbt.getBoolean("summoned")) {
-            desummonShikigami(player, shikigamiType);
+            desummonShikigami(user, shikigamiType);
         } else {
-            summonShikigamiAtRay(player, shikigamiType, 16);
+            summonShikigamiAtRay(user, shikigamiType, 16);
         }
     }
 
     // Todo: might make this a boolean later in case we want unsuccessful summons to not consume CE, but we'll see
-    public static <T extends TameableEntity & Shikigami> void summonShikigamiAtRay(PlayerEntity playerEntity, EntityType<T> shikigamiType, float range) {
-        BlockHitResult blockHitResult = RaycastUtils.blockRaycast(playerEntity, range);
+    public static <T extends TameableEntity & Shikigami> void summonShikigamiAtRay(LivingEntity user, EntityType<T> shikigamiType, float range) {
+        BlockHitResult blockHitResult = RaycastUtils.blockRaycast(user, range);
         if (blockHitResult == null) return;
         BlockPos pos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
 
-        summonShikigamiAt(playerEntity, shikigamiType, pos.toCenterPos());
+        summonShikigamiAt(user, shikigamiType, pos.toCenterPos());
     }
 
-    public static <T extends TameableEntity & Shikigami> T summonShikigami(PlayerEntity playerEntity, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d pos) {
+    public static <T extends TameableEntity & Shikigami> T summonShikigami(LivingEntity user, ServerWorld serverWorld, EntityType<T> shikigamiType, NbtCompound nbt, Vec3d pos) {
         T shikigami;
 
         if (nbt.containsUuid("UUID")) {
@@ -48,27 +48,27 @@ public class ShikigamiManager {
             shikigami = shikigamiType.create(serverWorld);
             if (shikigami == null) return null;
 
-            shikigami.setOwner(playerEntity);
+            shikigami.setOwnerUuid(user.getUuid());
             shikigami.setPersistent();
             shikigami.setTamed(true, false);
         }
 
         shikigami.setPosition(pos);
         serverWorld.spawnEntity(shikigami);
-        shikigami.onSummon(playerEntity);
+        shikigami.onSummon(user);
 
         return shikigami;
     }
 
-    public static <T extends TameableEntity & Shikigami> void desummonShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
-        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
+    public static <T extends TameableEntity & Shikigami> void desummonShikigami(LivingEntity user, EntityType<T> shikigamiType) {
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(user, shikigamiType);
         if (!nbt.containsUuid("UUID")) return;
 
-        T shikigami = getShikigami(player, shikigamiType);
+        T shikigami = getShikigami(user, shikigamiType);
 
         if (shikigami == null) {
             nbt.putBoolean("summoned", false);
-            ShikigamiNbtManager.setNbt(player, shikigamiType, nbt);
+            ShikigamiNbtManager.setNbt(user, shikigamiType, nbt);
             return;
         }
 
@@ -78,12 +78,12 @@ public class ShikigamiManager {
         shikigami.discard();
 
         newNbt.putBoolean("summoned", false);
-        ShikigamiNbtManager.setNbt(player, shikigamiType, newNbt);
+        ShikigamiNbtManager.setNbt(user, shikigamiType, newNbt);
     }
 
-    public static <T extends TameableEntity & Shikigami> T getShikigami(PlayerEntity player, EntityType<T> shikigamiType) {
-        if (!(player.getWorld() instanceof ServerWorld serverWorld)) return null;
-        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
+    public static <T extends TameableEntity & Shikigami> T getShikigami(LivingEntity user, EntityType<T> shikigamiType) {
+        if (!(user.getWorld() instanceof ServerWorld serverWorld)) return null;
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(user, shikigamiType);
 
         if (!nbt.getBoolean("summoned") || !nbt.containsUuid("UUID")) return null;
 
@@ -91,19 +91,19 @@ public class ShikigamiManager {
         return (T) entity;
     }
 
-    public static <T extends TameableEntity & Shikigami> T summonShikigamiAt(PlayerEntity player, EntityType<T> shikigamiType, Vec3d pos) {
-        if (!(player.getWorld() instanceof ServerWorld serverWorld)) return null;
+    public static <T extends TameableEntity & Shikigami> T summonShikigamiAt(LivingEntity user, EntityType<T> shikigamiType, Vec3d pos) {
+        if (!(user.getWorld() instanceof ServerWorld serverWorld)) return null;
 
-        NbtCompound nbt = ShikigamiNbtManager.getNbt(player, shikigamiType);
+        NbtCompound nbt = ShikigamiNbtManager.getNbt(user, shikigamiType);
 
-        T shikigami = summonShikigami(player, serverWorld, shikigamiType, nbt, pos);
+        T shikigami = summonShikigami(user, serverWorld, shikigamiType, nbt, pos);
         if (shikigami == null) return null;
 
         NbtCompound newNbt = new NbtCompound();
         shikigami.saveNbt(newNbt);
         newNbt.putBoolean("summoned", true);
 
-        ShikigamiNbtManager.setNbt(player, shikigamiType, newNbt);
+        ShikigamiNbtManager.setNbt(user, shikigamiType, newNbt);
 
         return shikigami;
     }

@@ -6,7 +6,7 @@ import com.boundless.mechanics.ShikigamiManager;
 import com.boundless.util.Shikigami;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -21,8 +21,8 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     }
 
     @Override
-    public void activate(PlayerEntity playerEntity) {
-        ShikigamiManager.toggleShikigami(playerEntity, this.shikigamiType);
+    public void activate(LivingEntity user) {
+        ShikigamiManager.toggleShikigami(user, this.shikigamiType);
     }
 
     @Override
@@ -31,17 +31,17 @@ public class SummonShikigamiAbility<T extends TameableEntity & Shikigami> extend
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.literal("Summon " + Text.translatable(shikigamiType.getTranslationKey()).getString());
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return this.cooldown;
     }
 
     @Override
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return this.cost;
     }
 }

@@ -11,7 +11,7 @@ import com.boundless.util.CombatUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -20,57 +20,57 @@ import net.minecraft.util.math.Vec3d;
 import java.util.List;
 
 public abstract class CursedSpeechAbility extends TechniqueAbility {
-    public abstract void cursedSpeechEffect(PlayerEntity player, LivingEntity target);
-    public void onSpeechTrigger(PlayerEntity player, List<LivingEntity> targets) {};
+    public abstract void cursedSpeechEffect(LivingEntity user, LivingEntity target);
+    public void onSpeechTrigger(LivingEntity user, List<LivingEntity> targets) {};
 
     int delayTicks = 5;
 
     @Override
-    public void activate(PlayerEntity player) {
-        this.playFX(player);
+    public void activate(LivingEntity user) {
+        this.playFX(user);
 
-        List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(player);
+        List<LivingEntity> targets = new MeleeHitbox(16.0f, 60.0).getTargetsInArc(user);
 
         if (targets.isEmpty()) return;
 
-        this.onSpeechTrigger(player, targets);
+        this.onSpeechTrigger(user, targets);
 
-        TickScheduler.schedule(player.getWorld(), delayTicks, () -> {
+        TickScheduler.schedule(user.getWorld(), delayTicks, () -> {
             for (LivingEntity target : targets) {
-                this.cursedSpeechEffect(player, target);
-                this.takeRecoilDamage(player, target);
+                this.cursedSpeechEffect(user, target);
+                this.takeRecoilDamage(user, target);
             }
         });
     }
 
-    public void takeRecoilDamage(PlayerEntity player, LivingEntity target) {
-        float recoil = getRecoilDamage(player, target);
+    public void takeRecoilDamage(LivingEntity user, LivingEntity target) {
+        float recoil = getRecoilDamage(user, target);
 
-        if (player.hasStatusEffect(StatusEffectRegistry.COUGH_SYRUP)) {
+        if (user.hasStatusEffect(StatusEffectRegistry.COUGH_SYRUP)) {
             recoil /= 2;
         }
 
         if (recoil > 0.0f) {
-            player.damage(DamageTypeRegistry.getDamageSource(player, DamageTypeRegistry.BLEED), recoil);
+            user.damage(DamageTypeRegistry.getDamageSource(user, DamageTypeRegistry.BLEED), recoil);
         }
 
         if (recoil >= 50f) {
-            EffekUtils.playVisual(player, BoundlessAPI.id("dismantle_impact"), new Vec3d(player.getHeight() / 8, player.getHeight() / 8, player.getHeight() / 8));
+            EffekUtils.playVisual(user, BoundlessAPI.id("dismantle_impact"), new Vec3d(user.getHeight() / 8, user.getHeight() / 8, user.getHeight() / 8));
         }
     }
 
-    public void playFX(PlayerEntity player) {
-        SoundUtils.playSound(player, SoundEvents.ENTITY_WARDEN_SONIC_BOOM, 15, 22);
-        Vec3d effectScale = new Vec3d(player.getScale() * 0.4f, player.getScale() * 0.4f, player.getScale() * 0.4f);
-        Vec3d effectRotation = new Vec3d(player.getPitch(), player.getYaw() * -1, 0);
-        Vec3d effectPosition = new Vec3d(player.getRotationVector().x, player.getStandingEyeHeight(), player.getRotationVector().z);
+    public void playFX(LivingEntity user) {
+        SoundUtils.playSound(user, SoundEvents.ENTITY_WARDEN_SONIC_BOOM, 15, 22);
+        Vec3d effectScale = new Vec3d(user.getScale() * 0.4f, user.getScale() * 0.4f, user.getScale() * 0.4f);
+        Vec3d effectRotation = new Vec3d(user.getPitch(), user.getYaw() * -1, 0);
+        Vec3d effectPosition = new Vec3d(user.getRotationVector().x, user.getStandingEyeHeight(), user.getRotationVector().z);
 
-        EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), player, effectScale, effectRotation, effectPosition);
+        EffekUtils.playBoundRotatedEffect(BoundlessAPI.id("cursed_speech"), user, effectScale, effectRotation, effectPosition);
     }
 
-    public float getRecoilDamage(PlayerEntity player, LivingEntity target) {
-        if (!(target instanceof PlayerEntity playerTarget)) return 0.0f;
-        float powerDifference = MathHelper.clamp(CursedEnergyManager.getCursedEnergy(player) / (float) CursedEnergyManager.getCursedEnergy(playerTarget), 0, 1);
+    public float getRecoilDamage(LivingEntity user, LivingEntity target) {
+        if (!(target instanceof LivingEntity userTarget)) return 0.0f;
+        float powerDifference = MathHelper.clamp(CursedEnergyManager.getCursedEnergy(user) / (float) CursedEnergyManager.getCursedEnergy(userTarget), 0, 1);
         // Todo: add min and max recoil to config
         return MathHelper.lerp(powerDifference, 275, 0);
     }
