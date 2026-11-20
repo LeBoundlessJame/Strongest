@@ -8,14 +8,14 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.CameraUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 
 import java.util.List;
 
 public class BlackFlashModifier implements AttackModifier {
     @Override
-    public boolean shouldTrigger(PlayerEntity player) {
-        return BlackFlashManager.shouldBlackFlash(player);
+    public boolean shouldTrigger(LivingEntity user) {
+        return BlackFlashManager.shouldBlackFlash(user);
     }
 
     @Override
@@ -27,10 +27,10 @@ public class BlackFlashModifier implements AttackModifier {
     }
 
     @Override
-    public void onTrigger(PlayerEntity player) {
+    public void onTrigger(LivingEntity user) {
         int duration = 5;
-        CameraUtils.playCameraShake(player);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, duration - 2, 4, true, false, false));
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, duration, 4, true, false, false));
+        // TODO: FIX ASAP CameraUtils.playCameraShake(user);
+        user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.IMPACT_FRAME_EFFECT, duration - 2, 4, true, false, false));
+        user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, duration, 4, true, false, false));
     }
 }

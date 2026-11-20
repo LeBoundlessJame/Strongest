@@ -1,6 +1,7 @@
 package com.boundless.combat;
 
 import lombok.Getter;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.List;
@@ -13,9 +14,9 @@ public class AttackContext {
         this.activeModifiers = activeModifiers;
     }
 
-    public void postTrigger(PlayerEntity player) {
+    public void postTrigger(LivingEntity user) {
         for (AttackModifier modifier: activeModifiers) {
-            modifier.postTrigger(player);
+            modifier.postTrigger(user);
         }
     }
 }

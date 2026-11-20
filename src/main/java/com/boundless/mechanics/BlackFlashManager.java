@@ -5,20 +5,20 @@ import com.boundless.registry.StrongestComponents;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 
 public class BlackFlashManager {
 
-    public static boolean shouldBlackFlash(PlayerEntity player) {
-        return player.getRandom().nextFloat() < getBlackFlashChance(player);
+    public static boolean shouldBlackFlash(LivingEntity user) {
+        return user.getRandom().nextFloat() < getBlackFlashChance(user);
     }
 
-    public static float getBlackFlashChance(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.0f);
+    public static float getBlackFlashChance(LivingEntity user) {
+        return HeroUtils.getHeroStack(user).getOrDefault(StrongestComponents.BLACK_FLASH_CHANCE, 0.0f);
     }
 
-    public static float getBlackFlashMultiplier(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).getOrDefault(StrongestComponents.BLACK_FLASH_DAMAGE_MULTIPLIER, 2.5f);
+    public static float getBlackFlashMultiplier(LivingEntity user) {
+        return HeroUtils.getHeroStack(user).getOrDefault(StrongestComponents.BLACK_FLASH_DAMAGE_MULTIPLIER, 2.5f);
     }
 
     public static void playBlackFlashVisuals(LivingEntity entity, int duration) {

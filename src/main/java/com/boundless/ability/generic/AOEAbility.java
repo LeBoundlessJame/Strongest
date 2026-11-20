@@ -29,10 +29,10 @@ public class AOEAbility extends TechniqueAbility implements AOE {
     private HitEffects hitEffects = new HitEffects(List.of(BoundlessAPI.id("melee_impact")), List.of(SoundRegistry.IMPACT_HEAVY_1));
 
     @Override
-    public void activate(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
+    public void activate(LivingEntity user) {
+        if (user.getWorld().isClient) return;
 
-        TickScheduler.schedule(player.getWorld(), this.impactTick, () -> this.activateAOE(player));
+        TickScheduler.schedule(user.getWorld(), this.impactTick, () -> this.activateAOE(user));
     }
 
     @Override

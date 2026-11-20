@@ -3,6 +3,7 @@ package com.boundless.hero.nanami.technique.abilities;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.nanami.technique.RatioComponents;
+import com.boundless.util.AnimationManager;
 import com.boundless.util.AttackUtils;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.LivingEntity;
@@ -15,9 +16,7 @@ public class OvertimeAbility extends TechniqueAbility {
     public void activate(LivingEntity user) {
         AttackUtils.startAttackTimer(user, 77);
         HeroUtils.getHeroStack(user).set(RatioComponents.OVERTIME_ELAPSED, 1);
-
-        // TODO: I need to come up with a fix for this IMMEDIATELY
-        //PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.id("overtime"));
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("overtime"));
     }
 
     @Override

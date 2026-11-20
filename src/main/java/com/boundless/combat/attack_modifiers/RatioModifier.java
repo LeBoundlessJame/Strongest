@@ -8,14 +8,14 @@ import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
 import com.boundless.util.HeroUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 
 import java.util.List;
 
 public class RatioModifier implements AttackModifier {
     @Override
-    public boolean shouldTrigger(PlayerEntity player) {
-        return HeroUtils.getHeroStack(player).get(RatioComponents.NEXT_ATTACK_RATIO_MULTIPLIER) != null;
+    public boolean shouldTrigger(LivingEntity user) {
+        return HeroUtils.getHeroStack(user).get(RatioComponents.NEXT_ATTACK_RATIO_MULTIPLIER) != null;
     }
 
     @Override
@@ -28,12 +28,12 @@ public class RatioModifier implements AttackModifier {
     }
 
     @Override
-    public void onTrigger(PlayerEntity player) {
-        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
+    public void onTrigger(LivingEntity user) {
+        user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 5, 4, true, false, false));
     }
 
     @Override
-    public void postTrigger(PlayerEntity player) {
-        HeroUtils.getHeroStack(player).remove(RatioComponents.NEXT_ATTACK_RATIO_MULTIPLIER);
+    public void postTrigger(LivingEntity user) {
+        HeroUtils.getHeroStack(user).remove(RatioComponents.NEXT_ATTACK_RATIO_MULTIPLIER);
     }
 }

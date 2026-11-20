@@ -1,10 +1,11 @@
 package com.boundless.combat;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public interface AttackModifier {
-    boolean shouldTrigger(PlayerEntity player);
+    boolean shouldTrigger(LivingEntity user);
     void apply(Hit hit);
-    default void onTrigger(PlayerEntity player) {};
-    default void postTrigger(PlayerEntity player) {};
+    default void onTrigger(LivingEntity user) {};
+    default void postTrigger(LivingEntity user) {};
 }

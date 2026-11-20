@@ -16,6 +16,7 @@ import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import dev.kosmx.playerAnim.minecraftApi.layers.LeftHandedHelperModifier;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -38,12 +39,20 @@ public class AnimationManager {
         }
     }
 
-    public static void playSyncedAnimation(PlayerEntity user, Identifier animation) {
-        playSyncedAnimation(user, animation, 1.0f, false, true, 1000);
+    public static void playSyncedAnimation(LivingEntity user, Identifier animation) {
+        if (user instanceof PlayerEntity player) {
+            playSyncedAnimation(player, animation, 1.0f, false, true, 1000);
+        } else {
+            System.out.println("Support for non-player entity animation not yet complete; WIP");
+        }
     }
 
-    public static void playSyncedAnimation(PlayerEntity user, Identifier animation, boolean repeatIfPlaying, int priority) {
-        playSyncedAnimation(user, animation, 1.0f, false, repeatIfPlaying, priority);
+    public static void playSyncedAnimation(LivingEntity user, Identifier animation, boolean repeatIfPlaying, int priority) {
+        if (user instanceof PlayerEntity player) {
+            playSyncedAnimation(player, animation, 1.0f, false, repeatIfPlaying, priority);
+        } else {
+            System.out.println("Support for non-player entity animation not yet complete; WIP");
+        }
     }
 
     public static void playClientAnimation(PlayerEntity user, Identifier animation, float speed, boolean mirror, boolean repeatIfPlaying, int priority) {

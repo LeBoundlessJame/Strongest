@@ -13,7 +13,7 @@ import com.boundless.util.ComponentUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
@@ -26,36 +26,36 @@ public class DivergentModifier implements AttackModifier {
     private static final float SECOND_HIT_MULTIPLIER = 0.6f;
 
     @Override
-    public boolean shouldTrigger(PlayerEntity player) {
-        return ComponentUtils.getOr(player, YujiComponents.DIVERGENCE_ACTIVE, false);
+    public boolean shouldTrigger(LivingEntity attacker) {
+        return ComponentUtils.getOr(attacker, YujiComponents.DIVERGENCE_ACTIVE, false);
     }
 
     @Override
     public void apply(Hit hit) {
-        PlayerEntity player = hit.getAttacker();
+        LivingEntity attacker = hit.getAttacker();
 
         float originalDamage = hit.getDamage();
         hit.multiplyDamage(FIRST_HIT_MULTIPLIER);
 
-        List<DivergentTarget> currentTargets = ComponentUtils.getOr(player, YujiComponents.DIVERGENT_TARGETS, List.of());
+        List<DivergentTarget> currentTargets = ComponentUtils.getOr(attacker, YujiComponents.DIVERGENT_TARGETS, List.of());
         List<DivergentTarget> updated = new ArrayList<>(currentTargets);
         updated.add(new DivergentTarget(hit.getTarget().getUuid(), originalDamage));
 
-        ComponentUtils.set(player, YujiComponents.DIVERGENT_TARGETS, updated);
+        ComponentUtils.set(attacker, YujiComponents.DIVERGENT_TARGETS, updated);
     }
 
     @Override
-    public void postTrigger(PlayerEntity player) {
-        if (!(player.getWorld() instanceof ServerWorld serverWorld)) return;
+    public void postTrigger(LivingEntity user) {
+        if (!(user.getWorld() instanceof ServerWorld serverWorld)) return;
 
-        List<DivergentTarget> targets = ComponentUtils.getOr(player, YujiComponents.DIVERGENT_TARGETS, List.of());
+        List<DivergentTarget> targets = ComponentUtils.getOr(user, YujiComponents.DIVERGENT_TARGETS, List.of());
 
         if (!targets.isEmpty()) {
             TickScheduler.schedule(serverWorld, DIVERGENT_DELAY_TICKS, () -> {
-                if (!player.isAlive()) return;
+                if (!user.isAlive()) return;
 
 
-                AttackContext context = AttackResolver.resolveAttack(player);
+                AttackContext context = AttackResolver.resolveAttack(user);
 
                 boolean visualsApplied = false;
 
@@ -67,20 +67,20 @@ public class DivergentModifier implements AttackModifier {
                     divergentEffects.addVisual(BoundlessAPI.id("divergent_fist_impact"));
                     divergentEffects.addSound(SoundRegistry.DIVERGENT_IMPACT);
 
-                    Hit delayedHit = new Hit(player, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(0.6, 0.3, 0.6), divergentEffects);
+                    Hit delayedHit = new Hit(user, livingEntity, target.damage() * SECOND_HIT_MULTIPLIER, new Vec3d(0.6, 0.3, 0.6), divergentEffects);
 
                     CombatUtils.resolveAndApplyHit(delayedHit, context);
 
                     if (!visualsApplied) {
-                        CameraUtils.playCameraShake(player);
-                        player.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 2, 4, true, false, false));
+                        // TODO: FIX ASAP CameraUtils.playCameraShake(user);
+                        user.addStatusEffect(new StatusEffectInstance(StatusEffectRegistry.CLAP_IMPACT_FRAME_EFFECT, 2, 4, true, false, false));
                         visualsApplied = true;
                     }
                 }
             });
         }
 
-        ComponentUtils.set(player, YujiComponents.DIVERGENT_TARGETS, List.of());
-        ComponentUtils.set(player, YujiComponents.DIVERGENCE_ACTIVE, false);
+        ComponentUtils.set(user, YujiComponents.DIVERGENT_TARGETS, List.of());
+        ComponentUtils.set(user, YujiComponents.DIVERGENCE_ACTIVE, false);
     }
 }
