@@ -4,14 +4,14 @@ import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.util.HeroUtils;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class DivergentFistAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        HeroUtils.getHeroStack(player).set(YujiComponents.DIVERGENCE_ACTIVE, true);
+    public void activate(LivingEntity user) {
+        HeroUtils.getHeroStack(user).set(YujiComponents.DIVERGENCE_ACTIVE, true);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class DivergentFistAbility extends TechniqueAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.of("Divergent Fist");
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 200;
     }
 }

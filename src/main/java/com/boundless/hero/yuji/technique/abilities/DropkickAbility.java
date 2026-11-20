@@ -3,7 +3,7 @@ package com.boundless.hero.yuji.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.generic.KickAbility;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -23,12 +23,12 @@ public class DropkickAbility extends KickAbility {
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 200;
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.of("Dropkick");
     }
 }

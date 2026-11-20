@@ -5,7 +5,7 @@ import com.boundless.util.SoundUtils;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -39,13 +39,13 @@ public class HitEffects {
         this.sounds = new ArrayList<>(List.of(sound));
     }
 
-    public void playEffects(PlayerEntity player, LivingEntity target) {
+    public void playEffects(LivingEntity user, LivingEntity target) {
         for (Identifier visual: visuals) {
-            CombatUtils.playImpactVisual(player, target, visual);
+            CombatUtils.playImpactVisual(user, target, visual);
         }
 
         for (SoundEvent sound: sounds) {
-            SoundUtils.playSound(player, sound);
+            SoundUtils.playSound(user, sound);
         }
     }
 
