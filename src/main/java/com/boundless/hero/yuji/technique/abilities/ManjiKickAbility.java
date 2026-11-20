@@ -5,6 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.KickAbility;
 import com.boundless.ability.generic.PunchAbility;
 import com.boundless.util.PlayerAnimationUtils;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -25,17 +26,17 @@ public class ManjiKickAbility extends KickAbility {
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 100;
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.of("Manji Kick");
     }
 
     @Override
-    public boolean canActivate(PlayerEntity player) {
-        return super.canActivate(player) && player.isOnGround();
+    public boolean canActivate(LivingEntity user) {
+        return super.canActivate(user) && user.isOnGround();
     }
 }

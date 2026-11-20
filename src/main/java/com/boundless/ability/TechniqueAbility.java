@@ -3,35 +3,40 @@ package com.boundless.ability;
 import com.boundless.mechanics.CooldownManager;
 import com.boundless.mechanics.CursedEnergyManager;
 import com.boundless.registry.StatusEffectRegistry;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public abstract class TechniqueAbility {
-    public abstract void activate(PlayerEntity player);
+    public abstract void activate(LivingEntity user);
     public abstract Identifier getId();
-    public Text getDisplayText(PlayerEntity playerEntity) { return null; }
+    public Text getDisplayText(LivingEntity user) { return null; }
     public int cost = 0;
 
-    public final void use(PlayerEntity player) {
-        if (!canActivate(player)) return;
-        activate(player);
+    public final void use(LivingEntity user) {
+        if (!canActivate(user)) return;
+        activate(user);
 
-        if (this.getCost(player) > 0 && !player.isCreative()) CursedEnergyManager.addCursedEnergy(player, -this.getCost(player));
-        CooldownManager.setAbilityCooldownIfHigher(player, this.getId(), this.getCooldown(player));
+        boolean isCreative = user instanceof PlayerEntity player && player.isCreative();
+
+        if (this.getCost(user) > 0 && !isCreative) CursedEnergyManager.addCursedEnergy(user, -this.getCost(user));
+        CooldownManager.setAbilityCooldownIfHigher(user, this.getId(), this.getCooldown(user));
     }
 
-    public boolean canActivate(PlayerEntity player) {
-        return !CooldownManager.isOnCooldown(player, this.getId())
-                && (this.getCost(player) == 0 || player.isCreative() || CursedEnergyManager.getCursedEnergy(player) >= this.getCost(player))
-                && !player.hasStatusEffect(StatusEffectRegistry.STUN);
+    public boolean canActivate(LivingEntity user) {
+        boolean isCreative = user instanceof PlayerEntity player && player.isCreative();
+
+        return !CooldownManager.isOnCooldown(user, this.getId())
+                && (this.getCost(user) == 0 || isCreative || CursedEnergyManager.getCursedEnergy(user) >= this.getCost(user))
+                && !user.hasStatusEffect(StatusEffectRegistry.STUN);
     }
 
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 0;
     }
 
-    public int getCost(PlayerEntity player) {
+    public int getCost(LivingEntity user) {
         return 0;
     }
 }

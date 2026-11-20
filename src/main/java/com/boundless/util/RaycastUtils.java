@@ -2,6 +2,7 @@ package com.boundless.util;
 
 import com.boundless.entity.hero_action.HeroActionEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.util.hit.BlockHitResult;
@@ -13,15 +14,15 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Optional;
 
 public class RaycastUtils {
-    public static EntityHitResult raycast(PlayerEntity playerEntity, float range) {
-        if (!playerEntity.getWorld().isClient) {
-            Vec3d start = playerEntity.getCameraPosVec(1.0f);
-            Vec3d direction = playerEntity.getRotationVec(1);
+    public static EntityHitResult raycast(LivingEntity user, float range) {
+        if (!user.getWorld().isClient) {
+            Vec3d start = user.getCameraPosVec(1.0f);
+            Vec3d direction = user.getRotationVec(1);
             Vec3d end = start.add(direction.x * range, direction.y * range, direction.z * range);
-            Box box = playerEntity.getBoundingBox().stretch(direction.multiply(range)).expand(1, 1, 1);
+            Box box = user.getBoundingBox().stretch(direction.multiply(range)).expand(1, 1, 1);
 
             // todo: A message from Daomephsta I saw in the fabricmc discord helped with this!
-            return ProjectileUtil.raycast(playerEntity, start, end, box, entity -> {
+            return ProjectileUtil.raycast(user, start, end, box, entity -> {
                 return !(entity instanceof HeroActionEntity);
             }, range * range);
         }
@@ -55,9 +56,9 @@ public class RaycastUtils {
 
 
 
-    public static BlockHitResult blockRaycast(PlayerEntity player, float range) {
-        if (player.getWorld().isClient) return null;
-        HitResult hitResult = player.raycast(range, 1.0f, false);
+    public static BlockHitResult blockRaycast(LivingEntity user, float range) {
+        if (user.getWorld().isClient) return null;
+        HitResult hitResult = user.raycast(range, 1.0f, false);
         if (!hitResult.getType().equals(HitResult.Type.BLOCK)) return null;
         return (BlockHitResult) hitResult;
     }

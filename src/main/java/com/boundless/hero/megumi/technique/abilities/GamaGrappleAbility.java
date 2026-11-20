@@ -5,7 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.gama.GamaEntity;
 import com.boundless.entity.grapple.GrappleEntity;
 import com.boundless.util.RaycastUtils;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -13,21 +13,21 @@ import net.minecraft.util.math.Vec3d;
 
 public class GamaGrappleAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        if (player.getWorld().isClient) return;
-        if (!(player.getControllingVehicle() instanceof GamaEntity gama)) return;
+    public void activate(LivingEntity user) {
+        if (user.getWorld().isClient) return;
+        if (!(user.getControllingVehicle() instanceof GamaEntity gama)) return;
 
         GrappleEntity grapple = gama.getGrapple();
 
         if (grapple == null) {
-            BlockHitResult blockHitResult = RaycastUtils.blockRaycast(player, 128);
+            BlockHitResult blockHitResult = RaycastUtils.blockRaycast(user, 128);
             if (blockHitResult == null) return;
 
-            grapple = new GrappleEntity(gama, player.getWorld());
+            grapple = new GrappleEntity(gama, user.getWorld());
             grapple.setVelocity(0, 0, 0);
             grapple.setPosition(Vec3d.of(blockHitResult.getBlockPos()));
             grapple.setNoGravity(true);
-            player.getWorld().spawnEntity(grapple);
+            user.getWorld().spawnEntity(grapple);
 
             gama.setGrapple(grapple);
         } else {
@@ -42,18 +42,18 @@ public class GamaGrappleAbility extends TechniqueAbility {
     }
 
     @Override
-    public long getCooldown(PlayerEntity playerEntity) {
+    public long getCooldown(LivingEntity user) {
         return 2;
     }
 
     @Override
-    public boolean canActivate(PlayerEntity player) {
-        return super.canActivate(player) &&
-                player.getControllingVehicle() instanceof GamaEntity gama && gama.getOwner() == player;
+    public boolean canActivate(LivingEntity user) {
+        return super.canActivate(user) &&
+                user.getControllingVehicle() instanceof GamaEntity gama && gama.getOwner() == user;
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.literal("Gama Grapple");
     }
 }

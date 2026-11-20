@@ -6,6 +6,7 @@ import com.boundless.hero.megumi.technique.TenShadowsComponents;
 import com.boundless.hero.megumi.technique.TenShadowsTechnique;
 import com.boundless.mechanics.ComboManager;
 import com.boundless.util.HeroUtils;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -18,10 +19,10 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
     }
 
     @Override
-    public void activate(PlayerEntity player) {
-        if (ComboManager.updateCombo(player, TenShadowsComponents.CURRENT_ORDER_SEQUENCE, sequenceCharacter, GAMA)) {
-            TenShadowsTechnique.GAMA_PULL.use(player);
-            TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU.use(player);
+    public void activate(LivingEntity user) {
+        if (ComboManager.updateCombo(user, TenShadowsComponents.CURRENT_ORDER_SEQUENCE, sequenceCharacter, GAMA)) {
+            TenShadowsTechnique.GAMA_PULL.use(user);
+            TenShadowsTechnique.TOGGLE_SHIKIGAMI_ORDERS_MENU.use(user);
         }
     }
 
@@ -31,12 +32,12 @@ public class ShikigamiOrderAbility extends TechniqueAbility {
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 2;
     }
 
     @Override
-    public boolean canActivate(PlayerEntity player) {
-        return super.canActivate(player) && HeroUtils.getHeroStack(player).getOrDefault(TenShadowsComponents.SHIKIGAMI_ORDER_MENU, false);
+    public boolean canActivate(LivingEntity user) {
+        return super.canActivate(user) && HeroUtils.getHeroStack(user).getOrDefault(TenShadowsComponents.SHIKIGAMI_ORDER_MENU, false);
     }
 }

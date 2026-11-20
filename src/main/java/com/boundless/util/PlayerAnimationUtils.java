@@ -38,14 +38,6 @@ public class PlayerAnimationUtils {
         }
     }
 
-    public static void stopSyncedAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
-        if (user.getWorld().isClient) return;
-
-        for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
-            ServerPlayNetworking.send(target, new AnimationStopPayload(user.getUuid(), animations));
-        }
-    }
-
     public static void playSyncedAnimation(PlayerEntity user, Identifier animation) {
         playSyncedAnimation(user, animation, 1.0f, false, true, 1000);
     }
@@ -93,6 +85,14 @@ public class PlayerAnimationUtils {
         Identifier lastTriggeredAnimation = ((IAnimatedHero) user).boundless$getLastTriggeredAnimation();
         if (animations.containsKey(lastTriggeredAnimation)) {
             playClientAnimation(user, BoundlessAPI.id("null"), 1.0f, false, false, 9999);
+        }
+    }
+
+    public static void stopSyncedAnimationIfPresent(PlayerEntity user, HashMap<Identifier, Integer> animations) {
+        if (user.getWorld().isClient) return;
+
+        for (ServerPlayerEntity target : PlayerLookup.tracking((ServerWorld) user.getWorld(), new ChunkPos((int) user.getPos().x / 16, (int) user.getPos().z / 16))) {
+            ServerPlayNetworking.send(target, new AnimationStopPayload(user.getUuid(), animations));
         }
     }
 

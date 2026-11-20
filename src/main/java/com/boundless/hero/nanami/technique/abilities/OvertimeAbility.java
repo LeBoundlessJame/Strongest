@@ -6,6 +6,7 @@ import com.boundless.hero.nanami.technique.RatioComponents;
 import com.boundless.util.AttackUtils;
 import com.boundless.util.HeroUtils;
 import com.boundless.util.PlayerAnimationUtils;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -13,10 +14,12 @@ import net.minecraft.util.Identifier;
 
 public class OvertimeAbility extends TechniqueAbility {
     @Override
-    public void activate(PlayerEntity player) {
-        AttackUtils.startAttackTimer(player, 77);
-        HeroUtils.getHeroStack(player).set(RatioComponents.OVERTIME_ELAPSED, 1);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("overtime"));
+    public void activate(LivingEntity user) {
+        AttackUtils.startAttackTimer(user, 77);
+        HeroUtils.getHeroStack(user).set(RatioComponents.OVERTIME_ELAPSED, 1);
+
+        // TODO: I need to come up with a fix for this IMMEDIATELY
+        //PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.id("overtime"));
     }
 
     @Override
@@ -25,19 +28,19 @@ public class OvertimeAbility extends TechniqueAbility {
     }
 
     @Override
-    public Text getDisplayText(PlayerEntity player) {
+    public Text getDisplayText(LivingEntity user) {
         return Text.literal("Overtime").formatted(Formatting.AQUA).formatted(Formatting.BOLD);
     }
 
     @Override
-    public long getCooldown(PlayerEntity player) {
+    public long getCooldown(LivingEntity user) {
         return 12000;
     }
 
     @Override
-    public boolean canActivate(PlayerEntity player) {
-        long time = player.getWorld().getTimeOfDay() % 24000;
+    public boolean canActivate(LivingEntity user) {
+        long time = user.getWorld().getTimeOfDay() % 24000;
         boolean isWorkingHours = time >= 3000 && time <= 11000;
-        return super.canActivate(player) && !isWorkingHours;
+        return super.canActivate(user) && !isWorkingHours;
     }
 }
