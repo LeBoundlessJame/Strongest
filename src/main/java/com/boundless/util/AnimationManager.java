@@ -25,7 +25,7 @@ import net.minecraft.util.math.ChunkPos;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class PlayerAnimationUtils {
+public class AnimationManager {
 
     /**
      * Plays an animation and sends a packet for multiplayer display

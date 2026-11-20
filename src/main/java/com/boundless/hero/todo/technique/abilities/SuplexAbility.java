@@ -2,7 +2,6 @@ package com.boundless.hero.todo.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.ability.generic.PunchAbility;
 import com.boundless.combat.MeleeHitbox;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
@@ -14,11 +13,9 @@ import net.minecraft.network.packet.s2c.play.EntityPassengersSetS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldEvents;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import static com.boundless.registry.DataComponentRegistry.ATTACK_END;
 
@@ -27,7 +24,7 @@ public class SuplexAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("suplex"), 1.0f, false, true, 3000);
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("suplex"), 1.0f, false, true, 3000);
 
         List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
 

@@ -15,10 +15,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
@@ -31,7 +29,7 @@ public class ResonanceAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
         TickScheduler.schedule(player.getWorld(), 10, () -> {
             Map<UUID, ResonanceData> resonanceTracker = ComponentUtils.getOr(player, StrawdollComponents.RESONANCE_TRACKER, new HashMap<>());

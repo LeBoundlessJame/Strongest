@@ -5,7 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.malevolent_shrine.MalevolentShrineEntity;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -21,7 +21,7 @@ public class MalevolentShrineAbility extends TechniqueAbility {
         if (player.getWorld().isClient) return;
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 2, false, false, false));
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("domain_expansion_shrine"), 1.0f, true, false, 4000);
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("domain_expansion_shrine"), 1.0f, true, false, 4000);
         SoundUtils.playSound(player, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK);
 
         MalevolentShrineEntity shrine = new MalevolentShrineEntity(player, player.getWorld());

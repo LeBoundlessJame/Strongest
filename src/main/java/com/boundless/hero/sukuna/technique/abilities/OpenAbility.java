@@ -5,7 +5,7 @@ import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.open.OpenEntity;
 import com.boundless.tick.TickScheduler;
 import com.boundless.util.EffekUtils;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import com.boundless.util.SoundUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -26,7 +26,7 @@ public class OpenAbility extends TechniqueAbility {
 
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3, true, false, false));
         SoundUtils.playSound(player, SoundEvents.BLOCK_FIRE_AMBIENT);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("open"), true, 5000);
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("open"), true, 5000);
 
         for (int i = 0; i < 20; i++) {
             player.getWorld().addImportantParticle(ParticleTypes.LAVA, player.getX() + Math.cos(i), player.getY(), player.getZ() + Math.sin(i), 0, 0, 0);

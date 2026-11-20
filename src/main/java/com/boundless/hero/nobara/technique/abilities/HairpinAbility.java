@@ -4,24 +4,17 @@ package com.boundless.hero.nobara.technique.abilities;
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
 import com.boundless.entity.nail.NailEntity;
-import com.boundless.hero.nobara.technique.StrawdollTechnique;
 import com.boundless.hero.nobara.technique.components.CursedNailData;
-import com.boundless.hero.nobara.technique.components.ResonanceData;
 import com.boundless.hero.nobara.technique.components.StrawdollComponents;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
-import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.tick.TickScheduler;
 import com.boundless.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.*;
@@ -32,7 +25,7 @@ public class HairpinAbility extends TechniqueAbility {
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
 
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
         SoundUtils.playSound(player, SoundRegistry.CLICK, 10, 11);
 
         detonateImpaledNails(player);

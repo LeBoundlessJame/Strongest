@@ -2,12 +2,10 @@ package com.boundless.hero.sukuna.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.ability.generic.PunchAbility;
 import com.boundless.combat.MeleeHitbox;
 import com.boundless.hero.sukuna.technique.components.SukunaComponents;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StatusEffectRegistry;
-import com.boundless.registry.StrongestComponents;
 import com.boundless.util.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -23,7 +21,7 @@ import java.util.List;
 public class CleaveAbility extends TechniqueAbility {
     @Override
     public void activate(PlayerEntity player) {
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("cleave"));
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("cleave"));
         List<LivingEntity> targets = new MeleeHitbox(5.0, 180.0).getTargetsInArc(player);
 
         for (LivingEntity target: targets) {

@@ -2,13 +2,10 @@ package com.boundless.hero.yuji.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.hero.megumi.technique.TenShadowsComponents;
-import com.boundless.hero.yuji.technique.YujiComponents;
 import com.boundless.mechanics.ComboManager;
 import com.boundless.registry.StrongestComponents;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -17,7 +14,7 @@ public class BarrageComboAbility extends TechniqueAbility {
 
     @Override
     public void activate(LivingEntity user) {
-        PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.id("barrage_combo"));
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("barrage_combo"));
         ComboManager.resetProgress(user, StrongestComponents.MELEE_COMBO);
     }
 

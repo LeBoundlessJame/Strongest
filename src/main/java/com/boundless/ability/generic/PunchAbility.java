@@ -2,10 +2,8 @@ package com.boundless.ability.generic;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.action.Action;
 import com.boundless.combat.HitEffects;
 import com.boundless.combat.MeleeHitbox;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.registry.DataComponentRegistry;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.registry.StrongestComponents;
@@ -62,7 +60,7 @@ public class PunchAbility extends TechniqueAbility {
         if (!(player.getWorld().getTime() >= HeroUtils.getHeroStack(player).getOrDefault(ATTACK_END, 0L))) return;
 
         preAttackEvent.accept(player);
-        PlayerAnimationUtils.playSyncedAnimation(player, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(player), true, 3000);
+        AnimationManager.playSyncedAnimation(player, this.animation, this.animationSpeed, mirrorAnimationProvider.apply(player), true, 3000);
         SoundUtils.playSound(player, this.whiffSound);
 
         TickScheduler.schedule(player.getWorld(), this.impactTick, () -> this.impact(player));

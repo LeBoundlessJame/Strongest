@@ -8,7 +8,7 @@ import com.boundless.tick.TickScheduler;
 import com.boundless.util.ComponentUtils;
 import com.boundless.util.EffekUtils;
 import com.boundless.util.HeroUtils;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -21,7 +21,7 @@ public class TripleNailThrowAbility extends TechniqueAbility {
     public void activate(PlayerEntity player) {
         ComponentUtils.incrementInt(DataComponentRegistry.ATTACK_COUNT, player, 1);
         int attackCount = HeroUtils.getHeroStack(player).getOrDefault(DataComponentRegistry.ATTACK_COUNT, 0);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("dismantle_1"), 1.5f, attackCount % 2 == 0, true, 3000);
 
         List<Float> rotations = List.of(-45f, 0f, 45f);
 

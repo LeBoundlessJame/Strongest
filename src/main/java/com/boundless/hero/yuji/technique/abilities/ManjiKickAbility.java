@@ -1,12 +1,8 @@
 package com.boundless.hero.yuji.technique.abilities;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.TechniqueAbility;
 import com.boundless.ability.generic.KickAbility;
-import com.boundless.ability.generic.PunchAbility;
-import com.boundless.util.PlayerAnimationUtils;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;

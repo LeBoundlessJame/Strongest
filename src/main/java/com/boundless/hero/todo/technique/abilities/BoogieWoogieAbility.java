@@ -1,12 +1,10 @@
 package com.boundless.hero.todo.technique.abilities;
 
 import com.boundless.BoundlessAPI;
-import com.boundless.ability.Ability;
 import com.boundless.ability.TechniqueAbility;
-import com.boundless.mechanics.CursedEnergyManager;
 import com.boundless.registry.SoundRegistry;
 import com.boundless.util.EffekUtils;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import com.boundless.util.RaycastUtils;
 import com.boundless.util.SoundUtils;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
@@ -48,7 +46,7 @@ public class BoogieWoogieAbility extends TechniqueAbility {
 
     public void clap(PlayerEntity user) {
         if (user.getWorld().isClient()) return;
-        PlayerAnimationUtils.playSyncedAnimation(user, BoundlessAPI.id("clap"), 2.0f, false, true, 3000);
+        AnimationManager.playSyncedAnimation(user, BoundlessAPI.id("clap"), 2.0f, false, true, 3000);
         SoundUtils.playSound(user, SoundRegistry.CLAP_1, 8, 12);
     }
 

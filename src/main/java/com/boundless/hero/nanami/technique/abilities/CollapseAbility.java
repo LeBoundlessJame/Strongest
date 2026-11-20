@@ -2,10 +2,9 @@ package com.boundless.hero.nanami.technique.abilities;
 
 import com.boundless.BoundlessAPI;
 import com.boundless.ability.generic.AOEAbility;
-import com.boundless.entity.hero_action.HeroActionEntity;
 import com.boundless.util.AOE;
 import com.boundless.util.EffekUtils;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -27,7 +26,7 @@ public class CollapseAbility extends AOEAbility implements AOE {
     @Override
     public void activate(PlayerEntity player) {
         super.activate(player);
-        PlayerAnimationUtils.playSyncedAnimation(player, BoundlessAPI.id("collapse"));
+        AnimationManager.playSyncedAnimation(player, BoundlessAPI.id("collapse"));
     }
 
     public void activateAOE(PlayerEntity player) {

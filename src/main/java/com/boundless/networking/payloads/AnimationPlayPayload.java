@@ -1,7 +1,7 @@
 package com.boundless.networking.payloads;
 
 import com.boundless.networking.PayloadRegistry;
-import com.boundless.util.PlayerAnimationUtils;
+import com.boundless.util.AnimationManager;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.RegistryByteBuf;
@@ -30,7 +30,7 @@ public record AnimationPlayPayload(UUID user, Identifier animation, float speed,
         if (user == null || context.client() == null) return;
 
         context.client().execute(() -> {
-            PlayerAnimationUtils.playClientAnimation(user, payload.animation, payload.speed, payload.mirror, payload.repeatIfPlaying, payload.priority);
+            AnimationManager.playClientAnimation(user, payload.animation, payload.speed, payload.mirror, payload.repeatIfPlaying, payload.priority);
         });
     }
 
